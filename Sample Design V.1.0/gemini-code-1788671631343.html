@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Villa Cinnamoon Castle — Find Your Own Peacefulness</title> <!--[cite: 1, 2] -->
+
+  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"> <!--[cite: 3, 10] -->
+
+  <!-- External CDN Dependencies: GSAP, ScrollTrigger, and Lenis Smooth Scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script> <!--[cite: 11] -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script> <!--[cite: 11] -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script> <!--[cite: 11] -->
+
+  <style>
+    /* ==========================================================================
+       1. Design Tokens & Theme Variables (DESIGN.md & Components)
+       ========================================================================== */
+    :root {
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; /*[cite: 3, 8] */
+      --font-serif: 'Playfair Display', Georgia, serif; /*[cite: 3, 10] */
+
+      /* Cinnamon & Editorial Brand Colors */
+      --cinnamon-primary: #964B28; /* Ceylon Bark[cite: 3, 6] */
+      --cinnamon-secondary: #B85D36; /* Sunlit Terracotta[cite: 3] */
+      --cinnamon-tertiary: #D8A47F; /* Raw Cinnamon Quill[cite: 3] */
+      --canvas-light: #FDFBF7; /* Coconut Milk / Warm Canvas[cite: 3, 8] */
+      --surface-muted: #F5EFE6; /* Tinted Parchment[cite: 3] */
+      --border-hairline: #E8DFD3; /* Stone-chiseled hairline border[cite: 3] */
+      --text-dark: #0A0A0C; /* Deep Architectural Night[cite: 3, 8] */
+      --text-muted: #54433C; /* Warm Charcoal[cite: 3] */
+      --text-white: #FFFFFF; /*[cite: 8, 10] */
+
+      /* Navigation Tokens */
+      --nav-font: var(--font-sans); /*[cite: 8] */
+      --nav-bg-white: #FFFFFF; /*[cite: 8] */
+      --nav-bg-dark: var(--text-dark); /*[cite: 8] */
+      --nav-mobile-bg: var(--cinnamon-primary); /*[cite: 6, 8] */
+      --nav-radius-pill: 9999px; /*[cite: 8] */
+      --nav-radius-card: 22px; /*[cite: 8] */
+      --nav-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06); /*[cite: 8] */
+      --nav-ease: cubic-bezier(0.19, 1, 0.22, 1); /*[cite: 8] */
+
+      /* Kinetic Button Tokens */
+      --btn-primary-color: var(--cinnamon-primary); /*[cite: 6] */
+      --btn-default-bg: #FFFFFF; /*[cite: 6] */
+      --btn-default-text: var(--text-dark); /*[cite: 6] */
+      --btn-hover-text: #FFFFFF; /*[cite: 6] */
+      --btn-dot-color: var(--cinnamon-primary); /*[cite: 6] */
+      --btn-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); /*[cite: 6] */
+      --btn-shadow-hover: 0 10px 28px rgba(150, 75, 40, 0.35); /*[cite: 6] */
+      --btn-ease: cubic-bezier(0.65, 0, 0.35, 1); /*[cite: 6] */
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box; /*[cite: 5, 8, 10] */
+      margin: 0; /*[cite: 5, 8, 10] */
+      padding: 0; /*[cite: 5, 8, 10] */
+    }
+
+    html {
+      font-family: var(--font-sans); /*[cite: 8, 10] */
+      background-color: var(--canvas-light); /*[cite: 3, 10] */
+      color: var(--text-dark); /*[cite: 3, 10] */
+      -webkit-font-smoothing: antialiased; /*[cite: 10] */
+      -moz-osx-font-smoothing: grayscale; /*[cite: 10] */
+    }
+
+    /* Lenis Smooth Scroll Rules */
+    html.lenis, html.lenis body {
+      height: auto; /*[cite: 10] */
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important; /*[cite: 10] */
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden; /*[cite: 10] */
+    }
+
+    /* ==========================================================================
+       2. Masked Line Text Reveal Engine Styles (text-reveal.css)
+       ========================================================================== */
+    .line-mask,
+    .split-mask {
+      overflow: hidden !important; /*[cite: 9, 10] */
+      display: block; /*[cite: 9, 10] */
+      position: relative; /*[cite: 10] */
+      vertical-align: top; /*[cite: 10] */
+      padding-bottom: 0.06em; /* descender protection[cite: 9, 10] */
+    }
+
+    .line-inner,
+    .line,
+    [class*="line-"] {
+      display: block; /*[cite: 9, 10] */
+      will-change: transform; /*[cite: 9, 10] */
+    }
+
+    /* ==========================================================================
+       3. Global Navigation Component Styles (navigation.css)
+       ========================================================================== */
+    .site-header {
+      position: sticky; /*[cite: 8] */
+      top: 0; /*[cite: 8] */
+      left: 0; /*[cite: 8] */
+      width: 100%; /*[cite: 8] */
+      z-index: 1000; /*[cite: 8] */
+      background-color: rgba(253, 251, 247, 0.94); /*[cite: 3, 8] */
+      backdrop-filter: blur(10px); /*[cite: 3] */
+      border-bottom: 1px solid var(--border-hairline); /*[cite: 3, 8] */
+      padding: 14px 28px; /*[cite: 8] */
+      transition: background-color 0.3s ease, box-shadow 0.3s ease; /*[cite: 8] */
+    }
+
+    .header-inner {
+      max-width: 1360px; /*[cite: 8] */
+      margin: 0 auto; /*[cite: 8] */
+      display: flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      justify-content: space-between; /*[cite: 8] */
+    }
+
+    .site-logo {
+      text-decoration: none; /*[cite: 8] */
+      color: var(--cinnamon-primary); /*[cite: 3, 8] */
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: 1.4rem; /*[cite: 8] */
+      font-weight: 700; /*[cite: 8] */
+      letter-spacing: 0.04em; /*[cite: 3, 8] */
+      display: inline-flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      gap: 8px; /*[cite: 8] */
+    }
+
+    .desktop-nav {
+      display: flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      gap: 12px; /*[cite: 8] */
+    }
+
+    .desktop-links-cluster {
+      display: inline-flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      background-color: #FFFFFF; /*[cite: 8] */
+      border: 1px solid var(--border-hairline); /*[cite: 3, 8] */
+      border-radius: var(--nav-radius-pill); /*[cite: 8] */
+      padding: 4px 8px; /*[cite: 8] */
+      box-shadow: var(--nav-shadow-soft); /*[cite: 8] */
+    }
+
+    .desktop-nav .nav-link {
+      display: inline-flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      gap: 6px; /*[cite: 8] */
+      padding: 10px 18px; /*[cite: 8] */
+      border-radius: var(--nav-radius-pill); /*[cite: 8] */
+      text-decoration: none; /*[cite: 8] */
+      color: var(--text-dark); /*[cite: 8] */
+      font-size: 0.84rem; /*[cite: 8] */
+      font-weight: 700; /*[cite: 8] */
+      letter-spacing: 0.06em; /*[cite: 8] */
+      text-transform: uppercase; /*[cite: 8] */
+      transition: background-color 0.25s ease, color 0.25s ease; /*[cite: 8] */
+    }
+
+    .desktop-nav .nav-link.active,
+    .desktop-nav .nav-link:hover {
+      background-color: var(--surface-muted); /*[cite: 3, 8] */
+      color: var(--cinnamon-primary); /*[cite: 3] */
+    }
+
+    .text-roller {
+      position: relative; /*[cite: 8] */
+      display: inline-flex; /*[cite: 8] */
+      flex-direction: column; /*[cite: 8] */
+      height: 1.3em; /*[cite: 8] */
+      line-height: 1.3em; /*[cite: 8] */
+      overflow: hidden; /*[cite: 8] */
+      vertical-align: middle; /*[cite: 8] */
+    }
+
+    .text-roller .text-primary,
+    .text-roller .text-secondary {
+      display: block; /*[cite: 8] */
+      white-space: nowrap; /*[cite: 8] */
+      transition: transform 0.4s var(--nav-ease); /*[cite: 8] */
+      will-change: transform; /*[cite: 8] */
+    }
+
+    .text-roller .text-secondary {
+      position: absolute; /*[cite: 8] */
+      top: 100%; /*[cite: 8] */
+      left: 0; /*[cite: 8] */
+    }
+
+    .nav-link:hover .text-roller .text-primary,
+    .btn-talk:hover .text-roller .text-primary,
+    .card-link:hover .text-roller .text-primary {
+      transform: translateY(-100%); /*[cite: 8] */
+    }
+
+    .nav-link:hover .text-roller .text-secondary,
+    .btn-talk:hover .text-roller .text-secondary,
+    .card-link:hover .text-roller .text-secondary {
+      transform: translateY(-100%); /*[cite: 8] */
+    }
+
+    .nav-arrow {
+      display: inline-flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      justify-content: center; /*[cite: 8] */
+      width: 14px; /*[cite: 8] */
+      height: 14px; /*[cite: 8] */
+      opacity: 0; /*[cite: 8] */
+      transform: translateX(-6px); /*[cite: 8] */
+      transition: opacity 0.3s ease, transform 0.35s var(--nav-ease); /*[cite: 8] */
+      flex-shrink: 0; /*[cite: 8] */
+    }
+
+    .nav-link:hover .nav-arrow,
+    .btn-talk:hover .nav-arrow,
+    .card-link:hover .nav-arrow {
+      opacity: 1; /*[cite: 8] */
+      transform: translateX(0); /*[cite: 8] */
+    }
+
+    .nav-arrow svg {
+      width: 100%; /*[cite: 8] */
+      height: 100%; /*[cite: 8] */
+      stroke: currentColor; /*[cite: 8] */
+      stroke-width: 2.5; /*[cite: 8] */
+      fill: none; /*[cite: 8] */
+      stroke-linecap: round; /*[cite: 8] */
+      stroke-linejoin: round; /*[cite: 8] */
+    }
+
+    .btn-talk {
+      display: inline-flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      gap: 6px; /*[cite: 8] */
+      padding: 10px 20px; /*[cite: 8] */
+      background-color: #FFFFFF; /*[cite: 8] */
+      border: 1px solid var(--border-hairline); /*[cite: 3, 8] */
+      border-radius: var(--nav-radius-pill); /*[cite: 8] */
+      text-decoration: none; /*[cite: 8] */
+      color: var(--text-dark); /*[cite: 8] */
+      font-size: 0.84rem; /*[cite: 8] */
+      font-weight: 700; /*[cite: 8] */
+      letter-spacing: 0.06em; /*[cite: 8] */
+      text-transform: uppercase; /*[cite: 8] */
+      box-shadow: var(--nav-shadow-soft); /*[cite: 8] */
+      transition: transform 0.2s ease, box-shadow 0.25s ease; /*[cite: 8] */
+    }
+
+    .btn-talk:hover {
+      transform: translateY(-1px); /*[cite: 8] */
+      box-shadow: 0 8px 24px rgba(150, 75, 40, 0.12); /*[cite: 3, 8] */
+    }
+
+    .btn-book-nav {
+      position: relative; /*[cite: 8] */
+      display: inline-flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      justify-content: center; /*[cite: 8] */
+      padding: 12px 24px; /*[cite: 8] */
+      background-color: var(--text-dark); /*[cite: 3, 8] */
+      border: none; /*[cite: 8] */
+      border-radius: var(--nav-radius-pill); /*[cite: 8] */
+      outline: none; /*[cite: 8] */
+      cursor: pointer; /*[cite: 8] */
+      overflow: hidden; /*[cite: 8] */
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2); /*[cite: 8] */
+      text-decoration: none; /*[cite: 8] */
+      user-select: none; /*[cite: 8] */
+      transition: transform 0.2s ease, box-shadow 0.35s var(--nav-ease); /*[cite: 8] */
+    }
+
+    .btn-book-nav:hover {
+      transform: translateY(-1px); /*[cite: 8] */
+      box-shadow: var(--btn-shadow-hover); /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav .btn-fill {
+      position: absolute; /*[cite: 6, 8] */
+      top: 0; /*[cite: 6, 8] */
+      left: 0; /*[cite: 6, 8] */
+      bottom: 0; /*[cite: 6, 8] */
+      width: 0%; /*[cite: 6, 8] */
+      height: 100%; /*[cite: 6, 8] */
+      background-color: var(--cinnamon-primary); /*[cite: 3, 6] */
+      border-radius: var(--nav-radius-pill); /*[cite: 8] */
+      z-index: 1; /*[cite: 6, 8] */
+      pointer-events: none; /*[cite: 6, 8] */
+      transition: width 0.45s var(--btn-ease); /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav:hover .btn-fill {
+      width: 100%; /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav .btn-content {
+      position: relative; /*[cite: 6, 8] */
+      display: inline-flex; /*[cite: 6, 8] */
+      align-items: center; /*[cite: 6, 8] */
+      justify-content: center; /*[cite: 6, 8] */
+      z-index: 2; /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav .btn-dot {
+      display: inline-block; /*[cite: 6, 8] */
+      width: 7px; /*[cite: 6, 8] */
+      height: 7px; /*[cite: 6, 8] */
+      border-radius: 50%; /*[cite: 6, 8] */
+      background-color: var(--canvas-light); /*[cite: 3, 8] */
+      margin-right: 10px; /*[cite: 8] */
+      flex-shrink: 0; /*[cite: 6, 8] */
+      transition: transform 0.4s var(--btn-ease), opacity 0.3s ease, margin-right 0.4s var(--btn-ease), width 0.4s var(--btn-ease); /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav:hover .btn-dot {
+      width: 0; /*[cite: 6, 8] */
+      margin-right: 0; /*[cite: 6, 8] */
+      opacity: 0; /*[cite: 6, 8] */
+      transform: translateX(-10px) scale(0); /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav .btn-text {
+      font-size: 0.84rem; /*[cite: 8] */
+      font-weight: 700; /*[cite: 6, 8] */
+      letter-spacing: 0.06em; /*[cite: 6, 8] */
+      text-transform: uppercase; /*[cite: 6, 8] */
+      color: #FFFFFF; /*[cite: 6, 8] */
+      white-space: nowrap; /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav .btn-arrow {
+      display: inline-flex; /*[cite: 6, 8] */
+      align-items: center; /*[cite: 6, 8] */
+      justify-content: center; /*[cite: 6, 8] */
+      width: 0; /*[cite: 6, 8] */
+      height: 16px; /*[cite: 8] */
+      margin-left: 0; /*[cite: 6, 8] */
+      opacity: 0; /*[cite: 6, 8] */
+      overflow: hidden; /*[cite: 6, 8] */
+      color: #FFFFFF; /*[cite: 6, 8] */
+      transform: translateX(-8px); /*[cite: 6, 8] */
+      transition: width 0.4s var(--btn-ease), margin-left 0.4s var(--btn-ease), opacity 0.35s ease, transform 0.4s var(--btn-ease); /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav:hover .btn-arrow {
+      width: 16px; /*[cite: 8] */
+      margin-left: 8px; /*[cite: 8] */
+      opacity: 1; /*[cite: 6, 8] */
+      transform: translateX(0); /*[cite: 6, 8] */
+    }
+
+    .btn-book-nav .btn-arrow svg {
+      width: 16px; /*[cite: 8] */
+      height: 16px; /*[cite: 8] */
+      stroke: currentColor; /*[cite: 6, 8] */
+      stroke-width: 2.8; /*[cite: 6, 8] */
+      fill: none; /*[cite: 6, 8] */
+      stroke-linecap: round; /*[cite: 6, 8] */
+      stroke-linejoin: round; /*[cite: 6, 8] */
+    }
+
+    /* Mobile Toggle */
+    .mobile-toggle-btn {
+      display: none; /*[cite: 8] */
+      width: 46px; /*[cite: 8] */
+      height: 46px; /*[cite: 8] */
+      border-radius: 50%; /*[cite: 8] */
+      background-color: #FFFFFF; /*[cite: 8] */
+      border: 1px solid var(--border-hairline); /*[cite: 3, 8] */
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /*[cite: 8] */
+      cursor: pointer; /*[cite: 8] */
+      outline: none; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      justify-content: center; /*[cite: 8] */
+      position: relative; /*[cite: 8] */
+      z-index: 1100; /*[cite: 8] */
+      transition: transform 0.2s ease; /*[cite: 8] */
+    }
+
+    .toggle-icon-wrap {
+      width: 20px; /*[cite: 8] */
+      height: 12px; /*[cite: 8] */
+      position: relative; /*[cite: 8] */
+      display: flex; /*[cite: 8] */
+      flex-direction: column; /*[cite: 8] */
+      justify-content: space-between; /*[cite: 8] */
+    }
+
+    .toggle-line {
+      width: 100%; /*[cite: 8] */
+      height: 2px; /*[cite: 8] */
+      background-color: var(--text-dark); /*[cite: 3, 8] */
+      border-radius: 2px; /*[cite: 8] */
+      transition: transform 0.35s var(--nav-ease), opacity 0.25s ease; /*[cite: 8] */
+      transform-origin: center; /*[cite: 8] */
+    }
+
+    .menu-open .toggle-icon-wrap .toggle-line:nth-child(1) {
+      transform: translateY(5px) rotate(45deg); /*[cite: 8] */
+    }
+    .menu-open .toggle-icon-wrap .toggle-line:nth-child(2) {
+      transform: translateY(-5px) rotate(-45deg); /*[cite: 8] */
+    }
+
+    .mobile-menu-overlay {
+      display: none; /*[cite: 8] */
+      position: fixed; /*[cite: 8] */
+      top: 0; /*[cite: 8] */
+      left: 0; /*[cite: 8] */
+      width: 100%; /*[cite: 8] */
+      height: 100vh; /*[cite: 8] */
+      background-color: var(--cinnamon-primary); /*[cite: 3, 8] */
+      z-index: 1050; /*[cite: 8] */
+      padding: 86px 20px 36px; /*[cite: 8] */
+      overflow-y: auto; /*[cite: 8] */
+      flex-direction: column; /*[cite: 8] */
+      gap: 14px; /*[cite: 8] */
+      opacity: 0; /*[cite: 8] */
+      visibility: hidden; /*[cite: 8] */
+      transform: translateY(-12px); /*[cite: 8] */
+      transition: opacity 0.35s var(--nav-ease), transform 0.35s var(--nav-ease), visibility 0.35s var(--nav-ease); /*[cite: 8] */
+    }
+
+    .menu-open .mobile-menu-overlay {
+      opacity: 1; /*[cite: 8] */
+      visibility: visible; /*[cite: 8] */
+      transform: translateY(0); /*[cite: 8] */
+    }
+
+    .menu-card {
+      background-color: #FFFFFF; /*[cite: 8] */
+      border-radius: var(--nav-radius-card); /*[cite: 8] */
+      overflow: hidden; /*[cite: 8] */
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.15); /*[cite: 8] */
+      width: 100%; /*[cite: 8] */
+    }
+
+    .menu-card-links {
+      display: flex; /*[cite: 8] */
+      flex-direction: column; /*[cite: 8] */
+    }
+
+    .card-link {
+      display: flex; /*[cite: 8] */
+      align-items: center; /*[cite: 8] */
+      justify-content: space-between; /*[cite: 8] */
+      padding: 20px 24px; /*[cite: 8] */
+      text-decoration: none; /*[cite: 8] */
+      color: var(--text-dark); /*[cite: 8] */
+      font-size: 1.1rem; /*[cite: 8] */
+      font-weight: 800; /*[cite: 8] */
+      letter-spacing: 0.05em; /*[cite: 8] */
+      text-transform: uppercase; /*[cite: 8] */
+      border-bottom: 1px solid var(--border-hairline); /*[cite: 3, 8] */
+    }
+
+    .card-link:last-child {
+      border-bottom: none; /*[cite: 8] */
+    }
+
+    .menu-card-dark {
+      background-color: var(--text-dark); /*[cite: 3, 8] */
+      color: #FFFFFF; /*[cite: 8] */
+    }
+
+    /* ==========================================================================
+       4. Kinetic Pill Button Component Styles (button.css)
+       ========================================================================== */
+    .project-btn,
+    a.project-btn {
+      position: relative; /*[cite: 6] */
+      display: inline-flex; /*[cite: 6] */
+      align-items: center; /*[cite: 6] */
+      justify-content: center; /*[cite: 6] */
+      padding: 16px 36px; /*[cite: 6] */
+      border-radius: 9999px; /*[cite: 6] */
+      background-color: var(--btn-default-bg); /*[cite: 6] */
+      border: 1px solid var(--border-hairline); /*[cite: 3, 6] */
+      outline: none; /*[cite: 6] */
+      cursor: pointer; /*[cite: 6] */
+      overflow: hidden; /*[cite: 6] */
+      box-shadow: var(--btn-shadow); /*[cite: 6] */
+      text-decoration: none; /*[cite: 6] */
+      user-select: none; /*[cite: 6] */
+      transition: box-shadow 0.4s var(--btn-ease), transform 0.2s ease, border-color 0.3s ease; /*[cite: 6] */
+      font-family: var(--font-sans); /*[cite: 6] */
+    }
+
+    .project-btn:hover {
+      box-shadow: var(--btn-shadow-hover); /*[cite: 6] */
+      transform: translateY(-2px); /*[cite: 6] */
+      border-color: var(--cinnamon-primary); /*[cite: 3] */
+    }
+
+    .project-btn .btn-fill {
+      position: absolute; /*[cite: 6] */
+      top: 0; /*[cite: 6] */
+      left: 0; /*[cite: 6] */
+      bottom: 0; /*[cite: 6] */
+      width: 0%; /*[cite: 6] */
+      height: 100%; /*[cite: 6] */
+      background-color: var(--cinnamon-primary); /*[cite: 3, 6] */
+      border-radius: 9999px; /*[cite: 6] */
+      z-index: 1; /*[cite: 6] */
+      pointer-events: none; /*[cite: 6] */
+      transition: width 0.45s var(--btn-ease); /*[cite: 6] */
+    }
+
+    .project-btn:hover .btn-fill {
+      width: 100%; /*[cite: 6] */
+    }
+
+    .project-btn .btn-content {
+      position: relative; /*[cite: 6] */
+      display: inline-flex; /*[cite: 6] */
+      align-items: center; /*[cite: 6] */
+      justify-content: center; /*[cite: 6] */
+      z-index: 2; /*[cite: 6] */
+      transition: transform 0.4s var(--btn-ease); /*[cite: 6] */
+    }
+
+    .project-btn .btn-dot {
+      display: inline-block; /*[cite: 6] */
+      width: 9px; /*[cite: 6] */
+      height: 9px; /*[cite: 6] */
+      border-radius: 50%; /*[cite: 6] */
+      background-color: var(--cinnamon-primary); /*[cite: 3, 6] */
+      margin-right: 14px; /*[cite: 6] */
+      flex-shrink: 0; /*[cite: 6] */
+      transition: transform 0.4s var(--btn-ease), opacity 0.3s ease, margin-right 0.4s var(--btn-ease), width 0.4s var(--btn-ease); /*[cite: 6] */
+    }
+
+    .project-btn:hover .btn-dot {
+      width: 0; /*[cite: 6] */
+      margin-right: 0; /*[cite: 6] */
+      opacity: 0; /*[cite: 6] */
+      transform: translateX(-12px) scale(0); /*[cite: 6] */
+    }
+
+    .project-btn .btn-text {
+      font-size: 0.95rem; /*[cite: 6] */
+      font-weight: 700; /*[cite: 6] */
+      letter-spacing: 0.05em; /*[cite: 6] */
+      text-transform: uppercase; /*[cite: 6] */
+      color: var(--text-dark); /*[cite: 6] */
+      white-space: nowrap; /*[cite: 6] */
+      transition: color 0.35s ease; /*[cite: 6] */
+    }
+
+    .project-btn:hover .btn-text {
+      color: #FFFFFF; /*[cite: 6] */
+    }
+
+    .project-btn .btn-arrow {
+      display: inline-flex; /*[cite: 6] */
+      align-items: center; /*[cite: 6] */
+      justify-content: center; /*[cite: 6] */
+      width: 0; /*[cite: 6] */
+      height: 20px; /*[cite: 6] */
+      margin-left: 0; /*[cite: 6] */
+      opacity: 0; /*[cite: 6] */
+      overflow: hidden; /*[cite: 6] */
+      color: #FFFFFF; /*[cite: 6] */
+      transform: translateX(-10px); /*[cite: 6] */
+      transition: width 0.4s var(--btn-ease), margin-left 0.4s var(--btn-ease), opacity 0.35s ease, transform 0.4s var(--btn-ease); /*[cite: 6] */
+    }
+
+    .project-btn:hover .btn-arrow {
+      width: 20px; /*[cite: 6] */
+      margin-left: 12px; /*[cite: 6] */
+      opacity: 1; /*[cite: 6] */
+      transform: translateX(0); /*[cite: 6] */
+    }
+
+    .project-btn .btn-arrow svg {
+      width: 20px; /*[cite: 6] */
+      height: 20px; /*[cite: 6] */
+      stroke: currentColor; /*[cite: 6] */
+      stroke-width: 2.8; /*[cite: 6] */
+      fill: none; /*[cite: 6] */
+      stroke-linecap: round; /*[cite: 6] */
+      stroke-linejoin: round; /*[cite: 6] */
+    }
+
+    /* Dark Variant Button */
+    .project-btn-dark {
+      background-color: var(--text-dark); /*[cite: 3, 6] */
+      border-color: var(--text-dark); /*[cite: 6] */
+    }
+    .project-btn-dark .btn-text {
+      color: #FFFFFF; /*[cite: 6] */
+    }
+    .project-btn-dark .btn-dot {
+      background-color: var(--cinnamon-tertiary); /*[cite: 3, 6] */
+    }
+
+    /* ==========================================================================
+       5. Home Page Sections & Editorial Layout Styles
+       ========================================================================== */
+    .page-wrapper {
+      width: 100%; /*[cite: 10] */
+      overflow-x: hidden; /*[cite: 8, 10] */
+    }
+
+    .section {
+      position: relative; /*[cite: 10] */
+      width: 100%; /*[cite: 10] */
+      padding: 120px 8vw; /*[cite: 10] */
+    }
+
+    /* Hero Section */
+    .section-hero {
+      min-height: 90vh; /*[cite: 10] */
+      display: flex; /*[cite: 10] */
+      flex-direction: column; /*[cite: 10] */
+      justify-content: center; /*[cite: 10] */
+      background: linear-gradient(180deg, var(--canvas-light) 0%, var(--surface-muted) 100%); /*[cite: 3] */
+      border-bottom: 1px solid var(--border-hairline); /*[cite: 3] */
+      padding-top: 80px;
+    }
+
+    .hero-tag {
+      font-size: 0.85rem; /*[cite: 10] */
+      font-weight: 700; /*[cite: 10] */
+      letter-spacing: 0.16em; /*[cite: 10] */
+      text-transform: uppercase; /*[cite: 10] */
+      color: var(--cinnamon-primary); /*[cite: 3, 10] */
+      margin-bottom: 24px; /*[cite: 10] */
+    }
+
+    .hero-title {
+      font-family: var(--font-serif); /*[cite: 3, 10] */
+      font-size: clamp(2.6rem, 5.5vw, 5rem); /*[cite: 10] */
+      font-weight: 600; /*[cite: 3, 10] */
+      line-height: 1.15; /*[cite: 3, 10] */
+      letter-spacing: -0.02em; /*[cite: 3, 10] */
+      max-width: 1100px; /*[cite: 10] */
+      margin-bottom: 32px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem); /*[cite: 10] */
+      font-weight: 400; /*[cite: 3] */
+      line-height: 1.6; /*[cite: 3] */
+      color: var(--text-muted); /*[cite: 3] */
+      max-width: 800px;
+      margin-bottom: 48px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+    }
+
+    /* Key Spec Bar */
+    .hero-spec-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-hairline); /*[cite: 3] */
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .spec-number {
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--cinnamon-primary); /*[cite: 3] */
+    }
+
+    .spec-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted); /*[cite: 3] */
+      font-weight: 600;
+    }
+
+    /* Editorial Statement Section */
+    .section-statement {
+      background-color: var(--canvas-light); /*[cite: 3, 10] */
+      border-bottom: 1px solid var(--border-hairline); /*[cite: 3] */
+    }
+
+    .statement-tag {
+      font-size: 0.82rem; /*[cite: 10] */
+      font-weight: 700; /*[cite: 10] */
+      letter-spacing: 0.16em; /*[cite: 10] */
+      text-transform: uppercase; /*[cite: 10] */
+      color: var(--cinnamon-secondary); /*[cite: 3] */
+      margin-bottom: 32px; /*[cite: 10] */
+    }
+
+    .statement-text {
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: clamp(1.8rem, 3.4vw, 3rem); /*[cite: 10] */
+      font-weight: 400; /*[cite: 3] */
+      line-height: 1.35; /*[cite: 10] */
+      letter-spacing: -0.015em; /*[cite: 3] */
+      max-width: 1100px; /*[cite: 10] */
+      text-indent: 12%; /*[cite: 10] */
+    }
+
+    /* Highlights 3-Card Grid */
+    .section-highlights {
+      background-color: #FFFFFF; /*[cite: 10] */
+      border-bottom: 1px solid var(--border-hairline); /*[cite: 3] */
+    }
+
+    .grid-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+
+    .section-heading {
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem); /*[cite: 10] */
+      font-weight: 600; /*[cite: 3] */
+      line-height: 1.2; /*[cite: 10] */
+      letter-spacing: -0.02em; /*[cite: 3, 10] */
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+    }
+
+    .feature-card {
+      background-color: var(--surface-muted); /*[cite: 3] */
+      border: 1px solid var(--border-hairline); /*[cite: 3] */
+      border-radius: 16px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 320px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(150, 75, 40, 0.08); /*[cite: 3] */
+    }
+
+    .feature-num {
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--cinnamon-tertiary); /*[cite: 3] */
+      margin-bottom: 24px;
+    }
+
+    .feature-title {
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text-dark); /*[cite: 3] */
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--text-muted); /*[cite: 3] */
+    }
+
+    /* Packages & Teasers Banner */
+    .section-cta-banner {
+      background-color: var(--text-dark); /*[cite: 3, 10] */
+      color: #FFFFFF; /*[cite: 8, 10] */
+      text-align: center;
+      padding: 140px 8vw;
+    }
+
+    .banner-content {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .banner-title {
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem); /*[cite: 10] */
+      font-weight: 600; /*[cite: 3] */
+      line-height: 1.2; /*[cite: 10] */
+    }
+
+    .banner-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--border-hairline); /*[cite: 3] */
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: #050507; /*[cite: 3] */
+      color: #FFFFFF; /*[cite: 10] */
+      padding: 80px 8vw 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08); /*[cite: 10] */
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand h3 {
+      font-family: var(--font-serif); /*[cite: 3] */
+      font-size: 1.6rem;
+      color: var(--cinnamon-tertiary); /*[cite: 3] */
+      margin-bottom: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      color: #FFFFFF;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ==========================================================================
+       6. Responsive Breakpoints
+       ========================================================================== */
+    @media (max-width: 991px) {
+      .desktop-nav {
+        display: none; /*[cite: 8] */
+      }
+      .mobile-toggle-btn {
+        display: flex; /*[cite: 8] */
+      }
+      .mobile-menu-overlay {
+        display: flex; /*[cite: 8] */
+      }
+      .menu-open.site-header {
+        background-color: var(--cinnamon-primary); /*[cite: 3, 8] */
+      }
+      .menu-open .site-logo {
+        color: #FFFFFF; /*[cite: 8] */
+      }
+      .section {
+        padding: 80px 6vw; /*[cite: 10] */
+      }
+      .statement-text {
+        text-indent: 0; /*[cite: 10] */
+      }
+      .grid-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Navigation Bar Component (Multi-Page Integrated)
+       ========================================================================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="site-logo">
+        Villa Cinnamoon Castle <!--[cite: 1, 2] -->
+      </a>
+
+      <!-- Desktop View: Horizontal Navigation -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        
+        <!-- Grouped Navigation Cluster -->
+        <div class="desktop-links-cluster">
+          <a href="index.html" class="nav-link active">
+            <span class="text-roller">
+              <span class="text-primary">Home</span>
+              <span class="text-secondary">Home</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
+
+          <a href="the-villa.html" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">The Villa</span>
+              <span class="text-secondary">The Villa</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
+
+          <a href="packages.html" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">Packages</span>
+              <span class="text-secondary">Packages</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
+
+          <a href="experiences.html" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">Experiences</span>
+              <span class="text-secondary">Experiences</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
+
+          <a href="reviews.html" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">Reviews</span>
+              <span class="text-secondary">Reviews</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </a>
+        </div>
+
+        <!-- Secondary Action: Contact Host -->
+        <a href="contact.html" class="btn-talk">
+          <span class="text-roller">
+            <span class="text-primary">Contact</span>
+            <span class="text-secondary">Contact</span>
+          </span>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+          </span>
+        </a>
+
+        <!-- Primary Action: Book Now (Linked to reserve.html) -->
+        <a href="reserve.html" class="btn-book-nav">
+          <span class="btn-fill"></span>
+          <span class="btn-content">
+            <span class="btn-dot"></span>
+            <span class="btn-text">Book Now</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </span>
+        </a>
+
+      </nav>
+
+      <!-- Mobile Toggle Button -->
+      <button class="mobile-toggle-btn" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <div class="toggle-icon-wrap">
+          <span class="toggle-line"></span>
+          <span class="toggle-line"></span>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileOverlay">
+      <div class="menu-card menu-card-links">
+        <a href="index.html" class="card-link">Home</a>
+        <a href="the-villa.html" class="card-link">The Villa</a>
+        <a href="packages.html" class="card-link">Packages</a>
+        <a href="experiences.html" class="card-link">Experiences</a>
+        <a href="reviews.html" class="card-link">Reviews</a>
+      </div>
+      <div class="menu-card">
+        <a href="contact.html" class="card-link">Contact Host</a>
+      </div>
+      <div class="menu-card">
+        <a href="reserve.html" class="card-link menu-card-dark">
+          <span>Book Now</span>
+          <span class="nav-arrow" style="opacity: 1; transform: none;">
+            <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Main Page Content Wrapper
+       ========================================================================== -->
+  <main class="page-wrapper">
+
+    <!-- Section 1: Hero Section (Immediate Reveal) -->
+    <section class="section section-hero">
+      <div class="hero-tag" data-text-reveal data-hero data-delay="0.1">
+        Arachchikanda, Hikkaduwa &bull; Sri Lanka <!--[cite: 1, 2] -->
+      </div>
+      <h1 class="hero-title" data-text-reveal data-hero data-delay="0.25">
+        Find your own peacefulness in an authentic cinnamon estate. <!--[cite: 1, 2] -->
+      </h1>
+      <p class="hero-subtitle" data-text-reveal data-hero data-delay="0.4">
+        A private two-story luxury sanctuary just 3.5 km inland from Hikkaduwa beach. Complete seclusion for up to 15 guests surrounded by nature. <!--[cite: 1, 2] -->
+      </p>
+      
+      <div class="hero-actions">
+        <!-- Interactive Pill Button to Reservation -->
+        <a href="reserve.html" class="project-btn project-btn-dark">
+          <span class="btn-fill"></span>
+          <span class="btn-content">
+            <span class="btn-dot"></span>
+            <span class="btn-text">Reserve Your Stay</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </span>
+        </a>
+
+        <!-- Secondary Pill Button to Scrollytelling Tour -->
+        <a href="the-villa.html" class="project-btn">
+          <span class="btn-fill"></span>
+          <span class="btn-content">
+            <span class="btn-dot"></span>
+            <span class="btn-text">Explore The Villa</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </span>
+        </a>
+      </div>
+
+      <!-- Quick Specifications Strip -->
+      <div class="hero-spec-strip">
+        <div class="spec-item">
+          <span class="spec-number">5</span>
+          <span class="spec-label">Bedrooms</span> <!--[cite: 1, 2] -->
+        </div>
+        <div class="spec-item">
+          <span class="spec-number">10–15</span>
+          <span class="spec-label">Guest Capacity</span> <!--[cite: 1, 2] -->
+        </div>
+        <div class="spec-item">
+          <span class="spec-number">2</span>
+          <span class="spec-label">Modern Baths</span> <!--[cite: 1, 2] -->
+        </div>
+        <div class="spec-item">
+          <span class="spec-number">3.5 km</span>
+          <span class="spec-label">To Coral Beach</span> <!--[cite: 1, 2] -->
+        </div>
+        <div class="spec-item">
+          <span class="spec-number">100%</span>
+          <span class="spec-label">Private Buyout</span> <!--[cite: 1] -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Editorial Statement (Scroll Triggered) -->
+    <section class="section section-statement">
+      <div class="statement-tag" data-text-reveal>
+        The Sanctuary Philosophy <!--[cite: 3, 11] -->
+      </div>
+      <p class="statement-text" data-text-reveal>
+        Surrounded by whispering cinnamon groves and tropical palms, Villa Cinnamoon Castle offers an unhurried estate where families and travel groups reconnect away from crowded shores. <!--[cite: 1] -->
+      </p>
+    </section>
+
+    <!-- Section 3: Villa Highlights -->
+    <section class="section section-highlights">
+      <div class="grid-header">
+        <div>
+          <div class="statement-tag" data-text-reveal>Thoughtful Spaces</div>
+          <h2 class="section-heading" data-text-reveal>Designed for unhurried gatherings</h2>
+        </div>
+        <a href="the-villa.html" class="project-btn">
+          <span class="btn-fill"></span>
+          <span class="btn-content">
+            <span class="btn-dot"></span>
+            <span class="btn-text">View Full Tour</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+            </span>
+          </span>
+        </a>
+      </div>
+
+      <div class="cards-grid">
+        <div class="feature-card">
+          <span class="feature-num">01 / Living Spaces</span>
+          <h3 class="feature-title">Ground &amp; Mezzanine Lounges</h3>
+          <p class="feature-desc">
+            Traditional hand-carved armchairs on the ground floor with TV entertainment, plus an expansive upstairs open mezzanine with high vaulted timber ceilings. <!--[cite: 1, 2] -->
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-num">02 / Kitchen &amp; Dining</span>
+          <h3 class="feature-title">Full Granite Kitchen</h3>
+          <p class="feature-desc">
+            Equipped with gas stove, rice cooker, cookware, and a large formal dining banquet table to seat your entire family together. In-house chef available. <!--[cite: 1, 2] -->
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <span class="feature-num">03 / Tropical Grounds</span>
+          <h3 class="feature-title">Private Courtyard &amp; BBQ</h3>
+          <p class="feature-desc">
+            A secluded gravel garden enclosed by rustic timber fencing. Features private parking for multiple vans/cars and evening BBQ dining setups. <!--[cite: 1, 2] -->
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Packages Teaser Banner -->
+    <section class="section section-cta-banner">
+      <div class="banner-content">
+        <div class="statement-tag" style="color: var(--cinnamon-tertiary);" data-text-reveal>Direct Booking Privilege</div>
+        <h2 class="banner-title" data-text-reveal>Transparent rates tailored to your group size</h2>
+        <p class="banner-text" data-text-reveal>
+          From intimate couple escapes at Rs. 6,500/= to full 5-bedroom private villa buyouts from Rs. 17,900/= to Rs. 23,000/=. Zero hidden commissions. <!--[cite: 1, 4] -->
+        </p>
+        <div style="margin-top: 20px;">
+          <a href="packages.html" class="project-btn" style="background: transparent; border-color: rgba(255,255,255,0.2);">
+            <span class="btn-fill"></span>
+            <span class="btn-content">
+              <span class="btn-dot" style="background-color: #FFFFFF;"></span>
+              <span class="btn-text" style="color: #FFFFFF;">Explore All Packages</span>
+              <span class="btn-arrow">
+                <svg viewBox="0 0 24 24"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="13 5 20 12 13 19"></polyline></svg>
+              </span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       Footer Component
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h3>Villa Cinnamoon Castle</h3>
+        <p style="color: rgba(255,255,255,0.6); max-width: 320px; font-size: 0.9rem; margin-top: 8px;">
+          Arachchikanda, Hikkaduwa, Southern Province, Sri Lanka. <!--[cite: 1] -->
+        </p>
+        <p style="color: var(--cinnamon-tertiary); font-size: 0.9rem; margin-top: 8px;">
+          Hotline: +94 76 100 7686 <!--[cite: 1, 2] -->
+        </p>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="the-villa.html">The Villa</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="experiences.html">Experiences</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="reserve.html">Reserve</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 Villa Cinnamoon Castle. All Rights Reserved.</span>
+      <span>Host: Dampalla Gamage Devindu</span> <!--[cite: 1, 2] -->
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       Embedded JavaScript: Lenis, GSAP Text Reveal & Navigation
+       ========================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // 1. Mobile Menu Toggle Logic[cite: 7]
+      const header = document.getElementById('siteHeader');
+      const toggleBtn = document.getElementById('menuToggle');
+      const overlay = document.getElementById('mobileOverlay');
+
+      if (toggleBtn && header) {
+        toggleBtn.addEventListener('click', () => {
+          header.classList.toggle('menu-open');
+        });
+
+        if (overlay) {
+          overlay.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+              header.classList.remove('menu-open');
+            });
+          });
+        }
+      }
+
+      // 2. Initialize Lenis Smooth Scrolling[cite: 9]
+      let lenis;
+      if (typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 1.0,
+          touchMultiplier: 1.5,
+        });
+
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+      }
+
+      // 3. Setup GSAP & ScrollTrigger[cite: 9]
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+        return;
+      }
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      if (lenis) {
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+      }
+
+      // 4. Line Splitter Helper (Creates line masks while preserving text-indent)[cite: 9]
+      function splitElementIntoMaskedLines(el) {
+        const originalHTML = el.innerHTML;
+        const text = el.textContent.trim().replace(/\s+/g, ' ');
+        const words = text.split(' ');
+
+        el.innerHTML = words.map(w => `<span class="test-word">${w}</span>`).join(' ');
+        const testWords = Array.from(el.querySelectorAll('.test-word'));
+
+        const lines = [];
+        let currentLine = [];
+        let currentTop = null;
+
+        testWords.forEach(wordSpan => {
+          const top = wordSpan.offsetTop;
+          if (currentTop === null || Math.abs(top - currentTop) > 4) {
+            if (currentLine.length > 0) lines.push(currentLine);
+            currentLine = [wordSpan.textContent];
+            currentTop = top;
+          } else {
+            currentLine.push(wordSpan.textContent);
+          }
+        });
+        if (currentLine.length > 0) lines.push(currentLine);
+
+        el.innerHTML = '';
+        const lineInnerElements = [];
+
+        lines.forEach((lineWords, idx) => {
+          const maskSpan = document.createElement('span');
+          maskSpan.className = 'line-mask split-mask';
+          maskSpan.style.overflow = 'hidden';
+          maskSpan.style.display = 'block';
+
+          const innerSpan = document.createElement('span');
+          innerSpan.className = `line-inner line${idx + 1}`;
+          innerSpan.style.display = 'block';
+          innerSpan.textContent = lineWords.join(' ');
+
+          maskSpan.appendChild(innerSpan);
+          el.appendChild(maskSpan);
+          lineInnerElements.push(innerSpan);
+        });
+
+        return {
+          lines: lineInnerElements,
+          revert: () => { el.innerHTML = originalHTML; }
+        };
+      }
+
+      // 5. Initialize Text Reveal Animations[cite: 9]
+      function initTextRevealAnimations() {
+        const revealTargets = document.querySelectorAll('[data-text-reveal]');
+
+        revealTargets.forEach(el => {
+          const delay = parseFloat(el.getAttribute('data-delay') || '0');
+          const isHero = el.hasAttribute('data-hero');
+
+          const computed = window.getComputedStyle(el);
+          const textIndent = computed.textIndent;
+          const hasIndent = textIndent && textIndent !== '0px' && textIndent !== '0';
+
+          const splitResult = splitElementIntoMaskedLines(el);
+          const lines = splitResult.lines;
+
+          if (!lines || lines.length === 0) return;
+
+          if (hasIndent) {
+            lines[0].style.paddingLeft = textIndent;
+            el.style.textIndent = '0px';
+          }
+
+          gsap.set(lines, { y: '120%' });
+
+          const animProps = {
+            y: '0%',
+            duration: 1.1,
+            stagger: 0.08,
+            ease: 'power4.out',
+            delay: delay,
+          };
+
+          if (isHero) {
+            gsap.to(lines, animProps);
+          } else {
+            gsap.to(lines, {
+              ...animProps,
+              scrollTrigger: {
+                trigger: el,
+                start: 'top 85%',
+                once: true,
+              },
+            });
+          }
+        });
+
+        ScrollTrigger.refresh();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          document.fonts ? document.fonts.ready.then(initTextRevealAnimations) : initTextRevealAnimations();
+        });
+      } else {
+        document.fonts ? document.fonts.ready.then(initTextRevealAnimations) : initTextRevealAnimations();
+      }
+
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 250);
+      });
+    })();
+  </script>
+</body>
+</html>
