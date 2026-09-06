@@ -1,0 +1,266 @@
+/* ==========================================================================
+   Award-Winning Text Reveal Animation Stylesheet
+   - Masked Line-by-Line Y-Translation (As seen in Awwwards Site of the Day)
+   - Integrated with Lenis Smooth Scrolling and GSAP ScrollTrigger
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  
+  --bg-light: #f7f7f9;
+  --bg-white: #ffffff;
+  --bg-dark: #0c0d11;
+  
+  --text-dark: #121316;
+  --text-muted: #626572;
+  --text-white: #ffffff;
+  --text-white-muted: #9699a6;
+  
+  --cinnamon: #964B28;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure Lenis smooth scroll behaves gracefully */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Line Masking Elements
+   ========================================================================== */
+/* Each split line wrapper cuts off the text as it translates along Y-axis */
+.line-mask,
+.split-mask {
+  overflow: hidden !important;
+  display: block;
+  position: relative;
+  vertical-align: top;
+  padding-bottom: 0.04em; /* Micro-padding to preserve descenders (p, y, g) without adding gap */
+}
+
+.line-inner,
+.line,
+[class*="line-"] {
+  display: block;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   Page Layout & Sections (Spaced for Scroll-Triggering)
+   ========================================================================== */
+.page-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Base Section */
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 8vw;
+}
+
+/* Section 1: Hero (Full Viewport Height) */
+.section-hero {
+  background-color: var(--bg-white);
+  justify-content: flex-end;
+  padding-bottom: 140px;
+}
+
+.hero-tag {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cinnamon);
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  max-width: 1100px;
+}
+
+.scroll-indicator {
+  margin-top: 60px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.scroll-indicator .mouse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--cinnamon);
+  animation: pulseDot 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.6); opacity: 1; }
+}
+
+/* Section 2: Statement (Editorial Indented Text) */
+.section-statement {
+  background-color: var(--bg-light);
+}
+
+.statement-tag {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 36px;
+}
+
+.statement-text {
+  font-size: clamp(1.8rem, 3.8vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  max-width: 1040px;
+  text-indent: 18%; /* Handled by text-indent preservation logic */
+}
+
+/* Section 3: Story (Two-Column Layout) */
+.section-story {
+  background-color: var(--bg-white);
+  min-height: auto;
+  padding: 160px 8vw;
+}
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.story-heading {
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  position: sticky;
+  top: 120px;
+}
+
+.story-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.story-paragraphs p {
+  font-size: clamp(1.1rem, 1.4vw, 1.35rem);
+  font-weight: 400;
+  line-height: 1.68;
+  color: var(--text-muted);
+}
+
+/* Section 4: Philosophy (Dark Theme Section) */
+.section-philosophy {
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+}
+
+.philosophy-tag {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-white-muted);
+  margin-bottom: 32px;
+}
+
+.philosophy-title {
+  font-size: clamp(2rem, 4.2vw, 4rem);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  max-width: 1120px;
+  color: var(--text-white);
+}
+
+/* Section 5: End Anchor */
+.section-footer {
+  background-color: var(--bg-dark);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 50vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.3;
+  color: var(--text-white);
+  max-width: 700px;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 900px) {
+  .section {
+    padding: 90px 6vw;
+  }
+  
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .story-heading {
+    position: static;
+  }
+
+  .statement-text {
+    text-indent: 0;
+  }
+}

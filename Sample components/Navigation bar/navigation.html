@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navigation Bar</title>
+  <link rel="stylesheet" href="navigation.css" />
+</head>
+<body>
+
+  <!-- Navigation Bar Component -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="site-logo">
+        Villa Cinnamoon
+      </a>
+
+      <!-- Desktop View: Horizontal Navigation Buttons -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+        
+        <!-- Grouped Navigation Pill -->
+        <div class="desktop-links-cluster">
+          <a href="#home" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">Home</span>
+              <span class="text-secondary">Home</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24">
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <polyline points="13 5 20 12 13 19"></polyline>
+              </svg>
+            </span>
+          </a>
+
+          <a href="#about" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">About Us</span>
+              <span class="text-secondary">About Us</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24">
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <polyline points="13 5 20 12 13 19"></polyline>
+              </svg>
+            </span>
+          </a>
+
+          <a href="#projects" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">Projects</span>
+              <span class="text-secondary">Projects</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24">
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <polyline points="13 5 20 12 13 19"></polyline>
+              </svg>
+            </span>
+          </a>
+
+          <a href="#contact" class="nav-link">
+            <span class="text-roller">
+              <span class="text-primary">Contact</span>
+              <span class="text-secondary">Contact</span>
+            </span>
+            <span class="nav-arrow">
+              <svg viewBox="0 0 24 24">
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <polyline points="13 5 20 12 13 19"></polyline>
+              </svg>
+            </span>
+          </a>
+        </div>
+
+        <!-- Secondary Action: Let's Talk -->
+        <a href="#talk" class="btn-talk">
+          <span class="text-roller">
+            <span class="text-primary">Let's Talk</span>
+            <span class="text-secondary">Let's Talk</span>
+          </span>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <polyline points="13 5 20 12 13 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <!-- Book Now Button with Left-to-Right Fill Animation -->
+        <a href="#book" class="btn-book-now">
+          <span class="btn-fill"></span>
+          <span class="btn-content">
+            <span class="btn-dot"></span>
+            <span class="btn-text">Book Now</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24">
+                <line x1="4" y1="12" x2="20" y2="12"></line>
+                <polyline points="13 5 20 12 13 19"></polyline>
+              </svg>
+            </span>
+          </span>
+        </a>
+
+      </nav>
+
+      <!-- Mobile Toggle Button (Hamburger / Close) -->
+      <button class="mobile-toggle-btn" id="menuToggle" aria-label="Toggle Navigation Menu">
+        <div class="toggle-icon-wrap">
+          <span class="toggle-line"></span>
+          <span class="toggle-line"></span>
+        </div>
+      </button>
+
+    </div>
+
+    <!-- Mobile Menu Overlay (Exact Lusion Card Structure) -->
+    <div class="mobile-menu-overlay" id="mobileOverlay">
+      
+      <!-- Card 1: Main Navigation Links -->
+      <div class="menu-card menu-card-links">
+        
+        <a href="#home" class="card-link">
+          <span class="text-roller">
+            <span class="text-primary">Home</span>
+            <span class="text-secondary">Home</span>
+          </span>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <polyline points="13 5 20 12 13 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#about" class="card-link">
+          <span class="text-roller">
+            <span class="text-primary">About Us</span>
+            <span class="text-secondary">About Us</span>
+          </span>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <polyline points="13 5 20 12 13 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#projects" class="card-link">
+          <span class="text-roller">
+            <span class="text-primary">Projects</span>
+            <span class="text-secondary">Projects</span>
+          </span>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <polyline points="13 5 20 12 13 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+        <a href="#contact" class="card-link">
+          <span class="text-roller">
+            <span class="text-primary">Contact</span>
+            <span class="text-secondary">Contact</span>
+          </span>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <polyline points="13 5 20 12 13 19"></polyline>
+            </svg>
+          </span>
+        </a>
+
+      </div>
+
+      <!-- Card 2: Secondary Action ("LET'S TALK") -->
+      <div class="menu-card">
+        <a href="#talk" class="card-link menu-card-talk">
+          <span class="text-roller">
+            <span class="text-primary">Let's Talk</span>
+            <span class="text-secondary">Let's Talk</span>
+          </span>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <polyline points="13 5 20 12 13 19"></polyline>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- Card 3: Solid Dark Action ("BOOK NOW" with Left-to-Right Fill Animation) -->
+      <div class="menu-card">
+        <a href="#book" class="card-link menu-card-dark">
+          <span class="btn-fill"></span>
+          <div class="card-left-group">
+            <span class="btn-dot"></span>
+            <span class="btn-text">Book Now</span>
+          </div>
+          <span class="nav-arrow">
+            <svg viewBox="0 0 24 24">
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <polyline points="13 5 20 12 13 19"></polyline>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <script>
+    const header = document.getElementById('siteHeader');
+    const toggleBtn = document.getElementById('menuToggle');
+    const overlay = document.getElementById('mobileOverlay');
+
+    function toggleMenu() {
+      header.classList.toggle('menu-open');
+    }
+
+    toggleBtn.addEventListener('click', toggleMenu);
+
+    // Close menu when clicking on any link
+    overlay.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        header.classList.remove('menu-open');
+      });
+    });
+  </script>
+</body>
+</html>
