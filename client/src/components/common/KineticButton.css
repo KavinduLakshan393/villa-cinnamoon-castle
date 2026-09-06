@@ -1,0 +1,296 @@
+/* ==========================================================================
+   Kinetic Button Styles (Sample components/Button/button.css)
+   ========================================================================== */
+
+.project-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: var(--radius-pill);
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-hairline);
+  outline: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  text-decoration: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: box-shadow 0.4s var(--ease-kinetic),
+              transform 0.2s ease,
+              border-color 0.3s ease;
+  font-family: var(--font-sans);
+  color: var(--text-dark);
+}
+
+.project-btn:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--cinnamon-primary);
+}
+
+.project-btn:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.project-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Left-to-Right Expanding Background Fill */
+.project-btn .btn-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 100%;
+  background-color: var(--cinnamon-primary);
+  border-radius: var(--radius-pill);
+  z-index: 1;
+  pointer-events: none;
+  transition: width 0.45s var(--ease-kinetic);
+}
+
+.project-btn:hover .btn-fill {
+  width: 100%;
+}
+
+/* Button Content Layer */
+.project-btn .btn-content {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.4s var(--ease-kinetic);
+}
+
+/* 1. Left Dot (Present in default state, hides on hover) */
+.project-btn .btn-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--cinnamon-primary);
+  margin-right: 12px;
+  flex-shrink: 0;
+  transition: transform 0.4s var(--ease-kinetic),
+              opacity 0.3s ease,
+              margin-right 0.4s var(--ease-kinetic),
+              width 0.4s var(--ease-kinetic);
+}
+
+.project-btn:hover .btn-dot {
+  width: 0;
+  margin-right: 0;
+  opacity: 0;
+  transform: translateX(-12px) scale(0);
+}
+
+/* 2. Button Typography */
+.project-btn .btn-text {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  white-space: nowrap;
+  transition: color 0.35s ease,
+              transform 0.4s var(--ease-kinetic);
+}
+
+.project-btn:hover .btn-text {
+  color: #FFFFFF;
+}
+
+/* 3. Right Arrow (Hidden in default state, slides in on hover) */
+.project-btn .btn-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 18px;
+  margin-left: 0;
+  opacity: 0;
+  overflow: hidden;
+  color: #FFFFFF;
+  transform: translateX(-10px);
+  transition: width 0.4s var(--ease-kinetic),
+              margin-left 0.4s var(--ease-kinetic),
+              opacity 0.35s ease,
+              transform 0.4s var(--ease-kinetic);
+}
+
+.project-btn:hover .btn-arrow {
+  width: 18px;
+  margin-left: 10px;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.project-btn .btn-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ==========================================================================
+   Variants
+   ========================================================================== */
+
+/* Dark Variant */
+.project-btn.btn-dark {
+  background-color: var(--text-dark);
+  border-color: var(--text-dark);
+  color: #FFFFFF;
+}
+.project-btn.btn-dark .btn-text {
+  color: #FFFFFF;
+}
+.project-btn.btn-dark .btn-dot {
+  background-color: var(--cinnamon-tertiary);
+}
+.project-btn.btn-dark .btn-fill {
+  background-color: var(--cinnamon-primary);
+}
+.project-btn.btn-dark:hover .btn-text {
+  color: #FFFFFF;
+}
+
+/* Outline Variant */
+.project-btn.btn-outline {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.project-btn.btn-outline .btn-text {
+  color: #FFFFFF;
+}
+.project-btn.btn-outline .btn-dot {
+  background-color: #FFFFFF;
+}
+.project-btn.btn-outline .btn-fill {
+  background-color: #FFFFFF;
+}
+.project-btn.btn-outline:hover .btn-text {
+  color: var(--text-dark);
+}
+.project-btn.btn-outline:hover .btn-arrow {
+  color: var(--text-dark);
+}
+
+/* Cinnamon Variant — Primary CTA style */
+.project-btn.btn-cinnamon {
+  background-color: var(--cinnamon-primary);
+  border-color: var(--cinnamon-primary);
+  color: #FFFFFF;
+}
+.project-btn.btn-cinnamon .btn-text {
+  color: #FFFFFF;
+}
+.project-btn.btn-cinnamon .btn-dot {
+  background-color: #FFFFFF;
+}
+.project-btn.btn-cinnamon .btn-fill {
+  background-color: var(--cinnamon-dark);
+}
+.project-btn.btn-cinnamon:hover {
+  border-color: var(--cinnamon-dark);
+}
+.project-btn.btn-cinnamon:hover .btn-text {
+  color: #FFFFFF;
+}
+.project-btn.btn-cinnamon:hover .btn-arrow {
+  color: #FFFFFF;
+}
+
+/* Primary Variant — alias for cinnamon */
+.project-btn.btn-primary {
+  background-color: var(--cinnamon-primary);
+  border-color: var(--cinnamon-primary);
+  color: #FFFFFF;
+}
+.project-btn.btn-primary .btn-text {
+  color: #FFFFFF;
+}
+.project-btn.btn-primary .btn-dot {
+  background-color: #FFFFFF;
+}
+.project-btn.btn-primary .btn-fill {
+  background-color: var(--cinnamon-dark);
+}
+.project-btn.btn-primary:hover {
+  border-color: var(--cinnamon-dark);
+}
+.project-btn.btn-primary:hover .btn-text {
+  color: #FFFFFF;
+}
+
+/* Sizes */
+.project-btn.btn-sm {
+  padding: 10px 22px;
+}
+.project-btn.btn-sm .btn-text {
+  font-size: 0.8rem;
+}
+.project-btn.btn-lg {
+  padding: 18px 40px;
+}
+.project-btn.btn-lg .btn-text {
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   Legacy kinetic-btn class aliases (used in some JSX templates)
+   ========================================================================== */
+
+.kinetic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.35s var(--ease-smooth),
+              color 0.3s ease,
+              transform 0.2s ease,
+              box-shadow 0.35s ease;
+  white-space: nowrap;
+  outline: none;
+  user-select: none;
+}
+
+.kinetic-btn:hover {
+  transform: translateY(-2px);
+}
+
+.kinetic-btn--primary {
+  background-color: var(--cinnamon-primary);
+  border: 1px solid var(--cinnamon-primary);
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px rgba(150, 75, 40, 0.3);
+}
+.kinetic-btn--primary:hover {
+  background-color: var(--cinnamon-dark);
+  border-color: var(--cinnamon-dark);
+  box-shadow: 0 12px 28px rgba(150, 75, 40, 0.4);
+}
+
+.kinetic-btn--outline {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #FFFFFF;
+}
+.kinetic-btn--outline:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+}
