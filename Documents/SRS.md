@@ -1,38 +1,52 @@
 # Software Requirements Specification (SRS)
 ## Villa Cinnamoon Castle Web Application
 
-**Document Version:** 1.1.0 — Final  
-**Status:** Finalized (All Feasibility Issues Resolved)  
+**Document Version:** 1.2.0 — Phase 1 Revised  
+**Status:** Active — Phase 1 Scoped (Post Host Requirements Clarification)  
 **Target Platform:** Web (Desktop, Tablet, Mobile)  
 **Reference Documents:**
-* [`Requirements file.md`](file:///D:/Villa%20Cinnamoon%20Castle/Requirements%20file.md)
-* [`DESIGN.md`](file:///D:/Villa%20Cinnamoon%20Castle/DESIGN.md)
-* [`property_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/property_details.md)
-* [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/package_details.md)
-* [`images_catalog.md`](file:///D:/Villa%20Cinnamoon%20Castle/images_catalog.md)
+* [`Requirements file.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/Requirements%20file.md)
+* [`property_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/property_details.md)
+* [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/package_details.md)
+
+> [!NOTE]
+> **📋 Phase 1 Scope — Host Requirements Clarification (2026-09-20)**
+> Following a direct requirements session with the villa hoster (Dampalla Gamage Devindu), the system scope has been revised:
+> - **Booking Engine:** Simplified to a **WhatsApp Inquiry Form** only. No backend database, status machine, or date-blocking system in Phase 1. All business workflow (advance payment, confirmation, calendar management) is handled directly by the hoster via WhatsApp.
+> - **On-Site Review System:** Deferred to a future phase. Only **Google Reviews showcase** (§ 3.3.4) is active in Phase 1.
+> - **Package Pricing:** Current prices and packages used as-is for Phase 1 development.
+> - **Complex Booking Engine** (§ 3.2 original), **Admin Booking Management** (§ 3.4.2), **Calendar Engine** (§ 3.4.5), **On-Site Review Gate** (§ 3.3.1–3.3.3) are all **deferred to Phase 2**.
 
 ---
 
 ## 1. Introduction
 
 ### 1.1 Purpose
-This Software Requirements Specification (SRS) establishes the complete functional and non-functional requirements for the official web platform of **Villa Cinnamoon Castle**, an authentic luxury 5-bedroom holiday villa located in Arachchikanda, Hikkaduwa, Sri Lanka. This document defines the system architecture, customer scrollytelling journey, interactive 3-step booking engine, check-in gated review mechanism, administrative control portal, and WhatsApp communication workflows.
+This Software Requirements Specification (SRS) establishes the complete functional and non-functional requirements for the official web platform of **Villa Cinnamoon Castle**, an authentic luxury 5-bedroom holiday villa located in Arachchikanda, Hikkaduwa, Sri Lanka. This document defines the Phase 1 system architecture: customer scrollytelling journey, WhatsApp-based booking inquiry form, dedicated Google Reviews showcase, and the administrative portal for review and package management.
 
 ### 1.2 Scope
+
+#### Phase 1 (Current Implementation Scope)
 The web application encompasses two primary subsystems:
 1. **Customer Experience Portal (Public, Zero-Auth):**
-   - High-fidelity visual property presentation adhering to luxury real-estate standards.
+   - High-fidelity visual property presentation adhering to luxury villa standards.
    - Narrative **"Scrollytelling Property Elaboration"** covering all rooms, grounds, and amenities.
-   - 3-step mini-form booking wizard with automated red-calendar date blocking.
-   - Verified guest review system unlocked strictly on/after the customer's check-in date.
-   - Transparent showcase of customer reviews, package pricing, location, and curated experiences.
+   - **3-step WhatsApp Inquiry Form:** date range selection (check-in + check-out calendars), guest count & package selection, contact details — culminating in a pre-formatted WhatsApp message directly to the hoster.
+   - Dedicated **Google Reviews showcase** displaying authentic Google ratings, guest testimonials, and direct review action.
+   - Transparent showcase of package pricing, location, and curated experiences.
 2. **Admin Operations Portal (Private, Authenticated):**
    - Secure authentication for property management.
-   - Inbound booking inquiry management (approve/decline with personalized decline reason).
-   - Automated WhatsApp message generation and dispatch to customers.
    - Review moderation engine (pin, hide, publish without editing text).
    - Full package management (Create, Read, Update, Delete).
-   - Automated calendar date blocking upon booking approval (no manual date blocking by admin).
+
+#### Phase 2 (Deferred — Pending Further Requirements)
+> [!CAUTION]
+> The following features are **explicitly out of scope for Phase 1** and must not be implemented until Phase 2 requirements are confirmed with the hoster:
+> - Complex booking engine with status lifecycle (`PENDING` / `APPROVED` / `DECLINED` / `CANCELLED`)
+> - Admin booking inquiry pipeline (approve/decline/quotation/WhatsApp dispatch)
+> - Automated calendar date-blocking system
+> - On-site verified guest review submission system (check-in date gated)
+> - Database-driven booking records and availability API
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
 * **SRS:** Software Requirements Specification
@@ -55,49 +69,47 @@ The system is an independent, responsive web application operating in modern des
 graph TB
     subgraph Public Internet
         Customer[Customer / Guest]
-        AdminUser[Villa Owner / Admin]
+        AdminUser[Villa Owner — Dampalla Gamage Devindu]
     end
 
-    subgraph Villa Cinnamoon Castle Platform
+    subgraph "Villa Cinnamoon Castle Platform — Phase 1"
         WebFront[Customer Frontend & Scrollytelling Tour]
-        BookingWiz[3-Step Booking Wizard]
-        ReviewEngine[Check-in Gated Review Engine]
-        AdminDashboard[Admin Management Portal]
-        APIServer[Backend API & Business Logic]
-        Database[(Relational Database: Bookings, Reviews, Packages, Calendar)]
+        InquiryForm[3-Step WhatsApp Inquiry Form]
+        GoogleReviews[Google Reviews Showcase]
+        AdminDashboard[Admin Portal — Reviews & Packages]
+        APIServer[Backend API]
+        Database[(Database: Reviews, Packages)]
     end
 
     subgraph External Services
-        WhatsAppApp[WhatsApp Web / Mobile App]
-        MapService[Map Embed / Coordinates]
+        WhatsAppApp[WhatsApp — Hoster's Phone]
+        GoogleBiz[Google Business Profile]
+        MapService[Google Maps Embed]
     end
 
     Customer -->|Browses Property| WebFront
-    Customer -->|Submits Inquiries| BookingWiz
-    Customer -->|Writes Review after Check-in| ReviewEngine
+    Customer -->|Fills Inquiry Form| InquiryForm
+    InquiryForm -->|Opens WhatsApp with pre-filled message| WhatsAppApp
+    WhatsAppApp -->|Receives inquiry & manages booking| AdminUser
+    Customer -->|Views Google Reviews| GoogleReviews
+    GoogleReviews --> GoogleBiz
     AdminUser -->|Authenticates| AdminDashboard
-    
-    WebFront --> APIServer
-    BookingWiz --> APIServer
-    ReviewEngine --> APIServer
     AdminDashboard --> APIServer
-    
     APIServer --> Database
-    AdminDashboard -->|1-Click Direct Notification| WhatsAppApp
-    Customer -->|Direct Chat Inquiries| WhatsAppApp
     WebFront --> MapService
 ```
 
 ### 2.2 User Classes and Characteristics
 1. **Public Visitor / Prospective Guest:**
    - No login or registration required.
-   - Browses property details, explores rooms via interactive scroll, checks calendar availability, and submits booking inquiries.
-2. **Verified Guest:**
-   - Customer with an approved reservation whose check-in date has arrived.
-   - Authorized via Booking ID and WhatsApp Number to submit authentic ratings and reviews.
-3. **Villa Administrator (Property Owner/Manager):**
+   - Browses property details, explores rooms via interactive scroll, and submits WhatsApp booking inquiries.
+2. **Villa Administrator (Property Owner/Manager):**
    - Authenticated via secure administrative credentials.
-   - Oversees inquiry pipeline, reviews, packages, and calendar blackout dates.
+   - Manages public reviews (pin/hide) and package catalog (CRUD).
+   - Receives all booking inquiries directly on WhatsApp and manages the full booking workflow independently.
+
+> [!NOTE]
+> **Phase 2 Only:** A "Verified Guest" user class (for on-site review submission) will be introduced in Phase 2 once the on-site review system is implemented.
 
 ### 2.3 Operating Environment
 * **Client Side:** Modern browsers (Chrome, Safari, Firefox, Edge) across iOS, Android, macOS, and Windows devices.
@@ -105,11 +117,13 @@ graph TB
 * **Database:** SQLite (local persistent) / PostgreSQL (production scalable).
 
 ### 2.4 Design & Implementation Constraints
-1. **Zero-Friction Customer Access:** No customer accounts or passwords allowed; bookings are tracked via unique Booking IDs.
-2. **Visual Fidelity:** Must match the warm cinnamon and Airbnb design tokens specified in [`DESIGN.md`](file:///D:/Villa%20Cinnamoon%20Castle/DESIGN.md).
-3. **Strict Phone Validation:** Customer WhatsApp numbers must be validated via Regex before form submission.
-4. **Availability Rule:** Dates become unavailable solely when customers book them and those bookings are approved. When booked/approved, they must be highlighted in **red** and rendered **unclickable** in the calendar. Admin does not manually block dates.
-5. **Review Protection Rule:** Reviews cannot be edited by the administrator; only pinned or hidden.
+1. **Zero-Friction Customer Access:** No customer accounts or passwords required.
+2. **Visual Fidelity:** Must match the warm cinnamon villa design aesthetic. Reference: luxury villa websites (not apartment or large hotel websites) for design inspiration.
+3. **Strict Phone Validation:** Customer WhatsApp numbers must be validated via Regex before the inquiry form can be submitted.
+4. **WhatsApp-First Inquiry:** All booking inquiries are routed directly to the hoster's WhatsApp. No server-side booking storage in Phase 1.
+5. **A/C Room Transparency:** The villa has exactly 2 air-conditioned bedrooms and 3 bedrooms with stand fans. This must be clearly communicated in both the property tour and the booking form. A/C preference is captured in the inquiry and communicated to the hoster via the WhatsApp message.
+6. **Review Protection Rule:** Reviews cannot be edited by the administrator; only pinned or hidden.
+7. **Check-in / Check-out & Turnaround Window:** Standard check-in is at **1:00 PM** and standard check-out is at **10:00 AM**. A dedicated 3-hour turnaround window (10:00 AM – 1:00 PM) is reserved for deep cleaning, sanitation, linen changes, and villa re-arrangements before incoming guests arrive. If requested by the guest due to personal circumstances, the hoster may flexibly grant an additional 1 hour (until 11:00 AM) or up to 1.5 hours (until 11:30 AM) for check-out, completing the re-arrangements in the remaining buffer before 1:00 PM.
 
 ---
 
@@ -121,274 +135,173 @@ graph TB
 #### 3.1.1 Architectural Standards & Flow
 The landing experience must lead with an immersive, scroll-driven visual walkthrough that guides the customer through the estate logically from arrival to intimate spaces:
 1. **Hero Arrival & Overview:**
-   - High-impact exterior panorama ([`images/photo_1.jpg`](file:///D:/Villa%20Cinnamoon%20Castle/images/photo_1.jpg) / [`images/outdoor_and_garden/exterior/exterior_06.jpg`](file:///D:/Villa%20Cinnamoon%20Castle/images/outdoor_and_garden/exterior/exterior_06.jpg)).
+   - High-impact exterior visual presentation showcasing the villa architecture, entrance, and lush surroundings.
    - Headline: *"Villa Cinnamoon Castle — Find your own peacefulness"*.
    - Key attributes: 10–15 guests, 5 bedrooms, 5 beds, 2 baths, 3.5 km to Hikkaduwa Beach.
 2. **The Living Quarters (Step 1 of Tour):**
-   - Ground-Floor Living Room: Hand-carved traditional armchairs, caned seating, TV entertainment ([`images/living_rooms/living_room_1`](file:///D:/Villa%20Cinnamoon%20Castle/images/living_rooms/living_room_1)).
-   - Upstairs Mezzanine Lounge: Vaulted timber roof, open-concept breeze corridor, relaxed sofa lounging ([`images/living_rooms/living_room_2`](file:///D:/Villa%20Cinnamoon%20Castle/images/living_rooms/living_room_2)).
+   - Ground-Floor Living Room: Hand-carved traditional armchairs, caned seating, TV entertainment, and garden views.
+   - Upstairs Mezzanine Lounge: Vaulted timber roof, open-concept breeze corridor, relaxed sofa lounging, and reading nook.
 3. **Bedrooms Sanctuary (Step 2 of Tour):**
    - Total 5 bedrooms, presented with clear bed badges and climate specs:
-     - **Bedroom 1 (Master):** Super King Bed, Air Conditioning, desk workspace ([`images/bedrooms/bedroom_1`](file:///D:/Villa%20Cinnamoon%20Castle/images/bedrooms/bedroom_1)).
-     - **Bedroom 2:** Super King Bed, Air Conditioning, large windows ([`images/bedrooms/bedroom_2`](file:///D:/Villa%20Cinnamoon%20Castle/images/bedrooms/bedroom_2)).
-     - **Bedroom 3:** King Bed, ceiling fan, garden orientation ([`images/bedrooms/bedroom_3`](file:///D:/Villa%20Cinnamoon%20Castle/images/bedrooms/bedroom_3)).
-     - **Bedroom 4:** Attic/Timber Roof aesthetic, Super King Bed, ceiling fan ([`images/bedrooms/bedroom_4`](file:///D:/Villa%20Cinnamoon%20Castle/images/bedrooms/bedroom_4)).
-     - **Bedroom 5:** Queen Bed, ceiling fan, peaceful natural light.
+     - **Bedroom 1 (Master):** Super King Bed, Air Conditioning, dedicated desk workspace.
+     - **Bedroom 2:** Super King Bed, Air Conditioning, large scenic windows.
+     - **Bedroom 3:** King Bed, stand fan, direct garden orientation.
+     - **Bedroom 4:** Attic/Timber Roof aesthetic, Super King Bed, stand fan.
+     - **Bedroom 5:** Queen Bed, stand fan, peaceful natural light.
 4. **Kitchen & Dining Experience (Step 3 of Tour):**
-   - Full granite kitchen counter, double-burner gas stove, electric rice cooker, cookware ([`images/kitchen_and_dining/full_kitchen`](file:///D:/Villa%20Cinnamoon%20Castle/images/kitchen_and_dining/full_kitchen)).
-   - Dining hall table with seating for the entire family/group ([`images/kitchen_and_dining/dining_area`](file:///D:/Villa%20Cinnamoon%20Castle/images/kitchen_and_dining/dining_area)).
+   - Full granite kitchen counter, double-burner gas stove, electric rice cooker, cookware, and full self-catering amenities.
+   - Dining hall table with seating for the entire family/group.
 5. **Bathrooms & Modern Sanitation (Step 4 of Tour):**
-   - 2 full modern bathrooms with instant hot water showers, vanity sinks, hand bidets ([`images/bathrooms`](file:///D:/Villa%20Cinnamoon%20Castle/images/bathrooms)).
+   - 2 full modern bathrooms with instant hot water showers, vanity sinks, and hand bidets.
 6. **Courtyard, Tropical Garden & Veranda (Step 5 of Tour):**
-   - Gated gravel courtyard, rustic timber perimeter fencing, private BBQ pavilion, front veranda ([`images/outdoor_and_garden`](file:///D:/Villa%20Cinnamoon%20Castle/images/outdoor_and_garden)).
+   - Gated gravel courtyard, rustic timber perimeter fencing, private BBQ pavilion, and front veranda.
 7. **Curated Nearby Experiences:**
-   - Hikkaduwa Beach (5 min), coral reef turtle watching, river boat safaris, kayaking, surfing, Galle Fort ([`images/nearby_attractions_and_activities`](file:///D:/Villa%20Cinnamoon%20Castle/images/nearby_attractions_and_activities)).
+   - Hikkaduwa Beach (5 min), coral reef turtle watching, river boat safaris, kayaking, surfing, and Galle Fort heritage tours.
 
 #### 3.1.2 Scrollytelling Interaction Requirements
-* **FR-TOUR-01:** As the user scrolls vertically, images shall transition smoothly using opacity/scale easing with pinned descriptive story cards.
+* **FR-TOUR-01:** As the user scrolls vertically, visual scenes shall transition smoothly using opacity/scale easing with pinned descriptive story cards.
 * **FR-TOUR-02:** Quick navigation anchors (*Overview*, *Living*, *Bedrooms*, *Kitchen*, *Outdoors*, *Amenities*, *Location*) shall remain accessible in a sticky floating sub-header.
-* **FR-TOUR-03:** A "Full Gallery Modal" with category filtering must allow direct image browsing for users preferring non-scroll exploration.
+* **FR-TOUR-03:** A "Full Visual Gallery Modal" with category filtering must allow direct space-by-space visual browsing for users preferring non-scroll exploration.
 
-### 3.2 Module 2: Adaptive Booking Engine (Date-Type Driven)
-*Requirement Traceability: Requirements file.md § Customer (2, 21-37)*
+### 3.2 Module 2: WhatsApp Booking Inquiry Form (Phase 1)
+*Requirement Traceability: Requirements file.md § Customer (2)*
 
-The booking experience is organized as a sequential wizard of up to **4 steps** (Step 3B appears conditionally for Mixed stays). Progression to subsequent steps is disabled until the current step is validated.
+> [!NOTE]
+> **Phase 1 Simplification:** This section replaces the previously planned complex booking engine. The inquiry form collects all necessary booking details and routes them as a pre-formatted WhatsApp message directly to the hoster. All booking confirmation, advance payment, and date management is handled by the hoster independently.
+
+The inquiry form is a sequential **3-step wizard**. Progression to each next step is disabled until the current step is validated.
 
 ```mermaid
 stateDiagram-v2
     [*] --> Step1_Dates
-    Step1_Dates --> Step2_Guests: Valid Date Range + Date Type Detected
-    Step2_Guests --> Step3_Package: Guest Count Selected (1-15) + Auto-Suggest Ready
-
-    state Step3_Package {
-        [*] --> ModeA_Weekend: Date Type = WEEKEND
-        [*] --> ModeB_Weekday: Date Type = WEEKDAY
-        [*] --> ModeC_Mixed_Weekend: Date Type = MIXED
-        ModeC_Mixed_Weekend --> ModeC_Mixed_Weekday: Weekend pkg selected
-        ModeA_Weekend --> ContactFields
-        ModeB_Weekday --> ContactFields
-        ModeC_Mixed_Weekday --> ContactFields
-    }
-
-    ContactFields --> PendingReview: Name + WhatsApp Validated & Submitted
-    PendingReview --> Approved: Admin Approves
-    PendingReview --> Declined: Admin Declines with Reason
-    Approved --> [*]: WhatsApp Dispatch
-    Declined --> [*]: WhatsApp Dispatch
+    Step1_Dates --> Step2_Package : Valid date range selected (min 1 night)
+    Step2_Package --> Step3_Contact : Guest count + package selected
+    Step3_Contact --> WhatsAppRedirect : Name + WhatsApp validated & submitted
+    WhatsAppRedirect --> [*] : Hoster receives inquiry on WhatsApp
 ```
 
-#### 3.2.1 Mini-Form 1: Preferred Dates Selection
-* **FR-BOOK-01:** The system shall display an interactive monthly calendar allowing check-in/check-out date range selection.
-* **FR-BOOK-02 (Red-Block Rule):** The calendar must query the backend for all unavailable dates (dates associated with an `APPROVED` customer booking). Admin does not manually block dates.
-* **FR-BOOK-03 (Unclickable State):** All unavailable dates must be visually highlighted in **red** (`#FF4D4F` / `--color-danger`) and set to unclickable (`disabled`, `pointer-events: none`, `cursor: not-allowed`).
-* **FR-BOOK-04:** Past dates (prior to today) must be disabled and muted in gray.
-* **FR-BOOK-05:** Selection of a range that spans across any red-blocked date must be rejected with an inline warning: *"Selected range contains unavailable dates. Please select continuous open dates."*
-* **FR-BOOK-06 (Date Type Detection):** Upon valid date selection, the system automatically classifies each night of the selected range by day-of-week, applying the following business rule:
+#### 3.2.1 Step 1: Date Range Selection
+* **FR-INQ-01 (Dual Calendar Pickers):** The system shall display two distinct date pickers (Check-In and Check-Out), allowing independent selection. The check-out date must be at least 1 day after the check-in date (minimum 1-night stay). **1-day bookings (1 night) are explicitly supported** (e.g., check-in Friday → check-out Saturday is valid).
+* **FR-INQ-02 (Past Date Blocking):** All dates prior to today must be disabled and visually muted in gray on both calendars. No backend date-blocking in Phase 1.
+* **FR-INQ-03 (Date Type Detection):** Upon valid date range selection, the system automatically classifies the stay by day-of-week:
 
-  | Night Falls On (Check-in Day) | Classification |
+  | Night Falls On | Classification |
   | :--- | :---: |
-  | **Friday, Saturday, Sunday** | 🟡 **Weekend Night** |
-  | **Monday, Tuesday, Wednesday, Thursday** | 🔵 **Weekday Night** |
+  | **Friday, Saturday, Sunday** | 🟡 Weekend Night |
+  | **Monday, Tuesday, Wednesday, Thursday** | 🔵 Weekday Night |
 
-  A **Date Type Badge** is displayed beneath the calendar immediately after selection:
-  - 🟡 **Weekend Stay** — all selected nights are Weekend nights.
-  - 🔵 **Weekday Stay** — all selected nights are Weekday nights (Mon–Thu).
-  - 🟠 **Mixed Stay** — selected range contains both Weekend and Weekday nights. Badge shows breakdown: *e.g., "2 Weekend nights + 3 Weekday nights"*.
+  A **Date Type Badge** is displayed beneath the calendars:
+  - 🟡 **Weekend Stay** — all selected nights fall on Fri/Sat/Sun.
+  - 🔵 **Weekday Stay** — all selected nights fall on Mon–Thu.
+  - 🟠 **Mixed Stay** — range contains both Weekend and Weekday nights (e.g., "2 Weekend nights + 3 Weekday nights").
 
-  > **Business Rule:** The maximum consecutive Weekday Stay is **4 nights (Mon–Thu)**. A booking of 5+ weekday-only nights would carry into the next Friday (Weekend), making it a Mixed Stay automatically.
+* **FR-INQ-04:** Total nights count and date type badge are displayed immediately after selection. **"Continue to Package →"** button activates upon valid selection.
 
-* **FR-BOOK-07:** Upon valid date selection and Date Type detection, the total nights count and type breakdown are displayed, and the **"Continue to Guests →"** button activates.
+#### 3.2.2 Step 2: Guest Count & Package Selection
+* **FR-INQ-05 (Guest Stepper):** Stepper component allowing selection from **1 to 15 guests** (default: 2).
+* **FR-INQ-06 (Auto-Suggestion Engine):** Based on guest count and date type, the system highlights the most suitable package with a ⭐ *"Recommended for your group"* badge:
+  - 1–2 guests / Weekday → Couples Package (Rs. 6,500/night)
+  - 3–4 guests / Weekday → Family Package (Rs. 8,500/night)
+  - 1–4 guests / Weekday → 2-Room Group (Non-A/C Rs. 8,500 / A/C Rs. 10,500)
+  - 5–6 guests / Weekday → 3-Room Group (Non-A/C Rs. 12,500 / A/C Rs. 14,500)
+  - 7–8 guests / Weekday → 4-Room Group (Non-A/C Rs. 15,500 / A/C Rs. 17,500)
+  - 9–10 guests / Weekday → 5-Room Group (Non-A/C Rs. 17,900 / A/C Rs. 19,900)
+  - 11–15 guests / Weekday → Full Villa (Non-A/C Rs. 17,900 / A/C Rs. 19,900)
+  - Any guest count / Weekend → Weekend Standard Non-A/C (Rs. 21,000) or Weekend Premium A/C (Rs. 23,000)
+  - *Auto-suggestion is assistive only — customer retains full freedom to select any package.*
+* **FR-INQ-07 (Package Display — Date-Type Driven):**
+  - **Weekend stays:** Display only Weekend packages.
+  - **Weekday stays:** Display only Weekday packages.
+  - **Mixed stays:** Display Weekend packages first (primary) + a sub-selector for the Weekday portion (secondary) with the transparent split calculation:
+    $$\text{Total Price} = (\text{Weekend Nights} \times \text{Weekend Rate}) + (\text{Weekday Nights} \times \text{Weekday Rate})$$
+* **FR-INQ-08 (A/C Room Information Note):** All packages offering an A/C option must display the following note:
+  > *"The villa features 2 air-conditioned bedrooms. For A/C package bookings, your group may arrange these rooms as preferred. Stand fans are provided in all remaining bedrooms."*
+* **FR-INQ-09 (Live Price Summary Card):** An interactive summary card displays: check-in & check-out dates, total nights (with split if Mixed), selected package(s) and rate(s), total estimated amount, and per-person estimate.
 
-#### 3.2.2 Mini-Form 2: Guest Count Selection & Package Recommendation
-* **FR-BOOK-08 (Guest Stepper):** The system shall provide an intuitive stepper component allowing guests to select group size from **1 to 15 guests** (standard occupancy: 10, expandable up to 15 pax). Default value is set to 2 guests.
-* **FR-BOOK-09 (Dynamic Auto-Suggestion Engine):** Based on the guest count selected in Step 2 and the date classification detected in Step 1, the system computes the recommended package and applies a distinctive visual highlight (*"⭐ Recommended for your group"*) when the user advances to Step 3:
-  - **1–2 Guests:**
-    - Weekday: Auto-suggests **Couples Package** (Rs. 6,500/night) or **2-Room Group** (Rs. 8,500 Non-A/C / Rs. 10,500 A/C).
-    - Weekend: Auto-suggests **Weekend Standard Non-A/C** (Rs. 21,000/night) or **Weekend Premium A/C** (Rs. 23,000/night).
-  - **3–4 Guests:**
-    - Weekday: Auto-suggests **Family Package** (Rs. 8,500/night) or **2-Room Group** (Rs. 8,500 Non-A/C / Rs. 10,500 A/C).
-    - Weekend: Weekend packages.
-  - **5–6 Guests:**
-    - Weekday: Auto-suggests **3-Room Group** (Rs. 12,500 Non-A/C / Rs. 14,500 A/C).
-    - Weekend: Weekend packages.
-  - **7–8 Guests:**
-    - Weekday: Auto-suggests **4-Room Group** (Rs. 15,500 Non-A/C / Rs. 17,500 A/C).
-    - Weekend: Weekend packages.
-  - **9–10 Guests:**
-    - Weekday: Auto-suggests **5-Room Group** (Rs. 17,900 Non-A/C / Rs. 19,900 A/C).
-    - Weekend: Weekend packages.
-  - **11–15 Guests:**
-    - Weekday: Auto-suggests **Full Villa Buyout** (Rs. 17,900 Non-A/C / Rs. 19,900 A/C).
-    - Weekend: Weekend packages.
-  - *Note:* The auto-suggestion is purely assistive. Customers retain full freedom to upgrade or select any eligible package.
-* **FR-BOOK-09-B:** Upon confirming the guest count, the **"Continue to Package & Details →"** button activates.
+#### 3.2.3 Step 3: Contact Details & Submission
+* **FR-INQ-10 (Contact Fields):**
+  - **Full Name:** Mandatory, minimum 3 characters.
+  - **WhatsApp Number:** Mandatory, validated against Sri Lankan format `^(?:0|94|\+94)?(7[01245678]\d{7})$` or international E.164 `^\+?[1-9]\d{6,14}$`. Inline error on invalid input.
+* **FR-INQ-11 (Optional Special Requests):** Multiline text area for special requests (e.g., BBQ setup, dietary needs, arrival time).
+* **FR-INQ-12 (Consent Checkbox):** *"I understand this is a booking inquiry. The hoster will confirm dates and advance payment details via WhatsApp."*
+* **FR-INQ-13 (Submit Action):** Primary CTA: **"Send Inquiry on WhatsApp 🌿"** — enters loading state, prevents double-tap.
 
-#### 3.2.3 Mini-Form 3: Adaptive Package Selection & Contact Information
-The package selection interface adapts dynamically based on the Date Type detected in Step 1:
+#### 3.2.4 WhatsApp Redirect & Message Format
+* **FR-INQ-14:** Upon submission, the system opens WhatsApp via deep-link (`https://wa.me/94761007686?text=...`) with the following pre-formatted message:
 
-##### Mode A: Weekend Stays (All nights fall on Friday, Saturday, or Sunday)
-* **FR-BOOK-10 (Weekend Package Isolation):** When all selected nights are Weekend nights, the wizard **strictly displays ONLY Weekend packages**. All Weekday packages (room-based, couples, family) are completely hidden from selection.
-* **FR-BOOK-11 (Available Weekend Options):**
-  1. **Weekend Standard — Non-A/C:** Rs. 21,000 / night (Full 5-Bedroom Villa buyout with ceiling fans throughout).
-  2. **Weekend Premium — A/C:** Rs. 23,000 / night (Full 5-Bedroom Villa buyout with air-conditioned bedrooms).
-* **FR-BOOK-12-A (Weekend Rate Calculation):**
-  $$\text{Total Estimate} = \text{Total Weekend Nights} \times \text{Selected Weekend Rate}$$
-  Example: 2 Weekend nights @ Rs. 23,000 = **Rs. 46,000/=**
+```
+🏰 *Villa Cinnamoon Castle — Booking Inquiry*
 
-##### Mode B: Weekday Stays (All nights fall on Monday, Tuesday, Wednesday, or Thursday)
-* **FR-BOOK-10-B (Weekday Package Isolation):** When all selected nights are Weekday nights (up to 4 consecutive nights Mon–Thu), the wizard **strictly displays ONLY active Weekday packages**. Weekend buyout packages are completely hidden.
-* **FR-BOOK-11-B (Available Weekday Options):** The system fetches all active weekday packages from the `packages` table (managed via Admin CRUD):
-  - **Full Villa Buyout (11–15 pax):** Non-A/C: Rs. 17,900/night | A/C: Rs. 19,900/night
-  - **5-Room Group (9–10 pax):** Non-A/C: Rs. 17,900/night | A/C: Rs. 19,900/night
-  - **4-Room Group (7–8 pax):** Non-A/C: Rs. 15,500/night | A/C: Rs. 17,500/night
-  - **3-Room Group (5–6 pax):** Non-A/C: Rs. 12,500/night | A/C: Rs. 14,500/night
-  - **2-Room Group (1–4 pax):** Non-A/C: Rs. 8,500/night | A/C: Rs. 10,500/night
-  - **Couples Package (1–2 pax):** Rs. 6,500/night (flat)
-  - **Family Package (3–4 pax):** Rs. 8,500/night (flat)
-* The package identified by the Step 2 Auto-Suggestion Engine is pre-selected and highlighted with a recommendation badge.
-* **FR-BOOK-12-B (Weekday Rate Calculation):**
-  $$\text{Total Estimate} = \text{Total Weekday Nights} \times \text{Selected Weekday Rate}$$
-  Example: 3 Weekday nights @ Rs. 14,500 (3-Room A/C) = **Rs. 43,500/=**
+📅 Check-in:  {check_in_date}  (From 1:00 PM)
+📅 Check-out: {check_out_date} (Until 10:00 AM)
+🌙 Total Nights: {total_nights} ({date_type_label})
 
-##### Mode C: Mixed Stays (Combined Weekend + Weekday Nights)
-* **FR-BOOK-10-C (Mixed Stay Adaptive Architecture):** When a selected range encompasses both Weekend nights (Fri, Sat, Sun) and Weekday nights (Mon–Thu), the system activates a dual-selector interface with an explicit sub-form for the weekday portion:
-  1. **Primary Package Selection (Weekend Portion):**
-     - Customer selects the Weekend package for all weekend nights within the range:
-       - **Weekend Standard — Non-A/C** (Rs. 21,000 / night)
-       - **Weekend Premium — A/C** (Rs. 23,000 / night)
-  2. **Secondary Mini-Form / Sub-Selection (Step 3B - Weekday Portion):**
-     - An integrated mini-form appears directly below the weekend selector titled: *"Select Package for your Weekday Nights ([N] nights: Mon–Thu)"*.
-     - Customer selects the Weekday package matching their preference:
-       - A/C vs Non-A/C preference matching the full villa (e.g. Non-A/C Rs. 17,900 vs A/C Rs. 19,900), or a group room option if applicable.
-       - Default pre-selection matches the A/C preference chosen in the Weekend selector for seamless continuity (e.g., if Weekend Premium A/C is chosen, Weekday Full Villa A/C @ Rs. 19,900 is pre-selected).
-* **FR-BOOK-12-C (Mixed Stay Split Calculation & Transparent Summary):**
-  $$\text{Total Estimate} = (\text{Weekend Nights} \times \text{Weekend Package Rate}) + (\text{Weekday Nights} \times \text{Weekday Package Rate})$$
-  The wizard renders a live calculation breakdown card:
-  $$\text{e.g., } [2\text{ Weekend Nights} \times \text{Rs. 23,000}] + [2\text{ Weekday Nights} \times \text{Rs. 19,900}] = \text{Rs. 46,000} + \text{Rs. 39,800} = \mathbf{\text{Rs. 85,800/=}}$$
+👥 Guests: {guest_count}
+📦 Package: {package_name} — Rs. {rate}/night
+💰 Estimated Total: Rs. {total_estimate}/=
+   {split_breakdown_if_mixed}
 
-##### Contact & Submission Fields (Common to all Modes)
-* **FR-BOOK-13 (Customer Contact & Phone Validation):**
-  - **Full Name:** Mandatory text field, minimum 3 characters.
-  - **WhatsApp Number:** Mandatory input validated against regex before enabling the submit button:
-    - Local Sri Lankan format: `^(?:0|94|\+94)?(7[01245678]\d{7})$`
-    - Universal International E.164 format: `^\+?[1-9]\d{6,14}$`
-    - Inline error if invalid: *"Please enter a valid WhatsApp phone number (e.g., 076 100 7686 or +94 76 100 7686)"*.
-* **FR-BOOK-14 (Optional Special Notes):** An optional multiline text area for special requests (e.g., BBQ setup, boat safari inquiry, check-in arrival time).
-* **FR-BOOK-15 (Live Cost Card & Per-Person Estimation):** Throughout Step 3, an interactive summary card displays:
-  - Check-in & Check-out dates and total nights (with Weekend/Weekday split).
-  - Selected package(s) and nightly rate(s).
-  - Total Estimated Amount.
-  - Per-Person Nightly Estimate: $\text{Total Estimate} \div (\text{Guest Count} \times \text{Total Nights})$.
-* **FR-BOOK-16 (Privacy & Consent):** Checkbox: *"I understand this is a reservation inquiry. Dates will be confirmed upon host approval via WhatsApp."*
-* **FR-BOOK-17 (Submit Action):** Primary CTA: **"Submit Reservation Inquiry 🌿"** (enters loading state, disables repeated clicks).
+👤 Name: {customer_name}
+📱 WhatsApp: {whatsapp_number}
 
-#### 3.2.4 Submission, Record Creation & Confirmation
-* **FR-BOOK-18 (Random Booking ID Generation):** Upon form submission, the system generates a cryptographically random, non-sequential Booking ID in the format:  
-  `VCC-YYYY-XXXXXX` where `XXXXXX` is a **6-character random alphanumeric string** (uppercase letters + digits, e.g., `VCC-2026-X7K2P9`, `VCC-2026-3BNR8Q`).  
-  Sequential numeric IDs are explicitly prohibited to prevent brute-force enumeration attacks on the review verification endpoint.
-* **FR-BOOK-19:** A record is inserted into the `booking_requests` table with status `PENDING`. For Mixed stays, both `primary_package_id` (Weekend) and `secondary_package_id` (Weekday) are stored.
-* **FR-BOOK-20:** A confirmation screen is rendered displaying:
-  - Booking ID (with copy-to-clipboard button).
-  - Summary: Date Type (Weekend / Weekday / Mixed), Dates, Nights breakdown, Guests, Selected Package(s), Estimated Total.
-  - For Mixed stays — a clear split: *"Weekend: N₁ nights × Rs. X,XXX + Weekday: N₂ nights × Rs. X,XXX = Rs. Total"*.
-  - Notice: *"Your inquiry has been forwarded to Villa Cinnamoon Castle management. You will receive an official approval via WhatsApp shortly."*
-  - Instant Concierge Button: *"Chat with Host on WhatsApp"* (pre-filled with Booking ID).
+📝 Special Requests:
+{special_requests_or_"None"}
 
-#### 3.2.5 Core Booking Statuses & Lifecycle State Machine
-The system strictly operates with **three core booking statuses** to manage reservations, calendar availability, quotation generation, and review access:
-
-```mermaid
-stateDiagram-v2
-    [*] --> PENDING: Customer Submits 3-Step Form
-    
-    state PENDING {
-        [*] --> AwaitingAdminReview
-        AwaitingAdminReview: Dates remain Available (Open in Calendar)
-        AwaitingAdminReview: Booking stored in DB with VCC ID
-    }
-    
-    PENDING --> APPROVED: Admin Approves Booking
-    PENDING --> DECLINED: Admin Declines with Reason
-    
-    state APPROVED {
-        [*] --> DatesLocked
-        DatesLocked: Dates become RED & UNCLICKABLE in Calendar
-        DatesLocked: Luxury Quotation Image Generated (PNG)
-        DatesLocked: WhatsApp Approval Dispatch Prepared
-        DatesLocked --> ReviewUnlocked: Check-in Date Arrives (Today >= Check-in)
-    }
-    
-    state DECLINED {
-        [*] --> DatesRemainOpen
-        DatesRemainOpen: Dates remain OPEN & Available for others
-        DatesRemainOpen: Mandatory Decline Reason Stored
-        DatesRemainOpen: WhatsApp Decline Message Prepared
-        DatesRemainOpen: Review Access Strictly Disallowed
-    }
+_(Sent via Villa Cinnamoon Castle website)_
 ```
 
-##### 1. `PENDING` (Under Review / Decision Pending)
-* **Trigger:** Customer completes and submits the 3-step booking wizard.
-* **System State & Actions:**
-  - Unique Booking ID (`VCC-YYYY-XXXX`) generated and stored in `booking_requests`.
-  - Selected dates **remain open/available** in the public calendar (they are NOT blocked yet because the admin has not confirmed availability).
-  - Notification badge appears in the Admin Dashboard inquiry queue.
-* **Allowed Next Transitions:** `APPROVED` or `DECLINED`.
-
-##### 2. `APPROVED` (Confirmed Reservation)
-* **Trigger:** Admin inspects the inquiry and clicks **"Approve"**.
-* **System State & Actions:**
-  - **Automated Date Locking:** All dates from check-in to check-out are automatically marked as unavailable in the database, rendering them **red and unclickable** for all visitors.
-  - **Quotation Image Generation:** The system automatically renders the branded Villa Cinnamoon Castle Quotation Image (PNG card) with complete pricing, dates, package inclusions, and official confirmation seal.
-  - **WhatsApp Dispatch:** Admin sends the quotation image along with the pre-formatted WhatsApp confirmation message directly to the customer.
-  - **Review Eligibility:** Grants the customer permission to submit a verified review once their check-in date arrives ($\text{Today} \ge \text{Check-in Date}$).
-
-##### 3. `DECLINED` (Rejected Inquiry)
-* **Trigger:** Admin cannot accommodate the booking (e.g., maintenance, private event, capacity mismatch) and clicks **"Decline"**.
-* **System State & Actions:**
-  - Admin must enter a mandatory **"Reason for Decline"**.
-  - Selected dates **remain available** in the public calendar for other prospective guests.
-  - **WhatsApp Dispatch:** Prepares a personalized, courteous decline message containing the specific decline reason for WhatsApp transmission.
-  - **Review Eligibility:** Review submission is permanently locked and disallowed for this booking ID.
-
-##### Booking Status Comparative Matrix
-| Property / Feature | `PENDING` | `APPROVED` | `DECLINED` |
-| :--- | :---: | :---: | :---: |
-| **Origin / Trigger** | Customer Form Submission | Admin Click "Approve" | Admin Click "Decline" |
-| **Calendar Dates State** | Available (Open) | **Red & Unclickable (Blocked)** | Available (Open) |
-| **Quotation Image** | None | **Generated (PNG Card)** | None |
-| **WhatsApp Notification** | None | Approval Message + Quotation | Decline Message + Reason |
-| **Review Submission Gate** | Locked | **Unlocks on Check-in Date** | Ineligible / Disallowed |
-| **History Retention** | Retained in DB & Admin Panel | Retained in DB & Admin Panel | Retained in DB & Admin Panel |
+* **FR-INQ-15:** After triggering the WhatsApp redirect, a confirmation screen displays a summary and the message: *"Your inquiry has been sent! The hoster will contact you on WhatsApp shortly to confirm your booking and arrange advance payment."* A secondary CTA *"Chat with Host on WhatsApp"* repeats the link for convenience.
 
 ---
 
-### 3.3 Module 3: Check-In Date Gated Review System
+
+
+### 3.3 Module 3: Reviews
 *Requirement Traceability: Requirements file.md § Customer (3)*
 
-#### 3.3.1 Review Unlock Business Rules
-* **FR-REV-01 (Eligibility Criteria):** A review can only be submitted if:
-  1. A valid Booking ID is provided.
-  2. The booking record status is `APPROVED`.
-  3. The current date is greater than or equal to the booking's `check_in_date` ($\text{Today} \ge \text{Check-in Date}$).
-  4. No existing review has been submitted for this Booking ID.
-* **FR-REV-02 (Locked State Notice):** If a customer attempts to review prior to their check-in date, the system shall display:  
-  *"Your review unlocks on your check-in date ([Check-in Date]). We want you to experience the beauty of Villa Cinnamoon Castle first!"*
-* **FR-REV-03 (Declined/Pending Notice):** If the booking ID is not in `APPROVED` status, the submission is rejected.
+#### 3.3.1 On-Site Verified Guest Review System — Phase 2 Deferred
 
-#### 3.3.2 Review Submission Flow
-* **FR-REV-04:** Verified review form inputs:
-  - Verified Customer Name (pre-filled from booking record).
-  - Star Rating (1 to 5 stars, mandatory).
-  - Review Title (optional).
-  - Detailed Experience Comment (mandatory, min 10 characters).
-  - Stay Type badge (e.g., "Family Vacation", "Group Gathering", "Couples Retreat").
-* **FR-REV-05:** Upon submission, the review record is saved with `is_visible = true` and `is_pinned = false`.
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — Do Not Implement**
+> The on-site guest review submission system (check-in date gated, booking-ID-verified reviews) is deferred to Phase 2. The hoster has confirmed he does not want a complex review system in the first version. FR-REV-01 through FR-REV-08 below are preserved for Phase 2 reference only.
 
-#### 3.3.3 Public Review Showcase
-* **FR-REV-06:** All reviews with `is_visible = true` are rendered in the public Reviews section.
-* **FR-REV-07:** Reviews marked as `is_pinned = true` are given priority placement at the top of the review grid or carousel.
-* **FR-REV-08:** Each review card displays: Guest Name, Star Rating, Stay Date/Month, Verified Guest Badge, and the Review Text.
+<details>
+<summary>📄 Phase 2 Reference: On-Site Review Requirements (FR-REV-01 – FR-REV-08)</summary>
+
+**FR-REV-01 (Eligibility Criteria):** A review can only be submitted if: (1) A valid Booking ID is provided; (2) Booking status is `APPROVED`; (3) Today ≥ `check_in_date`; (4) No prior review for this Booking ID.
+
+**FR-REV-02 (Locked State Notice):** If attempted before check-in: *"Your review unlocks on your check-in date. We want you to experience Villa Cinnamoon Castle first!"*
+
+**FR-REV-03 (Declined/Pending Notice):** If booking is not `APPROVED`, submission is rejected.
+
+**FR-REV-04:** Review form inputs: Verified Customer Name, Star Rating (1–5), Review Title (optional), Detailed Comment (mandatory, min 10 chars), Stay Type badge.
+
+**FR-REV-05:** On submission, record saved with `is_visible = true`, `is_pinned = false`.
+
+**FR-REV-06:** All `is_visible = true` reviews rendered publicly.
+
+**FR-REV-07:** `is_pinned = true` reviews shown at top priority.
+
+**FR-REV-08:** Each card displays: Guest Name, Star Rating, Stay Date, Verified Guest Badge, Review Text.
+</details>
+
+#### 3.3.4 Google Reviews Integration & Showcase ✅ (Phase 1 — Active)
+* **FR-GREV-01 (Google Reviews Section & Aggregate Rating Badge):**
+  The website shall feature a dedicated Google Reviews section displaying:
+  - Official Google aggregate rating score (e.g., 4.9 ★ / 5.0 ★) and total review count.
+  - Authentic Google brand icon / emblem and verified business badge.
+  - Direct clickable link to Villa Cinnamoon Castle's live Google Business Profile on Google Maps.
+* **FR-GREV-02 (Curated Google Reviews Carousel / Grid):**
+  The section shall display authentic Google guest reviews in an interactive card grid or carousel, each card featuring:
+  - Reviewer's Google display name and profile avatar/initial.
+  - Google verification badge icon.
+  - Star rating (1 to 5 stars).
+  - Relative publication date (e.g., "3 weeks ago", "2 months ago").
+  - Review commentary snippet.
+* **FR-GREV-03 (Phase 1 — Google Reviews Only):**
+  In Phase 1, the Reviews section displays Google Reviews only. The dual-source tab navigation (*"Google Reviews" / "Verified Direct Guests"*) is deferred to Phase 2 when the on-site review system is implemented.
+* **FR-GREV-04 (Direct 'Review Us on Google' CTA):**
+  A prominent Call-to-Action button (*"Review Us on Google ⭐"*) directing past guests to leave a review on Google Maps / Google Business Profile.
 
 ---
 
@@ -401,7 +314,12 @@ stateDiagram-v2
 * **FR-ADM-03:** Protected API routes and admin dashboard views require a valid signed session token/cookie.
 * **FR-ADM-04:** Secure logout mechanism invalidating the session.
 
-#### 3.4.2 Booking Request Management, History Archive & WhatsApp Dispatch Engine
+#### 3.4.2 Booking Request Management, History Archive & WhatsApp Dispatch Engine 🚧
+
+> [!CAUTION]
+> **🚧 ON HOLD — Do Not Implement**
+> This section (FR-ADM-05 through FR-ADM-CANCEL) is **on hold**. The admin inquiry pipeline, approval/decline workflow, quotation image generation, WhatsApp dispatch engine, date conflict detection, and cancellation workflow all depend on the finalized booking requirements from § 3.2.
+
 * **FR-ADM-05 (Real-Time Inquiries & Queue Management):** Admin dashboard displays all incoming booking requests in an active pipeline with quick-action approvals and declines.
 * **FR-ADM-06 (Permanent Database History Storage):**
   - All booking records—including `PENDING`, `APPROVED`, `DECLINED`, `CANCELLED`, and past `COMPLETED` stays—shall be permanently preserved in the relational database.
@@ -428,7 +346,7 @@ stateDiagram-v2
        - Official "APPROVED & CONFIRMED" seal/badge.
        - Unique Booking ID (`VCC-YYYY-XXXX`) and Date of Issue.
        - Customer Information: Customer Name and WhatsApp Number.
-       - Stay Itinerary: Check-in Date (from 3:00 PM), Check-out Date (by 11:00 AM), Total Nights, and Guest Count (1–15).
+       - Stay Itinerary: Check-in Date (from 1:00 PM), Check-out Date (by 10:00 AM), Total Nights, and Guest Count (1–15).
        - Package Breakdown: Selected Package Name(s) (for Mixed stays: both Weekend and Weekday package names, night splits, and individual nightly rates), Inclusions (e.g. 5 bedrooms, A/C rooms, gas kitchen, BBQ facilities, high-speed Wi-Fi), and Nightly Rate(s).
        - Financial Calculation: Total Estimated Amount (Rs. / LKR) with transparent calculation breakdown (for Mixed stays: `[N₁ Weekend nights × Rate₁] + [N₂ Weekday nights × Rate₂]`) and per-person cost breakdown.
        - Host & Property Contact Details: Host *Dampalla Gamage Devindu*, Hotline `+94 76 100 7686`, Arachchikanda, Hikkaduwa.
@@ -442,8 +360,8 @@ stateDiagram-v2
        Great news from Villa Cinnamoon Castle! 🏰
        Your booking request #{Booking_ID} has been APPROVED.
        
-       📅 Check-in: {Check_In_Date} (From 3:00 PM)
-       📅 Check-out: {Check_Out_Date} (Until 11:00 AM)
+       📅 Check-in: {Check_In_Date} (From 1:00 PM)
+       📅 Check-out: {Check_Out_Date} (Until 10:00 AM)
        🌙 Total Nights: {Nights} ({Stay_Type_Breakdown})
        👥 Guest Count: {Guest_Count}
        📦 Package: {Package_Details_or_Mixed_Breakdown}
@@ -514,7 +432,12 @@ stateDiagram-v2
 * **FR-ADM-15 (Update):** Admin can adjust prices, package types, A/C classifications, guest/room capacities, descriptions, discount labels, or features anytime.
 * **FR-ADM-16 (Soft Deactivate — NOT Hard Delete):** Admin can deactivate a package that is no longer offered. The package record is **never physically deleted** from the database (`is_active = FALSE`) to preserve referential integrity with all past and existing booking records that reference that package. The Admin Panel shall display this action as **"Deactivate"**, not "Delete". Deactivated packages are hidden from the customer-facing booking wizard but remain visible in the Admin Package archive.
 
-#### 3.4.5 Automated Calendar Availability Engine
+#### 3.4.5 Automated Calendar Availability Engine 🚧
+
+> [!CAUTION]
+> **🚧 ON HOLD — Do Not Implement**
+> This section (FR-ADM-17, FR-ADM-18) is **on hold**. Calendar availability logic is entirely driven by the booking approval workflow in § 3.2 and § 3.4.2, both of which are pending requirements clarification.
+
 * **FR-ADM-17:** When an admin approves a customer booking request, the system automatically marks all dates within the check-in to check-out range as unavailable in the database.
 * **FR-ADM-18 (No Manual Date Blocking):** The admin does not manually block dates. Dates become unavailable strictly when booked by customers and approved by the admin. These unavailable dates immediately display in red and become unclickable on the customer-facing calendar. If an approved booking is cancelled, its dates automatically return to available status.
 
@@ -528,12 +451,12 @@ The customer-facing application is organized into the following clear, intuitive
 
 | Section / Route | Title / Identifier | Primary Function & Contents |
 | :--- | :--- | :--- |
-| **`#home` / `/`** | **Hero & Overview** | 5-photo showcase collage, headline, Airbnb-style rating badge, quick reserve sticky card, host badge. |
+| **`#home` / `/`** | **Hero & Overview** | Visual showcase presentation, headline, Google & direct rating badge, quick reserve sticky card, host badge. |
 | **`#story` / `/tour`** | **The Scrollytelling Tour** | Immersive narrative breakdown: Bedrooms (1-5), Living spaces (Ground + Mezzanine), Kitchen & Dining, Bathrooms, Courtyard. |
 | **`#packages`** | **Villa Rates & Packages** | Transparent pricing matrix: Weekend Full Villa (Non-A/C Rs. 21,000 / A/C Rs. 23,000), Weekday Full Villa (Non-A/C Rs. 17,900 / A/C Rs. 19,900), Group Room Options (2 to 5 rooms from Rs. 8,500), Couples (Rs. 6,500), Family (Rs. 8,500). |
 | **`#reserve`** | **Interactive Booking Wizard** | 3-step mini-forms (Red-calendar date selector &rarr; Guest count &rarr; Package selection & WhatsApp regex). |
 | **`#experiences`** | **Activities & Neighborhood** | BBQ courtyard, boat safaris, surfing, Hikkaduwa coral reef, distance matrix, interactive map. |
-| **`#reviews`** | **Guest Reviews & Write Review** | Pinned and verified public reviews, star distribution, and check-in date gated review access modal. |
+| **`#reviews`** | **Guest & Google Reviews** | Dedicated Google Reviews showcase with aggregate rating badge & carousel, pinned & verified direct reviews, star distribution, and check-in date gated review access modal. |
 | **`#contact`** | **Host & Directions** | Dampalla Gamage Devindu contact card, WhatsApp hotline (+94 76 100 7686), address & GPS coordinates. |
 | **`/admin`** | **Admin Portal** | Authenticated management dashboard for bookings, reviews, packages, and calendar. |
 
@@ -683,8 +606,15 @@ INSERT INTO packages (id, title, package_type, ac_type, price_per_night, min_gue
   (uuid(), 'Full Villa — A/C',          'WEEKDAY', 'AC',    19900.00, 11, 15, NULL,'Full Villa · A/C',    14);
 ```
 
-#### 3. `booking_requests` Table
-```sql
+#### 3. `booking_requests` Table 🚧 (Phase 2 Deferred)
+
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — Do Not Implement**
+> This table is part of the complex booking engine deferred to Phase 2. In Phase 1, no booking records are stored server-side.
+
+<details>
+<summary>📄 Phase 2 Reference: booking_requests DDL</summary>
+
 CREATE TABLE booking_requests (
     id VARCHAR(20) PRIMARY KEY, -- e.g. VCC-2026-X7K2P9 (random alphanumeric, NOT sequential)
     customer_name VARCHAR(100) NOT NULL,
@@ -715,8 +645,15 @@ CREATE TABLE booking_requests (
 );
 ```
 
-#### 4. `blocked_dates` Table
-```sql
+#### 4. `blocked_dates` Table 🚧 (Phase 2 Deferred)
+
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — Do Not Implement**
+> This table depends on the booking approval workflow deferred to Phase 2.
+
+<details>
+<summary>📄 Phase 2 Reference: blocked_dates DDL</summary>
+
 CREATE TABLE blocked_dates (
     id VARCHAR(36) PRIMARY KEY,
     date DATE UNIQUE NOT NULL,
@@ -755,7 +692,12 @@ CREATE TABLE reviews (
 2. **Decline Dispatch Endpoint:**
    - Pre-fills personalized polite decline message containing the specific `decline_reason` specified by the admin.
 
-### 6.2 Calendar Availability API Endpoint
+### 6.2 Calendar Availability API Endpoint 🚧
+
+> [!CAUTION]
+> **🚧 ON HOLD — Do Not Implement**
+> This API endpoint depends on the `blocked_dates` table populated by the booking approval workflow. On hold until § 3.2 and § 3.4.2 are finalized.
+
 * **Route:** `GET /api/calendar/blocked-dates`
 * **Response Payload:**
   ```json
@@ -770,14 +712,23 @@ CREATE TABLE reviews (
   ```
 * **Frontend Behavior:** Any date matching this array receives CSS class `.date-blocked` (background: `#FF4D4F`, color: `#FFFFFF`, pointer-events: `none`).
 
-### 6.3 Review Verification API Endpoint
+### 6.3 Review Verification API Endpoint 🚧 (Phase 2 Deferred)
+
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — Do Not Implement**
+> This endpoint depends on the on-site review system and booking database, both deferred to Phase 2.
+
+<details>
+<summary>📄 Phase 2 Reference: Review Eligibility API</summary>
+
 * **Route:** `POST /api/reviews/verify-eligibility`
 * **Request:** `{ "booking_id": "VCC-2026-1049", "whatsapp_number": "0761007686" }`
 * **Response:**
-  - If eligible: `{ "eligible": true, "customer_name": "Saman Kumara", "check_in_date": "2026-09-01" }`
+  - If eligible: `{ "eligible": true, "customer_name": "Saman K.", "check_in_date": "2026-09-01" }`
   - If date not arrived: `{ "eligible": false, "reason": "CHECK_IN_NOT_ARRIVED", "unlock_date": "2026-09-20" }`
   - If already reviewed: `{ "eligible": false, "reason": "ALREADY_REVIEWED" }`
   - If not found or not approved: `{ "eligible": false, "reason": "NOT_APPROVED" }`
+</details>
 
 ---
 
@@ -797,44 +748,49 @@ CREATE TABLE reviews (
 * **NFR-SEC-01 (Authentication):** Passwords stored using industry-standard salted hashing (`bcrypt` with cost factor $\ge 10$).
 * **NFR-SEC-02 (Injection Protection):** Parameterized queries or ORM used exclusively to eliminate SQL injection vulnerabilities.
 * **NFR-SEC-03 (XSS Sanitization):** All user-submitted review comments and guest names sanitized against Cross-Site Scripting (XSS).
-* **NFR-SEC-04 (Rate Limiting):** Public booking inquiry and review endpoints rate-limited (e.g., max 5 requests per minute per IP) to prevent spam.
+* **NFR-SEC-04 (Rate Limiting):** Admin login and public form submission endpoints rate-limited to prevent spam and brute-force attacks.
 
 ### 7.4 Data Integrity
-* **NFR-INT-01 (Transactional Date Locking):** Approving a booking inquiry and inserting into `blocked_dates` must execute within a database transaction to prevent race conditions or double-booking.
+* **NFR-INT-01 (Phase 1 — No Backend Booking Storage):** In Phase 1, inquiry data is sent directly to the hoster's WhatsApp. No server-side booking storage or transactional date-locking is required. *Phase 2 Note: Transactional date-locking will be required when booking approval workflow is implemented.*
 
 ---
 
 ## 8. Requirement Traceability Matrix (RTM)
 
-| Req ID (User Doc) | Requirement Description | SRS Section | Implementation Method |
+| Req ID | Requirement Description | SRS Section | Phase 1 Implementation |
 | :--- | :--- | :--- | :--- |
-| **Cust 0** | No customer authorization required | § 1.2, § 2.2 | Public session-free booking wizard |
-| **Cust 1** | Scrollytelling property elaboration | § 3.1 | Scroll-driven narrative + categorized photo tour |
-| **Cust 2** | Package booking with inquiry to Admin | § 3.2 | 3-step mini-form wizard + DB insertion |
-| **Cust 3** | Review unlocks only on/after check-in date | § 3.3 | Eligibility API checking `status == APPROVED` & `today >= check_in_date` |
-| **Cust 4** | Customer pages decided by system | § 4.0 | Single-page luxury architecture with anchored sections & modals |
-| **Cust 5** | Fully responsive and mobile-friendly | § 7.1 | CSS Flexbox/Grid, mobile floating booking bar, touch targets |
-| **Mini 1** | Date selection with red blocked unclickable dates | § 3.2.1 | Dynamic calendar component querying `/api/calendar/blocked-dates` |
-| **Mini 2** | Guest count selection (1–15) & Auto-Suggestion | § 3.2.2 | Stepper component + dynamic package auto-suggestion based on group size |
-| **Mini 3** | Adaptive Package Selection (Weekend / Weekday / Mixed sub-form) + Name + WhatsApp Regex | § 3.2.3 | Date-type driven mode switching (Mode A/B/C), mixed stay split pricing calculation, regex validation |
-| **Inquiry Flow** | Unique random ID, DB save, Admin approve/decline via WA | § 3.2.4, § 3.4.2 | Random alphanumeric ID `VCC-YYYY-XXXXXX`, WA deep links with decline reason |
+| **Cust 0** | No customer authorization required | § 1.2, § 2.2 | Public, session-free form |
+| **Cust 1** | Scrollytelling property elaboration | § 3.1 | Scroll-driven narrative + visual space-by-space walkthrough |
+| **Cust 2** | WhatsApp booking inquiry with date & package selection | § 3.2 | 3-step form → WhatsApp deep-link with pre-formatted message |
+| **Cust 4** | Single-page luxury architecture | § 4.0 | Single-page with anchored sections & modals |
+| **Cust 5** | Fully responsive and mobile-friendly | § 7.1 | CSS Flexbox/Grid, mobile-first layout, touch targets |
+| **Google Reviews** | Google Reviews showcase with aggregate badge & cards | § 3.3.4 | Google Business Profile badge + curated reviews carousel + Review CTA |
+| **INQ 1** | Dual calendar pickers (check-in + check-out), 1-night min, past dates disabled | § 3.2.1 | Two independent date pickers, client-side validation |
+| **INQ 2** | Guest count (1–15) + date-type-driven auto-suggestion | § 3.2.2 | Stepper + auto-suggest engine (Weekend/Weekday/Mixed) |
+| **INQ 3** | Adaptive Package Selection (Weekend/Weekday/Mixed) + A/C note | § 3.2.2 | Date-type mode switching, split pricing, A/C transparency note |
+| **INQ 4** | WhatsApp redirect with structured pre-formatted message | § 3.2.4 | `wa.me` deep-link with URL-encoded message template |
 | **Admin 1** | Admin authentication required | § 3.4.1 | Bcrypt hashed login + protected session |
-| **Admin 2** | Manage booking requests (Approve/Decline with reason) | § 3.4.2 | Admin table + conflict badge + decline reason modal + WA message generator |
-| **Admin 2B** | Booking Cancellation with date auto-release | § FR-ADM-CANCEL | Cancel action → `CANCELLED` status → `ON DELETE CASCADE` releases blocked dates |
 | **Admin 3** | Manage reviews (Hide / Pin only, no altering) | § 3.4.3 | Toggle `is_pinned` / `is_visible`; edit fields disabled |
-| **Admin 4** | Manage package details (Full CRUD, soft deactivate) | § 3.4.4 | Admin CRUD for Weekend/Weekday/Group/Couples packages with type/AC/capacity flags; soft deactivate (`is_active=FALSE`) |
-| **Logical Fix** | Concurrent pending overlap prevention | § FR-ADM-CONFLICT | Date conflict badge + approval block guard + DB unique constraint |
+| **Admin 4** | Manage package details (Full CRUD, soft deactivate) | § 3.4.4 | Admin CRUD for all packages; soft deactivate (`is_active=FALSE`) |
+
+> [!NOTE]
+> **Phase 2 RTM entries** (Admin booking pipeline, date-blocking, review gate, cancellation) will be added when Phase 2 requirements are confirmed.
 
 ---
 
 ## 9. Verification & Acceptance Testing Plan
 
-### 9.1 Automated Test Suites
-1. **Date Blocking Verification:** Verify that dates marked as blocked in the database return 400 Bad Request if submitted in a booking payload.
+### 9.1 Phase 1 Automated Test Suites
+1. **WhatsApp Message Format Test:** Verify that submitted form data correctly encodes into the WhatsApp deep-link message template (dates, nights, package name, price, guest count, name, number, special requests).
 2. **Regex Validation Tests:** Unit test customer WhatsApp input against valid Sri Lankan formats (`0761007686`, `+94761007686`), international numbers (`+447911123456`), and invalid patterns (alphabetic, incomplete strings).
-3. **Review Gate Tests:** Unit test review submission endpoint with check-in date in the future (must fail with 403 Forbidden) vs check-in date today/past (must succeed).
+3. **Date Validation Tests:** Verify check-out ≥ check-in + 1 day; past dates disabled; 1-night stays accepted.
+4. **Date Type Detection Tests:** Verify weekend/weekday/mixed classification across edge cases (Friday only → Weekend; Monday only → Weekday; Friday to Monday → Mixed: 2 Weekend + 1 Weekday).
 
-### 9.2 Manual End-to-End Walkthrough
-1. **Visitor Journey:** Visitor browses property tour &rarr; selects dates on calendar (e.g. Mixed Friday to Tuesday) &rarr; system detects 2 Weekend nights + 2 Weekday nights &rarr; enters 8 guests &rarr; wizard auto-suggests 4-Room package for weekday portion &rarr; visitor selects Weekend Premium (A/C) and Weekday 4-Room (A/C) via weekday mini-form &rarr; verifies transparent split calculation &rarr; enters Name and WhatsApp &rarr; submits inquiry and receives `VCC-YYYY-XXXXXX`.
-2. **Admin Inquiry Review:** Admin logs in &rarr; inspects mixed inquiry &rarr; clicks "Approve" &rarr; verifies calendar dates turn red &rarr; inspects generated Quotation Card showing split pricing &rarr; clicks "Send WhatsApp Approval" and verifies formatted text.
-3. **Review Submission:** When stay date arrives, customer enters Booking ID &rarr; system unlocks review form &rarr; customer submits 5-star review &rarr; review appears on homepage. Admin pins the review &rarr; review shifts to top priority.
+### 9.2 Phase 1 Manual End-to-End Walkthrough
+1. **Visitor Journey (Mixed Stay):** Visitor browses scrollytelling tour → views Google Reviews → selects check-in Friday + check-out Tuesday → system detects 2 Weekend nights + 2 Weekday nights → enters 8 guests → wizard auto-suggests 4-Room package → visitor selects Weekend Premium A/C + Weekday 4-Room A/C → sees live split price → enters name + WhatsApp → submits → WhatsApp opens with pre-filled message.
+2. **1-Night Booking:** Visitor selects check-in Saturday + check-out Sunday → system accepts (1 night, Weekend) → Weekend packages shown → visitor selects and submits.
+3. **Admin Package Management:** Admin logs in → creates new weekday package → updates pricing → soft-deactivates old package → verifies deactivated package hidden from customer inquiry form.
+4. **Google Reviews Section:** Visitor views Google Reviews section → sees aggregate rating badge → browses curated Google review cards → clicks "Review Us on Google" CTA → Google Maps opens to Villa Cinnamoon Castle listing.
+
+> [!CAUTION]
+> **Phase 2 walkthroughs** (Admin booking approval, calendar date-blocking, on-site review submission) are deferred pending Phase 2 implementation.

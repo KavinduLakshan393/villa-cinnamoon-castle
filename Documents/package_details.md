@@ -44,8 +44,8 @@ Weekend bookings represent exclusive full-property buyouts, granting complete pr
 
 | Package Name | Code / Identifier | A/C Configuration | Nightly Rate (LKR) | Max Capacity | Room Allocation | Inclusions & Highlights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Weekend Standard — Non-A/C** | `PKG-WKND-NONAC` | Non-A/C | **Rs. 21,000/=** | 15 Guests | Full 5 Bedrooms | Full private villa buyout. Powerful ceiling fans in all bedrooms, open breeze mezzanine lounge, full kitchen access, BBQ pavilion, private grounds. *Equates to ~Rs. 1,400/person for 15 guests.* |
-| **Weekend Premium — A/C** | `PKG-WKND-AC` | Air Conditioned | **Rs. 23,000/=** | 15 Guests | Full 5 Bedrooms | Full private villa buyout with air-conditioned master bedrooms. Ceiling fans throughout, full kitchen, BBQ pavilion, luxury linens, Wi-Fi. *Equates to ~Rs. 1,533/person for 15 guests.* |
+| **Weekend Standard — Non-A/C** | `PKG-WKND-NONAC` | Non-A/C | **Rs. 21,000/=** | 15 Guests | Full 5 Bedrooms | Full private villa buyout. Stand fans in all bedrooms, open breeze mezzanine lounge, full kitchen access, BBQ pavilion, private grounds. *Equates to ~Rs. 1,400/person for 15 guests.* |
+| **Weekend Premium — A/C** | `PKG-WKND-AC` | Air Conditioned | **Rs. 23,000/=** | 15 Guests | Full 5 Bedrooms | Full private villa buyout with air-conditioned master bedrooms. Stand fans in other bedrooms, full kitchen, BBQ pavilion, luxury linens, Wi-Fi. *Equates to ~Rs. 1,533/person for 15 guests.* |
 
 > **Weekend Booking Policy:** Minimum booking duration is 1 night. During holiday long weekends or festive peak seasons (e.g., Sinhala & Tamil New Year, Christmas/New Year), a 2-night minimum stay may be applied.
 
@@ -124,24 +124,24 @@ Weekday packages offer flexible pricing tailored for couples, small family retre
 
 When a customer selects dates spanning across both weekend and weekday nights, the system calculates pricing transparently using the official formula:
 
-$$\text{Total Estimated Price} = (N_{\text{weekend}} \times \text{Rate}_{\text{weekend}}) + (N_{\text{weekday}} \times \text{Rate}_{\text{weekday}})$$
+$$\text{Total Price} = (\text{Weekend Nights} \times \text{Weekend Rate}) + (\text{Weekday Nights} \times \text{Weekday Rate})$$
 
 ### Case Study Examples:
 
 #### Case Study A: Friday to Sunday (Pure Weekend)
-* **Check-in:** Friday (3:00 PM) | **Check-out:** Sunday (11:00 AM)
+* **Check-in:** Friday (1:00 PM) | **Check-out:** Sunday (10:00 AM)
 * **Nights:** 2 Weekend nights (Friday night, Saturday night)
 * **Selected Package:** Weekend Premium — A/C @ Rs. 23,000/=
 * **Calculation:** $2 \times \text{Rs. 23,000} = \mathbf{\text{Rs. 46,000/=}}$
 
 #### Case Study B: Monday to Wednesday (Pure Weekday)
-* **Check-in:** Monday (3:00 PM) | **Check-out:** Wednesday (11:00 AM)
+* **Check-in:** Monday (1:00 PM) | **Check-out:** Wednesday (10:00 AM)
 * **Nights:** 2 Weekday nights (Monday night, Tuesday night)
 * **Selected Package:** 3-Room Group — A/C @ Rs. 14,500/=
 * **Calculation:** $2 \times \text{Rs. 14,500} = \mathbf{\text{Rs. 29,000/=}}$
 
 #### Case Study C: Friday to Tuesday (Mixed Stay — Weekend + Weekday)
-* **Check-in:** Friday (3:00 PM) | **Check-out:** Tuesday (11:00 AM)
+* **Check-in:** Friday (1:00 PM) | **Check-out:** Tuesday (10:00 AM)
 * **Breakdown:**
   - **Weekend Nights:** Friday, Saturday, Sunday (3 nights)
   - **Weekday Nights:** Monday (1 night)
@@ -154,7 +154,7 @@ $$\text{Total Estimated Price} = (N_{\text{weekend}} \times \text{Rate}_{\text{w
   $$\mathbf{\text{Total Estimated Amount}} = \text{Rs. 69,000} + \text{Rs. 19,900} = \mathbf{\text{Rs. 88,900/=}}$$
 
 #### Case Study D: Wednesday to Saturday (Mixed Stay — Weekday + Weekend)
-* **Check-in:** Wednesday (3:00 PM) | **Check-out:** Saturday (11:00 AM)
+* **Check-in:** Wednesday (1:00 PM) | **Check-out:** Saturday (10:00 AM)
 * **Breakdown:**
   - **Weekday Nights:** Wednesday, Thursday (2 nights)
   - **Weekend Nights:** Friday (1 night)
@@ -218,8 +218,10 @@ All packages, regardless of tier, include access to the following property facil
 
 ## 8. Reservation Policies & Rules
 
-* **Check-in Time:** From **3:00 PM** onwards.
-* **Check-out Time:** By **11:00 AM** (late check-out negotiable based on incoming bookings).
+* **Check-in Time:** From **1:00 PM** onwards.
+* **Check-out Time:** By **10:00 AM**.
+* **Villa Turnaround & Re-arrangement Window (10:00 AM – 1:00 PM):** A dedicated 3-hour window is reserved after 10:00 AM for the host to thoroughly clean, sanitize, replace fresh linens, and re-arrange the villa before the next guests arrive at 1:00 PM according to the booking schedule.
+* **Flexible Late Check-out Policy:** If a customer requests late check-out due to personal reasons, the host can allocate an extension of 1 hour (until 11:00 AM) or up to 1.5 hours (until 11:30 AM). The host utilizes the remaining turnaround time prior to 1:00 PM to complete all re-arrangements.
 * **Inquiry-First Confirmation:** Submitting a booking inquiry reserves tentative intent. Dates become **locked (red & unclickable)** on the public calendar **only upon Admin approval**.
 * **Confirmation Deliverable:** Upon approval, the customer receives:
   1. An official high-resolution **Luxury Quotation & Confirmation PNG Card** containing complete pricing, guest details, and host seal.
@@ -235,22 +237,22 @@ The following SQL seed queries represent the production initialization for all a
 ```sql
 -- Weekend Packages (2)
 INSERT INTO packages (id, title, package_type, ac_type, price_per_night, min_guests, max_guests, max_rooms, badge_label, description, display_order, is_active) VALUES
-('pkg-wknd-nonac', 'Weekend Standard — Non-A/C', 'WEEKEND', 'NON_AC', 21000.00, 1, 15, NULL, 'Full Villa Buyout', 'Full private villa buyout with ceiling fans throughout all 5 bedrooms and communal living spaces.', 1, TRUE),
+('pkg-wknd-nonac', 'Weekend Standard — Non-A/C', 'WEEKEND', 'NON_AC', 21000.00, 1, 15, NULL, 'Full Villa Buyout', 'Full private villa buyout with stand fans throughout all 5 bedrooms and communal living spaces.', 1, TRUE),
 ('pkg-wknd-ac',    'Weekend Premium — A/C',      'WEEKEND', 'AC',     23000.00, 1, 15, NULL, 'Full Villa · A/C',  'Full private villa buyout with air-conditioned bedrooms for premier tropical comfort.', 2, TRUE);
 
 -- Weekday Packages (12)
 INSERT INTO packages (id, title, package_type, ac_type, price_per_night, min_guests, max_guests, max_rooms, badge_label, description, display_order, is_active) VALUES
 ('pkg-wkday-cpl',   'Couples Package',           'WEEKDAY', 'NA',      6500.00, 1,  2, 1,    'Couples · Full Day', 'Romantic full-day escape for 2 guests with 1 master bedroom suite and kitchen access.', 3, TRUE),
 ('pkg-wkday-fam',   'Family Package',            'WEEKDAY', 'NA',      8500.00, 3,  4, 2,    'Family · Full Day',  'Peaceful retreat for nuclear families with comfortable bedroom allocations and courtyard.', 4, TRUE),
-('pkg-wkday-2r-nac','2-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC',  8500.00, 1,  4, 2,    '2 Rooms · 4 pax',    'Economical 2-bedroom arrangement with ceiling fans for up to 4 guests.', 5, TRUE),
+('pkg-wkday-2r-nac','2-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC',  8500.00, 1,  4, 2,    '2 Rooms · 4 pax',    'Economical 2-bedroom arrangement with stand fans for up to 4 guests.', 5, TRUE),
 ('pkg-wkday-2r-ac', '2-Room Group — A/C',        'WEEKDAY', 'AC',     10500.00, 1,  4, 2,    '2 Rooms · A/C',      'Comfortable 2-bedroom arrangement with air-conditioning for up to 4 guests.', 6, TRUE),
-('pkg-wkday-3r-nac','3-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC', 12500.00, 5,  6, 3,    '3 Rooms · 6 pax',    'Spacious 3-bedroom stay with ceiling fans for medium groups up to 6 guests.', 7, TRUE),
+('pkg-wkday-3r-nac','3-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC', 12500.00, 5,  6, 3,    '3 Rooms · 6 pax',    'Spacious 3-bedroom stay with stand fans for medium groups up to 6 guests.', 7, TRUE),
 ('pkg-wkday-3r-ac', '3-Room Group — A/C',        'WEEKDAY', 'AC',     14500.00, 5,  6, 3,    '3 Rooms · A/C',      '3-bedroom stay with air-conditioned bedrooms for up to 6 guests.', 8, TRUE),
-('pkg-wkday-4r-nac','4-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC', 15500.00, 7,  8, 4,    '4 Rooms · 8 pax',    'Generous 4-bedroom setup with ceiling fans for large families up to 8 guests.', 9, TRUE),
+('pkg-wkday-4r-nac','4-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC', 15500.00, 7,  8, 4,    '4 Rooms · 8 pax',    'Generous 4-bedroom setup with stand fans for large families up to 8 guests.', 9, TRUE),
 ('pkg-wkday-4r-ac', '4-Room Group — A/C',        'WEEKDAY', 'AC',     17500.00, 7,  8, 4,    '4 Rooms · A/C',      '4-bedroom setup with air-conditioned bedrooms for up to 8 guests.', 10, TRUE),
-('pkg-wkday-5r-nac','5-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC', 17900.00, 9, 10, 5,    '5 Rooms · 10 pax',   'Full 5 bedrooms with ceiling fans for groups of up to 10 guests.', 11, TRUE),
+('pkg-wkday-5r-nac','5-Room Group — Non-A/C',    'WEEKDAY', 'NON_AC', 17900.00, 9, 10, 5,    '5 Rooms · 10 pax',   'Full 5 bedrooms with stand fans for groups of up to 10 guests.', 11, TRUE),
 ('pkg-wkday-5r-ac', '5-Room Group — A/C',        'WEEKDAY', 'AC',     19900.00, 9, 10, 5,    '5 Rooms · A/C',      'Full 5 bedrooms with air conditioning for groups of up to 10 guests.', 12, TRUE),
-('pkg-wkday-fv-nac','Full Villa — Non-A/C',      'WEEKDAY', 'NON_AC', 17900.00, 11, 15, NULL, 'Full Villa · 15 pax', 'Entire private villa buyout for large groups up to 15 guests (ceiling fans throughout).', 13, TRUE),
+('pkg-wkday-fv-nac','Full Villa — Non-A/C',      'WEEKDAY', 'NON_AC', 17900.00, 11, 15, NULL, 'Full Villa · 15 pax', 'Entire private villa buyout for large groups up to 15 guests (stand fans throughout).', 13, TRUE),
 ('pkg-wkday-fv-ac', 'Full Villa — A/C',          'WEEKDAY', 'AC',     19900.00, 11, 15, NULL, 'Full Villa · A/C',    'Entire private villa buyout for large groups up to 15 guests with air-conditioned bedrooms.', 14, TRUE);
 ```
 
