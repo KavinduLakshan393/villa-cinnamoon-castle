@@ -1,0 +1,220 @@
+.cal {
+  position: relative;
+}
+
+.cal__nav {
+  position: absolute;
+  top: -6px;
+  right: 0;
+  display: flex;
+  gap: 8px;
+}
+
+.cal__nav-btn {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.cal__nav-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .cal__nav-btn:not(:disabled):hover {
+    border-color: var(--text-primary);
+  }
+}
+
+.cal__nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.cal__months {
+  display: grid;
+  gap: 40px;
+}
+
+.cal__months--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cal__month-name {
+  min-height: 32px;
+  margin-bottom: 16px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cal__weekdays,
+.cal__days {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.cal__weekdays {
+  margin-bottom: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.cal__weekdays .is-weekend {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.cal__days {
+  row-gap: 4px;
+}
+
+.cal__day {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 44px;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  isolation: isolate;
+}
+
+/* The date number sits in a circle; the range band runs behind it. */
+.cal__day span {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Weekend nights: a small mark under Fri–Sun dates. */
+.cal__day.is-weekend::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.28;
+}
+
+.cal__day.is-today span {
+  box-shadow: inset 0 0 0 1px var(--text-primary);
+}
+
+@media (hover: hover) {
+  .cal__day:not(:disabled):hover span {
+    background: var(--border);
+  }
+}
+
+.cal__day:disabled {
+  color: var(--text-secondary);
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.cal__day:disabled span {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.cal__day:focus-visible {
+  outline: none;
+}
+
+.cal__day:focus-visible span {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Range band */
+.cal__day.is-range::before,
+.cal__day.is-start::before,
+.cal__day.is-end::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background: var(--accent-soft);
+}
+
+.cal__day.is-start::before {
+  left: 50%;
+}
+
+.cal__day.is-end::before {
+  right: 50%;
+}
+
+/* A lone check-in (no range yet) needs no band. */
+.cal__day.is-start:not(.has-range)::before {
+  display: none;
+}
+
+.cal__day.is-start span,
+.cal__day.is-end span {
+  background: var(--accent) !important;
+  color: var(--text-on-image);
+  font-weight: 600;
+}
+
+.cal__day.is-preview span {
+  background: var(--accent-hover) !important;
+  opacity: 0.75;
+}
+
+.cal__day.is-start::after,
+.cal__day.is-end::after {
+  background: var(--text-on-image);
+  opacity: 0.8;
+}
+
+.cal__legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.cal__legend-mark {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cal__day span {
+    transition: none;
+  }
+}
