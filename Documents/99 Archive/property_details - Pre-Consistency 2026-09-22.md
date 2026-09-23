@@ -3,9 +3,9 @@
 > Comprehensive reference document compiling all property specifications, architectural spaces, pricing structures, amenities, and contact information gathered from **Airbnb**, **Google Business Profile**, **Facebook**, and official management records. This document serves as the single source of truth for developing the official web application and luxury marketing collateral.
 
 **Related Project Documentation:**
-* [`SRS.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/SRS.md) — Software Requirements Specification & Technical Architecture
-* [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/package_details.md) — Complete Package Catalog, Calculation Engine & Database Seeds
-* [`Requirements file.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/Requirements%20file.md) — Client Original Specification
+* [`SRS.md`](../02%20Requirements/SRS.md) — Software Requirements Specification & Technical Architecture
+* [`package_details.md`](../01%20Source%20Information/package_details.md) — Complete Package Catalog, Calculation Engine & Database Seeds
+* [`Original Requirements.md`](../01%20Source%20Information/Original%20Requirements.md) — Client Original Specification
 
 ---
 
@@ -151,7 +151,7 @@ Flexible group, room-based, and family packages:
 | **5-Room Group** | 10 pax | 5 Rooms | **Rs. 17,900/=** | **Rs. 19,900/=** | Full 5 bedrooms for up to 10 guests |
 | **Full Villa Buyout** | 15 pax | Full Villa | **Rs. 17,900/=** | **Rs. 19,900/=** | Entire property exclusivity for large groups |
 
-> 📖 **Comprehensive Package Catalog:** For detailed case study calculations, group auto-suggestion decision matrices, database SQL seed scripts, and admin CRUD policies, refer to [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/package_details.md).
+> 📖 **Comprehensive Package Catalog:** For detailed case study calculations, group auto-suggestion decision matrices, database SQL seed scripts, and admin CRUD policies, refer to [`package_details.md`](../01%20Source%20Information/package_details.md).
 
 ---
 
@@ -204,48 +204,53 @@ The property visual showcase is organized into distinct functional spaces, highl
 
 ## 11. Web Platform Architecture & Blueprint
 
-The official web application architecture conforms to the finalized specification established in [`SRS.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/SRS.md):
+The official Phase 1 web application architecture conforms to [`SRS.md`](../02%20Requirements/SRS.md), version 1.3.0 or later:
 
 ```mermaid
 graph TD
     subgraph Frontend [Customer Experience Portal]
         M1[Module 1: Scrollytelling Tour]
-        M2[Module 2: Adaptive Booking Wizard]
-        M3[Module 3: Gated Reviews & Google Reviews Showcase]
+        M2[Module 2: WhatsApp Inquiry Wizard]
+        M3[Module 3: Google Reviews Showcase]
     end
 
     subgraph Backend [Management & Services]
-        M4[Module 4: Admin Operations Portal]
-        DB[(Relational DB: Bookings, Packages, Reviews, Calendar)]
-        WA[WhatsApp Instant Dispatch & PNG Quotation Generator]
+        M4[Module 4: Admin Package Portal]
+        DB[(Relational DB: Admins and Packages)]
+    end
+
+    subgraph External Services
+        WA[WhatsApp — Host Inquiry]
+        GBP[Google Business Profile]
+        MAP[Google Maps Embed]
     end
 
     M1 -->|Visual Exploration| M2
-    M2 -->|Inquiry Submission| DB
-    DB -->|Review Unlocked on Check-in| M3
-    M4 -->|Approve / Decline / Cancel| DB
-    M4 -->|Quotation Card & Confirmation| WA
+    M2 -->|Pre-filled Inquiry| WA
+    M3 -->|Read or Write Review| GBP
+    M4 -->|Package CRUD| DB
+    M1 -->|Location and Directions| MAP
 ```
 
 ### Module Breakdown:
 1. **Module 1 — Scrollytelling Property Elaboration (§ 3.1):**
    - Immersive narrative scroll walking guests through: *Arrival & Hero &rarr; Living Spaces &rarr; Bedrooms Sanctuary (1–5) &rarr; Kitchen & Dining &rarr; Bathrooms &rarr; Courtyard & BBQ &rarr; Curated Hikkaduwa Experiences*.
    - Floating sticky anchor navigation and Full Visual Gallery modal for categorized spatial exploration.
-2. **Module 2 — Adaptive Booking Engine (§ 3.2):**
-   - **Mini-Form 1 (Calendar):** Real-time availability with red-highlighted unclickable booked dates; automatic date-type detection (Weekend / Weekday / Mixed).
+2. **Module 2 — WhatsApp Booking Inquiry (§ 3.2):**
+   - **Mini-Form 1 (Dates):** Check-in and check-out selection with past dates disabled and automatic date-type detection (Weekend / Weekday / Mixed). Phase 1 does not claim real-time availability or block booked dates.
    - **Mini-Form 2 (Guests):** 1–15 guest stepper with automatic package recommendation engine based on group capacity.
    - **Mini-Form 3 (Package & Contact):**
      - Mode A: Strictly Weekend packages.
      - Mode B: Strictly Weekday packages.
      - Mode C: Mixed Stay dual-selector (Weekend package + Weekday sub-form) with transparent split price math.
      - Sri Lankan and E.164 WhatsApp regex validation.
-   - **Confirmation:** Cryptographically random Booking ID (`VCC-YYYY-XXXXXX`) and instant concierge access.
-3. **Module 3 — Check-in Date Gated Review System & Google Reviews Showcase (§ 3.3):**
-   - Verified direct reviews unlock **strictly on/after the customer's check-in date** ($\text{Today} \ge \text{Check-in Date}$) for approved bookings.
+   - **Submission:** Opens a pre-filled WhatsApp inquiry to the host. It does not create a booking record or confirm availability.
+3. **Module 3 — Google Reviews Showcase (§ 3.3.2):**
    - Dedicated **Google Reviews showcase** featuring official Google aggregate rating badge, guest feedback cards, and direct Google Maps review action.
-   - Public review showcase with star distribution, verified guest badges, and pinned priority display.
-4. **Module 4 — Administrator Operations Portal (§ 3.4):**
-   - Inquiry pipeline with automated `⚠️ Date Conflict` detection for overlapping pending requests.
-   - One-click approval generating a branded luxury Quotation Image (PNG card) and pre-formatted WhatsApp dispatch.
-   - Booking cancellation workflow (`FR-ADM-CANCEL`) with automated date release via database `ON DELETE CASCADE`.
+   - No on-site review submission, review database, or admin review moderation is included in Phase 1.
+4. **Module 4 — Administrator Package Portal (§ 3.4):**
+   - Secure administrator authentication.
    - Full package management CRUD with soft deactivation (`is_active = FALSE`).
+
+> [!NOTE]
+> Database-backed bookings, approval/decline workflows, automated calendar blocking, quotation generation, cancellations, and direct-review moderation are deferred to Phase 2.

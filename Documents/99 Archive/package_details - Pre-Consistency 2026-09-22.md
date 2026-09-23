@@ -33,7 +33,7 @@ Every booking inquiry is evaluated night-by-night (based on the check-in night o
    - *Engine Rule:* Customer is presented with **Weekend Packages ONLY**.
 2. **Weekday Stay:** All nights fall on Monday, Tuesday, Wednesday, or Thursday.
    - *Engine Rule:* Customer is presented with **Weekday Packages ONLY**.
-3. **Mixed Stay:** The selected range spans across both Weekend and Weekday nights (e.g., Friday to Tuesday = 2 Weekend nights + 2 Weekday nights).
+3. **Mixed Stay:** The selected range spans across both Weekend and Weekday nights (e.g., Friday check-in to Tuesday check-out = 3 Weekend nights + 1 Weekday night).
    - *Engine Rule:* Primary selection chooses the Weekend package; an integrated secondary sub-form selects the Weekday package, calculating transparent split totals.
 
 ---
@@ -45,7 +45,11 @@ Weekend bookings represent exclusive full-property buyouts, granting complete pr
 | Package Name | Code / Identifier | A/C Configuration | Nightly Rate (LKR) | Max Capacity | Room Allocation | Inclusions & Highlights |
 | :--- | :--- | :---: | :---: | :---: | :---: | :--- |
 | **Weekend Standard — Non-A/C** | `PKG-WKND-NONAC` | Non-A/C | **Rs. 21,000/=** | 15 Guests | Full 5 Bedrooms | Full private villa buyout. Stand fans in all bedrooms, open breeze mezzanine lounge, full kitchen access, BBQ pavilion, private grounds. *Equates to ~Rs. 1,400/person for 15 guests.* |
-| **Weekend Premium — A/C** | `PKG-WKND-AC` | Air Conditioned | **Rs. 23,000/=** | 15 Guests | Full 5 Bedrooms | Full private villa buyout with air-conditioned master bedrooms. Stand fans in other bedrooms, full kitchen, BBQ pavilion, luxury linens, Wi-Fi. *Equates to ~Rs. 1,533/person for 15 guests.* |
+| **Weekend Premium — A/C** | `PKG-WKND-AC` | Air Conditioned | **Rs. 23,000/=** | 15 Guests | Full 5 Bedrooms | Full private villa buyout. The **2 master bedrooms have air conditioning switched ON**. Remaining 3 bedrooms have stand fans. Full kitchen, BBQ pavilion, luxury linens, Wi-Fi. *Equates to ~Rs. 1,533/person for 15 guests.* |
+
+> **A/C Room Allocation Policy:**
+> - **A/C Packages (Weekend Premium):** Customers receive the **2 A/C master bedrooms** (Bedroom 1 & Bedroom 2) with air conditioning switched ON, plus the remaining 3 bedrooms with stand fans.
+> - **Non-A/C Packages (Weekend Standard):** Air conditioning in the master bedrooms is **switched OFF**. Stand fans are provided throughout all 5 bedrooms. The specific internal room allocation for Non-A/C guests is managed by the host and is **not communicated on the website**.
 
 > **Weekend Booking Policy:** Minimum booking duration is 1 night. During holiday long weekends or festive peak seasons (e.g., Sinhala & Tamil New Year, Christmas/New Year), a 2-night minimum stay may be applied.
 
@@ -88,6 +92,9 @@ Weekday packages offer flexible pricing tailored for couples, small family retre
   - Non-A/C: **Rs. 8,500/=**
   - A/C: **Rs. 10,500/=**
 * **Capacity:** Up to 4 Guests (2 Bedrooms allocated)
+* **Room Allocation:**
+  - **A/C option:** The **2 A/C master bedrooms** (Bedroom 1 & Bedroom 2) are allocated with air conditioning ON.
+  - **Non-A/C option:** All villa rooms may be used; A/C in master bedrooms is switched OFF. Internal allocation managed by the host (not communicated on the website).
 * **Description:** Economical choice for two couples or four friends traveling together. Includes access to all communal living spaces and kitchen.
 
 #### 4. 3-Room Group Package (6 Pax)
@@ -95,6 +102,9 @@ Weekday packages offer flexible pricing tailored for couples, small family retre
   - Non-A/C: **Rs. 12,500/=**
   - A/C: **Rs. 14,500/=**
 * **Capacity:** Up to 6 Guests (3 Bedrooms allocated)
+* **Room Allocation:**
+  - **A/C option:** The **2 A/C master bedrooms** + 1 stand-fan bedroom are allocated.
+  - **Non-A/C option:** A/C in master bedrooms is switched OFF. Allocation managed by the host (not communicated on the website).
 * **Description:** Perfectly balanced for mid-sized groups. Ample bed arrangements with access to ground living room and garden courtyard.
 
 #### 5. 4-Room Group Package (8 Pax)
@@ -102,6 +112,9 @@ Weekday packages offer flexible pricing tailored for couples, small family retre
   - Non-A/C: **Rs. 15,500/=**
   - A/C: **Rs. 17,500/=**
 * **Capacity:** Up to 8 Guests (4 Bedrooms allocated)
+* **Room Allocation:**
+  - **A/C option:** The **2 A/C master bedrooms** + 2 stand-fan bedrooms are allocated.
+  - **Non-A/C option:** A/C switched OFF. Allocation managed by the host (not communicated on the website).
 * **Description:** Accommodates extended families or friend reunions with generous privacy across 4 dedicated bedrooms.
 
 #### 6. 5-Room Group Package (10 Pax)
@@ -222,11 +235,13 @@ All packages, regardless of tier, include access to the following property facil
 * **Check-out Time:** By **10:00 AM**.
 * **Villa Turnaround & Re-arrangement Window (10:00 AM – 1:00 PM):** A dedicated 3-hour window is reserved after 10:00 AM for the host to thoroughly clean, sanitize, replace fresh linens, and re-arrange the villa before the next guests arrive at 1:00 PM according to the booking schedule.
 * **Flexible Late Check-out Policy:** If a customer requests late check-out due to personal reasons, the host can allocate an extension of 1 hour (until 11:00 AM) or up to 1.5 hours (until 11:30 AM). The host utilizes the remaining turnaround time prior to 1:00 PM to complete all re-arrangements.
-* **Inquiry-First Confirmation:** Submitting a booking inquiry reserves tentative intent. Dates become **locked (red & unclickable)** on the public calendar **only upon Admin approval**.
-* **Confirmation Deliverable:** Upon approval, the customer receives:
-  1. An official high-resolution **Luxury Quotation & Confirmation PNG Card** containing complete pricing, guest details, and host seal.
-  2. A pre-formatted WhatsApp confirmation message directly from the host.
-* **Cancellation & Date Release (`FR-ADM-CANCEL`):** If an approved booking is cancelled by the admin (due to guest emergency or force majeure), all booked dates in `blocked_dates` are **instantly released via database `ON DELETE CASCADE`**, returning them to open status on the calendar.
+* **Phase 1 Inquiry-Only Policy:** Submitting the website form opens a pre-formatted WhatsApp inquiry to the host. It does **not** reserve, hold, or confirm the selected dates.
+* **Availability Confirmation:** Phase 1 does not provide automated availability or date blocking. The host verifies availability and confirms the stay directly with the customer through WhatsApp.
+* **Confirmation & Advance Payment:** Any confirmation message, payment instructions, or supporting media are handled manually by the host through WhatsApp.
+* **Cancellation:** Customers coordinate cancellations or date changes directly with the host through WhatsApp. No booking record or `blocked_dates` automation is implemented in Phase 1.
+
+> [!NOTE]
+> Automated approval/decline workflows, quotation-card generation, calendar locking, database-backed cancellation, and date release are reserved for Phase 2.
 
 ---
 
@@ -264,4 +279,4 @@ All packages documented herein are fully managed via the authenticated Admin Por
 1. **Create Package:** Add new seasonal, promotional, or event-specific packages with custom rates and guest limits.
 2. **Read / Filter:** View packages partitioned by `WEEKEND` and `WEEKDAY` tabs.
 3. **Update Package:** Edit nightly rates, features list, discount badges, or guest capacities at any time.
-4. **Soft Deactivate (`FR-ADM-16`):** Packages are flagged as `is_active = FALSE` when retired, preserving historical integrity with all past booking records. Hard deletion is strictly forbidden.
+4. **Soft Deactivate (`FR-ADM-16`):** Retired packages are flagged as `is_active = FALSE` so package history and stable identifiers remain available for auditing and future integrations. Hard deletion is strictly forbidden.

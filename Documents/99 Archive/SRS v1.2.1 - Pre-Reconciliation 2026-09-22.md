@@ -1,13 +1,13 @@
 # Software Requirements Specification (SRS)
 ## Villa Cinnamoon Castle Web Application
 
-**Document Version:** 1.2.0 — Phase 1 Revised  
+**Document Version:** 1.2.1 — Phase 1 Google Reviews Scope Aligned  
 **Status:** Active — Phase 1 Scoped (Post Host Requirements Clarification)  
 **Target Platform:** Web (Desktop, Tablet, Mobile)  
 **Reference Documents:**
-* [`Requirements file.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/Requirements%20file.md)
-* [`property_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/property_details.md)
-* [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/package_details.md)
+* [`Original Requirements.md`](../01%20Source%20Information/Original%20Requirements.md)
+* [`property_details.md`](../01%20Source%20Information/property_details.md)
+* [`package_details.md`](../01%20Source%20Information/package_details.md)
 
 > [!NOTE]
 > **📋 Phase 1 Scope — Host Requirements Clarification (2026-09-20)**
@@ -15,14 +15,15 @@
 > - **Booking Engine:** Simplified to a **WhatsApp Inquiry Form** only. No backend database, status machine, or date-blocking system in Phase 1. All business workflow (advance payment, confirmation, calendar management) is handled directly by the hoster via WhatsApp.
 > - **On-Site Review System:** Deferred to a future phase. Only **Google Reviews showcase** (§ 3.3.4) is active in Phase 1.
 > - **Package Pricing:** Current prices and packages used as-is for Phase 1 development.
-> - **Complex Booking Engine** (§ 3.2 original), **Admin Booking Management** (§ 3.4.2), **Calendar Engine** (§ 3.4.5), **On-Site Review Gate** (§ 3.3.1–3.3.3) are all **deferred to Phase 2**.
+> - **Admin Package Management (§ 3.4.4):** Full package CRUD (Create, Read, Update, Soft-Deactivate) is **in scope for Phase 1**. The admin must be able to manage all package details from Day 1.
+> - **Complex Booking Engine** (§ 3.2 original), **Admin Booking Management** (§ 3.4.2), **Calendar Engine** (§ 3.4.5), **On-Site Review Gate** (§ 3.3.1–3.3.3), and **Direct Review Moderation** (§ 3.4.3) are all **deferred to Phase 2**.
 
 ---
 
 ## 1. Introduction
 
 ### 1.1 Purpose
-This Software Requirements Specification (SRS) establishes the complete functional and non-functional requirements for the official web platform of **Villa Cinnamoon Castle**, an authentic luxury 5-bedroom holiday villa located in Arachchikanda, Hikkaduwa, Sri Lanka. This document defines the Phase 1 system architecture: customer scrollytelling journey, WhatsApp-based booking inquiry form, dedicated Google Reviews showcase, and the administrative portal for review and package management.
+This Software Requirements Specification (SRS) establishes the complete functional and non-functional requirements for the official web platform of **Villa Cinnamoon Castle**, an authentic luxury 5-bedroom holiday villa located in Arachchikanda, Hikkaduwa, Sri Lanka. This document defines the Phase 1 system architecture: customer scrollytelling journey, WhatsApp-based booking inquiry form, dedicated Google Reviews showcase, and the administrative portal for package management.
 
 ### 1.2 Scope
 
@@ -36,7 +37,6 @@ The web application encompasses two primary subsystems:
    - Transparent showcase of package pricing, location, and curated experiences.
 2. **Admin Operations Portal (Private, Authenticated):**
    - Secure authentication for property management.
-   - Review moderation engine (pin, hide, publish without editing text).
    - Full package management (Create, Read, Update, Delete).
 
 #### Phase 2 (Deferred — Pending Further Requirements)
@@ -46,6 +46,7 @@ The web application encompasses two primary subsystems:
 > - Admin booking inquiry pipeline (approve/decline/quotation/WhatsApp dispatch)
 > - Automated calendar date-blocking system
 > - On-site verified guest review submission system (check-in date gated)
+> - Direct-review moderation (pin/hide) and its supporting review database
 > - Database-driven booking records and availability API
 
 ### 1.3 Definitions, Acronyms, and Abbreviations
@@ -76,15 +77,15 @@ graph TB
         WebFront[Customer Frontend & Scrollytelling Tour]
         InquiryForm[3-Step WhatsApp Inquiry Form]
         GoogleReviews[Google Reviews Showcase]
-        AdminDashboard[Admin Portal — Reviews & Packages]
+        AdminDashboard[Admin Portal — Packages]
         APIServer[Backend API]
-        Database[(Database: Reviews, Packages)]
+        Database[(Database: Packages)]
     end
 
     subgraph External Services
         WhatsAppApp[WhatsApp — Hoster's Phone]
         GoogleBiz[Google Business Profile]
-        MapService[Google Maps Embed]
+        MapService[Google Maps — User-Initiated Link or Load]
     end
 
     Customer -->|Browses Property| WebFront
@@ -96,7 +97,7 @@ graph TB
     AdminUser -->|Authenticates| AdminDashboard
     AdminDashboard --> APIServer
     APIServer --> Database
-    WebFront --> MapService
+    WebFront -->|Visitor chooses to open map| MapService
 ```
 
 ### 2.2 User Classes and Characteristics
@@ -105,7 +106,7 @@ graph TB
    - Browses property details, explores rooms via interactive scroll, and submits WhatsApp booking inquiries.
 2. **Villa Administrator (Property Owner/Manager):**
    - Authenticated via secure administrative credentials.
-   - Manages public reviews (pin/hide) and package catalog (CRUD).
+   - Manages the package catalog (CRUD).
    - Receives all booking inquiries directly on WhatsApp and manages the full booking workflow independently.
 
 > [!NOTE]
@@ -121,8 +122,12 @@ graph TB
 2. **Visual Fidelity:** Must match the warm cinnamon villa design aesthetic. Reference: luxury villa websites (not apartment or large hotel websites) for design inspiration.
 3. **Strict Phone Validation:** Customer WhatsApp numbers must be validated via Regex before the inquiry form can be submitted.
 4. **WhatsApp-First Inquiry:** All booking inquiries are routed directly to the hoster's WhatsApp. No server-side booking storage in Phase 1.
-5. **A/C Room Transparency:** The villa has exactly 2 air-conditioned bedrooms and 3 bedrooms with stand fans. This must be clearly communicated in both the property tour and the booking form. A/C preference is captured in the inquiry and communicated to the hoster via the WhatsApp message.
-6. **Review Protection Rule:** Reviews cannot be edited by the administrator; only pinned or hidden.
+5. **A/C Room Transparency & Allocation Policy:**
+   - The villa has exactly **2 air-conditioned master bedrooms** (Bedroom 1 & Bedroom 2) and **3 bedrooms with stand fans only** (Bedrooms 3, 4 & 5).
+   - **A/C Packages:** Customers who select an A/C package are allocated the **2 A/C master bedrooms** with air conditioning switched ON. The remaining bedrooms have stand fans.
+   - **Non-A/C Packages:** Customers who select a Non-A/C package have all villa rooms available for use, but the air conditioning in the master bedrooms is **switched OFF**. Stand fans are provided throughout. The specific room allocation for Non-A/C packages is an **internal host operational decision and must NOT be communicated on the website**.
+   - This A/C distinction must be clearly communicated in both the property tour and the booking form.
+6. **Google Reviews Phase 1 Rule:** Phase 1 only displays curated, authentic Google Reviews and links users to the official Google Business Profile. The administrator cannot edit, pin, hide, or otherwise moderate Google Reviews through this website. Direct-review moderation is deferred to Phase 2.
 7. **Check-in / Check-out & Turnaround Window:** Standard check-in is at **1:00 PM** and standard check-out is at **10:00 AM**. A dedicated 3-hour turnaround window (10:00 AM – 1:00 PM) is reserved for deep cleaning, sanitation, linen changes, and villa re-arrangements before incoming guests arrive. If requested by the guest due to personal circumstances, the hoster may flexibly grant an additional 1 hour (until 11:00 AM) or up to 1.5 hours (until 11:30 AM) for check-out, completing the re-arrangements in the remaining buffer before 1:00 PM.
 
 ---
@@ -130,7 +135,7 @@ graph TB
 ## 3. Detailed Functional Requirements
 
 ### 3.1 Module 1: Customer Property Elaboration & Scrollytelling Tour
-*Requirement Traceability: Requirements file.md § Customer (1, 4, 5)*
+*Requirement Traceability: Original Requirements.md § Customer (1, 4, 5)*
 
 #### 3.1.1 Architectural Standards & Flow
 The landing experience must lead with an immersive, scroll-driven visual walkthrough that guides the customer through the estate logically from arrival to intimate spaces:
@@ -164,7 +169,7 @@ The landing experience must lead with an immersive, scroll-driven visual walkthr
 * **FR-TOUR-03:** A "Full Visual Gallery Modal" with category filtering must allow direct space-by-space visual browsing for users preferring non-scroll exploration.
 
 ### 3.2 Module 2: WhatsApp Booking Inquiry Form (Phase 1)
-*Requirement Traceability: Requirements file.md § Customer (2)*
+*Requirement Traceability: Original Requirements.md § Customer (2)*
 
 > [!NOTE]
 > **Phase 1 Simplification:** This section replaces the previously planned complex booking engine. The inquiry form collects all necessary booking details and routes them as a pre-formatted WhatsApp message directly to the hoster. All booking confirmation, advance payment, and date management is handled by the hoster independently.
@@ -181,7 +186,7 @@ stateDiagram-v2
 ```
 
 #### 3.2.1 Step 1: Date Range Selection
-* **FR-INQ-01 (Dual Calendar Pickers):** The system shall display two distinct date pickers (Check-In and Check-Out), allowing independent selection. The check-out date must be at least 1 day after the check-in date (minimum 1-night stay). **1-day bookings (1 night) are explicitly supported** (e.g., check-in Friday → check-out Saturday is valid).
+* **FR-INQ-01 (Labelled Date-Range Selection):** The system shall display two clearly labelled fields (Check-In and Check-Out) backed by one shared date-range calendar model. Suitable desktop widths may show two calendar months, while mobile shows one month at a time. The check-out date must be at least 1 day after the check-in date (minimum 1-night stay). **1-day stays (1 night) are explicitly supported** (e.g., check-in Friday → check-out Saturday is valid).
 * **FR-INQ-02 (Past Date Blocking):** All dates prior to today must be disabled and visually muted in gray on both calendars. No backend date-blocking in Phase 1.
 * **FR-INQ-03 (Date Type Detection):** Upon valid date range selection, the system automatically classifies the stay by day-of-week:
 
@@ -195,7 +200,7 @@ stateDiagram-v2
   - 🔵 **Weekday Stay** — all selected nights fall on Mon–Thu.
   - 🟠 **Mixed Stay** — range contains both Weekend and Weekday nights (e.g., "2 Weekend nights + 3 Weekday nights").
 
-* **FR-INQ-04:** Total nights count and date type badge are displayed immediately after selection. **"Continue to Package →"** button activates upon valid selection.
+* **FR-INQ-04:** Total nights count and date type badge are displayed immediately after selection. The **"Continue"** button activates upon valid selection.
 
 #### 3.2.2 Step 2: Guest Count & Package Selection
 * **FR-INQ-05 (Guest Stepper):** Stepper component allowing selection from **1 to 15 guests** (default: 2).
@@ -208,15 +213,15 @@ stateDiagram-v2
   - 9–10 guests / Weekday → 5-Room Group (Non-A/C Rs. 17,900 / A/C Rs. 19,900)
   - 11–15 guests / Weekday → Full Villa (Non-A/C Rs. 17,900 / A/C Rs. 19,900)
   - Any guest count / Weekend → Weekend Standard Non-A/C (Rs. 21,000) or Weekend Premium A/C (Rs. 23,000)
-  - *Auto-suggestion is assistive only — customer retains full freedom to select any package.*
+  - *Auto-suggestion is assistive only — the customer may select any active package that accommodates the chosen guest count, including a larger eligible option.*
 * **FR-INQ-07 (Package Display — Date-Type Driven):**
   - **Weekend stays:** Display only Weekend packages.
   - **Weekday stays:** Display only Weekday packages.
   - **Mixed stays:** Display Weekend packages first (primary) + a sub-selector for the Weekday portion (secondary) with the transparent split calculation:
     $$\text{Total Price} = (\text{Weekend Nights} \times \text{Weekend Rate}) + (\text{Weekday Nights} \times \text{Weekday Rate})$$
-* **FR-INQ-08 (A/C Room Information Note):** All packages offering an A/C option must display the following note:
-  > *"The villa features 2 air-conditioned bedrooms. For A/C package bookings, your group may arrange these rooms as preferred. Stand fans are provided in all remaining bedrooms."*
-* **FR-INQ-09 (Live Price Summary Card):** An interactive summary card displays: check-in & check-out dates, total nights (with split if Mixed), selected package(s) and rate(s), total estimated amount, and per-person estimate.
+* **FR-INQ-08 (A/C Room Information Note):** All packages offering an A/C option must display the following transparency note:
+  > *"This villa features 2 air-conditioned master bedrooms and 3 bedrooms with stand fans. When you select an A/C package, the 2 master bedrooms with air conditioning are included. Stand fans are provided in all other bedrooms."*
+* **FR-INQ-09 (Live Price Summary Card):** An interactive summary card displays: check-in and check-out dates, total nights (with split if Mixed), guest count, selected package(s) and rate(s), and the total estimated amount. Phase 1 does not display a per-person estimate.
 
 #### 3.2.3 Step 3: Contact Details & Submission
 * **FR-INQ-10 (Contact Fields):**
@@ -224,7 +229,7 @@ stateDiagram-v2
   - **WhatsApp Number:** Mandatory, validated against Sri Lankan format `^(?:0|94|\+94)?(7[01245678]\d{7})$` or international E.164 `^\+?[1-9]\d{6,14}$`. Inline error on invalid input.
 * **FR-INQ-11 (Optional Special Requests):** Multiline text area for special requests (e.g., BBQ setup, dietary needs, arrival time).
 * **FR-INQ-12 (Consent Checkbox):** *"I understand this is a booking inquiry. The hoster will confirm dates and advance payment details via WhatsApp."*
-* **FR-INQ-13 (Submit Action):** Primary CTA: **"Send Inquiry on WhatsApp 🌿"** — enters loading state, prevents double-tap.
+* **FR-INQ-13 (Submit Action):** The primary CTA label is exactly **"Send Inquiry"**. Activation prepares and opens the WhatsApp deep-link, enters a short loading state while the link is prepared, and prevents repeated activation.
 
 #### 3.2.4 WhatsApp Redirect & Message Format
 * **FR-INQ-14:** Upon submission, the system opens WhatsApp via deep-link (`https://wa.me/94761007686?text=...`) with the following pre-formatted message:
@@ -250,14 +255,14 @@ stateDiagram-v2
 _(Sent via Villa Cinnamoon Castle website)_
 ```
 
-* **FR-INQ-15:** After triggering the WhatsApp redirect, a confirmation screen displays a summary and the message: *"Your inquiry has been sent! The hoster will contact you on WhatsApp shortly to confirm your booking and arrange advance payment."* A secondary CTA *"Chat with Host on WhatsApp"* repeats the link for convenience.
+* **FR-INQ-15:** Opening a WhatsApp deep-link does not prove that the visitor sent the prepared message. When the visitor returns to the browser, the page shall display **"WhatsApp opened"** and instruct the visitor to review the prepared message and tap Send in WhatsApp. Fallback actions shall be **"Open WhatsApp again"** and **"Copy inquiry details"**. The form state must remain available during the current session.
 
 ---
 
 
 
 ### 3.3 Module 3: Reviews
-*Requirement Traceability: Requirements file.md § Customer (3)*
+*Requirement Traceability: Original Requirements.md § Customer (3)*
 
 #### 3.3.1 On-Site Verified Guest Review System — Phase 2 Deferred
 
@@ -306,7 +311,7 @@ _(Sent via Villa Cinnamoon Castle website)_
 ---
 
 ### 3.4 Module 4: Administrator Operations Portal
-*Requirement Traceability: Requirements file.md § Admin (1-4)*
+*Requirement Traceability: Original Requirements.md § Admin (1-4)*
 
 #### 3.4.1 Admin Authentication & Session Management
 * **FR-ADM-01:** Admin login page located at `/admin/login`.
@@ -421,7 +426,12 @@ _(Sent via Villa Cinnamoon Castle website)_
   - **Review Eligibility:** A cancelled booking permanently disqualifies the customer from submitting a review for that Booking ID.
   - **History Retention:** The cancelled booking record is **permanently retained** in the Admin Booking History with status `CANCELLED` for audit purposes.
 
-#### 3.4.3 Review Moderation System
+#### 3.4.3 Direct Review Moderation System 🚧 (Phase 2 Deferred)
+
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — Do Not Implement**  
+> Phase 1 displays Google Reviews only. Google Reviews are not editable, pinnable, or hideable through the Villa Cinnamoon Castle Admin Portal. The requirements below apply only to the future on-site direct-review system.
+
 * **FR-ADM-10 (Integrity Constraint):** The admin interface **shall not allow editing or altering** customer review text, ratings, or customer names.
 * **FR-ADM-11 (Pinning):** Admin can toggle `is_pinned` status to highlight standout reviews on the homepage.
 * **FR-ADM-12 (Hiding):** Admin can toggle `is_visible` status to hide inappropriate, irrelevant, or spam reviews from the public website.
@@ -445,7 +455,7 @@ _(Sent via Villa Cinnamoon Castle website)_
 
 ## 4. Customer Page Structure & Information Architecture
 
-*Requirement Traceability: Requirements file.md § Customer (4)*
+*Requirement Traceability: Original Requirements.md § Customer (4)*
 
 The customer-facing application is organized into the following clear, intuitive sections and pages:
 
@@ -456,9 +466,9 @@ The customer-facing application is organized into the following clear, intuitive
 | **`#packages`** | **Villa Rates & Packages** | Transparent pricing matrix: Weekend Full Villa (Non-A/C Rs. 21,000 / A/C Rs. 23,000), Weekday Full Villa (Non-A/C Rs. 17,900 / A/C Rs. 19,900), Group Room Options (2 to 5 rooms from Rs. 8,500), Couples (Rs. 6,500), Family (Rs. 8,500). |
 | **`#reserve`** | **Interactive Booking Wizard** | 3-step mini-forms (Red-calendar date selector &rarr; Guest count &rarr; Package selection & WhatsApp regex). |
 | **`#experiences`** | **Activities & Neighborhood** | BBQ courtyard, boat safaris, surfing, Hikkaduwa coral reef, distance matrix, interactive map. |
-| **`#reviews`** | **Guest & Google Reviews** | Dedicated Google Reviews showcase with aggregate rating badge & carousel, pinned & verified direct reviews, star distribution, and check-in date gated review access modal. |
+| **`#reviews`** | **Google Reviews** | Dedicated Google Reviews showcase with aggregate rating badge, curated authentic review cards or carousel, direct Google Business Profile link, and “Review Us on Google” CTA. No direct-review submission or moderation is included in Phase 1. |
 | **`#contact`** | **Host & Directions** | Dampalla Gamage Devindu contact card, WhatsApp hotline (+94 76 100 7686), address & GPS coordinates. |
-| **`/admin`** | **Admin Portal** | Authenticated management dashboard for bookings, reviews, packages, and calendar. |
+| **`/admin`** | **Admin Portal** | Authenticated package-management dashboard. Booking management, calendar management, and direct-review moderation are deferred to Phase 2. |
 
 ---
 
@@ -523,7 +533,7 @@ erDiagram
         datetime created_at
     }
 
-    REVIEW {
+    REVIEW_PHASE2 {
         string id PK "UUID"
         string booking_id FK UK
         string customer_name
@@ -536,7 +546,7 @@ erDiagram
         datetime created_at
     }
 
-    BOOKING_REQUEST ||--o| REVIEW : "unlocks after check_in"
+    BOOKING_REQUEST ||--o| REVIEW_PHASE2 : "Phase 2: unlocks after check_in"
     BOOKING_REQUEST }|--|| PACKAGE : "primary_package"
     BOOKING_REQUEST }|--o| PACKAGE : "secondary_package"
     BOOKING_REQUEST ||--o{ BLOCKED_DATE : "reserves"
@@ -665,7 +675,15 @@ CREATE TABLE blocked_dates (
 );
 ```
 
-#### 5. `reviews` Table
+#### 5. `reviews` Table 🚧 (Phase 2 Deferred)
+
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — Do Not Implement**  
+> Phase 1 uses a presentation-only Google Reviews showcase and does not store or moderate reviews in the application database. This table is retained solely as a future reference for the on-site direct-review system.
+
+<details>
+<summary>📄 Phase 2 Reference: reviews DDL</summary>
+
 ```sql
 CREATE TABLE reviews (
     id VARCHAR(36) PRIMARY KEY,
@@ -680,6 +698,7 @@ CREATE TABLE reviews (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
+</details>
 
 ---
 
@@ -753,6 +772,14 @@ CREATE TABLE reviews (
 ### 7.4 Data Integrity
 * **NFR-INT-01 (Phase 1 — No Backend Booking Storage):** In Phase 1, inquiry data is sent directly to the hoster's WhatsApp. No server-side booking storage or transactional date-locking is required. *Phase 2 Note: Transactional date-locking will be required when booking approval workflow is implemented.*
 
+### 7.5 Privacy & Data Minimisation
+* **NFR-PRV-01 (Privacy Notice):** A public `/privacy` page shall explain the personal information used by the inquiry flow, its purpose, temporary browser-session state, WhatsApp handoff, technical hosting logs, external links, retention criteria, visitor choices and the privacy contact route.
+* **NFR-PRV-02 (Session-Scoped Form State):** Inquiry progress may be retained in session-scoped browser storage to prevent accidental loss while navigating the form. Phase 1 shall not persist inquiry details in a backend booking database.
+* **NFR-PRV-03 (No Non-Essential Tracking by Default):** The initial release shall not enable advertising cookies or behavioural analytics. Any later addition requires an updated Privacy Notice and any consent controls required by applicable law before activation.
+* **NFR-PRV-04 (User-Initiated Third-Party Maps):** Google Maps shall open through a visitor-initiated action or load only after the visitor chooses to activate it. The initial page load shall not automatically transmit visitor data through an interactive third-party map embed.
+* **NFR-PRV-05 (No Sensitive Transaction Data):** The public website shall not request or collect payment-card details, bank-account details or passport information. Visitors shall be advised not to place unnecessary sensitive or medical information in `Special requests`.
+* **NFR-PRV-06 (Policy Accuracy):** The Privacy Notice shall show a last-updated date and must be reviewed before launch and whenever hosting, analytics, maps, inquiry storage, payment collection or third-party integrations change.
+
 ---
 
 ## 8. Requirement Traceability Matrix (RTM)
@@ -765,16 +792,16 @@ CREATE TABLE reviews (
 | **Cust 4** | Single-page luxury architecture | § 4.0 | Single-page with anchored sections & modals |
 | **Cust 5** | Fully responsive and mobile-friendly | § 7.1 | CSS Flexbox/Grid, mobile-first layout, touch targets |
 | **Google Reviews** | Google Reviews showcase with aggregate badge & cards | § 3.3.4 | Google Business Profile badge + curated reviews carousel + Review CTA |
-| **INQ 1** | Dual calendar pickers (check-in + check-out), 1-night min, past dates disabled | § 3.2.1 | Two independent date pickers, client-side validation |
+| **INQ 1** | Labelled check-in and check-out fields, 1-night min, past dates disabled | § 3.2.1 | Shared responsive date-range calendar model + client-side validation |
 | **INQ 2** | Guest count (1–15) + date-type-driven auto-suggestion | § 3.2.2 | Stepper + auto-suggest engine (Weekend/Weekday/Mixed) |
 | **INQ 3** | Adaptive Package Selection (Weekend/Weekday/Mixed) + A/C note | § 3.2.2 | Date-type mode switching, split pricing, A/C transparency note |
 | **INQ 4** | WhatsApp redirect with structured pre-formatted message | § 3.2.4 | `wa.me` deep-link with URL-encoded message template |
+| **Privacy** | Transparent, data-minimising Phase 1 inquiry flow | § 7.5 | Privacy Notice, session-scoped form state, no backend inquiry storage or non-essential tracking |
 | **Admin 1** | Admin authentication required | § 3.4.1 | Bcrypt hashed login + protected session |
-| **Admin 3** | Manage reviews (Hide / Pin only, no altering) | § 3.4.3 | Toggle `is_pinned` / `is_visible`; edit fields disabled |
 | **Admin 4** | Manage package details (Full CRUD, soft deactivate) | § 3.4.4 | Admin CRUD for all packages; soft deactivate (`is_active=FALSE`) |
 
 > [!NOTE]
-> **Phase 2 RTM entries** (Admin booking pipeline, date-blocking, review gate, cancellation) will be added when Phase 2 requirements are confirmed.
+> **Phase 2 RTM entries** (Admin booking pipeline, date-blocking, on-site review gate, direct-review moderation, and cancellation) will be added when Phase 2 requirements are confirmed.
 
 ---
 
@@ -787,7 +814,7 @@ CREATE TABLE reviews (
 4. **Date Type Detection Tests:** Verify weekend/weekday/mixed classification across edge cases (Friday only → Weekend; Monday only → Weekday; Friday to Monday → Mixed: 2 Weekend + 1 Weekday).
 
 ### 9.2 Phase 1 Manual End-to-End Walkthrough
-1. **Visitor Journey (Mixed Stay):** Visitor browses scrollytelling tour → views Google Reviews → selects check-in Friday + check-out Tuesday → system detects 2 Weekend nights + 2 Weekday nights → enters 8 guests → wizard auto-suggests 4-Room package → visitor selects Weekend Premium A/C + Weekday 4-Room A/C → sees live split price → enters name + WhatsApp → submits → WhatsApp opens with pre-filled message.
+1. **Visitor Journey (Mixed Stay):** Visitor browses scrollytelling tour → views Google Reviews → selects check-in Friday + check-out Tuesday → system detects 3 Weekend nights + 1 Weekday night → enters 8 guests → wizard auto-suggests 4-Room package → visitor selects Weekend Premium A/C + Weekday 4-Room A/C → sees live split price → enters name + WhatsApp → submits → WhatsApp opens with pre-filled message.
 2. **1-Night Booking:** Visitor selects check-in Saturday + check-out Sunday → system accepts (1 night, Weekend) → Weekend packages shown → visitor selects and submits.
 3. **Admin Package Management:** Admin logs in → creates new weekday package → updates pricing → soft-deactivates old package → verifies deactivated package hidden from customer inquiry form.
 4. **Google Reviews Section:** Visitor views Google Reviews section → sees aggregate rating badge → browses curated Google review cards → clicks "Review Us on Google" CTA → Google Maps opens to Villa Cinnamoon Castle listing.

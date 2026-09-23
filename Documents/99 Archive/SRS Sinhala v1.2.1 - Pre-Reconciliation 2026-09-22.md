@@ -1,13 +1,13 @@
 # මෘදුකාංග අවශ්‍යතා පිරිවිතරය (Software Requirements Specification - SRS)
 ## Villa Cinnamoon Castle වෙබ් යෙදුම (Web Application)
 
-**ලේඛන අනුවාදය:** 1.2.0 — පළමු අදියර සංශෝධිත (Phase 1 Revised)  
+**ලේඛන අනුවාදය:** 1.2.1 — පළමු අදියරේ Google Reviews විෂය පථය සමගාමී කළ සංස්කරණය  
 **තත්ත්වය:** සක්‍රීයයි — අදියර 1 විෂය පථය (විලා සත්කාරක අවශ්‍යතා පැහැදිලි කර ගැනීමෙන් පසු)  
 **ඉලක්කගත වේදිකාව:** Web (Desktop, Tablet, Mobile)  
 **ආශ්‍රිත ලේඛන:**
-* [`Requirements file.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/Requirements%20file.md)
-* [`property_details_Sinhala.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/property_details_Sinhala.md) / [`property_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/property_details.md)
-* [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/package_details.md)
+* [`Original Requirements.md`](../01%20Source%20Information/Original%20Requirements.md)
+* [`property_details_Sinhala.md`](../05%20Sinhala/property_details_Sinhala.md) / [`property_details.md`](../01%20Source%20Information/property_details.md)
+* [`package_details.md`](../01%20Source%20Information/package_details.md)
 
 > [!NOTE]
 > **📋 පළමු අදියරේ විෂය පථය (Phase 1 Scope) — විලා සත්කාරකගේ අවශ්‍යතා පැහැදිලි කර ගැනීම (2026-09-20)**  
@@ -15,14 +15,15 @@
 > - **වෙන්කිරීමේ පද්ධතිය (Booking Engine):** පළමු අදියර සඳහා **WhatsApp විමසුම් පෝරමයක් (WhatsApp Inquiry Form)** පමණක් ක්‍රියාත්මක කෙරේ. Backend database එකක් තුළ booking තැන්පත් කිරීම, status lifecycle කළමනාකරණය හෝ දින අවහිර කිරීමේ (date-blocking) පද්ධතියක් පළමු අදියරට ඇතුළත් නොවේ. සියලුම ව්‍යාපාරික කටයුතු (අත්තිකාරම් මුදල් ලබා ගැනීම, දින තහවුරු කිරීම සහ දින දර්ශනය කළමනාකරණය) සත්කාරක විසින් WhatsApp ඔස්සේ සෘජුවම සිදු කරනු ඇත.
 > - **අඩවියේ සෘජු විචාර පද්ධතිය (On-Site Review System):** අනාගත අදියරක් (Phase 2) දක්වා කල් තබා ඇත. පළමු අදියරේදී **Google Reviews සංදර්ශකය (§ 3.3.4)** පමණක් සක්‍රීයව පවතී.
 > - **පැකේජ මිල ගණන් (Package Pricing):** පවතින මිල ගණන් සහ පැකේජ එලෙසම පළමු අදියර සංවර්ධනය සඳහා යොදා ගැනේ.
-> - **සංකීර්ණ වෙන්කිරීමේ එන්ජිම (§ 3.2), පරිපාලක වෙන්කිරීම් කළමනාකරණය (§ 3.4.2), දින දර්ශන එන්ජිම (§ 3.4.5), සහ සෘජු විචාර පද්ධතිය (§ 3.3.1–3.3.3) දෙවන අදියර (Phase 2) සඳහා කල් දමා ඇත.**
+> - **පරිපාලක පැකේජ කළමනාකරණය (Admin Package Management - § 3.4.4):** සම්පූර්ණ පැකේජ CRUD (Create, Read, Update, Soft-Deactivate) **පළමු අදියරේදී ක්‍රියාත්මක කළ යුතු** අංගයකි. සංවර්ධනය ආරම්භයේ සිටම Admin ට සියලු පැකේජ විස්තර කළමනාකරණය කිරීමේ හැකියාව ලැබිය යුතුය.
+> - **සංකීර්ණ වෙන්කිරීමේ එන්ජිම (§ 3.2), පරිපාලක වෙන්කිරීම් කළමනාකරණය (§ 3.4.2), දින දර්ශන එන්ජිම (§ 3.4.5), සෘජු විචාර පද්ධතිය (§ 3.3.1–3.3.3), සහ සෘජු විචාර පාලනය (§ 3.4.3) දෙවන අදියර (Phase 2) සඳහා කල් දමා ඇත.**
 
 ---
 
 ## 1. හැඳින්වීම (Introduction)
 
 ### 1.1 අරමුණ (Purpose)
-මෙම මෘදුකාංග අවශ්‍යතා පිරිවිතරයේ (SRS) අරමුණ වන්නේ ශ්‍රී ලංකාවේ හික්කඩුව, ආරච්චිකන්ද ප්‍රදේශයේ පිහිටි කාමර 5කින් සමන්විත සුඛෝපභෝගී නිවාඩු නිකේතනයක් වන **Villa Cinnamoon Castle** හි නිල වෙබ් වේදිකාව සඳහා වන පළමු අදියරේ (Phase 1) සම්පූර්ණ ක්‍රියාකාරී (Functional) සහ ක්‍රියාකාරී නොවන (Non-Functional) අවශ්‍යතා නිර්වචනය කිරීමයි. මෙම ලේඛනය මගින් පද්ධති ගෘහ නිර්මාණ ශිල්පය (Architecture), පාරිභෝගික Scrollytelling අත්දැකීම, පියවර 3කින් යුත් WhatsApp වෙන්කිරීමේ විමසුම් පෝරමය, කැපවූ Google Reviews සංදර්ශකය, සහ විචාර හා පැකේජ කළමනාකරණය සඳහා වන පරිපාලන පාලක පුවරුව (Admin Portal) විස්තර කෙරේ.
+මෙම මෘදුකාංග අවශ්‍යතා පිරිවිතරයේ (SRS) අරමුණ වන්නේ ශ්‍රී ලංකාවේ හික්කඩුව, ආරච්චිකන්ද ප්‍රදේශයේ පිහිටි කාමර 5කින් සමන්විත සුඛෝපභෝගී නිවාඩු නිකේතනයක් වන **Villa Cinnamoon Castle** හි නිල වෙබ් වේදිකාව සඳහා වන පළමු අදියරේ (Phase 1) සම්පූර්ණ ක්‍රියාකාරී (Functional) සහ ක්‍රියාකාරී නොවන (Non-Functional) අවශ්‍යතා නිර්වචනය කිරීමයි. මෙම ලේඛනය මගින් පද්ධති ගෘහ නිර්මාණ ශිල්පය (Architecture), පාරිභෝගික Scrollytelling අත්දැකීම, පියවර 3කින් යුත් WhatsApp වෙන්කිරීමේ විමසුම් පෝරමය, කැපවූ Google Reviews සංදර්ශකය, සහ පැකේජ කළමනාකරණය සඳහා වන පරිපාලන පාලක පුවරුව (Admin Portal) විස්තර කෙරේ.
 
 ### 1.2 විෂය පථය (Scope)
 
@@ -31,12 +32,11 @@
 1. **පාරිභෝගික අත්දැකීම් ද්වාරය (Customer Experience Portal - පොදු, ගිණුම් අවශ්‍ය නැත):**
    - සුඛෝපභෝගී විලා වෙබ් අඩවි ප්‍රමිතීන්ට අනුව සකස් කළ උසස් තත්ත්වයේ දෘශ්‍ය ඉදිරිපත් කිරීම.
    - සියලුම කාමර, පරිශ්‍රය සහ පහසුකම් ආවරණය වන පරිදි සකස් කළ **"Scrollytelling Property Elaboration"** කතාන්දර චාරිකාව.
-   - **පියවර 3කින් යුත් WhatsApp විමසුම් පෝරමය (Inquiry Form):** දින පරාසය තේරීම (Check-in සහ Check-out දින දර්ශන දෙකක් සහිතව), අමුත්තන් ගණන සහ පැකේජය තේරීම, සම්බන්ධතා තොරතුරු ඇතුළත් කිරීම — අවසානයේ සියලු විස්තර සහිතව සත්කාරකගේ WhatsApp වෙත යොමු වන සකස් කළ පණිවිඩයක් ජනනය වීම.
+   - **පියවර 3කින් යුත් WhatsApp විමසුම් පෝරමය (Inquiry Form):** Check-in සහ Check-out සඳහා ලේබල් කළ fields දෙකකට සම්බන්ධ shared date-range calendar model එකක් භාවිතයෙන් දින පරාසය තේරීම, අමුත්තන් ගණන සහ පැකේජය තේරීම, සම්බන්ධතා තොරතුරු ඇතුළත් කිරීම — අවසානයේ සත්කාරකගේ WhatsApp වෙත යැවීම සඳහා සකස් කළ පණිවිඩයක් ජනනය වීම.
    - සත්‍යාපිත Google ශ්‍රේණිගත කිරීම්, අමුත්තන්ගේ සැබෑ ප්‍රතිචාර සහ සෘජු Google review සබැඳිය ඇතුළත් කැපවූ **Google Reviews සංදර්ශකය**.
    - පැකේජ මිල ගණන්, පිහිටීම සහ විශේෂිත අත්දැකීම් විනිවිදභාවයෙන් යුතුව ප්‍රදර්ශනය කිරීම.
 2. **පරිපාලන මෙහෙයුම් ද්වාරය (Admin Operations Portal - පුද්ගලික, මුරපද සහිතයි):**
    - දේපළ කළමනාකරණය සඳහා ආරක්ෂිත පරිපාලක පිවිසුම (Secure Authentication).
-   - විචාර පාලන එන්ජිම (Review Moderation - අකුරු වෙනස් නොකර Pin කිරීම, සැඟවීම හෝ ප්‍රකාශයට පත් කිරීම).
    - සම්පූර්ණ පැකේජ කළමනාකරණය (Create, Read, Update, Delete - CRUD).
 
 #### දෙවන අදියර (Phase 2 - කල් දැමූ අංග — වැඩිදුර අවශ්‍යතා තහවුරු වන තෙක්)
@@ -46,6 +46,7 @@
 > - පරිපාලක වෙන්කිරීම් කළමනාකරණ කාර්ය ප්‍රවාහය (අනුමත කිරීම / ප්‍රතික්ෂේප කිරීම / Quotation image සෑදීම).
 > - ස්වයංක්‍රීය දින අවහිර කිරීමේ දින දර්ශන පද්ධතිය (Automated calendar date-blocking).
 > - Check-in දිනය පදනම් කරගත් අඩවියේ සෘජු විචාර ඉදිරිපත් කිරීමේ පද්ධතිය (On-site verified review gate).
+> - සෘජු විචාර පාලනය (Pin/Hide) සහ ඒ සඳහා අවශ්‍ය review database එක.
 > - Database මගින් ක්‍රියාත්මක වන වෙන්කිරීම් වාර්තා සහ availability API.
 
 ### 1.3 නිර්වචන, කෙටි යෙදුම් සහ සංක්ෂිප්ත (Definitions, Acronyms, and Abbreviations)
@@ -76,15 +77,15 @@ graph TB
         WebFront[පාරිභෝගික Frontend සහ Scrollytelling සංචාරය]
         InquiryForm[පියවර 3කින් යුත් WhatsApp විමසුම් පෝරමය]
         GoogleReviews[Google Reviews සංදර්ශකය]
-        AdminDashboard[පරිපාලක පුවරුව — Reviews සහ Packages]
+        AdminDashboard[පරිපාලක පුවරුව — Packages]
         APIServer[Backend API]
-        Database[(Database: Reviews, Packages)]
+        Database[(Database: Packages)]
     end
 
     subgraph External Services
         WhatsAppApp[WhatsApp — සත්කාරකගේ දුරකථනය]
         GoogleBiz[Google Business Profile]
-        MapService[Google Maps Embed]
+        MapService[Google Maps — අමුත්තා ක්‍රියාත්මක කරන Link හෝ Load]
     end
 
     Customer -->|දේපළ ගවේෂණය කරයි| WebFront
@@ -96,7 +97,7 @@ graph TB
     AdminUser -->|පිවිසෙයි (Authenticates)| AdminDashboard
     AdminDashboard --> APIServer
     APIServer --> Database
-    WebFront --> MapService
+    WebFront -->|අමුත්තා Map එක විවෘත කිරීමට තෝරයි| MapService
 ```
 
 ### 2.2 පරිශීලක පන්ති සහ ලක්ෂණ (User Classes and Characteristics)
@@ -105,7 +106,7 @@ graph TB
    - දේපළ තොරතුරු පරීක්ෂා කිරීම, Scroll හරහා කාමර ගවේෂණය කිරීම සහ WhatsApp වෙන්කිරීමේ විමසුම් යොමු කිරීම සිදු කරයි.
 2. **විලා පරිපාලක (Villa Administrator — හිමිකරු/කළමනාකරු):**
    - ආරක්ෂිත පරිපාලක මුරපද මගින් පිවිසේ.
-   - පොදු විචාර (Pin / Hide) සහ පැකේජ නාමාවලිය (CRUD) කළමනාකරණය කරයි.
+   - පැකේජ නාමාවලිය (CRUD) කළමනාකරණය කරයි.
    - සියලුම වෙන්කිරීමේ විමසීම් සෘජුවම WhatsApp හරහා ලබා ගන්නා අතර, සම්පූර්ණ වෙන්කිරීමේ ක්‍රියාවලිය ස්වාධීනව කළමනාකරණය කරයි.
 
 > [!NOTE]
@@ -121,8 +122,12 @@ graph TB
 2. **දෘශ්‍ය ආකර්ෂණය සහ සෞන්දර්යය (Visual Fidelity):** උණුසුම් කුරුඳු පැහැති (warm cinnamon) සුඛෝපභෝගී විලා සැලසුම් සෞන්දර්යයට අනුකූල විය යුතුය. නිර්මාණ ආශ්වාදය සඳහා සුඛෝපභෝගී විලා වෙබ් අඩවි (luxury villa websites) ආශ්‍රය කළ යුතුය (සාමාන්‍ය හෝටල් හෝ මහල් නිවාස අඩවි නොවේ).
 3. **දැඩි දුරකථන අංක වලංගුකරණය (Strict Phone Validation):** විමසුම් පෝරමය යැවීමට පෙර පාරිභෝගිකයාගේ WhatsApp අංකය Regex මගින් දැඩි ලෙස වලංගු කළ යුතුය.
 4. **WhatsApp මූලික කරගත් විමසුම් ක්‍රමය (WhatsApp-First Inquiry):** සියලුම වෙන්කිරීමේ විමසීම් සෘජුවම සත්කාරකගේ WhatsApp වෙත යොමු කෙරේ. පළමු අදියරේදී සේවාදායකයේ (server-side) booking ගබඩා නොකෙරේ.
-5. **වායුසමීකරණ කාමර විනිවිදභාවය (A/C Room Transparency):** විලා නිවසේ ඇත්තේ හරියටම වායුසමනය කළ නිදන කාමර 2ක් සහ Stand Fans සහිත නිදන කාමර 3ක් පමණි. මෙය දේපළ චාරිකාවේදී මෙන්ම වෙන්කිරීමේ පෝරමයේදීද පැහැදිලිව පෙන්විය යුතුය. පාරිභෝගිකයාගේ A/C මනාපය විමසුමේ සටහන් කර WhatsApp පණිවිඩය හරහා සත්කාරක වෙත යවනු ලැබේ.
-6. **විචාර ආරක්ෂණ රීතිය (Review Protection Rule):** පරිපාලකවරයාට පාරිභෝගික විචාරවල අකුරු සංස්කරණය කළ නොහැක; ඒවා Pin කිරීමට හෝ සැඟවීමට (Hide) පමණක් හැකිය.
+5. **වායුසමීකරණ කාමර විනිවිදභාවය සහ කාමර බෙදා දීමේ ප්‍රතිපත්තිය (A/C Room Transparency & Allocation Policy):**
+   - විලා නිවසේ ඇත්තේ **A/C සහිත ප්‍රධාන නිදන කාමර 2ක්** (කාමරය 1 සහ කාමරය 2) සහ **Stand Fans පමණක් ඇති නිදන කාමර 3ක්** (කාමරය 3, 4 සහ 5) පමණි.
+   - **A/C Package:** A/C Package ගත් පාරිභෝගිකයින්ට **A/C ප්‍රධාන කාමර 2 ලැබෙන** අතර, A/C Switch ON කෙරේ. අනෙක් කාමරවල Stand Fans ලබා දෙනු ලැබේ.
+   - **Non-A/C Package:** Non-A/C Package ගත් පාරිභෝගිකයින්ට සියලු කාමර ලැබෙන නමුත්, ප්‍රධාන කාමරවල A/C **Switch OFF** කර ඇත. සියලු කාමරවල Stand Fans ලැබේ. **කුමන කාමර ලැබෙන්නේ දැයි වෙබ් අඩවිය තුළ නොපෙන්විය යුතුය** — එය සත්කාරකගේ ක්‍රියාත්මක කිරීමේ තීරණයකි.
+   - A/C සහ Non-A/C අතර වෙනස, දේපළ චාරිකාවේදීද, වෙන්කිරීමේ පෝරමයේදීද **පැහැදිලිව** පෙන්විය යුතුය.
+6. **පළමු අදියරේ Google Reviews රීතිය:** පළමු අදියරේදී සත්‍ය Google Reviews තෝරා ප්‍රදර්ශනය කිරීම සහ නිල Google Business Profile එකට පරිශීලකයන් යොමු කිරීම පමණක් සිදු වේ. මෙම වෙබ් අඩවියේ Admin Portal එක හරහා Google Reviews සංස්කරණය, Pin කිරීම, සැඟවීම හෝ වෙනත් පාලනයක් සිදු කළ නොහැක. සෘජු විචාර පාලනය දෙවන අදියරට කල් දමා ඇත.
 7. **පැමිණීම (Check-in), පිටවීම (Check-out) සහ විලාව නැවත පිළියෙල කිරීමේ කාලය:** සාමාන්‍යයෙන් අමුත්තන් පැමිණීමේ වේලාව (Check-in) පස්වරු **1:00** වන අතර, පිටවීමේ වේලාව (Check-out) පෙරවරු **10:00** වේ. පෙරවරු 10:00 සිට පස්වරු 1:00 දක්වා වන පැය 3ක කාලය, ඊළඟ අමුත්තන් පැමිණීමට පෙර විලාව හොඳින් පිරිසිදු කිරීමට, ඇඳ ඇතිරිලි අලුතින් යෙදීමට සහ සියලු කටයුතු පිළියෙල කිරීමට සත්කාරක විසින් වෙන් කර ඇත. අමුත්තන්ගේ පෞද්ගලික අවශ්‍යතාවයක් මත ඉල්ලා සිටියහොත්, පිටවීමේ වේලාව තවත් පැයක් (පෙරවරු 11:00 දක්වා) හෝ පැය එකහමාරක් (පෙරවරු 11:30 දක්වා) ලබා දීමට සත්කාරක කටයුතු කරයි. ඉන්පසු ඉතිරි වන කාලය තුළ සත්කාරක විසින් විලාව පිරිසිදු කර ඊළඟ අමුත්තන් සඳහා සූදානම් කරනු ලැබේ.
 
 ---
@@ -130,7 +135,7 @@ graph TB
 ## 3. සවිස්තරාත්මක ක්‍රියාකාරී අවශ්‍යතා (Detailed Functional Requirements)
 
 ### 3.1 මොඩියුලය 1: පාරිභෝගික දේපළ විස්තරය සහ Scrollytelling චාරිකාව
-*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Requirements file.md § Customer (1, 4, 5)*
+*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Original Requirements.md § Customer (1, 4, 5)*
 
 #### 3.1.1 ගෘහ නිර්මාණ ප්‍රමිතීන් සහ ගලායාම (Architectural Standards & Flow)
 මුල් පිටුවේ අත්දැකීම, පැමිණීමේ සිට අභ්‍යන්තර ඉඩකඩ දක්වා පාරිභෝගිකයා තර්කානුකූලව ගෙන යන අන්තර්ක්‍රියාකාරී visual walkthrough එකකින් සමන්විත විය යුතුය:
@@ -166,7 +171,7 @@ graph TB
 ---
 
 ### 3.2 මොඩියුලය 2: WhatsApp වෙන්කිරීමේ විමසුම් පෝරමය (Phase 1)
-*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Requirements file.md § Customer (2)*
+*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Original Requirements.md § Customer (2)*
 
 > [!NOTE]
 > **පළමු අදියරේ සරල කිරීම:** මෙම කොටස මගින් මීට පෙර සැලසුම් කර තිබූ සංකීර්ණ booking engine එක ප්‍රතිස්ථාපනය කරයි. මෙම විමසුම් පෝරමය මගින් අවශ්‍ය සියලුම තොරතුරු එක්රැස් කර, මනාව සකස් කළ WhatsApp පණිවිඩයක් ලෙස සෘජුවම සත්කාරක වෙත යවනු ලැබේ. වෙන්කිරීම් තහවුරු කිරීම, අත්තිකාරම් ලබා ගැනීම සහ දින කළමනාකරණය සත්කාරක විසින් සිදු කරයි.
@@ -179,11 +184,11 @@ stateDiagram-v2
     Step1_දින_තේරීම --> Step2_පැකේජය_තේරීම : වලංගු දින පරාසයක් තේරීම (අවම රාත්‍රී 1)
     Step2_පැකේජය_තේරීම --> Step3_සම්බන්ධතා_තොරතුරු : අමුත්තන් ගණන + පැකේජය තේරීම
     Step3_සම්බන්ධතා_තොරතුරු --> WhatsApp_වෙත_යොමුවීම : නම + WhatsApp අංකය වලංගු කර යැවීම
-    WhatsApp_වෙත_යොමුවීම --> [*] : සත්කාරක වෙත WhatsApp පණිවිඩය ලැබේ
+    WhatsApp_වෙත_යොමුවීම --> [*] : අමුත්තා සකස් කළ පණිවිඩය WhatsApp තුළ Send කරයි
 ```
 
 #### 3.2.1 පියවර 1: දින පරාසය තේරීම (Date Range Selection)
-* **FR-INQ-01 (ද්විත්ව දින දර්ශන - Dual Calendar Pickers):** පද්ධතිය Check-In සහ Check-Out සඳහා ස්වාධීන දින දර්ශන දෙකක් පෙන්විය යුතුය. Check-out දිනය, Check-in දිනයට වඩා අවම වශයෙන් දින 1ක් හෝ ඉදිරියෙන් විය යුතුය (අවම වශයෙන් රාත්‍රී 1ක නවාතැනක්). **දින 1ක (රාත්‍රී 1ක) වෙන්කිරීම් සඳහා පූර්ණ සහාය දක්වයි** (උදා: සිකුරාදා Check-in වී සෙනසුරාදා Check-out වීම වලංගු වේ).
+* **FR-INQ-01 (ලේබල් කළ දින පරාසය තේරීම):** පද්ධතිය Check-In සහ Check-Out සඳහා පැහැදිලිව ලේබල් කළ fields දෙකක් සහ ඒ දෙකටම සම්බන්ධ එක් shared date-range calendar model එකක් භාවිත කළ යුතුය. ප්‍රමාණවත් desktop ඉඩක calendar මාස දෙකක්ද, mobile එකේ වරකට එක් මාසයක්ද පෙන්විය හැක. Check-out දිනය Check-in දිනයට වඩා අවම වශයෙන් දින 1ක් ඉදිරියෙන් විය යුතුය. **රාත්‍රී 1ක නවාතැන් සඳහා පූර්ණ සහාය දක්වයි** (උදා: සිකුරාදා Check-in වී සෙනසුරාදා Check-out වීම වලංගු වේ).
 * **FR-INQ-02 (පසුගිය දින අවහිර කිරීම):** අද දිනට පෙර සියලු දින දෙදින දර්ශනයෙන්ම අක්‍රිය (disabled) කර අළු පැහැයෙන් පෙන්විය යුතුය. පළමු අදියරේදී backend date-blocking නොමැත.
 * **FR-INQ-03 (දින වර්ගය ස්වයංක්‍රීයව හඳුනාගැනීම):** දින පරාසය තෝරාගත් පසු, සතියේ දින අනුව නවාතැන ස්වයංක්‍රීයව වර්ගීකරණය වේ:
 
@@ -197,7 +202,7 @@ stateDiagram-v2
   - 🔵 **Weekday Stay** — තෝරාගත් සියලුම රාත්‍රී සඳුදා සිට බ්‍රහස්පතින්දා දක්වා වේ.
   - 🟠 **Mixed Stay** — සති අන්ත සහ සතියේ දින දෙවර්ගයම ඇතුළත් වේ (උදා: "සති අන්ත රාත්‍රී 2ක් + සතියේ දින රාත්‍රී 3ක්").
 
-* **FR-INQ-04:** මුළු රාත්‍රී ගණන සහ දින වර්ගයේ ලාංඡනය ක්ෂණිකව පෙන්වනු ලැබේ. නිවැරදි තේරීමකින් පසු **"Continue to Package →"** බොත්තම සක්‍රීය වේ.
+* **FR-INQ-04:** මුළු රාත්‍රී ගණන සහ දින වර්ගයේ ලාංඡනය ක්ෂණිකව පෙන්වනු ලැබේ. නිවැරදි තේරීමකින් පසු **"Continue"** බොත්තම සක්‍රීය වේ.
 
 #### 3.2.2 පියවර 2: අමුත්තන් ගණන සහ පැකේජය තේරීම (Guest Count & Package Selection)
 * **FR-INQ-05 (අමුත්තන් ගණක Stepper):** **අමුත්තන් 1 සිට 15 දක්වා** තෝරාගත හැකි Stepper සංරචකයක් (පෙරනිමිය: 2).
@@ -218,7 +223,7 @@ stateDiagram-v2
     $$\text{Total Price} = (\text{Weekend Nights} \times \text{Weekend Rate}) + (\text{Weekday Nights} \times \text{Weekday Rate})$$
 * **FR-INQ-08 (A/C කාමර පිළිබඳ විනිවිද සටහන):** A/C පහසුකම සහිත පැකේජ තෝරාගැනීමේදී පහත සටහන අනිවාර්යයෙන්ම දිස්විය යුතුය:
   > *"මෙම විලා නිවස වායුසමනය කළ නිදන කාමර 2කින් සමන්විත වේ. A/C පැකේජ වෙන්කිරීම් සඳහා, ඔබේ කණ්ඩායමේ කැමැත්ත පරිදි මෙම කාමර භාවිතය බෙදාගත හැක. අනෙකුත් සියලුම නිදන කාමර සඳහා Stand Fans සපයා ඇත."*
-* **FR-INQ-09 (සජීවී මිල සාරාංශ කාඩ්පත):** Check-in & Check-out දින, මුළු රාත්‍රී ගණන, තෝරාගත් පැකේජය සහ ගාස්තුව, මුළු ඇස්තමේන්තුගත මුදල සහ කෙනෙකුට වැයවන මුදල පෙන්වන සජීවී සාරාංශයක්.
+* **FR-INQ-09 (සජීවී මිල සාරාංශ කාඩ්පත):** Check-in සහ Check-out දින, මුළු රාත්‍රී ගණන (Mixed stay නම් බෙදීම සමඟ), අමුත්තන් ගණන, තෝරාගත් පැකේජ සහ ගාස්තු සහ මුළු ඇස්තමේන්තුගත මුදල පෙන්වන සජීවී සාරාංශයක්. පළමු අදියරේදී කෙනෙකුට වැයවන මුදල නොපෙන්වයි.
 
 #### 3.2.3 පියවර 3: සම්බන්ධතා තොරතුරු සහ විමසුම යැවීම (Contact Details & Submission)
 * **FR-INQ-10 (සම්බන්ධතා ක්ෂේත්‍ර):**
@@ -226,7 +231,7 @@ stateDiagram-v2
   - **WhatsApp දුරකථන අංකය:** අනිවාර්ය වේ, ශ්‍රී ලාංකික ආකෘතිය `^(?:0|94|\+94)?(7[01245678]\d{7})$` හෝ ජාත්‍යන්තර E.164 `^\+?[1-9]\d{6,14}$` අනුව වලංගු කෙරේ. වැරදි ඇතුළත් කිරීම් සඳහා පණිවිඩයක් දිස්වේ.
 * **FR-INQ-11 (අමතර ඉල්ලීම් - Optional Special Requests):** විශේෂ අවශ්‍යතා සඳහා බහු-පේළි පෙළ කොටුවක් (උදා: BBQ සූදානම් කිරීම, පැමිණෙන වේලාව).
 * **FR-INQ-12 (එකඟතා කොටුව - Consent Checkbox):** *"මෙය වෙන්කිරීමේ විමසුමක් පමණක් බවත්, සත්කාරක විසින් WhatsApp හරහා දින තහවුරු කර අත්තිකාරම් ගෙවීම් විස්තර ලබා දෙන බවත් මම තේරුම් ගතිමි."*
-* **FR-INQ-13 (යැවීමේ බොත්තම):** ප්‍රධාන ක්‍රියාකාරී බොත්තම: **"Send Inquiry on WhatsApp 🌿"** — ක්ලික් කළ විට Loading තත්ත්වයට පත්වී ද්විත්ව ක්ලික් කිරීම් වළක්වයි.
+* **FR-INQ-13 (යැවීමේ බොත්තම):** ප්‍රධාන ක්‍රියාකාරී බොත්තමේ label එක හරියටම **"Send Inquiry"** විය යුතුය. එය WhatsApp deep-link එක සකස් කර විවෘත කරන අතර, link එක සකස් වන කෙටි කාලයේ loading state එකක් පෙන්වා නැවත නැවත ක්‍රියාත්මක කිරීම වළක්වයි.
 
 #### 3.2.4 WhatsApp වෙත යොමුවීම සහ පණිවිඩ ආකෘතිය (Message Format)
 * **FR-INQ-14:** පෝරමය Submit කළ විට, පහත දැක්වෙන ආකෘතියෙන් යුත් පණිවිඩයක් සමඟ deep-link එකක් මගින් WhatsApp විවෘත වේ (`https://wa.me/94761007686?text=...`):
@@ -252,12 +257,12 @@ stateDiagram-v2
 _(Sent via Villa Cinnamoon Castle website)_
 ```
 
-* **FR-INQ-15:** WhatsApp වෙත යොමුවීමෙන් පසු, වෙබ් අඩවියේ තහවුරු කිරීමේ තිරයක් දිස්වේ: *"ඔබගේ විමසුම යොමු කරන ලදී! වෙන්කිරීම තහවුරු කිරීමට සහ අත්තිකාරම් මුදල් ලබා ගැනීමට සත්කාරක විසින් කෙටි වේලාවකින් ඔබව WhatsApp හරහා සම්බන්ධ කරගනු ඇත."* පහසුව සඳහා *"Chat with Host on WhatsApp"* සබැඳිය නැවත දිස්වේ.
+* **FR-INQ-15:** WhatsApp deep-link එක විවෘත කිරීමෙන් අමුත්තා පණිවිඩය Send කළ බව තහවුරු නොවේ. අමුත්තා browser එකට නැවත පැමිණි විට **"WhatsApp opened"** යන heading එක සහ WhatsApp තුළ සකස් කළ පණිවිඩය පරීක්ෂා කර Send කරන ලෙස උපදෙස් පෙන්විය යුතුය. Fallback actions ලෙස **"Open WhatsApp again"** සහ **"Copy inquiry details"** ලබා දිය යුතු අතර current session එක තුළ form state එක ආරක්ෂා කළ යුතුය.
 
 ---
 
 ### 3.3 මොඩියුලය 3: පාරිභෝගික විචාර (Reviews)
-*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Requirements file.md § Customer (3)*
+*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Original Requirements.md § Customer (3)*
 
 #### 3.3.1 අඩවියේ සෘජු විචාර පද්ධතිය — දෙවන අදියරට කල් තබා ඇත (Phase 2 Deferred)
 
@@ -306,7 +311,7 @@ _(Sent via Villa Cinnamoon Castle website)_
 ---
 
 ### 3.4 මොඩියුලය 4: පරිපාලක මෙහෙයුම් ද්වාරය (Administrator Operations Portal)
-*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Requirements file.md § Admin (1-4)*
+*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Original Requirements.md § Admin (1-4)*
 
 #### 3.4.1 පරිපාලක සත්‍යාපනය සහ Session කළමනාකරණය
 * **FR-ADM-01:** පරිපාලක පිවිසුම් පිටුව `/admin/login` හි පිහිටා ඇත.
@@ -328,7 +333,12 @@ _(Sent via Villa Cinnamoon Castle website)_
 * **FR-ADM-08 (ප්‍රතික්ෂේප කිරීමේ කාර්ය ප්‍රවාහය):** ප්‍රතික්ෂේප කිරීමට හේතුව ඇතුළත් කර සුහදශීලී WhatsApp පණිවිඩයක් ජනනය කිරීම.
 * **FR-ADM-CANCEL (අවලංගු කිරීමේ කාර්ය ප්‍රවාහය):** අනාගත `APPROVED` වෙන්කිරීමක් අවලංගු කළ විට `blocked_dates` ස්වයංක්‍රීයව නිදහස් වීම සහ WhatsApp දැනුම්දීම.
 
-#### 3.4.3 විචාර පාලන පද්ධතිය (Review Moderation System)
+#### 3.4.3 සෘජු විචාර පාලන පද්ධතිය 🚧 (දෙවන අදියරට කල් දමා ඇත)
+
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — පළමු අදියරේදී ක්‍රියාත්මක නොකරන්න**  
+> පළමු අදියරේදී Google Reviews පමණක් ප්‍රදර්ශනය කෙරේ. Villa Cinnamoon Castle Admin Portal එක හරහා Google Reviews සංස්කරණය, Pin කිරීම හෝ සැඟවීම කළ නොහැක. පහත අවශ්‍යතා අනාගත අඩවි-අභ්‍යන්තර සෘජු විචාර පද්ධතියට පමණක් අදාළ වේ.
+
 * **FR-ADM-10 (අඛණ්ඩතා සීමාව - Integrity Constraint):** පාරිභෝගික විචාරවල පෙළ, තරු ගණන හෝ නම් **සංස්කරණය කිරීමට හෝ වෙනස් කිරීමට පරිපාලක අතුරුමුහුණත කිසිසේත් ඉඩ නොදේ**.
 * **FR-ADM-11 (Pin කිරීම):** මුල් පිටුවේ ඉහළින් පෙන්වීම සඳහා විශේෂිත විචාර `is_pinned` තත්ත්වයට පත් කිරීම.
 * **FR-ADM-12 (සැඟවීම - Hiding):** නුසුදුසු, අසත්‍ය හෝ අදාළ නොවන විචාර පොදු වෙබ් අඩවියෙන් සැඟවීම සඳහා `is_visible` තත්ත්වය වෙනස් කිරීම.
@@ -351,7 +361,7 @@ _(Sent via Villa Cinnamoon Castle website)_
 ---
 
 ## 4. පාරිභෝගික පිටු ව්‍යුහය සහ තොරතුරු ගෘහ නිර්මාණ ශිල්පය (Information Architecture)
-*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Requirements file.md § Customer (4)*
+*අවශ්‍යතා සොයා ගැනීමේ හැකියාව: Original Requirements.md § Customer (4)*
 
 පාරිභෝගික අතුරුමුහුණත පහත දැක්වෙන පැහැදිලි අංශවලින් සමන්විත වේ:
 
@@ -364,7 +374,7 @@ _(Sent via Villa Cinnamoon Castle website)_
 | **`#experiences`** | **ක්‍රියාකාරකම් සහ වටපිටාව** | BBQ මිදුල, බෝට්ටු සවාරි, සර්ෆින්, හික්කඩුව කොරල් පර, දුර ප්‍රමාණ සටහන, අන්තර්ක්‍රියාකාරී සිතියම. |
 | **`#reviews`** | **Google Reviews සංදර්ශකය** | නිල Google Reviews ලාංඡනය, සමස්ත ලකුණු, තෝරාගත් අමුත්තන්ගේ විචාර කාඩ්පත් සහ "Review Us on Google" සබැඳිය. |
 | **`#contact`** | **සත්කාරක සහ මාර්ග විස්තර** | දම්පල්ල ගමගේ දෙවිඳු සම්බන්ධතා කාඩ්පත, WhatsApp අංකය (+94 76 100 7686), ලිපිනය සහ GPS සිතියම. |
-| **`/admin`** | **පරිපාලක පාලක පුවරුව** | විචාර සහ පැකේජ කළමනාකරණය සඳහා වන ආරක්ෂිත පරිපාලක අතුරුමුහුණත. |
+| **`/admin`** | **පරිපාලක පාලක පුවරුව** | පැකේජ කළමනාකරණය සඳහා වන ආරක්ෂිත පරිපාලක අතුරුමුහුණත. වෙන්කිරීම්, දින දර්ශනය සහ සෘජු විචාර පාලනය දෙවන අදියරට කල් දමා ඇත. |
 
 ---
 
@@ -429,7 +439,7 @@ erDiagram
         datetime created_at
     }
 
-    REVIEW {
+    REVIEW_PHASE2 {
         string id PK "UUID"
         string booking_id FK UK
         string customer_name
@@ -442,7 +452,7 @@ erDiagram
         datetime created_at
     }
 
-    BOOKING_REQUEST ||--o| REVIEW : "unlocks after check_in"
+    BOOKING_REQUEST ||--o| REVIEW_PHASE2 : "Phase 2: unlocks after check_in"
     BOOKING_REQUEST }|--|| PACKAGE : "primary_package"
     BOOKING_REQUEST }|--o| PACKAGE : "secondary_package"
     BOOKING_REQUEST ||--o{ BLOCKED_DATE : "reserves"
@@ -556,7 +566,15 @@ CREATE TABLE blocked_dates (
 ```
 </details>
 
-#### 5. `reviews` වගුව
+#### 5. `reviews` වගුව 🚧 (දෙවන අදියරට කල් දමා ඇත)
+
+> [!CAUTION]
+> **🚧 PHASE 2 DEFERRED — පළමු අදියරේදී ක්‍රියාත්මක නොකරන්න**  
+> පළමු අදියරේ Google Reviews අංශය ප්‍රදර්ශනය සඳහා පමණි. වෙබ් යෙදුමේ database එක තුළ reviews ගබඩා කිරීමක් හෝ පාලනය කිරීමක් සිදු නොවේ. පහත වගුව අනාගත අඩවි-අභ්‍යන්තර සෘජු විචාර පද්ධතිය සඳහා පමණක් තබා ඇත.
+
+<details>
+<summary>📄 දෙවන අදියරේ පරිශීලනය: reviews DDL</summary>
+
 ```sql
 CREATE TABLE reviews (
     id VARCHAR(36) PRIMARY KEY,
@@ -571,6 +589,7 @@ CREATE TABLE reviews (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
+</details>
 
 ---
 
@@ -631,6 +650,14 @@ CREATE TABLE reviews (
 ### 7.4 දත්ත අඛණ්ඩතාව (Data Integrity)
 * **NFR-INT-01 (පළමු අදියර — Backend Booking ගබඩාවක් නොමැත):** පළමු අදියරේදී, විමසුම් දත්ත සෘජුවම සත්කාරකගේ WhatsApp වෙත යවනු ලැබේ. සේවාදායකයේ booking දත්ත ගබඩා කිරීමක් හෝ transactional date-locking පළමු අදියරට අවශ්‍ය නොවේ. *(දෙවන අදියර සටහන: වෙන්කිරීම් අනුමත කිරීමේ කාර්ය ප්‍රවාහය ක්‍රියාත්මක වන විට දින අගුළු දැමීමේ පද්ධතිය අවශ්‍ය වනු ඇත).*
 
+### 7.5 පෞද්ගලිකත්වය සහ දත්ත අවම කිරීම (Privacy & Data Minimisation)
+* **NFR-PRV-01 (Privacy Notice):** Public `/privacy` page එක inquiry flow එක භාවිත කරන පුද්ගලික තොරතුරු, ඒවායේ අරමුණ, browser session state, WhatsApp handoff, hosting technical logs, external links, retention criteria, visitor choices සහ privacy contact route එක පැහැදිලි කළ යුතුය.
+* **NFR-PRV-02 (Session-Scoped Form State):** Form එකේ ගමන් කරන අතර valid තොරතුරු අහම්බෙන් අහිමි වීම වැළැක්වීමට inquiry progress එක session-scoped browser storage තුළ තාවකාලිකව තබාගත හැක. පළමු අදියරේදී inquiry details backend booking database එකක ගබඩා නොකළ යුතුය.
+* **NFR-PRV-03 (Default Non-Essential Tracking නොමැත):** පළමු release එකේ advertising cookies හෝ behavioural analytics සක්‍රීය නොකළ යුතුය. පසුව ඒවා එක් කළහොත් සක්‍රීය කිරීමට පෙර Privacy Notice එක සහ අදාළ නීතියට අවශ්‍ය consent controls යාවත්කාලීන කළ යුතුය.
+* **NFR-PRV-04 (User-Initiated Third-Party Maps):** Google Maps අමුත්තා ක්‍රියාත්මක කරන action එකකින් විවෘත කළ යුතු අතර, visitor තෝරාගත් පසුව පමණක් interactive map එක load කළ හැක. Initial page load එකේ third-party map embed එකක් හරහා visitor data ස්වයංක්‍රීයව යැවිය නොහැක.
+* **NFR-PRV-05 (Sensitive Transaction Data නොගැනීම):** Public website එක payment-card, bank-account හෝ passport details ඉල්ලා හෝ එකතු නොකළ යුතුය. `Special requests` field එකට අනවශ්‍ය sensitive හෝ medical information නොදමන ලෙස visitor ට උපදෙස් දිය යුතුය.
+* **NFR-PRV-06 (Policy Accuracy):** Privacy Notice එකේ last-updated date එකක් තිබිය යුතු අතර launch කිරීමට පෙර සහ hosting, analytics, maps, inquiry storage, payment collection හෝ third-party integrations වෙනස් වන සෑම අවස්ථාවකම එය නැවත පරීක්ෂා කළ යුතුය.
+
 ---
 
 ## 8. අවශ්‍යතා සොයා ගැනීමේ න්‍යාසය (Requirement Traceability Matrix - RTM)
@@ -643,16 +670,16 @@ CREATE TABLE reviews (
 | **Cust 4** | තනි පිටුවේ සුඛෝපභෝගී ගෘහ නිර්මාණ සැලසුම | § 4.0 | Anchored sections සහ modals සහිත තනි පිටුවේ අත්දැකීම |
 | **Cust 5** | පූර්ණ responsive සහ ජංගම හිතකාමී බව | § 7.1 | Flexbox/Grid, mobile-first සැකසුම, නිසි touch targets |
 | **Google Reviews** | Google Reviews සංදර්ශකය සහ aggregate badge | § 3.3.4 | Google Business Profile ලාංඡනය + තෝරාගත් reviews carousel + Review CTA |
-| **INQ 1** | ද්විත්ව දින දර්ශන, අවම රාත්‍රී 1, පසුගිය දින අවහිරය | § 3.2.1 | ස්වාධීන දින දර්ශන දෙකක්, client-side වලංගුකරණය |
+| **INQ 1** | ලේබල් කළ Check-in සහ Check-out fields, අවම රාත්‍රී 1, පසුගිය දින අවහිරය | § 3.2.1 | Shared responsive date-range calendar model එක සහ client-side වලංගුකරණය |
 | **INQ 2** | අමුත්තන් ගණන (1–15) සහ දින වර්ගය අනුව ස්වයංක්‍රීය නිර්දේශය | § 3.2.2 | Stepper + ස්වයංක්‍රීය නිර්දේශ එන්ජිම (Weekend/Weekday/Mixed) |
 | **INQ 3** | අනුකූල පැකේජ තේරීම + A/C විනිවිද සටහන | § 3.2.2 | දින වර්ගය අනුව මාරුවීම, බෙදුම් මිල ගණනය, A/C සටහන (Stand fans සහිත) |
 | **INQ 4** | පෙර සැකසූ පණිවිඩය සමඟ WhatsApp වෙත යොමුවීම | § 3.2.4 | URL-encoded පණිවිඩ ආකෘතිය සහිත `wa.me` deep-link |
+| **Privacy** | විනිවිද පෙනෙන, අවම දත්ත භාවිත කරන Phase 1 inquiry flow | § 7.5 | Privacy Notice, session-scoped form state, backend inquiry storage සහ non-essential tracking නොමැති වීම |
 | **Admin 1** | ආරක්ෂිත පරිපාලක සත්‍යාපනය | § 3.4.1 | Bcrypt hashed login + ආරක්ෂිත session |
-| **Admin 3** | විචාර පාලනය (Hide / Pin පමණි, අකුරු වෙනස් නොවේ) | § 3.4.3 | `is_pinned` / `is_visible` වෙනස් කිරීම; edit අක්‍රියයි |
 | **Admin 4** | පැකේජ කළමනාකරණය (Full CRUD, soft deactivate) | § 3.4.4 | සියලු පැකේජ සඳහා Admin CRUD; අක්‍රිය කිරීම (`is_active=FALSE`) |
 
 > [!NOTE]
-> **දෙවන අදියර RTM වාර්තා** (පරිපාලක booking pipeline, date-blocking, review gate, cancellation) දෙවන අදියරේ අවශ්‍යතා තහවුරු වූ පසු එක් කරනු ලැබේ.
+> **දෙවන අදියර RTM වාර්තා** (පරිපාලක booking pipeline, date-blocking, අඩවි-අභ්‍යන්තර review gate, සෘජු විචාර පාලනය සහ cancellation) දෙවන අදියරේ අවශ්‍යතා තහවුරු වූ පසු එක් කරනු ලැබේ.
 
 ---
 
@@ -665,7 +692,7 @@ CREATE TABLE reviews (
 4. **දින වර්ගය හඳුනාගැනීමේ පරීක්ෂණ:** Weekend, Weekday, සහ Mixed වර්ගීකරණයන් නිවැරදිව හඳුනාගන්නේදැයි පරීක්ෂා කිරීම (උදා: සිකුරාදා පමණක් &rarr; Weekend; සඳුදා පමණක් &rarr; Weekday; සිකුරාදා සිට සඳුදා දක්වා &rarr; Mixed: Weekend 2ක් + Weekday 1ක්).
 
 ### 9.2 පළමු අදියරේ අතින් සිදුකරන පරික්ෂණ චාරිකාව (Manual End-to-End Walkthrough)
-1. **පාරිභෝගික ගමන (Mixed Stay):** පාරිභෝගිකයා Scrollytelling චාරිකාව බලයි &rarr; Google Reviews බලයි &rarr; සිකුරාදා Check-in සහ අඟහරුවාදා Check-out තෝරයි &rarr; පද්ධතිය Weekend රාත්‍රී 2ක් සහ Weekday රාත්‍රී 2ක් හඳුනාගනී &rarr; අමුත්තන් 8ක් ඇතුළත් කරයි &rarr; Wizard එක 4-Room පැකේජය නිර්දේශ කරයි &rarr; Weekend Premium A/C සහ Weekday 4-Room A/C තෝරයි &rarr; සජීවී බෙදුම් මිල දකියි &rarr; නම සහ WhatsApp අංකය ඇතුළත් කරයි &rarr; Submit කරයි &rarr; සියලු දත්ත සහිතව WhatsApp විවෘත වේ.
+1. **පාරිභෝගික ගමන (Mixed Stay):** පාරිභෝගිකයා Scrollytelling චාරිකාව බලයි &rarr; Google Reviews බලයි &rarr; සිකුරාදා Check-in සහ අඟහරුවාදා Check-out තෝරයි &rarr; පද්ධතිය Weekend රාත්‍රී 3ක් සහ Weekday රාත්‍රී 1ක් හඳුනාගනී &rarr; අමුත්තන් 8ක් ඇතුළත් කරයි &rarr; Wizard එක 4-Room පැකේජය නිර්දේශ කරයි &rarr; Weekend Premium A/C සහ Weekday 4-Room A/C තෝරයි &rarr; සජීවී බෙදුම් මිල දකියි &rarr; නම සහ WhatsApp අංකය ඇතුළත් කරයි &rarr; Submit කරයි &rarr; සියලු දත්ත සහිතව WhatsApp විවෘත වේ.
 2. **රාත්‍රී 1ක වෙන්කිරීම (1-Night Booking):** පාරිභෝගිකයා සෙනසුරාදා Check-in සහ ඉරිදා Check-out තෝරයි &rarr; පද්ධතිය පිළිගනී (රාත්‍රී 1, Weekend) &rarr; Weekend පැකේජ පෙන්වයි &rarr; තෝරාගෙන submit කරයි.
 3. **පරිපාලක පැකේජ කළමනාකරණය:** පරිපාලක පිවිසේ &rarr; නව Weekday පැකේජයක් සාදයි &rarr; මිල යාවත්කාලීන කරයි &rarr; පැරණි පැකේජයක් අක්‍රිය කරයි &rarr; අක්‍රිය කළ පැකේජය පාරිභෝගික පෝරමයෙන් සැඟවී ඇති බව තහවුරු කරයි.
 4. **Google Reviews කොටස:** පාරිභෝගිකයා Google Reviews කොටස බලයි &rarr; සමස්ත ලකුණු දකියි &rarr; Reviews කාඩ්පත් පරීක්ෂා කරයි &rarr; "Review Us on Google" ක්ලික් කරයි &rarr; Google Maps හි Villa Cinnamoon Castle පිටුව විවෘත වේ.

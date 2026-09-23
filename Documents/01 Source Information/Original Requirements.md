@@ -1,3 +1,7 @@
+> [!IMPORTANT]
+> **Historical Source Document — Not the Current Implementation Scope**  
+> This file preserves the client's original requirements for traceability. The authoritative current Phase 1 scope is defined by [`SRS.md`](../02%20Requirements/SRS.md), version 1.3.0 or later. Where this document conflicts with the SRS, the SRS takes precedence. Booking storage, admin approval/decline workflows, automated date blocking, and on-site direct reviews are deferred to Phase 2.
+
 ***Requirements***
 
 

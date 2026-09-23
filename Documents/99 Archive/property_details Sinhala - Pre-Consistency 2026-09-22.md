@@ -3,10 +3,10 @@
 > **Airbnb**, **Google Business Profile**, **Facebook**, සහ නිල කළමනාකරණ වාර්තාවලින් රැස් කරන ලද සියලුම දේපළ පිරිවිතර, ගෘහ නිර්මාණ අවකාශයන්, මිල ගණන් ව්‍යුහයන්, පහසුකම් සහ සම්බන්ධතා තොරතුරු ඇතුළත් විස්තීරණ පරිශීලන ලේඛනය. මෙම ලේඛනය නිල වෙබ් යෙදුම (Web Application) සහ ප්‍රවර්ධන මාධ්‍ය සංවර්ධනය කිරීම සඳහා නිල පදනම (Single Source of Truth) ලෙස ක්‍රියා කරයි.
 
 **අදාළ ව්‍යාපෘති ලේඛන (Related Project Documentation):**
-* [`SRS_Sinhala.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/SRS_Sinhala.md) — මෘදුකාංග අවශ්‍යතා පිරිවිතර සහ තාක්ෂණික ගෘහ නිර්මාණ ශිල්පය (සිංහල පරිවර්තනය)
-* [`SRS.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/SRS.md) — Software Requirements Specification & Technical Architecture (English)
-* [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/package_details.md) — සම්පූර්ණ පැකේජ නාමාවලිය, ගණනය කිරීම් එන්ජිම සහ දත්ත සමුදාය (Database Seeds)
-* [`Requirements file.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/Requirements%20file.md) — සේවාදායකයාගේ මුල් අවශ්‍යතා ලේඛනය
+* [`SRS_Sinhala.md`](../05%20Sinhala/SRS_Sinhala.md) — මෘදුකාංග අවශ්‍යතා පිරිවිතර සහ තාක්ෂණික ගෘහ නිර්මාණ ශිල්පය (සිංහල පරිවර්තනය)
+* [`SRS.md`](../02%20Requirements/SRS.md) — Software Requirements Specification & Technical Architecture (English)
+* [`package_details.md`](../01%20Source%20Information/package_details.md) — සම්පූර්ණ පැකේජ නාමාවලිය, ගණනය කිරීම් එන්ජිම සහ දත්ත සමුදාය (Database Seeds)
+* [`Original Requirements.md`](../01%20Source%20Information/Original%20Requirements.md) — සේවාදායකයාගේ මුල් අවශ්‍යතා ලේඛනය
 
 ---
 
@@ -152,7 +152,7 @@
 | **5-Room Group** | පුද්ගලයින් 10 | කාමර 5 | **රු. 17,900/=** | **රු. 19,900/=** | අමුත්තන් 10ක් දක්වා කාමර 5ම |
 | **Full Villa Buyout** | පුද්ගලයින් 15 | සම්පූර්ණ විලා | **රු. 17,900/=** | **රු. 19,900/=** | විශාල කණ්ඩායම් සඳහා සම්පූර්ණ දේපළම |
 
-> 📖 **සම්පූර්ණ පැකේජ නාමාවලිය:** විස්තරාත්මක ගණනය කිරීම්, කණ්ඩායම් ප්‍රමාණය අනුව ස්වයංක්‍රීය පැකේජ නිර්දේශ සහ දත්ත සමුදාය සඳහා [`package_details.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/package_details.md) බලන්න.
+> 📖 **සම්පූර්ණ පැකේජ නාමාවලිය:** විස්තරාත්මක ගණනය කිරීම්, කණ්ඩායම් ප්‍රමාණය අනුව ස්වයංක්‍රීය පැකේජ නිර්දේශ සහ දත්ත සමුදාය සඳහා [`package_details.md`](../01%20Source%20Information/package_details.md) බලන්න.
 
 ---
 
@@ -205,48 +205,53 @@
 
 ## 11. වෙබ් වේදිකා ගෘහ නිර්මාණ ශිල්පය සහ සැලැස්ම (Web Platform Architecture & Blueprint)
 
-නිල වෙබ් යෙදුමේ ගෘහ නිර්මාණ ශිල්පය [`SRS_Sinhala.md`](file:///D:/Villa%20Cinnamoon%20Castle/Documents/SRS_Sinhala.md) හි සකස් කරන ලද සම්මතයන්ට අනුකූල වේ:
+නිල පළමු අදියරේ වෙබ් යෙදුමේ ගෘහ නිර්මාණ ශිල්පය [`SRS_Sinhala.md`](../05%20Sinhala/SRS_Sinhala.md) අනුවාදය 1.3.0 හෝ ඉන් පසු අනුවාදයක සම්මතයන්ට අනුකූල වේ:
 
 ```mermaid
 graph TD
     subgraph Frontend [පාරිභෝගික අතුරුමුහුණත (Customer Portal)]
         M1[මොඩියුලය 1: Scrollytelling අත්දැකීම]
-        M2[මොඩියුලය 2: අනුකූලතා වෙන්කිරීමේ එන්ජිම]
-        M3[මොඩියුලය 3: සත්‍යාපිත සමාලෝචන & Google Reviews ප්‍රදර්ශනය]
+        M2[මොඩියුලය 2: WhatsApp විමසුම් Wizard]
+        M3[මොඩියුලය 3: Google Reviews ප්‍රදර්ශනය]
     end
 
     subgraph Backend [කළමනාකරණ සහ සේවා පද්ධතිය]
-        M4[මොඩියුලය 4: පරිපාලක මෙහෙයුම් ද්වාරය]
-        DB[(දත්ත සමුදාය: Bookings, Packages, Reviews, Calendar)]
-        WA[WhatsApp පණිවිඩ සහ PNG Quotation උත්පාදකය]
+        M4[මොඩියුලය 4: පරිපාලක Package ද්වාරය]
+        DB[(දත්ත සමුදාය: Admins සහ Packages)]
+    end
+
+    subgraph External Services
+        WA[WhatsApp — සත්කාරක විමසුම]
+        GBP[Google Business Profile]
+        MAP[Google Maps Embed]
     end
 
     M1 -->|දෘශ්‍ය ගවේෂණය| M2
-    M2 -->|වෙන්කිරීමේ ඉල්ලීම| DB
-    DB -->|Check-in දිනයේදී සමාලෝචන සක්‍රීය වීම| M3
-    M4 -->|අනුමත / ප්‍රතික්ෂේප / අවලංගු කිරීම| DB
-    M4 -->|Quotation Card & තහවුරු කිරීම| WA
+    M2 -->|පෙර සකස් කළ විමසුම| WA
+    M3 -->|Review කියවීම හෝ ලිවීම| GBP
+    M4 -->|Package CRUD| DB
+    M1 -->|පිහිටීම සහ මාර්ග උපදෙස්| MAP
 ```
 
 ### ප්‍රධාන මොඩියුල විශ්ලේෂණය:
 1. **මොඩියුලය 1 — Scrollytelling දේපළ විස්තරය (§ 3.1):**
    - අමුත්තන් විලා පරිශ්‍රය තුළ අනුපිළිවෙලින් රැගෙන යන කථන අත්දැකීම: *ප්‍රධාන පිවිසුම &rarr; විසිත්ත කාමර &rarr; නිදන කාමර (1–5) &rarr; මුළුතැන්ගෙය සහ කෑම ශාලාව &rarr; නාන කාමර &rarr; එළිමහන් මිදුල & BBQ &rarr; හික්කඩුව අත්දැකීම්*.
    - ඉහළින් පාවෙන ඉක්මන් සංචාලනය (Sticky Navigation) සහ කාණ්ඩගත කළ දෘශ්‍ය ගැලරි මොඩලය (Categorized Spatial Gallery Modal).
-2. **මොඩියුලය 2 — අනුකූලතා වෙන්කිරීමේ එන්ජිම (§ 3.2):**
-   - **කුඩා පෝරමය 1 (දින දර්ශනය):** වෙන් කළ දින රතු පැහැයෙන් අක්‍රීය කර සජීවීව පෙන්වීම; දිනය ස්වයංක්‍රීයව හඳුනාගැනීම (Weekend / Weekday / Mixed).
+2. **මොඩියුලය 2 — WhatsApp වෙන්කිරීමේ විමසුම (§ 3.2):**
+   - **කුඩා පෝරමය 1 (දින):** Check-in සහ Check-out තේරීම, පසුගිය දින අක්‍රීය කිරීම සහ දිනය ස්වයංක්‍රීයව හඳුනාගැනීම (Weekend / Weekday / Mixed). පළමු අදියරේදී real-time availability හෝ booked-date blocking නොමැත.
    - **කුඩා පෝරමය 2 (අමුත්තන් ගණන):** අමුත්තන් 1–15 තේරීම මත පදනම්ව වඩාත් සුදුසු පැකේජය ස්වයංක්‍රීයව නිර්දේශ කිරීම.
    - **කුඩා පෝරමය 3 (පැකේජය සහ තොරතුරු):**
      - Mode A: සති අන්ත පැකේජ පමණි.
      - Mode B: සතියේ දින පැකේජ පමණි.
      - Mode C: මිශ්‍ර දින (Mixed Stay) ද්විත්ව තේරීම (සති අන්ත + සතියේ දින උප-පෝරමය) සහ විනිවිද පෙනෙන බෙදුම් ගණනය.
      - ශ්‍රී ලාංකික සහ ජාත්‍යන්තර E.164 WhatsApp දුරකථන අංක වලංගුකරණය.
-   - **තහවුරු කිරීම:** ගුප්තකේතන ක්‍රමයෙන් ආරක්ෂිත අහඹු Booking ID (`VCC-YYYY-XXXXXX`) සහ ක්ෂණික WhatsApp සත්කාරක සම්බන්ධතාව.
-3. **මොඩියුලය 3 — Check-in දිනය පදනම් කරගත් සත්‍යාපිත සමාලෝචන සහ Google Reviews අංශය (§ 3.3):**
-   - සෘජු වෙබ් අඩවි සමාලෝචන ලබා දීමට අවසර ලැබෙන්නේ අනුමත පාරිභෝගිකයාගේ **Check-in දිනයේදී හෝ ඉන් පසුව පමණි** ($\text{Today} \ge \text{Check-in Date}$).
+   - **යැවීම:** සත්කාරක වෙත පෙර සකස් කළ WhatsApp විමසුමක් විවෘත වේ. එයින් booking record එකක් සෑදීම හෝ availability තහවුරු කිරීම සිදු නොවේ.
+3. **මොඩියුලය 3 — Google Reviews ප්‍රදර්ශනය (§ 3.3.2):**
    - විශේෂිත **Google Reviews ප්‍රදර්ශනය**: නිල Google තරු ශ්‍රේණිගත කිරීම් ලාංඡනය (Aggregate Rating Badge), අව්‍යාජ ගූගල් අමුත්තන්ගේ ප්‍රතිචාර කාඩ්පත් සහ Google Maps හි සෘජුවම සමාලෝචනයක් ලිවීමේ බොත්තම (Direct 'Review Us on Google' CTA).
-   - තරු බෙදීයාමේ ප්‍රස්තාරය, සත්‍යාපිත පාරිභෝගික ලාංඡනය (Verified Guest Badge) සහ වැදගත් ප්‍රතිචාර ඉහළින් තැබීම (Pinned Reviews).
-4. **මොඩියුලය 4 — පරිපාලක මෙහෙයුම් ද්වාරය (§ 3.4):**
-   - එකම දින සඳහා ලැබෙන ඉල්ලීම් හඳුනාගැනීමේ ස්වයංක්‍රීය `⚠️ Date Conflict` පද්ධතිය.
-   - එක් ක්ලික් කිරීමකින් අනුමැතිය ලබාදීම, ස්වයංක්‍රීයව නිල Quotation Image (PNG card) එකක් සහ සකස් කළ WhatsApp පණිවිඩයක් සැකසීම.
-   - වෙන්කිරීම් අවලංගු කිරීමේ කාර්ය ප්‍රවාහය (`FR-ADM-CANCEL`) සහ දත්ත සමුදායේ `ON DELETE CASCADE` මගින් ස්වයංක්‍රීයව දින නිදහස් වීම.
+   - පළමු අදියරේදී අඩවි-අභ්‍යන්තර review submission, review database හෝ admin review moderation ඇතුළත් නොවේ.
+4. **මොඩියුලය 4 — පරිපාලක Package ද්වාරය (§ 3.4):**
+   - ආරක්ෂිත පරිපාලක සත්‍යාපනය.
    - පැකේජ කළමනාකරණය (CRUD) සහ මෘදු අක්‍රීය කිරීම (`is_active = FALSE`).
+
+> [!NOTE]
+> Database මත පදනම් වූ bookings, approval/decline workflows, ස්වයංක්‍රීය calendar blocking, quotation generation, cancellations සහ direct-review moderation දෙවන අදියරට කල් දමා ඇත.
