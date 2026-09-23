@@ -1,0 +1,24 @@
+.placeholder {
+  min-height: 78vh;
+  display: flex;
+  align-items: flex-end;
+  padding: calc(var(--nav-height) + 96px) 0 clamp(72px, 10vw, 140px);
+  border-bottom: 1px solid var(--border);
+}
+
+.placeholder__inner {
+  display: grid;
+  gap: 28px;
+}
+
+.placeholder__title {
+  font-size: var(--fs-hero);
+  line-height: 0.98;
+  max-width: 12em;
+}
+
+.placeholder__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

@@ -1,0 +1,477 @@
+/* ---------- Shared editorial grid ---------- */
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: clamp(16px, 2vw, 32px);
+}
+
+.split-intro {
+  display: grid;
+  gap: 20px;
+  margin-bottom: clamp(48px, 7vw, 112px);
+}
+
+.split-intro .eyebrow {
+  margin-bottom: 8px;
+}
+
+@media (min-width: 760px) {
+  .grid-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .split-intro {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 2vw, 32px);
+    row-gap: 24px;
+  }
+
+  .split-intro > .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .split-intro > .section-heading {
+    grid-column: 1 / 8;
+  }
+
+  .split-intro__copy {
+    grid-column: 9 / 13;
+    align-self: end;
+  }
+}
+
+/* ---------- 01 Overview ---------- */
+
+.overview__eyebrow {
+  margin-bottom: 28px;
+}
+
+.overview__statement {
+  margin-top: clamp(40px, 5vw, 72px);
+  font-size: clamp(1.5rem, 2.6vw, 2.6rem);
+  font-weight: 500;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  max-width: 22em;
+  text-wrap: pretty;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(16px, 2vw, 32px);
+  margin-top: clamp(56px, 7vw, 104px);
+}
+
+.facts__item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 16px 0 22px;
+  border-top: 1px solid var(--border);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.facts__index {
+  font-size: var(--fs-eyebrow);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 720px) {
+  .facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 760px) {
+  .overview__eyebrow {
+    grid-column: 1 / 4;
+    align-self: start;
+    padding-top: 1.1rem;
+  }
+
+  .overview__body {
+    grid-column: 4 / 13;
+  }
+}
+
+/* ---------- 02 Shared living ---------- */
+
+.shared__upstairs {
+  width: 78%;
+  margin: 48px 0 0 auto;
+}
+
+@media (min-width: 760px) {
+  .shared__downstairs {
+    grid-column: 1 / 6;
+  }
+
+  .shared__upstairs {
+    grid-column: 8 / 12;
+    width: auto;
+    margin: clamp(80px, 14vw, 240px) 0 0;
+  }
+}
+
+/* ---------- 03 Sleeping arrangements ---------- */
+
+.sleeping__text {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+  margin-bottom: 48px;
+}
+
+.sleeping__images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 32px);
+}
+
+.sleeping__offset {
+  margin-top: clamp(48px, 12vw, 200px);
+}
+
+@media (min-width: 760px) {
+  .sleeping__text {
+    grid-column: 1 / 6;
+    position: sticky;
+    top: calc(var(--nav-height) + 48px);
+    align-self: start;
+    margin-bottom: 0;
+  }
+
+  .sleeping__images {
+    grid-column: 7 / 13;
+  }
+}
+
+/* ---------- 04 Kitchen & dining ---------- */
+
+.kitchen__dining {
+  width: 72%;
+  margin: 40px 0 0 auto;
+}
+
+@media (min-width: 760px) {
+  .kitchen__kitchen {
+    grid-column: 1 / 8;
+  }
+
+  .kitchen__dining {
+    grid-column: 9 / 13;
+    width: auto;
+    margin: 0;
+    align-self: end;
+  }
+}
+
+/* ---------- 05 Outside ---------- */
+
+.outdoor__veranda {
+  width: 62%;
+  margin-top: 40px;
+}
+
+@media (min-width: 760px) {
+  .outdoor__garden {
+    grid-column: 1 / 9;
+  }
+
+  .outdoor__veranda {
+    grid-column: 10 / 13;
+    width: auto;
+    margin-top: clamp(80px, 12vw, 200px);
+  }
+}
+
+/* ---------- 06 What the villa includes ---------- */
+
+.includes .eyebrow {
+  margin-bottom: 28px;
+}
+
+.includes__title {
+  margin-bottom: clamp(48px, 6vw, 88px);
+}
+
+.includes__grid {
+  display: grid;
+  gap: 40px clamp(16px, 2vw, 32px);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.includes__group {
+  padding-top: 20px;
+  border-top: 1px solid var(--text-primary);
+}
+
+.includes__heading {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.includes__group li {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  padding-block: 6px;
+}
+
+@media (min-width: 640px) {
+  .includes__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1100px) {
+  .includes__grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.on-request {
+  display: grid;
+  gap: 20px;
+  margin-top: clamp(56px, 7vw, 104px);
+  padding: clamp(24px, 4vw, 56px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.on-request__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.on-request__list li {
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (min-width: 760px) {
+  .on-request {
+    grid-template-columns: 1fr 2fr;
+    column-gap: 48px;
+    align-items: start;
+  }
+
+  .on-request__list,
+  .on-request__note {
+    grid-column: 2;
+  }
+
+  .on-request .subheading {
+    grid-row: 1 / span 2;
+  }
+}
+
+/* ---------- 07 Nearby ---------- */
+
+.nearby__reef {
+  width: 82%;
+  margin: 40px 0 0 auto;
+}
+
+@media (min-width: 760px) {
+  .nearby__coast {
+    grid-column: 1 / 6;
+  }
+
+  .nearby__reef {
+    grid-column: 7 / 12;
+    width: auto;
+    margin: clamp(80px, 16vw, 260px) 0 0;
+  }
+}
+
+/* ---------- 08 Location ---------- */
+
+.location__panel {
+  row-gap: 32px;
+  padding: clamp(28px, 5vw, 80px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.location__heading {
+  display: grid;
+  gap: 28px;
+}
+
+.location__details {
+  display: grid;
+  gap: 24px;
+  justify-items: start;
+}
+
+.location__address {
+  font-style: normal;
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  max-width: 18em;
+}
+
+@media (min-width: 760px) {
+  .location__heading {
+    grid-column: 1 / 8;
+  }
+
+  .location__details {
+    grid-column: 9 / 13;
+    align-self: end;
+  }
+}
+
+/* ---------- 09 Stay options preview ---------- */
+
+.stay__intro {
+  display: grid;
+  gap: 28px;
+  margin-bottom: clamp(40px, 6vw, 88px);
+}
+
+.stay__blocks {
+  display: grid;
+  gap: 40px clamp(16px, 2vw, 32px);
+}
+
+.stay__block {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  padding-top: 20px;
+  border-top: 1px solid var(--text-primary);
+}
+
+.stay__label {
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.stay__rate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+}
+
+.stay__from,
+.stay__unit {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+.stay__amount {
+  font-size: clamp(2.5rem, 4.6vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stay__action {
+  margin-top: clamp(40px, 5vw, 72px);
+}
+
+@media (min-width: 720px) {
+  .stay__blocks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 760px) {
+  .stay__intro {
+    grid-column: 1 / 9;
+  }
+
+  .stay__blocks,
+  .stay__action {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ---------- Google Reviews (hidden until real data exists) ---------- */
+
+.reviews__summary {
+  margin: 24px 0 40px;
+  font-weight: 500;
+}
+
+.reviews__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(280px, 85%);
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+}
+
+.reviews__card {
+  scroll-snap-align: start;
+  display: grid;
+  gap: 20px;
+  align-content: space-between;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.reviews__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+@media (min-width: 760px) {
+  .reviews__list {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+}
+
+/* ---------- 10 Send inquiry ---------- */
+
+.inquiry-cta__image {
+  width: 82%;
+  margin-bottom: 48px;
+}
+
+.inquiry-cta__text {
+  display: grid;
+  gap: 24px;
+  justify-items: start;
+  align-content: center;
+}
+
+.inquiry-cta__text .btn {
+  margin-top: 8px;
+}
+
+@media (min-width: 760px) {
+  .inquiry-cta__image {
+    grid-column: 1 / 6;
+    width: auto;
+    margin: 0;
+  }
+
+  .inquiry-cta__text {
+    grid-column: 7 / 12;
+  }
+}

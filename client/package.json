@@ -1,23 +1,26 @@
 {
   "name": "villa-cinnamoon-castle-client",
+  "version": "0.1.0",
   "private": true,
-  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "media": "node scripts/build-media.mjs"
   },
   "dependencies": {
-    "gsap": "^3.12.7",
-    "lenis": "^1.1.18",
-    "lucide-react": "^0.469.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.28.0"
+    "@fontsource/bodoni-moda": "^5.3.0",
+    "@fontsource/plus-jakarta-sans": "^5.3.0",
+    "@gsap/react": "^2.1.2",
+    "gsap": "^3.15.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^6.0.7"
+    "@vitejs/plugin-react": "^6.1.1",
+    "sharp": "^0.35.4",
+    "vite": "^8.3.0"
   }
 }
