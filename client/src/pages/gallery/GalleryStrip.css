@@ -1,0 +1,190 @@
+/* ---------- Shared card anatomy ---------- */
+
+.strip__card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--text-primary);
+  color: var(--text-on-image);
+  text-align: left;
+  cursor: pointer;
+}
+
+.has-motion .strip__card {
+  clip-path: inset(100% 0% 0% 0%);
+}
+
+.strip__card picture {
+  display: contents;
+}
+
+.strip__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.strip__shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(17, 20, 17, 0.78) 0%, rgba(17, 20, 17, 0.32) 32%, rgba(17, 20, 17, 0) 58%);
+  pointer-events: none;
+}
+
+/* Thin outline on the active panel, as in the reference. */
+.strip__card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--accent-soft);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.strip__card:focus-visible {
+  outline: none;
+}
+
+.strip__card:focus-visible::after {
+  opacity: 1;
+  border-width: 2px;
+}
+
+.strip__meta {
+  position: absolute;
+  left: clamp(16px, 1.6vw, 28px);
+  right: clamp(16px, 1.6vw, 28px);
+  bottom: clamp(18px, 2vw, 32px);
+  display: grid;
+  gap: 6px;
+}
+
+.strip__index {
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-soft);
+}
+
+.strip__title {
+  font-size: clamp(1.25rem, 1.7vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.strip__label {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: rgba(250, 249, 245, 0.82);
+  white-space: nowrap;
+}
+
+/* ---------- Touch & narrow screens: native horizontal scroll-snap ---------- */
+
+.strip__list {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  padding-inline: var(--gutter);
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.strip__list::-webkit-scrollbar {
+  display: none;
+}
+
+.strip__item {
+  flex: 0 0 min(78vw, 440px);
+  height: min(68vh, 560px);
+  scroll-snap-align: start;
+}
+
+/* ---------- Desktop with a pointer: expanding accordion ---------- */
+
+@media (min-width: 1000px) and (hover: hover) and (pointer: fine) {
+  .strip {
+    /* The image width is derived from the strip width (cqw). */
+    container-type: inline-size;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .strip__list {
+    --strip-gap: 8px;
+    --grow: 4.8;
+    gap: var(--strip-gap);
+    height: clamp(440px, 38vw, 680px);
+    overflow: visible;
+    padding: 0;
+    scroll-snap-type: none;
+  }
+
+  .strip__item {
+    flex: 1 1 0;
+    min-width: 0;
+    height: auto;
+    transition: flex-grow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .strip__item:hover,
+  .strip__item:has(.strip__card:focus-visible) {
+    flex-grow: var(--grow);
+  }
+
+  /* Fixed to the expanded panel width and centred: widening reveals, never zooms. */
+  .strip__media {
+    left: 50%;
+    right: auto;
+    width: calc((100cqw - 5 * var(--strip-gap)) * 4.8 / 9.8);
+    max-width: none;
+    transform: translateX(-50%);
+  }
+
+  .strip__item:hover .strip__card::after {
+    opacity: 1;
+  }
+
+  /* Metadata sits low with the label hidden; it lifts as the label fades in. */
+  .strip__meta {
+    transform: translate3d(0, calc(0.875rem * 1.4 + 6px), 0);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .strip__label {
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .strip__item:hover .strip__meta,
+  .strip__item:has(.strip__card:focus-visible) .strip__meta {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .strip__item:hover .strip__label,
+  .strip__item:has(.strip__card:focus-visible) .strip__label {
+    opacity: 1;
+    transition-delay: 0.15s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip__item,
+  .strip__meta,
+  .strip__label,
+  .strip__card::after {
+    transition: none !important;
+  }
+}
