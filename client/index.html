@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Villa Cinnamoon Castle — Private villa near Hikkaduwa</title>
+    <meta
+      name="description"
+      content="A private villa for families and groups in Arachchikanda, 3.5 km from Hikkaduwa Beach. Five bedrooms and space for up to 15 guests."
+    />
+    <meta name="theme-color" content="#171a17" />
+
+    <!-- Motion flags are set before first paint so scroll-reveal text never flashes visible. -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        root.classList.add('js');
+        if (!reduce) root.classList.add('has-motion');
+        var path = window.location.pathname.replace(/\/+$/, '') || '/';
+        if (path === '/') root.classList.add('is-intro');
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
