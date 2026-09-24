@@ -24,6 +24,10 @@
   --nav-fg: var(--text-on-image);
 }
 
+.site-header.is-overlay .btn--fill {
+  border: 0;
+}
+
 .site-header.is-overlay::before,
 .site-header.is-menu::before {
   opacity: 0;
@@ -60,6 +64,7 @@
 .site-nav__list {
   display: none;
   align-items: baseline;
+  gap: clamp(18px, 1.5vw, 28px);
   font-size: var(--fs-nav);
   font-weight: 500;
 }
@@ -69,8 +74,10 @@
   align-items: baseline;
 }
 
-.site-nav__list li > span {
-  margin-right: 0.45em;
+.site-nav__cta-slot {
+  display: flex;
+  flex: 0 0 152px;
+  justify-content: flex-end;
 }
 
 .site-nav__link {
@@ -253,6 +260,10 @@ html.menu-open body {
 @media (max-width: 999px) {
   .site-nav {
     gap: 16px;
+  }
+
+  .site-nav__cta-slot {
+    flex-basis: auto;
   }
 }
 

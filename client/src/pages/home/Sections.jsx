@@ -9,7 +9,7 @@ export function Overview() {
   return (
     <section id="villa" className="section overview" aria-labelledby="villa-title">
       <div className="container grid-12">
-        <Eyebrow index="01" className="overview__eyebrow">
+        <Eyebrow className="overview__eyebrow">
           The villa
         </Eyebrow>
         <div className="overview__body">
@@ -39,7 +39,7 @@ export function SharedLiving() {
     <section className="section shared" aria-labelledby="shared-title">
       <div className="container grid-12">
         <header className="split-intro">
-          <Eyebrow index="02">Shared living</Eyebrow>
+          <Eyebrow>Shared living</Eyebrow>
           <RevealHeading id="shared-title">Two living areas, so the group can spread out.</RevealHeading>
           <p className="body-copy split-intro__copy" data-reveal="fade">
             The main living room is downstairs with seating and a TV. Upstairs, the open mezzanine offers a quieter place to
@@ -72,7 +72,7 @@ export function Sleeping() {
     <section className="section sleeping" aria-labelledby="sleeping-title">
       <div className="container grid-12">
         <div className="sleeping__text">
-          <Eyebrow index="03">Sleeping arrangements</Eyebrow>
+          <Eyebrow>Sleeping arrangements</Eyebrow>
           <RevealHeading id="sleeping-title">Five bedrooms, prepared for your group.</RevealHeading>
           <p className="body-copy" data-reveal="fade">
             Two bedrooms have air conditioning on A/C stay options. The remaining bedrooms have stand fans. For groups above
@@ -104,7 +104,7 @@ export function KitchenDining() {
     <section className="section kitchen" aria-labelledby="kitchen-title">
       <div className="container grid-12">
         <header className="split-intro">
-          <Eyebrow index="04">Kitchen &amp; dining</Eyebrow>
+          <Eyebrow>Kitchen &amp; dining</Eyebrow>
           <RevealHeading id="kitchen-title">Cook your own meals and eat together.</RevealHeading>
           <p className="body-copy split-intro__copy" data-reveal="fade">
             The kitchen includes a gas stove, refrigerator, rice cooker, kettle, cookware and tableware. A dining area is
@@ -137,7 +137,7 @@ export function Outdoor() {
     <section className="section outdoor" aria-labelledby="outdoor-title">
       <div className="container grid-12">
         <header className="split-intro">
-          <Eyebrow index="05">Outside</Eyebrow>
+          <Eyebrow>Outside</Eyebrow>
           <RevealHeading id="outdoor-title">
             Private outdoor space, surrounded by <span className="editorial">greenery.</span>
           </RevealHeading>
@@ -197,7 +197,7 @@ export function Includes() {
   return (
     <section className="section includes" aria-labelledby="includes-title">
       <div className="container">
-        <Eyebrow index="06">Amenities</Eyebrow>
+        <Eyebrow>Amenities</Eyebrow>
         <RevealHeading id="includes-title" className="section-heading includes__title">
           What the villa includes
         </RevealHeading>
@@ -233,7 +233,7 @@ export function Nearby() {
     <section className="section nearby" aria-labelledby="nearby-title">
       <div className="container grid-12">
         <header className="split-intro">
-          <Eyebrow index="07">Nearby</Eyebrow>
+          <Eyebrow>Nearby</Eyebrow>
           <RevealHeading id="nearby-title">Hikkaduwa is 3.5&nbsp;km away.</RevealHeading>
           <p className="body-copy split-intro__copy" data-reveal="fade">
             The town, beach, coral reef and surf spots are a short trip from the villa. Galle Fort is around 20 minutes away
@@ -267,7 +267,7 @@ export function Location() {
       <div className="container">
         <div className="location__panel grid-12">
           <div className="location__heading">
-            <Eyebrow index="08">Location</Eyebrow>
+            <Eyebrow>Location</Eyebrow>
             <RevealHeading id="location-title">Find us in Arachchikanda.</RevealHeading>
           </div>
           <div className="location__details" data-reveal="fade">
@@ -300,7 +300,7 @@ export function StayPreview() {
     <section className="section stay" aria-labelledby="stay-title">
       <div className="container grid-12">
         <header className="stay__intro">
-          <Eyebrow index="09">Stay options</Eyebrow>
+          <Eyebrow>Stay options</Eyebrow>
           <RevealHeading id="stay-title">Options for different group sizes.</RevealHeading>
         </header>
         <div className="stay__blocks">
@@ -374,7 +374,7 @@ export function InquiryCta() {
           sizes="(min-width: 1000px) 36vw, 90vw"
         />
         <div className="inquiry-cta__text">
-          <Eyebrow index="10">Send an inquiry</Eyebrow>
+          <Eyebrow>Send an inquiry</Eyebrow>
           <RevealHeading id="inquiry-title">Send your dates to the host.</RevealHeading>
           <p className="body-copy" data-reveal="fade">
             This is an inquiry only. The host will confirm availability and pricing on WhatsApp.

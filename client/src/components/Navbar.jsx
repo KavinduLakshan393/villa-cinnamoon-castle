@@ -102,7 +102,7 @@ export default function Navbar() {
 
         <nav className="site-nav" aria-label="Main">
           <ul className="site-nav__list" data-nav-in="">
-            {navItems.map((item, i) => (
+            {navItems.map((item) => (
               <li key={item.to}>
                 <SmartLink
                   to={item.to}
@@ -111,11 +111,10 @@ export default function Navbar() {
                 >
                   {item.label}
                 </SmartLink>
-                {i < navItems.length - 1 && <span aria-hidden="true">,</span>}
               </li>
             ))}
           </ul>
-          <span data-nav-in="">
+          <span className="site-nav__cta-slot" data-nav-in="">
             <Button to={inquiryPath} size="sm" tone={overlay && !open ? 'light' : 'accent'}>
               Send Inquiry
             </Button>

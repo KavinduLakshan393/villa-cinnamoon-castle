@@ -212,7 +212,7 @@ function Rates() {
     <section id="rates" className="section rates" aria-labelledby="rates-title">
       <div className="container">
         <header className="rates__header">
-          <Eyebrow index="01">Rates</Eyebrow>
+          <Eyebrow>Rates</Eyebrow>
           <RevealHeading id="rates-title">Compare stays by date and group size.</RevealHeading>
         </header>
 
@@ -267,7 +267,7 @@ function Included() {
     <section className="section included" aria-labelledby="included-title">
       <div className="container">
         <header className="included__header">
-          <Eyebrow index="02">Your stay</Eyebrow>
+          <Eyebrow>Your stay</Eyebrow>
           <RevealHeading id="included-title">Included with every stay.</RevealHeading>
           <p className="lead" data-reveal="fade">
             Electricity, gas, Wi-Fi and use of the full kitchen are part of the nightly rate.
@@ -325,7 +325,7 @@ function BeforeYouInquire() {
     <section className="section before" aria-labelledby="before-title">
       <div className="container before__grid">
         <header className="before__header">
-          <Eyebrow index="03">Before you inquire</Eyebrow>
+          <Eyebrow>Before you inquire</Eyebrow>
           <RevealHeading id="before-title">Stay details and what happens next.</RevealHeading>
         </header>
 
