@@ -141,9 +141,7 @@ export default function Intro({ onDone }) {
         </span>
       </div>
       <div className="intro__meta" aria-hidden="true">
-        <span>Arachchikanda</span>
         <Counter value={count} />
-        <span>Hikkaduwa</span>
       </div>
     </div>
   );
