@@ -113,10 +113,6 @@
   margin-top: 24px;
 }
 
-.hero__actions .btn--fill {
-  border: 0;
-}
-
 @media (min-width: 1000px) {
   .hero__content {
     grid-template-columns: 1fr auto;

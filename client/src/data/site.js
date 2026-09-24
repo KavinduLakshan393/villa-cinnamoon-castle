@@ -7,9 +7,10 @@ export const site = {
     label: '+94 76 100 7686',
     href: 'https://wa.me/94761007686',
   },
-  // OPEN-001: publish only the verified official Google Business Profile / Maps URL.
-  // While these stay null the Get Directions and Google Reviews actions are not rendered.
-  googleMapsUrl: null,
+  // Verified official Google Maps listing and coordinates.
+  googleMapsUrl: 'https://maps.app.goo.gl/Nsd11SNNdLVSAZ9fA',
+  googleMapsEmbedUrl: 'https://www.google.com/maps?q=6.1416876,80.1300153&z=16&output=embed',
+  // OPEN-001: publish only the verified official Google Reviews URL.
   googleReviewsUrl: null,
   // OPEN-003: set to the real publication date (YYYY-MM-DD) before launch.
   privacyLastUpdated: null,

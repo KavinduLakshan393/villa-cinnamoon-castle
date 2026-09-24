@@ -24,10 +24,6 @@
   --nav-fg: var(--text-on-image);
 }
 
-.site-header.is-overlay .btn--fill {
-  border: 0;
-}
-
 .site-header.is-overlay::before,
 .site-header.is-menu::before {
   opacity: 0;

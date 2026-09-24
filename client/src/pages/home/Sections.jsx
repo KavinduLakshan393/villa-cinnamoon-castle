@@ -272,6 +272,15 @@ export function Location() {
           </div>
           <div className="location__details" data-reveal="fade">
             <address className="location__address">{site.address}</address>
+            <div className="location__map">
+              <iframe
+                src={site.googleMapsEmbedUrl}
+                title="Map showing Villa Cinnamoon Castle in Arachchikanda, Hikkaduwa"
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
             {site.googleMapsUrl && (
               <Button to={site.googleMapsUrl} variant="swipe" tone="dark">
                 Get Directions
