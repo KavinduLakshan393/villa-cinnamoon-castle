@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "description": "Villa Cinnamoon Castle — Boutique Luxury Sanctuary in Hikkaduwa, Sri Lanka",
-  "scripts": {},
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "build": "npm --prefix client run build"
+  },
   "keywords": [
     "villa",
     "resort",

@@ -6,6 +6,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+const EIGHT_K_LONG_EDGE = 7680;
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = path.resolve(root, '..', 'images');
 const outDir = path.join(root, 'public', 'media');
@@ -49,6 +51,14 @@ const media = [
 await mkdir(outDir, { recursive: true });
 const manifest = {};
 
+// A restrained, non-generative grade for the website photographs. These are
+// global pixel operations only: no object removal, replacement, reframing or
+// synthetic detail is introduced. The originals in /images remain untouched.
+const enhance = (pipeline) => pipeline
+  .modulate({ brightness: 1, saturation: 0.95 })
+  .linear(1.045, -5)
+  .sharpen(0.75, 0.55, 1.05);
+
 for (const item of media) {
   const input = path.join(source, item.file);
   const meta = await sharp(input).rotate().metadata();
@@ -68,21 +78,24 @@ for (const item of media) {
     height = region.height;
   }
 
-  const widths = item.widths.filter((w) => w <= width);
-  if (!widths.includes(width) && widths.length < item.widths.length) widths.push(width);
+  const scale = EIGHT_K_LONG_EDGE / Math.max(width, height);
+  const enhancedWidth = Math.round(width * scale);
+  const enhancedHeight = Math.round(height * scale);
+  const widths = [...new Set([...item.widths, enhancedWidth])].sort((a, b) => a - b);
 
   for (const w of widths) {
     const base = () => {
       let pipeline = sharp(input).rotate();
       if (region) pipeline = pipeline.extract(region);
-      return pipeline.resize({ width: w, withoutEnlargement: true });
+      return enhance(pipeline.resize({ width: w, kernel: sharp.kernel.lanczos3 }));
     };
-    await base().webp({ quality: 80 }).toFile(path.join(outDir, `${item.name}-${w}.webp`));
-    await base().jpeg({ quality: 82, progressive: true, mozjpeg: true }).toFile(path.join(outDir, `${item.name}-${w}.jpg`));
+    const isEightK = w === enhancedWidth;
+    await base().webp({ quality: isEightK ? 88 : 82, effort: 5 }).toFile(path.join(outDir, `${item.name}-${w}.webp`));
+    await base().jpeg({ quality: isEightK ? 92 : 86, progressive: true, mozjpeg: true }).toFile(path.join(outDir, `${item.name}-${w}.jpg`));
   }
 
-  manifest[item.name] = { width, height, widths };
-  console.log(`${item.name}: ${width}x${height} -> ${widths.join(', ')}`);
+  manifest[item.name] = { width: enhancedWidth, height: enhancedHeight, widths };
+  console.log(`${item.name}: ${width}x${height} -> ${enhancedWidth}x${enhancedHeight} (8K long edge); widths ${widths.join(', ')}`);
 }
 
 await mkdir(path.dirname(manifestPath), { recursive: true });

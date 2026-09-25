@@ -8,245 +8,273 @@
       1920,
       2560,
       3200,
-      3840
+      3840,
+      7680
     ]
   },
   "villa-facade": {
-    "width": 4454,
-    "height": 2506,
+    "width": 7680,
+    "height": 4321,
     "widths": [
       960,
       1440,
       1920,
       2560,
-      3200
+      3200,
+      7680
     ]
   },
   "living-downstairs": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "living-mezzanine": {
-    "width": 1200,
-    "height": 1600,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       800,
-      1200
+      1200,
+      5760
     ]
   },
   "sleeping-prepared": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "sleeping-high-ceiling": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "kitchen": {
-    "width": 1200,
-    "height": 900,
+    "width": 7680,
+    "height": 5760,
     "widths": [
       600,
       900,
-      1200
+      1200,
+      7680
     ]
   },
   "dining": {
-    "width": 1200,
-    "height": 1408,
+    "width": 6545,
+    "height": 7680,
     "widths": [
       480,
       800,
-      1200
+      1200,
+      6545
     ]
   },
   "outdoor-garden": {
-    "width": 1200,
-    "height": 900,
+    "width": 7680,
+    "height": 5760,
     "widths": [
       600,
       900,
-      1200
+      1200,
+      7680
     ]
   },
   "outdoor-veranda": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "nearby-coast": {
-    "width": 720,
-    "height": 901,
+    "width": 6137,
+    "height": 7680,
     "widths": [
       480,
-      720
+      720,
+      6137
     ]
   },
   "nearby-reef": {
-    "width": 720,
-    "height": 630,
+    "width": 7680,
+    "height": 6720,
     "widths": [
       480,
-      720
+      720,
+      7680
     ]
   },
   "arrival-gate": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "exterior-night": {
-    "width": 720,
-    "height": 960,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
-      720
+      720,
+      5760
     ]
   },
   "villa-sign": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "front-yard": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "living-overlook": {
-    "width": 720,
-    "height": 960,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
-      720
+      720,
+      5760
     ]
   },
   "living-seating": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "upstairs-lounge": {
-    "width": 1200,
-    "height": 1601,
+    "width": 5756,
+    "height": 7680,
     "widths": [
       480,
       800,
-      1200
+      1200,
+      5756
     ]
   },
   "dining-stairs": {
-    "width": 720,
-    "height": 960,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
-      720
+      720,
+      5760
     ]
   },
   "sleeping-four-poster": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "sleeping-white": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "sleeping-leaf-print": {
-    "width": 720,
-    "height": 960,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
-      720
+      720,
+      5760
     ]
   },
   "sleeping-towels": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "balcony-doorway": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "balcony-exterior": {
-    "width": 1200,
-    "height": 1600,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       800,
-      1200
+      1200,
+      5760
     ]
   },
   "garden-palms": {
-    "width": 960,
-    "height": 1280,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
       720,
-      960
+      960,
+      5760
     ]
   },
   "nearby-kayaks": {
-    "width": 780,
-    "height": 1040,
+    "width": 5760,
+    "height": 7680,
     "widths": [
       480,
-      780
+      780,
+      5760
     ]
   }
 }
