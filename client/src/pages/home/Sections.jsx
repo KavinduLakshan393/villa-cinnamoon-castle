@@ -1,9 +1,9 @@
+import { useEffect, useRef, useState } from 'react';
 import Frame from '../../components/Frame.jsx';
 import Button from '../../components/Button.jsx';
 import { RevealHeading, ScrubText, Eyebrow } from '../../components/Reveal.jsx';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
-import { googleReviews } from '../../data/reviews.js';
 
 export function Overview() {
   return (
@@ -261,32 +261,77 @@ export function Nearby() {
   );
 }
 
+/**
+ * Visitor-initiated map (NFR-PRV-04, Privacy notice): nothing is requested from
+ * Google until the visitor chooses to show the map.
+ */
+function LocationMap() {
+  const [shown, setShown] = useState(false);
+  const frameRef = useRef(null);
+
+  useEffect(() => {
+    if (shown) frameRef.current?.focus();
+  }, [shown]);
+
+  if (shown) {
+    return (
+      <div className="location__map">
+        <iframe
+          ref={frameRef}
+          src={site.googleMapsEmbedUrl}
+          title="Map showing Villa Cinnamoon Castle in Arachchikanda, Hikkaduwa"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="location__map location__map--placeholder">
+      <svg className="location__pin" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z" />
+        <circle cx="12" cy="10" r="2.4" />
+      </svg>
+      <Button onClick={() => setShown(true)} tone="light">
+        Show map
+      </Button>
+      <p className="location__map-note">
+        The map loads from Google Maps. Google processes data under its{' '}
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+          privacy policy<span className="sr-only"> (opens in a new tab)</span>
+        </a>
+        .
+      </p>
+    </div>
+  );
+}
+
 export function Location() {
   return (
     <section id="location" className="section location" aria-labelledby="location-title">
       <div className="container">
-        <div className="location__panel grid-12">
-          <div className="location__heading">
-            <Eyebrow>Location</Eyebrow>
-            <RevealHeading id="location-title">Find us in Arachchikanda.</RevealHeading>
-          </div>
-          <div className="location__details" data-reveal="fade">
-            <address className="location__address">{site.address}</address>
-            <div className="location__map">
-              <iframe
-                src={site.googleMapsEmbedUrl}
-                title="Map showing Villa Cinnamoon Castle in Arachchikanda, Hikkaduwa"
-                loading="lazy"
-                allowFullScreen
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+        <div className="location__panel">
+          {/* Heading at the top, address and directions at the bottom: the column spans the map's height. */}
+          <div className="location__info">
+            <div className="location__heading">
+              <Eyebrow>Location</Eyebrow>
+              <RevealHeading id="location-title">Find us in Arachchikanda.</RevealHeading>
             </div>
-            {site.googleMapsUrl && (
-              <Button to={site.googleMapsUrl} variant="swipe" tone="dark">
-                Get Directions
-              </Button>
-            )}
+            <div className="location__details" data-reveal="fade">
+              <address className="location__address">{site.address}</address>
+              {site.googleMapsUrl && (
+                <Button to={site.googleMapsUrl} variant="swipe" tone="dark">
+                  Get Directions
+                </Button>
+              )}
+            </div>
           </div>
+          {site.googleMapsEmbedUrl && (
+            <div className="location__map-col" data-reveal="fade">
+              <LocationMap />
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -330,42 +375,6 @@ export function StayPreview() {
             View Stay Options
           </Button>
         </div>
-      </div>
-    </section>
-  );
-}
-
-/** Rendered only once real data from the official Google Business Profile is supplied. */
-export function GoogleReviews() {
-  if (!googleReviews) return null;
-  return (
-    <section className="section reviews" aria-labelledby="reviews-title">
-      <div className="container">
-        <Eyebrow>Google Reviews</Eyebrow>
-        <RevealHeading id="reviews-title">What guests say on Google.</RevealHeading>
-        <p className="reviews__summary" data-reveal="fade">
-          {googleReviews.rating} on Google · {googleReviews.total} reviews
-        </p>
-        <ul className="reviews__list">
-          {googleReviews.items.slice(0, 3).map((review) => (
-            <li key={`${review.author}-${review.date}`} className="reviews__card" data-reveal="fade">
-              <blockquote>“{review.text}”</blockquote>
-              <p className="caption">
-                {review.author} · {review.date}
-              </p>
-            </li>
-          ))}
-        </ul>
-        {site.googleReviewsUrl && (
-          <div className="reviews__actions">
-            <Button to={site.googleReviewsUrl} variant="swipe" tone="dark">
-              View All Reviews
-            </Button>
-            <Button to={site.googleReviewsUrl} variant="swipe" tone="dark">
-              Review Us on Google
-            </Button>
-          </div>
-        )}
       </div>
     </section>
   );

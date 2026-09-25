@@ -298,10 +298,18 @@
 /* ---------- 08 Location ---------- */
 
 .location__panel {
-  row-gap: 32px;
+  display: grid;
+  gap: clamp(32px, 4vw, 48px);
   padding: clamp(28px, 5vw, 80px);
   background: var(--surface);
   border: 1px solid var(--border);
+}
+
+.location__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(32px, 4vw, 48px);
 }
 
 .location__heading {
@@ -336,14 +344,66 @@
   border: 0;
 }
 
-@media (min-width: 760px) {
-  .location__heading {
-    grid-column: 1 / 5;
+/* Placeholder until the visitor chooses to load the Google map. */
+.location__map--placeholder {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+  background-color: var(--background);
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  border: 1px solid var(--border);
+}
+
+.location__pin {
+  width: 36px;
+  height: 36px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.location__map-note {
+  max-width: 30ch;
+  padding: 6px 10px;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  background: var(--background);
+}
+
+.location__map-note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Side by side only when the heading has room for "Arachchikanda." on one line. */
+@media (min-width: 1000px) {
+  .location__panel {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(16px, 2vw, 32px);
+    align-items: stretch;
   }
 
-  .location__details {
-    grid-column: 6 / 13;
-    align-self: end;
+  .location__info {
+    grid-column: 1 / 7;
+  }
+
+  /* The map keeps its 4:3 size but grows if the text column is taller. */
+  .location__map-col {
+    grid-column: 7 / 13;
+    display: grid;
+  }
+
+  .location__map-col .location__map {
+    height: 100%;
   }
 }
 
@@ -415,48 +475,6 @@
   .stay__blocks,
   .stay__action {
     grid-column: 1 / -1;
-  }
-}
-
-/* ---------- Google Reviews (hidden until real data exists) ---------- */
-
-.reviews__summary {
-  margin: 24px 0 40px;
-  font-weight: 500;
-}
-
-.reviews__list {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(280px, 85%);
-  gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
-}
-
-.reviews__card {
-  scroll-snap-align: start;
-  display: grid;
-  gap: 20px;
-  align-content: space-between;
-  padding: 28px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-}
-
-.reviews__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 40px;
-}
-
-@media (min-width: 760px) {
-  .reviews__list {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    overflow: visible;
   }
 }
 
