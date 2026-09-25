@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import Hero from './home/Hero.jsx';
+import GoogleReviews from './home/GoogleReviews.jsx';
 import {
   Overview,
   SharedLiving,
@@ -10,7 +11,6 @@ import {
   Nearby,
   Location,
   StayPreview,
-  GoogleReviews,
   InquiryCta,
 } from './home/Sections.jsx';
 import { useFadeReveals } from '../lib/reveal.js';
