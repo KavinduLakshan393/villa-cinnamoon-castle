@@ -101,6 +101,9 @@ The files under `Sample components/` are **samples**, not approved designs. They
   - Preserved the previous version in `99 Archive`.
   - **Sinhala synchronization:** Not required, because no Sinhala Privacy document exists.
 
+- **2026-09-24 — Moving Google Reviews (DEC-020):** Replaced the static-review-grid and no-auto-rotation rules in `Phase 1 Website Copy.md`. The superseded wording is quoted in place. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-24 — On-request location map (DEC-021):** Updated the Maps paragraph of the privacy copy in `Privacy Page Information Architecture.md` to describe the `Show map` behaviour.
+
 ## Document control rules
 
 - Do not delete superseded material until it has been preserved in `99 Archive`.

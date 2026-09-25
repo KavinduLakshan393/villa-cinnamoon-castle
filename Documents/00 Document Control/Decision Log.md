@@ -155,6 +155,25 @@ This log records confirmed product, content and UX decisions. It is not a discus
 - **Verification:** A network audit of all five public pages found requests only to the site's own origin, no cookies, no local storage, and only the session entry `vcc-inquiry`.
 - **Affected documents:** `03 Information Architecture/Privacy Page Information Architecture.md`.
 
+### DEC-020 — Moving Google Reviews rows
+
+- **Status:** Approved (2026-09-24)
+- **Decision:** Show the Google Reviews as two continuously moving rows. The upper row moves right and the lower row moves left. This replaces the earlier three-card static grid and supersedes the rule "Do not auto-rotate the review cards".
+- **Accessibility conditions (WCAG 2.2.2):**
+  - A visible `Pause reviews` control.
+  - Motion pauses on hover, on keyboard focus and while the section is off-screen.
+  - Duplicate loop copies are hidden from assistive technology and keyboard focus.
+  - With reduced motion, the rows are static and can be swiped or scrolled.
+- **Data rule (unchanged from DEC-010):** Only real reviews from the official Google Business Profile. The section stays hidden until they are supplied.
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md`.
+
+### DEC-021 — Location map loads only on request
+
+- **Status:** Approved (2026-09-24)
+- **Decision:** The embedded Google map in the Home Location section shows a placeholder with a `Show map` button. The map loads only after the visitor selects it (NFR-PRV-04). The `Get Directions` link opens the verified Google Maps destination.
+- **Verification:** A network audit showed no Google request before the click; the map loads from `google.com` only after it.
+- **Affected documents:** `03 Information Architecture/Privacy Page Information Architecture.md`. The Maps paragraph of the privacy copy now describes the on-request map.
+
 ## Open decisions and launch dependencies
 
 ### OPEN-001 — Official Google destination

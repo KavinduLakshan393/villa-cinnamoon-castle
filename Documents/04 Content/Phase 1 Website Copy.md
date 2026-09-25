@@ -323,8 +323,12 @@ Place the Location section immediately after `Nearby Hikkaduwa` and before the h
 - One section label
 - One direct heading
 - Official Google rating and total review count
-- Three selected Google review cards
-- Static grid on desktop and horizontal manual swipe on mobile
+- Selected Google review cards (six or more recommended) split across two rows
+- Two continuously moving rows (DEC-020): the upper row drifts right and the lower row drifts left
+- A visible `Pause reviews` / `Play reviews` control; motion also pauses on hover, on keyboard focus and while the section is off-screen
+- With reduced motion, both rows are static and can be swiped or scrolled
+
+*Superseded by DEC-020 (2026-09-24): "Three selected Google review cards" and "Static grid on desktop and horizontal manual swipe on mobile".*
 - Link to view all reviews on Google
 - Link for previous guests to leave a Google review
 
@@ -353,7 +357,7 @@ Place the Location section immediately after `Nearby Hikkaduwa` and before the h
 - Do not add a website review-submission form in Phase 1.
 - Do not fabricate review text, guest names, ratings or the total review count.
 - Use data from the official Villa Cinnamoon Castle Google Business Profile.
-- Do not auto-rotate the review cards. Mobile users may swipe them manually.
+- Review rows move continuously by approved exception (DEC-020). They must stay slow (about 40 px per second), loop seamlessly and never move without a visible pause control. Long reviews are shortened with a link to the full review on Google.
 - Link each available action to the appropriate official Google Maps or Google review destination.
 
 ## Send Inquiry
