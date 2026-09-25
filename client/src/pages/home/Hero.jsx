@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import ResponsiveImage from '../../components/ResponsiveImage.jsx';
 import Button from '../../components/Button.jsx';
 import { inquiryPath } from '../../data/site.js';
 import { gsap, EASE, introState, prefersReducedMotion, whenIntroLifts, useGSAP } from '../../lib/motion.js';
@@ -10,6 +9,81 @@ import './Hero.css';
 const PHRASES = ['the whole group', 'family reunions', 'old friends', 'slow weekends'];
 const HOLD_MS = 2800;
 const SWAP_MS = 450;
+
+// Cinemagraph hero (8 s generated clip, stabilised, texture-cleaned and crossfaded
+// into a seamless 9 s loop). Portrait screens get the 9:16 cut. Each poster is the
+// clip's first frame, so the hand-off from poster to video is invisible.
+const HERO_MEDIA = {
+  landscape: { video: '/media/hero-video-desktop.mp4', poster: '/media/hero-video-desktop-poster.jpg' },
+  portrait: { video: '/media/hero-video-mobile.mp4', poster: '/media/hero-video-mobile-poster.jpg' },
+};
+const PORTRAIT_QUERY = '(max-aspect-ratio: 4/5)';
+const HERO_ALT = 'Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence';
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const onChange = (event) => setMatches(event.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [query]);
+  return matches;
+}
+
+// Motion and data preferences are respected: the still first frame is shown instead.
+const videoAllowed = () => !prefersReducedMotion() && !navigator.connection?.saveData;
+
+function HeroMedia({ sectionRef, paused }) {
+  const variant = useMediaQuery(PORTRAIT_QUERY) ? 'portrait' : 'landscape';
+  const { video, poster } = HERO_MEDIA[variant];
+  const videoRef = useRef(null);
+  const [allowed] = useState(videoAllowed);
+
+  // Play only while the Hero is on screen and the visitor has not paused it.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return undefined;
+    el.muted = true; // React does not write the muted attribute; iOS needs it set before play().
+    let visible = true;
+    const sync = () => {
+      if (paused || !visible || document.hidden) el.pause();
+      else el.play().catch(() => {}); // Autoplay can be refused (e.g. iOS Low Power Mode): the poster stays.
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    });
+    observer.observe(sectionRef.current);
+    document.addEventListener('visibilitychange', sync);
+    sync();
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', sync);
+    };
+  }, [paused, variant, sectionRef]);
+
+  if (!allowed) {
+    return <img src={poster} alt={HERO_ALT} className="hero__media" fetchPriority="high" data-hero-image="" />;
+  }
+  return (
+    <video
+      key={variant}
+      ref={videoRef}
+      className="hero__media"
+      src={video}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      autoPlay
+      preload="auto"
+      disablePictureInPicture
+      aria-hidden="true"
+      data-hero-image=""
+    />
+  );
+}
 
 function useCyclingPhrase(active, sectionRef) {
   const [index, setIndex] = useState(0);
@@ -48,6 +122,7 @@ function useCyclingPhrase(active, sectionRef) {
 export default function Hero() {
   const sectionRef = useRef(null);
   const [cycling, setCycling] = useState(false);
+  const [videoPaused, setVideoPaused] = useState(false);
   const { phrase, leaving } = useCyclingPhrase(cycling, sectionRef);
 
   useGSAP(
@@ -98,16 +173,30 @@ export default function Hero() {
   return (
     <section className="hero" ref={sectionRef} data-nav-overlay="" aria-labelledby="hero-title">
       <div className="hero__parallax">
-        <ResponsiveImage
-          name="hero-arrival"
-          alt="Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence"
-          sizes="100vw"
-          priority
-          className="hero__media"
-          data-hero-image=""
-        />
+        <HeroMedia sectionRef={sectionRef} paused={videoPaused} />
       </div>
       <div className="hero__shade" aria-hidden="true" />
+
+      {/* WCAG 2.2.2: moving background content can be paused. */}
+      {videoAllowed() && (
+        <button
+          type="button"
+          className="hero__video-toggle"
+          onClick={() => setVideoPaused((value) => !value)}
+          aria-label={videoPaused ? 'Play background video' : 'Pause background video'}
+          data-hero-fade=""
+        >
+          {videoPaused ? (
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M5 3.5v9l7-4.5z" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M5.5 3.5v9M10.5 3.5v9" />
+            </svg>
+          )}
+        </button>
+      )}
 
       <div className="hero__content">
         <div className="hero__title-block">

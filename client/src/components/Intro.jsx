@@ -9,12 +9,15 @@ const PHRASE_MS = 950;
 const MIN_DURATION = PHRASES.length * PHRASE_MS + 700;
 const MAX_WAIT = 9000;
 
+// Waits for the Hero's first picture: an image's load, or a video's first decoded frame.
 function waitForHeroImage() {
-  const img = document.querySelector('[data-hero-image]');
-  if (!img || img.complete) return Promise.resolve();
+  const el = document.querySelector('[data-hero-image]');
+  if (!el) return Promise.resolve();
+  const isVideo = el.tagName === 'VIDEO';
+  if (isVideo ? el.readyState >= 2 : el.complete) return Promise.resolve();
   return new Promise((resolve) => {
-    img.addEventListener('load', resolve, { once: true });
-    img.addEventListener('error', resolve, { once: true });
+    el.addEventListener(isVideo ? 'loadeddata' : 'load', resolve, { once: true });
+    el.addEventListener('error', resolve, { once: true });
   });
 }
 
