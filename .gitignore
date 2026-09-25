@@ -109,3 +109,10 @@ Sample Design V.1.0/
 video/
 Web resources/
 .reference-review/
+
+# Large image experiments (kept locally, not part of the website build)
+images/8k-enhanced/
+images/hero/*-generated.png
+images/hero/villa-front-hero-8k.jpg
+images/hero/villa-front-hero-cinnamon-fence-8k.jpg
+images/hero/villa-front-hero-no-servo-8k.jpg
