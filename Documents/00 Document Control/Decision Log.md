@@ -206,7 +206,8 @@ This log records confirmed product, content and UX decisions. It is not a discus
   - Every Home mosaic photograph (and the mezzanine lead image) is a button that opens the Gallery viewer on that section's set. The viewer bar shows the section name.
   - On hover (mouse and trackpad only), the frame draws in, the photograph eases closer, and the other photographs in the mosaic dim. A round `View` label follows the pointer. Keyboard focus shows the same state with a visible focus ring.
   - A brand-green line drawn by scrolling runs behind the text and photographs:
-    - A travelling segment through Overview and Shared living (desktop only).
+    - Travelling segments through Overview and Shared living, and through Sleeping, Kitchen and Outside into the Balcony video (desktop only).
+    - A line from the Location section that draws past the rates and reviews and stops at the `Send Inquiry` button (desktop only).
     - A villa-to-beach route in the Nearby section, labelled `The villa`, `Hikkaduwa Beach` and `3.5 km · about 5 minutes`. The route is decorative (`aria-hidden`), because the heading already states the distance.
   - Every scroll-linked effect now follows the reduced-motion setting live. Turning it on mid-visit stops the parallax, drift, word scrub and videos (the poster is shown), and draws the lines fully and still.
 - **Not adopted:** Velocity-based image bending (reference: Lusion.co).
