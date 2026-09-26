@@ -488,3 +488,91 @@
     grid-column: 7 / 12;
   }
 }
+
+/* Focus dim: while one photograph is hovered, the others in the mosaic step back. */
+@media (hover: hover) and (pointer: fine) {
+  .mosaic .frame--interactive .frame__window {
+    transition:
+      clip-path 1s var(--ease-out),
+      opacity 0.6s var(--ease-out);
+  }
+
+  .mosaic:has(.frame__window:hover) .frame__window:not(:hover) {
+    opacity: 0.55;
+  }
+}
+
+/* ---------- Villa-to-beach route (Nearby) ---------- */
+
+.route {
+  position: relative;
+  height: clamp(120px, 14vw, 210px);
+  margin: clamp(-24px, -2vw, -8px) 0 clamp(40px, 6vw, 96px);
+  --path-width: 5px;
+}
+
+.route__stop,
+.route__distance {
+  position: absolute;
+  z-index: 1;
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Stops sit on the path's end points (3,70) and (97,30) of its 0–100 box. */
+.route__stop::before {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 3px solid var(--accent);
+  border-radius: 50%;
+  background: var(--background);
+}
+
+.route__stop--start {
+  left: 3%;
+  top: 70%;
+  padding-top: 20px;
+  transform: translateX(-7px);
+}
+
+.route__stop--start::before {
+  left: 0;
+  top: -7px;
+}
+
+.route__stop--end {
+  right: 3%;
+  top: 30%;
+  padding-bottom: 20px;
+  transform: translate(7px, -100%);
+  text-align: right;
+}
+
+.route__stop--end::before {
+  right: 0;
+  bottom: -7px;
+}
+
+.route__distance {
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  color: var(--text-secondary);
+}
+
+/* Phones: the distance moves under the line, clear of the end label. */
+@media (max-width: 759px) {
+  .route {
+    height: 140px;
+    margin-bottom: 56px;
+  }
+
+  .route__distance {
+    top: calc(100% + 8px);
+  }
+}

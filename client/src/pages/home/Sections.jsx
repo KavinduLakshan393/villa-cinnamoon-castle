@@ -4,8 +4,254 @@ import Button from '../../components/Button.jsx';
 import { RevealHeading, ScrubText, Eyebrow } from '../../components/Reveal.jsx';
 import Mosaic from './Mosaic.jsx';
 import Cinemagraph from './Cinemagraph.jsx';
+import { useOpenPhoto } from './PhotoViewer.jsx';
+import ScrollPath from './ScrollPath.jsx';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
+
+// ---------- Home photographs ----------
+// Each mosaic's photographs, in columns. Selecting a photo opens the viewer on
+// that section's set (the lead mezzanine image joins Shared living).
+
+const photosOf = (columns) => columns.flatMap((column) => column.items);
+
+const SHARED_LEAD = {
+  name: 'home-living-mezzanine',
+  alt: 'The open upstairs mezzanine under a timber-beamed ceiling, looking down to the dining table on the ground floor',
+  caption: 'The mezzanine, open to the floor below',
+};
+
+const SHARED_COLUMNS = [
+  {
+    shift: 0,
+    items: [
+      {
+        name: 'home-living-lounge',
+        alt: 'Wooden cane-seated lounge chairs around a low table in the upstairs sitting area',
+        caption: 'Upstairs sitting area',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-living-stair-light',
+        alt: 'The staircase seen from the landing, lit by a warm wall light',
+        ratio: '4 / 5',
+      },
+    ],
+  },
+  {
+    shift: 70,
+    items: [
+      {
+        name: 'home-living-downstairs',
+        alt: 'The downstairs living room with a row of cane-seated armchairs beside the staircase',
+        caption: 'Downstairs living room',
+        ratio: '3 / 4',
+      },
+      {
+        name: 'home-living-entrance',
+        alt: 'Cane-seated armchairs along the wall near the timber front door',
+        ratio: '4 / 5',
+      },
+    ],
+  },
+  {
+    shift: -50,
+    items: [
+      {
+        name: 'home-living-upstairs-dining',
+        alt: 'A dining table with cane chairs at the end of the upstairs mezzanine',
+        caption: 'Upstairs dining corner',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-living-stairs',
+        alt: 'The staircase with a timber handrail rising above the downstairs seating',
+        ratio: '3 / 4',
+      },
+    ],
+  },
+];
+
+const SLEEPING_COLUMNS = [
+  {
+    shift: 0,
+    items: [
+      {
+        name: 'home-bed-check-throw',
+        alt: 'A double bed with white linen, a yellow check throw and rolled towels under a timber ceiling',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bed-towels',
+        alt: 'Twin beds made up together with white linen and rolled towels',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bed-leaf-print',
+        alt: 'A double bed with a navy leaf-print cover beside a wooden dresser',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bed-pendant',
+        alt: 'A bedroom under a high timber-beamed ceiling with a warm pendant light',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bathroom',
+        alt: 'A bathroom with a pedestal basin, mirror, towel rail and louvred window',
+        caption: 'One of two bathrooms, with hot-water showers',
+        ratio: '3 / 4',
+      },
+    ],
+  },
+  {
+    shift: 90,
+    items: [
+      {
+        name: 'home-bed-four-poster',
+        alt: 'A four-poster bed seen past a patterned curtain, under a timber ceiling',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bed-ac',
+        alt: 'An air-conditioned bedroom with a wooden double bed and a wall light',
+        caption: 'Air-conditioned bedroom',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bed-leaf-grey',
+        alt: 'A double bed with a leaf-print cover and grey throw beside an arched wooden door',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bed-white',
+        alt: 'A carved wooden double bed with white linen under a sloped timber ceiling',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-bed-mirror',
+        alt: 'A bedroom with striped curtains, a tall wooden cupboard and a wall mirror',
+        ratio: '4 / 3',
+      },
+    ],
+  },
+];
+
+const KITCHEN_COLUMNS = [
+  {
+    shift: 0,
+    items: [
+      {
+        name: 'home-kitchen',
+        alt: 'The kitchen with a long wooden counter, gas stove, rice cooker, kettle, washing machine and a louvred window',
+        caption: 'Kitchen',
+        ratio: '3 / 4',
+      },
+    ],
+  },
+  {
+    shift: 80,
+    items: [
+      {
+        name: 'home-dining',
+        alt: 'A wooden dining table with chairs beside the refrigerator and grey curtains',
+        caption: 'Dining area',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-dining-stairs',
+        alt: 'A long wooden dining table at the foot of the staircase',
+        ratio: '4 / 5',
+      },
+    ],
+  },
+];
+
+const OUTDOOR_COLUMNS = [
+  {
+    shift: 0,
+    items: [
+      {
+        name: 'home-porch',
+        alt: 'The covered veranda with timber roof beams and a white pillar, opening onto the garden',
+        caption: 'Veranda',
+        ratio: '3 / 4',
+      },
+    ],
+  },
+  {
+    shift: -60,
+    items: [
+      {
+        name: 'home-balcony-walk',
+        alt: 'The upstairs balcony walkway looking out over banana plants, coconut palms and paddy fields',
+        caption: 'Upstairs balcony',
+        ratio: '4 / 3',
+      },
+      {
+        name: 'home-villa-sign',
+        alt: 'The Villa Cinnamoon Castle sign at the roadside at dusk',
+        ratio: '4 / 5',
+      },
+    ],
+  },
+  {
+    shift: 60,
+    items: [
+      {
+        name: 'home-balcony-exterior',
+        alt: 'The white villa with its curved upstairs balcony among the trees',
+        ratio: '3 / 4',
+      },
+    ],
+  },
+];
+
+const NEARBY_COLUMNS = [
+  {
+    shift: 0,
+    items: [
+      {
+        name: 'home-nearby-coast',
+        alt: 'Waves pouring into a rocky tidal pool on the coast at sunset',
+        caption: 'Nearby — the south coast',
+        ratio: '4 / 5',
+      },
+      {
+        name: 'home-nearby-kayaks',
+        alt: 'A group of friends in life jackets kayaking on a calm lagoon',
+        caption: 'Nearby — kayaking on the lagoon',
+        ratio: '4 / 3',
+      },
+    ],
+  },
+  {
+    shift: 80,
+    items: [
+      {
+        name: 'home-nearby-reef',
+        alt: 'A snorkeller swimming among striped reef fish in clear water',
+        caption: 'Nearby — snorkelling on the reef',
+        ratio: '8 / 7',
+      },
+      {
+        name: 'home-nearby-turtle',
+        alt: 'A sea turtle in the clear shallows beside a swimmer',
+        caption: 'Nearby — sea turtles in the shallows',
+        ratio: '4 / 5',
+      },
+    ],
+  },
+];
+
+// The road from the villa to the beach, drawn as the Nearby section scrolls in.
+const ROUTE_PATH = 'M 3 70 C 16 70 20 22 35 30 S 52 92 67 64 S 86 24 97 30';
+
+const SHARED_ITEMS = [SHARED_LEAD, ...photosOf(SHARED_COLUMNS)];
+const SLEEPING_ITEMS = photosOf(SLEEPING_COLUMNS);
+const KITCHEN_ITEMS = photosOf(KITCHEN_COLUMNS);
+const OUTDOOR_ITEMS = photosOf(OUTDOOR_COLUMNS);
+const NEARBY_ITEMS = photosOf(NEARBY_COLUMNS);
 
 export function Overview() {
   return (
@@ -37,6 +283,7 @@ export function Overview() {
 }
 
 export function SharedLiving() {
+  const open = useOpenPhoto(SHARED_ITEMS, 'Shared living');
   return (
     <section className="section shared" aria-labelledby="shared-title">
       <div className="container grid-12">
@@ -50,67 +297,18 @@ export function SharedLiving() {
         </header>
         <Frame
           className="shared__lead"
-          name="home-living-mezzanine"
-          alt="The open upstairs mezzanine under a timber-beamed ceiling, looking down to the dining table on the ground floor"
-          caption="The mezzanine, open to the floor below"
+          {...SHARED_LEAD}
           ratio="16 / 9"
           sizes="(min-width: 760px) 92vw, 100vw"
+          onOpen={open}
         />
       </div>
       <div className="container">
         <Mosaic
           className="shared__mosaic"
           sizes="(min-width: 760px) 30vw, 46vw"
-          columns={[
-            {
-              shift: 0,
-              items: [
-                {
-                  name: 'home-living-lounge',
-                  alt: 'Wooden cane-seated lounge chairs around a low table in the upstairs sitting area',
-                  caption: 'Upstairs sitting area',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-living-stair-light',
-                  alt: 'The staircase seen from the landing, lit by a warm wall light',
-                  ratio: '4 / 5',
-                },
-              ],
-            },
-            {
-              shift: 70,
-              items: [
-                {
-                  name: 'home-living-downstairs',
-                  alt: 'The downstairs living room with a row of cane-seated armchairs beside the staircase',
-                  caption: 'Downstairs living room',
-                  ratio: '3 / 4',
-                },
-                {
-                  name: 'home-living-entrance',
-                  alt: 'Cane-seated armchairs along the wall near the timber front door',
-                  ratio: '4 / 5',
-                },
-              ],
-            },
-            {
-              shift: -50,
-              items: [
-                {
-                  name: 'home-living-upstairs-dining',
-                  alt: 'A dining table with cane chairs at the end of the upstairs mezzanine',
-                  caption: 'Upstairs dining corner',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-living-stairs',
-                  alt: 'The staircase with a timber handrail rising above the downstairs seating',
-                  ratio: '3 / 4',
-                },
-              ],
-            },
-          ]}
+          columns={SHARED_COLUMNS}
+          onOpen={open}
         />
       </div>
     </section>
@@ -131,6 +329,7 @@ export function QuoteBand({ children }) {
 }
 
 export function Sleeping() {
+  const open = useOpenPhoto(SLEEPING_ITEMS, 'Sleeping arrangements');
   return (
     <section className="section sleeping" aria-labelledby="sleeping-title">
       <div className="container grid-12">
@@ -145,70 +344,8 @@ export function Sleeping() {
         <Mosaic
           className="sleeping__images"
           sizes="(min-width: 760px) 24vw, 46vw"
-          columns={[
-            {
-              shift: 0,
-              items: [
-                {
-                  name: 'home-bed-check-throw',
-                  alt: 'A double bed with white linen, a yellow check throw and rolled towels under a timber ceiling',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bed-towels',
-                  alt: 'Twin beds made up together with white linen and rolled towels',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bed-leaf-print',
-                  alt: 'A double bed with a navy leaf-print cover beside a wooden dresser',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bed-pendant',
-                  alt: 'A bedroom under a high timber-beamed ceiling with a warm pendant light',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bathroom',
-                  alt: 'A bathroom with a pedestal basin, mirror, towel rail and louvred window',
-                  caption: 'One of two bathrooms, with hot-water showers',
-                  ratio: '3 / 4',
-                },
-              ],
-            },
-            {
-              shift: 90,
-              items: [
-                {
-                  name: 'home-bed-four-poster',
-                  alt: 'A four-poster bed seen past a patterned curtain, under a timber ceiling',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bed-ac',
-                  alt: 'An air-conditioned bedroom with a wooden double bed and a wall light',
-                  caption: 'Air-conditioned bedroom',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bed-leaf-grey',
-                  alt: 'A double bed with a leaf-print cover and grey throw beside an arched wooden door',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bed-white',
-                  alt: 'A carved wooden double bed with white linen under a sloped timber ceiling',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-bed-mirror',
-                  alt: 'A bedroom with striped curtains, a tall wooden cupboard and a wall mirror',
-                  ratio: '4 / 3',
-                },
-              ],
-            },
-          ]}
+          columns={SLEEPING_COLUMNS}
+          onOpen={open}
         />
       </div>
     </section>
@@ -216,6 +353,7 @@ export function Sleeping() {
 }
 
 export function KitchenDining() {
+  const open = useOpenPhoto(KITCHEN_ITEMS, 'Kitchen & dining');
   return (
     <section className="section kitchen" aria-labelledby="kitchen-title">
       <div className="container grid-12">
@@ -232,35 +370,8 @@ export function KitchenDining() {
         <Mosaic
           className="kitchen__mosaic"
           sizes="(min-width: 760px) 44vw, 46vw"
-          columns={[
-            {
-              shift: 0,
-              items: [
-                {
-                  name: 'home-kitchen',
-                  alt: 'The kitchen with a long wooden counter, gas stove, rice cooker, kettle, washing machine and a louvred window',
-                  caption: 'Kitchen',
-                  ratio: '3 / 4',
-                },
-              ],
-            },
-            {
-              shift: 80,
-              items: [
-                {
-                  name: 'home-dining',
-                  alt: 'A wooden dining table with chairs beside the refrigerator and grey curtains',
-                  caption: 'Dining area',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-dining-stairs',
-                  alt: 'A long wooden dining table at the foot of the staircase',
-                  ratio: '4 / 5',
-                },
-              ],
-            },
-          ]}
+          columns={KITCHEN_COLUMNS}
+          onOpen={open}
         />
       </div>
     </section>
@@ -268,6 +379,7 @@ export function KitchenDining() {
 }
 
 export function Outdoor() {
+  const open = useOpenPhoto(OUTDOOR_ITEMS, 'Outside');
   return (
     <section className="section outdoor" aria-labelledby="outdoor-title">
       <div className="container grid-12">
@@ -285,45 +397,8 @@ export function Outdoor() {
         <Mosaic
           className="outdoor__mosaic"
           sizes="(min-width: 760px) 30vw, 46vw"
-          columns={[
-            {
-              shift: 0,
-              items: [
-                {
-                  name: 'home-porch',
-                  alt: 'The covered veranda with timber roof beams and a white pillar, opening onto the garden',
-                  caption: 'Veranda',
-                  ratio: '3 / 4',
-                },
-              ],
-            },
-            {
-              shift: -60,
-              items: [
-                {
-                  name: 'home-balcony-walk',
-                  alt: 'The upstairs balcony walkway looking out over banana plants, coconut palms and paddy fields',
-                  caption: 'Upstairs balcony',
-                  ratio: '4 / 3',
-                },
-                {
-                  name: 'home-villa-sign',
-                  alt: 'The Villa Cinnamoon Castle sign at the roadside at dusk',
-                  ratio: '4 / 5',
-                },
-              ],
-            },
-            {
-              shift: 60,
-              items: [
-                {
-                  name: 'home-balcony-exterior',
-                  alt: 'The white villa with its curved upstairs balcony among the trees',
-                  ratio: '3 / 4',
-                },
-              ],
-            },
-          ]}
+          columns={OUTDOOR_COLUMNS}
+          onOpen={open}
         />
       </div>
     </section>
@@ -420,6 +495,7 @@ export function Includes() {
 }
 
 export function Nearby() {
+  const open = useOpenPhoto(NEARBY_ITEMS, 'Nearby');
   return (
     <section className="section nearby" aria-labelledby="nearby-title">
       <div className="container grid-12">
@@ -433,45 +509,18 @@ export function Nearby() {
         </header>
       </div>
       <div className="container">
+        {/* Decorative: the heading already states the distance. */}
+        <div className="route" aria-hidden="true">
+          <ScrollPath mode="draw" d={ROUTE_PATH} start="top 85%" end="top 35%" />
+          <span className="route__stop route__stop--start">The villa</span>
+          <span className="route__distance">3.5 km · about 5 minutes</span>
+          <span className="route__stop route__stop--end">Hikkaduwa Beach</span>
+        </div>
         <Mosaic
           className="nearby__mosaic"
           sizes="(min-width: 760px) 44vw, 46vw"
-          columns={[
-            {
-              shift: 0,
-              items: [
-                {
-                  name: 'home-nearby-coast',
-                  alt: 'Waves pouring into a rocky tidal pool on the coast at sunset',
-                  caption: 'Nearby — the south coast',
-                  ratio: '4 / 5',
-                },
-                {
-                  name: 'home-nearby-kayaks',
-                  alt: 'A group of friends in life jackets kayaking on a calm lagoon',
-                  caption: 'Nearby — kayaking on the lagoon',
-                  ratio: '4 / 3',
-                },
-              ],
-            },
-            {
-              shift: 80,
-              items: [
-                {
-                  name: 'home-nearby-reef',
-                  alt: 'A snorkeller swimming among striped reef fish in clear water',
-                  caption: 'Nearby — snorkelling on the reef',
-                  ratio: '8 / 7',
-                },
-                {
-                  name: 'home-nearby-turtle',
-                  alt: 'A sea turtle in the clear shallows beside a swimmer',
-                  caption: 'Nearby — sea turtles in the shallows',
-                  ratio: '4 / 5',
-                },
-              ],
-            },
-          ]}
+          columns={NEARBY_COLUMNS}
+          onOpen={open}
         />
       </div>
     </section>

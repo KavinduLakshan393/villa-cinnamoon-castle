@@ -1,0 +1,44 @@
+/* ---------- Scroll-drawn path ---------- */
+
+.scroll-path {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.scroll-path svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.scroll-path path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: var(--path-width, 7px);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Sections inside a path scope sit above the line, so it passes behind text and photographs. */
+.path-scope {
+  position: relative;
+}
+
+.path-scope > .section {
+  position: relative;
+  z-index: 1;
+}
+
+/* The long villa path is a desktop flourish; phones keep the page quiet. */
+.scroll-path--wide {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .scroll-path--wide {
+    display: block;
+  }
+}

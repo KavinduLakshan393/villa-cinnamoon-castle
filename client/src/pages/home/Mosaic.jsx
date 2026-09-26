@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import Frame from '../../components/Frame.jsx';
-import { gsap, useGSAP } from '../../lib/motion.js';
+import { gsap, motionQuery, useGSAP, withMotion } from '../../lib/motion.js';
 
 /**
  * Photographs in columns that drift at different speeds against native scroll,
@@ -8,14 +8,14 @@ import { gsap, useGSAP } from '../../lib/motion.js';
  * `columns` is a list of { shift, items }; `shift` is the column's travel in px
  * (negative moves up faster, positive lags behind). On narrow screens the column
  * wrappers dissolve into a two-up grid and the drift is switched off.
+ * With `onOpen`, each photograph opens in the viewer.
  */
-export default function Mosaic({ columns, sizes, className = '' }) {
+export default function Mosaic({ columns, sizes, onOpen, className = '' }) {
   const rootRef = useRef(null);
 
   useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add('(min-width: 760px) and (prefers-reduced-motion: no-preference)', () => {
+    () =>
+      withMotion(() => {
         gsap.utils.toArray('.mosaic__column', rootRef.current).forEach((column) => {
           const shift = Number(column.dataset.shift) || 0;
           if (!shift) return;
@@ -29,9 +29,7 @@ export default function Mosaic({ columns, sizes, className = '' }) {
             },
           );
         });
-      });
-      return () => mm.revert();
-    },
+      }, `(min-width: 760px) and ${motionQuery}`),
     { scope: rootRef },
   );
 
@@ -40,7 +38,7 @@ export default function Mosaic({ columns, sizes, className = '' }) {
       {columns.map((column, i) => (
         <div key={i} className="mosaic__column" data-shift={column.shift ?? 0}>
           {column.items.map((item) => (
-            <Frame key={item.name} sizes={sizes} {...item} />
+            <Frame key={item.name} sizes={sizes} onOpen={onOpen} {...item} />
           ))}
         </div>
       ))}
