@@ -201,6 +201,60 @@ Do not mix included amenities with services or activities that require prior arr
 - Do not imply that every activity is operated directly by the villa.
 - Do not advertise a fixed price unless the host has supplied and approved it.
 
+## Home Quote Band
+
+### Information structure
+
+- Text-only interlude between Shared living and Sleeping arrangements (DEC-022)
+- One quote, revealed word by word with scroll (text reveal 2)
+
+### Current working copy
+
+> Five bedrooms, two living areas and a garden, *shared by one group* and no one else.
+
+## Balcony
+
+### Information structure
+
+- Full-screen cinemagraph after the Outside section (DEC-022): desktop 16:9 and mobile 9:16 loops, with a pause control
+- One eyebrow and one quote in the lower left, revealed word by word with scroll
+
+### Current working copy
+
+**Eyebrow**
+
+> The balcony
+
+**Quote**
+
+> Mornings on the balcony, *above the palms,* with nowhere else to be.
+
+## Hikkaduwa Beach
+
+### Information structure
+
+- Full-screen aerial cinemagraph between the Amenities and Nearby sections (DEC-022): desktop 16:9 and mobile 9:16 loops, with a pause control
+- One eyebrow, one quote in the lower left (text reveal 2) and one distance line
+
+### Current working copy
+
+**Eyebrow**
+
+> Hikkaduwa Beach
+
+**Quote**
+
+> Reef, surf and golden sand, *five minutes down the road.*
+
+**Distance line**
+
+> Nearby · 3.5 km from the villa, about 5 minutes by car
+
+### Content rules
+
+- Always present the beach as a nearby place, never as part of the villa.
+- The source aerial photograph must be licensed or replaced with an owned photograph before launch.
+
 ## Nearby Hikkaduwa
 
 ### Information structure
@@ -208,8 +262,10 @@ Do not mix included amenities with services or activities that require prior arr
 - One section label
 - One factual heading
 - One short supporting paragraph
-- No more than two selected destination or activity images
+- Up to four selected destination or activity images, each captioned `Nearby — …` (DEC-022)
 - No CTA; the map and directions appear later in the Location section
+
+*Superseded by DEC-022 (2026-09-26): "No more than two selected destination or activity images".*
 
 ### Current working copy
 
@@ -230,7 +286,9 @@ Do not mix included amenities with services or activities that require prior arr
 - Clearly present beach, reef and activity images as nearby experiences rather than on-property facilities.
 - Use approximate travel times because road conditions may vary.
 - Do not repeat the full `Available on request` list in this section.
-- Use no more than two images on the homepage; additional destination media can appear in the separate Gallery page.
+- Use no more than four images on the homepage; additional destination media can appear in the separate Gallery page.
+
+*Superseded by DEC-022 (2026-09-26): "Use no more than two images on the homepage".*
 
 ## Location
 

@@ -174,6 +174,31 @@ This log records confirmed product, content and UX decisions. It is not a discus
 - **Verification:** A network audit showed no Google request before the click; the map loads from `google.com` only after it.
 - **Affected documents:** `03 Information Architecture/Privacy Page Information Architecture.md`. The Maps paragraph of the privacy copy now describes the on-request map.
 
+### DEC-022 — Home media rework, cinemagraph interludes and quote band
+
+- **Status:** Approved (2026-09-26)
+- **Decision:**
+  - The Home sections after the Overview use the enhanced cinematic photographs from `images/Final Homepage 8K masters and videos/`:
+    - Shared living: one wide mezzanine image plus a six-photo mosaic.
+    - Sleeping: nine bedroom photos and one bathroom photo.
+    - Kitchen & dining: one kitchen photo and two dining photos.
+    - Outside: four photos.
+    - Nearby: four photos.
+  - Photographs sit in columns that drift at different speeds against native scroll. The page is never pinned. On screens narrower than 760 px, or with reduced motion, the drift is off.
+  - Three interludes are added:
+    - A text-only quote band after Shared living.
+    - A full-screen **Balcony** cinemagraph after Outside.
+    - A full-screen **Hikkaduwa Beach** cinemagraph between Amenities and Nearby.
+  - Each quote uses the secondary word-scrub reveal (text reveal 2) and is real page text, not burned into the video.
+  - Each cinemagraph has separate desktop (16:9) and mobile (9:16) loops and a pause control (WCAG 2.2.2). The video downloads only when the section is about to enter the viewport and plays only while it is on screen. With reduced motion or data saver, the page shows the poster frame instead.
+  - The beach section is labelled as nearby, with the distance (`Nearby · 3.5 km from the villa, about 5 minutes by car`), so it is not read as a villa facility.
+- **Supersedes:** In `Phase 1 Website Copy.md` (Nearby Hikkaduwa), the rule that allowed no more than two destination images on the homepage.
+- **Composite images:** The mezzanine, kitchen and veranda images were generated from several real photographs of the same space. They were checked against the originals before use.
+- **Launch dependencies:**
+  - The Hikkaduwa aerial source image was downloaded from the web. It must be licensed or replaced with an owned photograph before launch.
+  - `attraction_02` and `attraction_07` show identifiable people. Their publication consent must be confirmed before launch (Content Inventory rule).
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md` (new Quote band, Balcony and Hikkaduwa Beach entries; Nearby rules); `06 Design/Home Page Image and Video Prompts.md` (generation prompts).
+
 ## Open decisions and launch dependencies
 
 ### OPEN-001 — Official Google destination
