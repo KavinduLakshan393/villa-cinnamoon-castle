@@ -6,6 +6,7 @@ import Mosaic from './Mosaic.jsx';
 import Cinemagraph from './Cinemagraph.jsx';
 import { useOpenPhoto } from './PhotoViewer.jsx';
 import ScrollPath from './ScrollPath.jsx';
+import { ROUTE_PATH } from './paths.js';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
 
@@ -243,9 +244,6 @@ const NEARBY_COLUMNS = [
     ],
   },
 ];
-
-// The road from the villa to the beach, drawn as the Nearby section scrolls in.
-const ROUTE_PATH = 'M 3 70 C 16 70 20 22 35 30 S 52 92 67 64 S 86 24 97 30';
 
 const SHARED_ITEMS = [SHARED_LEAD, ...photosOf(SHARED_COLUMNS)];
 const SLEEPING_ITEMS = photosOf(SLEEPING_COLUMNS);
