@@ -99,23 +99,62 @@
   }
 }
 
-/* ---------- 02 Shared living ---------- */
+/* ---------- Mosaic: columns drifting at different speeds ---------- */
 
-.shared__upstairs {
-  width: 78%;
-  margin: 48px 0 0 auto;
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 4vw, 32px) clamp(12px, 3vw, 24px);
+  align-items: start;
+}
+
+/* Narrow screens: the columns dissolve and the photographs flow two-up. */
+.mosaic__column {
+  display: contents;
 }
 
 @media (min-width: 760px) {
-  .shared__downstairs {
-    grid-column: 1 / 6;
+  .mosaic {
+    grid-template-columns: repeat(var(--mosaic-columns), minmax(0, 1fr));
+    column-gap: clamp(16px, 2.4vw, 40px);
   }
 
-  .shared__upstairs {
-    grid-column: 8 / 12;
-    width: auto;
-    margin: clamp(80px, 14vw, 240px) 0 0;
+  .mosaic__column {
+    display: grid;
+    gap: clamp(28px, 3.6vw, 64px);
+    will-change: transform;
   }
+
+  .mosaic__column:nth-child(2) {
+    margin-top: clamp(64px, 10vw, 180px);
+  }
+
+  .mosaic__column:nth-child(3) {
+    margin-top: clamp(24px, 4vw, 72px);
+  }
+}
+
+/* ---------- 02 Shared living ---------- */
+
+.shared__lead {
+  grid-column: 1 / -1;
+}
+
+.shared__mosaic {
+  margin-top: clamp(40px, 7vw, 120px);
+}
+
+/* ---------- Quote interludes ---------- */
+
+.quote-band__text {
+  max-width: 20ch;
+  margin-inline: auto;
+  font-size: clamp(2rem, 4.8vw, 4.75rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  text-align: center;
+  text-wrap: balance;
 }
 
 /* ---------- 03 Sleeping arrangements ---------- */
@@ -125,16 +164,6 @@
   gap: 20px;
   align-content: start;
   margin-bottom: 48px;
-}
-
-.sleeping__images {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 2vw, 32px);
-}
-
-.sleeping__offset {
-  margin-top: clamp(48px, 12vw, 200px);
 }
 
 @media (min-width: 760px) {
@@ -151,42 +180,13 @@
   }
 }
 
-/* ---------- 04 Kitchen & dining ---------- */
-
-.kitchen__dining {
-  width: 72%;
-  margin: 40px 0 0 auto;
-}
+/* ---------- 04 Kitchen & dining, 05 Outside, 07 Nearby ---------- */
 
 @media (min-width: 760px) {
-  .kitchen__kitchen {
-    grid-column: 1 / 8;
-  }
-
-  .kitchen__dining {
-    grid-column: 9 / 13;
-    width: auto;
-    margin: 0;
-    align-self: end;
-  }
-}
-
-/* ---------- 05 Outside ---------- */
-
-.outdoor__veranda {
-  width: 62%;
-  margin-top: 40px;
-}
-
-@media (min-width: 760px) {
-  .outdoor__garden {
-    grid-column: 1 / 9;
-  }
-
-  .outdoor__veranda {
-    grid-column: 10 / 13;
-    width: auto;
-    margin-top: clamp(80px, 12vw, 200px);
+  .kitchen__mosaic,
+  .nearby__mosaic {
+    width: 88%;
+    margin-inline: auto;
   }
 }
 
@@ -273,25 +273,6 @@
 
   .on-request .subheading {
     grid-row: 1 / span 2;
-  }
-}
-
-/* ---------- 07 Nearby ---------- */
-
-.nearby__reef {
-  width: 82%;
-  margin: 40px 0 0 auto;
-}
-
-@media (min-width: 760px) {
-  .nearby__coast {
-    grid-column: 1 / 6;
-  }
-
-  .nearby__reef {
-    grid-column: 7 / 12;
-    width: auto;
-    margin: clamp(80px, 16vw, 260px) 0 0;
   }
 }
 

@@ -1,0 +1,121 @@
+/* ---------- Cinemagraph sections (Balcony, Hikkaduwa Beach) ---------- */
+
+.cinema {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  height: 100vh;
+  height: 100svh;
+  min-height: 560px;
+  max-height: 1100px;
+  overflow: hidden;
+  background: var(--text-primary);
+  color: var(--text-on-image);
+}
+
+.cinema__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* 112 % tall so the ±6 % drift never exposes an edge. */
+.cinema__media {
+  position: absolute;
+  left: 0;
+  top: -6%;
+  width: 100%;
+  height: 112%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* Shade from the lower-left corner, where the quote sits. */
+.cinema__shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 90% at 0% 100%, rgba(12, 16, 13, 0.72) 0%, rgba(12, 16, 13, 0.38) 38%, rgba(12, 16, 13, 0) 70%),
+    linear-gradient(to top, rgba(12, 16, 13, 0.42) 0%, rgba(12, 16, 13, 0) 45%);
+}
+
+.cinema__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  width: 100%;
+  padding-bottom: clamp(40px, 8vh, 104px);
+}
+
+.cinema .eyebrow {
+  color: var(--text-on-image);
+  opacity: 0.86;
+}
+
+.cinema__quote {
+  max-width: 17ch;
+  font-size: clamp(2rem, 4.4vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  text-shadow: 0 1px 24px rgba(12, 16, 13, 0.28);
+}
+
+.cinema__note {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  opacity: 0.86;
+}
+
+.cinema__toggle {
+  position: absolute;
+  top: clamp(20px, 3vw, 32px);
+  right: var(--gutter);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(250, 249, 245, 0.45);
+  border-radius: 50%;
+  color: var(--text-on-image);
+  background: rgba(17, 20, 17, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.cinema__toggle svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .cinema__toggle:hover {
+    background: rgba(17, 20, 17, 0.5);
+    border-color: var(--text-on-image);
+  }
+}
+
+.cinema__toggle:focus-visible {
+  outline: 2px solid var(--text-on-image);
+  outline-offset: 3px;
+}
+
+/* Portrait screens: the 9:16 cut fills the section; the quote spans the width. */
+@media (max-aspect-ratio: 4/5) {
+  .cinema__quote {
+    max-width: 14ch;
+  }
+}

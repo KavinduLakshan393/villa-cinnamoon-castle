@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button.jsx';
 import { inquiryPath } from '../../data/site.js';
 import { gsap, EASE, introState, prefersReducedMotion, whenIntroLifts, useGSAP } from '../../lib/motion.js';
+import { PORTRAIT_QUERY, useMediaQuery, videoAllowed } from '../../lib/media.js';
 import './Hero.css';
 
 // The dynamic phrase names who (or what) the villa is for. Every option is true of
@@ -17,22 +18,7 @@ const HERO_MEDIA = {
   landscape: { video: '/media/hero-video-desktop.mp4', poster: '/media/hero-video-desktop-poster.jpg' },
   portrait: { video: '/media/hero-video-mobile.mp4', poster: '/media/hero-video-mobile-poster.jpg' },
 };
-const PORTRAIT_QUERY = '(max-aspect-ratio: 4/5)';
 const HERO_ALT = 'Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence';
-
-function useMediaQuery(query) {
-  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const onChange = (event) => setMatches(event.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, [query]);
-  return matches;
-}
-
-// Motion and data preferences are respected: the still first frame is shown instead.
-const videoAllowed = () => !prefersReducedMotion() && !navigator.connection?.saveData;
 
 function HeroMedia({ sectionRef, paused }) {
   const variant = useMediaQuery(PORTRAIT_QUERY) ? 'portrait' : 'landscape';
