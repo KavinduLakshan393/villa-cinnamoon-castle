@@ -199,6 +199,19 @@ This log records confirmed product, content and UX decisions. It is not a discus
   - `attraction_02` and `attraction_07` show identifiable people. Their publication consent must be confirmed before launch (Content Inventory rule).
 - **Affected documents:** `04 Content/Phase 1 Website Copy.md` (new Quote band, Balcony and Hikkaduwa Beach entries; Nearby rules); `06 Design/Home Page Image and Video Prompts.md` (generation prompts).
 
+### DEC-023 — Openable Home photographs and the scroll-drawn path
+
+- **Status:** Approved (2026-09-26)
+- **Decision:**
+  - Every Home mosaic photograph (and the mezzanine lead image) is a button that opens the Gallery viewer on that section's set. The viewer bar shows the section name.
+  - On hover (mouse and trackpad only), the frame draws in, the photograph eases closer, and the other photographs in the mosaic dim. A round `View` label follows the pointer. Keyboard focus shows the same state with a visible focus ring.
+  - A brand-green line drawn by scrolling runs behind the text and photographs:
+    - A travelling segment through Overview and Shared living (desktop only).
+    - A villa-to-beach route in the Nearby section, labelled `The villa`, `Hikkaduwa Beach` and `3.5 km · about 5 minutes`. The route is decorative (`aria-hidden`), because the heading already states the distance.
+  - Every scroll-linked effect now follows the reduced-motion setting live. Turning it on mid-visit stops the parallax, drift, word scrub and videos (the poster is shown), and draws the lines fully and still.
+- **Not adopted:** Velocity-based image bending (reference: Lusion.co).
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md` (route labels).
+
 ## Open decisions and launch dependencies
 
 ### OPEN-001 — Official Google destination

@@ -281,6 +281,14 @@ Do not mix included amenities with services or activities that require prior arr
 
 > The town, beach, coral reef and surf spots are a short trip from the villa. Galle Fort is around 20 minutes away by road.
 
+**Route labels (decorative line, DEC-023)**
+
+> The villa
+
+> Hikkaduwa Beach
+
+> 3.5 km · about 5 minutes
+
 ### Content rules
 
 - Clearly present beach, reef and activity images as nearby experiences rather than on-property facilities.
