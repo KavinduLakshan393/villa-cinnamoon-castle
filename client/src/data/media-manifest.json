@@ -276,5 +276,313 @@
       780,
       5760
     ]
+  },
+  "home-living-mezzanine": {
+    "width": 7680,
+    "height": 4287,
+    "widths": [
+      960,
+      1440,
+      1920,
+      2560,
+      7680
+    ]
+  },
+  "home-living-lounge": {
+    "width": 5734,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5734
+    ]
+  },
+  "home-living-upstairs-dining": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-living-downstairs": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-living-stair-light": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-living-entrance": {
+    "width": 5734,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5734
+    ]
+  },
+  "home-living-stairs": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bed-check-throw": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bed-four-poster": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bed-towels": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bed-ac": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bed-leaf-print": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bed-leaf-grey": {
+    "width": 5734,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5734
+    ]
+  },
+  "home-bed-mirror": {
+    "width": 7680,
+    "height": 5760,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      7680
+    ]
+  },
+  "home-bed-pendant": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bed-white": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-bathroom": {
+    "width": 5758,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5758
+    ]
+  },
+  "home-kitchen": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-dining": {
+    "width": 5734,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5734
+    ]
+  },
+  "home-dining-stairs": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-porch": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-balcony-exterior": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-villa-sign": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "home-balcony-walk": {
+    "width": 7680,
+    "height": 5760,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      7680
+    ]
+  },
+  "home-nearby-reef": {
+    "width": 7680,
+    "height": 6720,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      7680
+    ]
+  },
+  "home-nearby-turtle": {
+    "width": 6200,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      6200
+    ]
+  },
+  "home-nearby-kayaks": {
+    "width": 7680,
+    "height": 5760,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      7680
+    ]
+  },
+  "home-nearby-coast": {
+    "width": 6138,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      6138
+    ]
   }
 }
