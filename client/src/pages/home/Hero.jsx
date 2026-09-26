@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button.jsx';
 import { inquiryPath } from '../../data/site.js';
-import { gsap, EASE, introState, prefersReducedMotion, whenIntroLifts, useGSAP } from '../../lib/motion.js';
-import { PORTRAIT_QUERY, useMediaQuery, videoAllowed } from '../../lib/media.js';
+import { gsap, EASE, introState, reducedMotionQuery, motionQuery, whenIntroLifts, useGSAP } from '../../lib/motion.js';
+import { PORTRAIT_QUERY, useMediaQuery, useReducedMotion, useVideoAllowed } from '../../lib/media.js';
 import './Hero.css';
 
 // The dynamic phrase names who (or what) the villa is for. Every option is true of
@@ -20,11 +20,10 @@ const HERO_MEDIA = {
 };
 const HERO_ALT = 'Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence';
 
-function HeroMedia({ sectionRef, paused }) {
+function HeroMedia({ sectionRef, paused, allowed }) {
   const variant = useMediaQuery(PORTRAIT_QUERY) ? 'portrait' : 'landscape';
   const { video, poster } = HERO_MEDIA[variant];
   const videoRef = useRef(null);
-  const [allowed] = useState(videoAllowed);
 
   // Play only while the Hero is on screen and the visitor has not paused it.
   useEffect(() => {
@@ -47,7 +46,7 @@ function HeroMedia({ sectionRef, paused }) {
       observer.disconnect();
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [paused, variant, sectionRef]);
+  }, [paused, variant, sectionRef, allowed]);
 
   if (!allowed) {
     return <img src={poster} alt={HERO_ALT} className="hero__media" fetchPriority="high" data-hero-image="" />;
@@ -74,9 +73,10 @@ function HeroMedia({ sectionRef, paused }) {
 function useCyclingPhrase(active, sectionRef) {
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
-    if (!active || prefersReducedMotion()) return undefined;
+    if (!active || reduced) return undefined;
 
     let visible = true;
     const observer = new IntersectionObserver(([entry]) => {
@@ -100,7 +100,7 @@ function useCyclingPhrase(active, sectionRef) {
       clearInterval(interval);
       clearTimeout(swap);
     };
-  }, [active, sectionRef]);
+  }, [active, reduced, sectionRef]);
 
   return { phrase: PHRASES[index], leaving };
 }
@@ -109,49 +109,57 @@ export default function Hero() {
   const sectionRef = useRef(null);
   const [cycling, setCycling] = useState(false);
   const [videoPaused, setVideoPaused] = useState(false);
+  const videoAllowed = useVideoAllowed();
   const { phrase, leaving } = useCyclingPhrase(cycling, sectionRef);
+  const entered = useRef(false);
 
   useGSAP(
     () => {
       const q = gsap.utils.selector(sectionRef);
-      if (prefersReducedMotion()) {
+      const mm = gsap.matchMedia();
+      mm.add(reducedMotionQuery, () => {
+        entered.current = true;
         setCycling(true);
-        return;
-      }
-
-      const lines = q('.hero__line > span');
-      const fades = q('[data-hero-fade]');
-      const fromIntro = introState.active;
-      gsap.set(lines, { yPercent: 118 });
-      gsap.set(fades, { opacity: 0, y: 18 });
-      gsap.set(q('.hero__media'), { scale: fromIntro ? 1.12 : 1.05 });
-
-      let cancelled = false;
-      whenIntroLifts().then(() => {
-        if (cancelled) return;
-        gsap
-          .timeline()
-          .to(q('.hero__media'), { scale: 1, duration: fromIntro ? 2.6 : 1.6, ease: EASE.out }, 0)
-          .to(lines, { yPercent: 0, duration: 1.25, stagger: 0.1, ease: EASE.reveal }, fromIntro ? 0.8 : 0.15)
-          .to(fades, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: EASE.out }, '<0.35')
-          .add(() => setCycling(true), '-=0.4');
       });
+      mm.add(motionQuery, () => {
+        // Scroll parallax: the photograph drifts slower than the page; scrubbed to native scroll.
+        gsap.to(q('.hero__parallax'), {
+          yPercent: 14,
+          ease: 'none',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
+        });
+        gsap.to(q('.hero__content'), {
+          y: -48,
+          ease: 'none',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
+        });
 
-      // Scroll parallax: the photograph drifts slower than the page; scrubbed to native scroll.
-      gsap.to(q('.hero__parallax'), {
-        yPercent: 14,
-        ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
-      });
-      gsap.to(q('.hero__content'), {
-        y: -48,
-        ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
-      });
+        // The entrance plays once per visit, not again if motion is switched back on.
+        if (entered.current) return undefined;
+        entered.current = true;
+        const lines = q('.hero__line > span');
+        const fades = q('[data-hero-fade]');
+        const fromIntro = introState.active;
+        gsap.set(lines, { yPercent: 118 });
+        gsap.set(fades, { opacity: 0, y: 18 });
+        gsap.set(q('.hero__media'), { scale: fromIntro ? 1.12 : 1.05 });
 
-      return () => {
-        cancelled = true;
-      };
+        let cancelled = false;
+        whenIntroLifts().then(() => {
+          if (cancelled) return;
+          gsap
+            .timeline()
+            .to(q('.hero__media'), { scale: 1, duration: fromIntro ? 2.6 : 1.6, ease: EASE.out }, 0)
+            .to(lines, { yPercent: 0, duration: 1.25, stagger: 0.1, ease: EASE.reveal }, fromIntro ? 0.8 : 0.15)
+            .to(fades, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: EASE.out }, '<0.35')
+            .add(() => setCycling(true), '-=0.4');
+        });
+
+        return () => {
+          cancelled = true;
+        };
+      });
+      return () => mm.revert();
     },
     { scope: sectionRef },
   );
@@ -159,12 +167,12 @@ export default function Hero() {
   return (
     <section className="hero" ref={sectionRef} data-nav-overlay="" aria-labelledby="hero-title">
       <div className="hero__parallax">
-        <HeroMedia sectionRef={sectionRef} paused={videoPaused} />
+        <HeroMedia sectionRef={sectionRef} paused={videoPaused} allowed={videoAllowed} />
       </div>
       <div className="hero__shade" aria-hidden="true" />
 
       {/* WCAG 2.2.2: moving background content can be paused. */}
-      {videoAllowed() && (
+      {videoAllowed && (
         <button
           type="button"
           className="hero__video-toggle"

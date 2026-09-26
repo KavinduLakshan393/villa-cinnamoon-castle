@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { prefersReducedMotion } from './motion.js';
+import { reducedMotionQuery } from './motion.js';
 
 export function useMediaQuery(query) {
   const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
@@ -15,5 +15,11 @@ export function useMediaQuery(query) {
 // Portrait screens get the 9:16 cut of each cinemagraph.
 export const PORTRAIT_QUERY = '(max-aspect-ratio: 4/5)';
 
-// Motion and data preferences are respected: the still first frame is shown instead.
-export const videoAllowed = () => !prefersReducedMotion() && !navigator.connection?.saveData;
+/** Live reduced-motion preference: re-renders when the visitor changes the OS setting. */
+export const useReducedMotion = () => useMediaQuery(reducedMotionQuery);
+
+/** Motion and data preferences are respected: the still first frame is shown instead of a video. */
+export function useVideoAllowed() {
+  const reduced = useReducedMotion();
+  return !reduced && !navigator.connection?.saveData;
+}

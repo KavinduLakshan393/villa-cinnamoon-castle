@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Eyebrow, ScrubText } from '../../components/Reveal.jsx';
-import { gsap, prefersReducedMotion, useGSAP } from '../../lib/motion.js';
-import { PORTRAIT_QUERY, useMediaQuery, videoAllowed } from '../../lib/media.js';
+import { gsap, useGSAP, withMotion } from '../../lib/motion.js';
+import { PORTRAIT_QUERY, useMediaQuery, useVideoAllowed } from '../../lib/media.js';
 import './Cinemagraph.css';
 
 /**
@@ -20,7 +20,7 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
   const variant = useMediaQuery(PORTRAIT_QUERY) ? 'mobile' : 'desktop';
   const video = `/media/${name}-video-${variant}.mp4`;
   const poster = `/media/${name}-video-${variant}-poster.jpg`;
-  const [allowed] = useState(videoAllowed);
+  const allowed = useVideoAllowed();
   const [near, setNear] = useState(false);
   const [paused, setPaused] = useState(false);
 
@@ -60,23 +60,23 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
       observer.disconnect();
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [near, paused, variant]);
+  }, [near, paused, variant, allowed]);
 
   // The picture drifts slightly slower than the page.
   useGSAP(
-    () => {
-      if (prefersReducedMotion()) return;
-      gsap.fromTo(
-        sectionRef.current.querySelector('.cinema__media'),
-        { yPercent: -6 },
-        {
-          yPercent: 6,
-          ease: 'none',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: true },
-        },
-      );
-    },
-    { scope: sectionRef },
+    () =>
+      withMotion(() => {
+        gsap.fromTo(
+          sectionRef.current.querySelector('.cinema__media'),
+          { yPercent: -6 },
+          {
+            yPercent: 6,
+            ease: 'none',
+            scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: true },
+          },
+        );
+      }),
+    { scope: sectionRef, dependencies: [allowed] },
   );
 
   const titleId = `${id}-quote`;

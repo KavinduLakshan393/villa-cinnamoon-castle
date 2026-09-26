@@ -3,7 +3,7 @@ import Button from '../../components/Button.jsx';
 import { RevealHeading, Eyebrow } from '../../components/Reveal.jsx';
 import { googleReviews } from '../../data/reviews.js';
 import { site } from '../../data/site.js';
-import { prefersReducedMotion } from '../../lib/motion.js';
+import { useReducedMotion } from '../../lib/media.js';
 import './GoogleReviews.css';
 
 const TEXT_LIMIT = 260;
@@ -109,6 +109,7 @@ export default function GoogleReviews() {
   const sectionRef = useRef(null);
   const [userPaused, setUserPaused] = useState(false);
   const [visible, setVisible] = useState(true);
+  const still = useReducedMotion();
 
   useEffect(() => {
     if (!sectionRef.current) return undefined;
@@ -152,7 +153,6 @@ export default function GoogleReviews() {
   const half = Math.ceil(items.length / 2);
   const upper = items.length > 1 ? items.slice(0, half) : items;
   const lower = items.length > 1 ? items.slice(half) : items;
-  const still = prefersReducedMotion();
   const playing = visible && !userPaused;
 
   return (
