@@ -5,8 +5,6 @@ import { RevealHeading, ScrubText, Eyebrow } from '../../components/Reveal.jsx';
 import Mosaic from './Mosaic.jsx';
 import Cinemagraph from './Cinemagraph.jsx';
 import { useOpenPhoto } from './PhotoViewer.jsx';
-import ScrollPath from './ScrollPath.jsx';
-import { ROUTE_PATH } from './paths.js';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
 
@@ -507,13 +505,6 @@ export function Nearby() {
         </header>
       </div>
       <div className="container">
-        {/* Decorative: the heading already states the distance. */}
-        <div className="route" aria-hidden="true">
-          <ScrollPath mode="draw" d={ROUTE_PATH} start="top 85%" end="top 35%" />
-          <span className="route__stop route__stop--start">The villa</span>
-          <span className="route__distance">3.5 km · about 5 minutes</span>
-          <span className="route__stop route__stop--end">Hikkaduwa Beach</span>
-        </div>
         <Mosaic
           className="nearby__mosaic"
           sizes="(min-width: 760px) 44vw, 46vw"

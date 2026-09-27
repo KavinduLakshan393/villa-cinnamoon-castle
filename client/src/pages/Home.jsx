@@ -3,8 +3,6 @@ import Hero from './home/Hero.jsx';
 import GoogleReviews from './home/GoogleReviews.jsx';
 import { PhotoViewerProvider } from './home/PhotoViewer.jsx';
 import CursorLabel from '../components/CursorLabel.jsx';
-import ScrollPath from './home/ScrollPath.jsx';
-import { VILLA_PATH, ROOMS_PATH, INQUIRY_PATH } from './home/paths.js';
 import {
   Overview,
   SharedLiving,
@@ -33,34 +31,23 @@ export default function Home() {
     <PhotoViewerProvider>
       <div className="home" ref={pageRef}>
         <Hero />
-        {/* Scroll-drawn paths (desktop) run behind the text and photographs; shapes in home/paths.js. */}
-        <div className="path-scope">
-          <ScrollPath className="scroll-path--wide" mode="travel" segment={0.45} d={VILLA_PATH} />
-          <Overview />
-          <SharedLiving />
-        </div>
+        <Overview />
+        <SharedLiving />
         <QuoteBand>
           Five bedrooms, two living areas and a garden, <span className="editorial">shared by one group</span> and no one
           else.
         </QuoteBand>
-        <div className="path-scope">
-          <ScrollPath className="scroll-path--wide" mode="travel" segment={0.3} d={ROOMS_PATH} />
-          <Sleeping />
-          <KitchenDining />
-          <Outdoor />
-        </div>
+        <Sleeping />
+        <KitchenDining />
+        <Outdoor />
         <Balcony />
         <Includes />
         <Beach />
         <Nearby />
-        {/* The last path draws on and stops at the Send Inquiry button. */}
-        <div className="path-scope">
-          <ScrollPath className="scroll-path--wide" mode="draw" d={INQUIRY_PATH} start="top 60%" end="bottom 95%" />
-          <Location />
-          <StayPreview />
-          <GoogleReviews />
-          <InquiryCta />
-        </div>
+        <Location />
+        <StayPreview />
+        <GoogleReviews />
+        <InquiryCta />
       </div>
       <CursorLabel />
     </PhotoViewerProvider>
