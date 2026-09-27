@@ -229,6 +229,29 @@ This log records confirmed product, content and UX decisions. It is not a discus
 - **Not adopted:** Colour-matched fade bands above and below the videos (tried and rejected, 2026-09-26).
 - **Affected documents:** None (motion only; copy unchanged).
 
+### DEC-026 — Gallery chapters with a scroll wheel, enhanced photographs and viewer flight
+
+- **Status:** Approved (2026-09-27)
+- **Decision:**
+  - The Gallery page keeps the Hero and the featured strip. The strip now shows each chapter's highlight photograph from the enhanced set.
+  - The filtered grid is replaced by six villa chapters. A thin half-wheel at the left edge (a small wheel at the bottom-left on narrow screens) turns with the scroll to show the chapter on screen.
+  - The Gallery uses only enhanced photographs: the Home cinematic set plus 10 photographs from the second set. `dining_area_04` stays excluded for its visible alcohol branding.
+  - Photographs open and close in the viewer with a flight animation from and back to their tile.
+  - The Hero supporting text changes to "Six parts of the villa, inside and out. Scroll through them, or open any photo to see it full screen."
+- **Supersedes:** In DEC-018 and the Gallery IA, the Full Gallery section (header, filters, grid, `Load more`) and the original strip lead images and labels.
+- **Affected documents:** `03 Information Architecture/Gallery Page Information Architecture.md` (previous version archived); `06 Design/Home Page Image and Video Prompts.md` (section 9).
+
+### DEC-027 — Two side lines on the Home page
+
+- **Status:** Approved (2026-09-27)
+- **Decision:** Two fine (1.75 px) brand-green curved lines, one from each side of the page, draw toward each other with scroll in three sections:
+  - Overview: they close in beneath the facts.
+  - Quote band: they cross and wrap the quote.
+  - Send Inquiry: they meet at the button.
+
+  The right line is at half opacity. The lines stay in the margins and gaps and never cross text. They draw across the whole time the section is on screen, stay drawn, and are shown complete with reduced motion. Desktop and mobile have separate shapes.
+- **Affected documents:** None (visual only; no copy).
+
 ## Open decisions and launch dependencies
 
 ### OPEN-001 — Official Google destination

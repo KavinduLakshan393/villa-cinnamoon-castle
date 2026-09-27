@@ -107,6 +107,8 @@ The files under `Sample components/` are **samples**, not approved designs. They
 - **2026-09-26 — Home media rework (DEC-022):** Added the Quote band, Balcony and Hikkaduwa Beach entries to `Phase 1 Website Copy.md` and raised the homepage Nearby image limit from two to four. The superseded wording is quoted in place. Added `06 Design/Home Page Image and Video Prompts.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
 - **2026-09-26 — Openable photographs and scroll-drawn path (DEC-023):** Added the Nearby route labels to `Phase 1 Website Copy.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
 - **2026-09-27 — Scroll-drawn line removed (DEC-024):** Superseded the Nearby route labels in `Phase 1 Website Copy.md`; the removed wording is quoted in place. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-27 — Gallery chapters and wheel (DEC-026):** Updated `Gallery Page Information Architecture.md`: the strip leads and labels, the new Section 3 (villa chapters with the wheel), the curated set of 39 enhanced photographs, the viewer flight and the Hero supporting text. The previous version is archived as `99 Archive/Gallery Page Information Architecture - Pre-Wheel 2026-09-27.md`. **Sinhala synchronization:** Not required, because no Sinhala Gallery IA document exists.
+- **2026-09-27 — Two side lines (DEC-027):** Visual only; no document text changed.
 
 ## Document control rules
 

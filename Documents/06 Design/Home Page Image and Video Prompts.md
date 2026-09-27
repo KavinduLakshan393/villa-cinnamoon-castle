@@ -664,3 +664,209 @@ Real drone footage, bright tropical daylight, constant exposure, cinematic colou
 - **Typography and motion:** Plus Jakarta Sans 500 with one Bodoni Moda italic phrase, `--text-on-image`, word-scrub reveal (text reveal 2). With reduced motion or data saver, the page shows the poster frame and the full text.
 - **Eyebrow and fact line:** eyebrow `Hikkaduwa Beach`; fact line `3.5 km · about 5 minutes by car`.
 - **Proposed quote:** “Reef, surf and golden sand, *five minutes down the road.*”
+
+---
+
+## 9. Gallery — enhanced photos (second set)
+
+**Use:** the Gallery page, alongside the Home cinematic set. The **same fidelity rules as section 0** apply: reference-image mode, keep the original aspect ratio, enhance to 4K and upscale separately.
+**Selection:** these 11 photos add views that the cinematic set does not already cover. Not included: group photos with identifiable guests (publication consent), `dining_area_01` (phone watermark), and near-duplicates of existing views.
+**Output file names:** `<source name>_enhanced.png` (or `.jpg`) in `images/Final Homepage 8K masters and videos/`.
+
+### 9.1 `front_yard_01` — Arrival
+- **Source:** `images/outdoor_and_garden/front_yard/front_yard_01.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of the front of a real two-storey Sri Lankan villa seen from its shaded garden into a cinematic, professional architectural photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same building, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the white two-storey villa, the upstairs balcony and its railing, the red-brown tiled roof and timber eaves, the white pillars and the covered veranda, the dark timber windows and doors, the large trees framing the view, the palms behind, the bare earth and the gravel in the foreground, and the sky. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the perspective so that the walls and pillars are vertical; balance the exposure between the bright sky and the shaded house; enhance the soft dappled sunlight through the canopy; keep the walls clean white; bring out the fine texture of the roof tiles, leaves, bark and gravel; reduce noise; keep colours true to life. Calm, welcoming editorial architectural photography with soft cinematic contrast. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+new trees, removed trees, changed roof, changed balcony, cars, motorbikes, pool, fountain, lawn replacing the earth, dramatic sky replacement, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.2 `exterior_07` — Arrival
+- **Source:** `images/outdoor_and_garden/exterior/exterior_07.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of a real Sri Lankan villa at night with its lights on into a cinematic, professional night architectural photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same building, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the white villa with its warm lit windows and veranda lights, the upstairs balcony, the tiled roof and timber eaves, the trees and leaves framing the top of the frame, the bare ground in the foreground, and the dark night sky. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the perspective so that the walls are vertical; lift the shadows gently so the garden keeps detail without looking like daytime; keep the warm glow of the existing lamps and the deep blue-black of the night; bring out the fine texture of the walls, roof tiles and leaves; reduce noise; keep colours true to life. Quiet, warm, atmospheric night photography with gentle cinematic contrast. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+daylight, sunset sky, stars, moon, extra lights, fairy lights, lanterns, changed windows, lens flare, glowing halos, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.3 `photo_7` — Arrival
+- **Source:** `images/Uncategorized/photo_7.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm
+
+**Prompt**
+```text
+Enhance this exact photograph of the gravel driveway of a real Sri Lankan villa, lined by a rustic timber fence and tall trees into a cinematic, professional architectural photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same scene, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the rustic timber post fence on the left, the tall tree trunks and the overhanging branches, the grey gravel driveway, the white villa with its red-brown roof and veranda in the background, the green plants at the foot of the fence, and the sky through the leaves. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: balance the exposure between the bright sky and the shaded driveway; enhance the soft dappled sunlight on the gravel; keep the house clean white and the greens lush but natural; bring out the fine texture of the timber fence posts, bark, leaves and gravel; reduce noise; keep colours true to life. Inviting, calm arrival photography with soft cinematic depth. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+changed fence, new gate, cars, motorbikes, removed trees, paved driveway, lawn, lights, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.4 `backyard_02` — Garden & outside
+- **Source:** `images/outdoor_and_garden/backyard/backyard_02.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 20 mm, low angle kept
+
+**Prompt**
+```text
+Enhance this exact photograph of a real Sri Lankan villa seen from below through banana leaves and coconut palms into a cinematic, professional architectural photograph, as if shot on a full-frame camera with a 20 mm lens on a tripod.
+
+Keep exactly the same view, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the white two-storey villa, its upstairs balcony and dark timber windows, the tiled roof edge, the large banana leaves in the foreground at the top left, the tall coconut palms, and the blue sky. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: keep the dramatic low angle but correct the lens distortion gently; balance the exposure between the bright sky and the shaded walls; enhance the fresh sunlight through the leaves; bring out the fine texture of the banana leaves, palm fronds and walls; reduce noise; keep colours true to life. Fresh, tropical, editorial photography with soft cinematic contrast. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+new trees, extra palms, birds, changed balcony, changed windows, dramatic sky replacement, clouds added, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.5 `balcony_03` — Garden & outside
+- **Source:** `images/outdoor_and_garden/balcony/balcony_03.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of the open doorway onto the upstairs balcony of a real Sri Lankan villa into a cinematic, professional architectural interior photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same view, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the dark timber door frame and the open door on the left, the grey floor, the white balcony wall, the timber roof eave above, the trees and palms beyond the balcony, and the neighbouring roof in the distance. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the perspective so that the door frame is vertical; balance the exposure between the dim doorway and the bright garden outside so both keep detail; add soft natural daylight falling through the doorway; bring out the fine texture of the timber door frame, the floor and the leaves; reduce noise; keep colours true to life. Calm, inviting editorial photography that draws the eye outside. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+balcony furniture, potted plants, rugs, changed door, changed balcony wall, sky replacement, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.6 `balcony_11` — Garden & outside
+- **Source:** `images/outdoor_and_garden/balcony/balcony_11.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of the upstairs balcony walkway of a real Sri Lankan villa with a view of the trees into a cinematic, professional architectural photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same view, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the square white pillar, the white balcony wall, the dark timber roof beams and eave above, the grey floor, the palms and tropical trees beyond, and the sky. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the perspective so that the pillar and walls are vertical; balance the exposure between the shaded walkway and the bright garden; enhance the soft natural daylight; bring out the fine texture of the timber beams, the wall and the leaves; reduce noise; keep colours true to life. Fresh, calm editorial photography with soft cinematic contrast. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+balcony furniture, potted plants, hammock, changed pillar, changed roof, sky replacement, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.7 `living_room_1_04` — Shared living
+- **Source:** `images/living_rooms/living_room_1/living_room_1_04.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 20 mm, top-down angle kept
+
+**Prompt**
+```text
+Enhance this exact photograph of the ground-floor living room of a real Sri Lankan villa seen from the upstairs landing into a cinematic, professional architectural interior photograph, as if shot on a full-frame camera with a 20 mm lens on a tripod.
+
+Keep exactly the same room, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the black steel railing with its timber handrail in the foreground, the row of cane-seated wooden armchairs, the dining table and chairs, the glossy white floor tiles, the doorways, the curtains and the ceiling lights. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: keep the downward view but correct the lens distortion so that the walls look straight; balance the exposure; add soft natural daylight and a true reflection in the polished floor; keep the walls neutral white; bring out the fine texture of the timber, cane and floor tiles; reduce noise; keep colours true to life. Bright, spacious editorial interior photography with gentle cinematic depth. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+rugs, cushions, table settings, changed railing, changed furniture layout, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.8 `photo_2` — Shared living
+- **Source:** `images/Uncategorized/photo_2.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of the upstairs dining space under the vaulted timber ceiling of a real Sri Lankan villa into a cinematic, professional architectural interior photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same room, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the long wooden dining table with its cane chairs, the vaulted white ceiling with dark timber beams, the pendant lamp, the grey curtains and floral sheers, the dark timber doors, the railing edge in the foreground and the floor. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the lens distortion so that the walls, doors and curtains are vertical; balance the exposure between the windows and the room; add soft natural daylight and a warm glow from the existing pendant lamp; bring out the fine texture of the timber beams, table, cane and fabric; reduce noise; keep colours true to life. Calm, spacious editorial interior photography with gentle cinematic contrast. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+table settings, plates, food, vases, rugs, extra chairs, changed ceiling, extra lamps, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.9 `dining_area_04` — Kitchen & dining
+- **Source:** `images/kitchen_and_dining/dining_area/dining_area_04.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of a shared meal laid out on the upstairs dining table of a real Sri Lankan villa into a cinematic, professional interior lifestyle photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same scene, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the wooden dining table with every plate and bowl of food exactly as served, the cane chairs, the pendant lamp, the timber ceiling beams, the curtains, the open door to the balcony with greenery outside, and the railing on the left. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the lens distortion so that the walls and door are vertical; balance the exposure between the bright doorway and the table; add soft natural daylight across the table and a warm glow from the existing lamp; make the food look fresh and appetising without changing any dish; bring out the fine texture of the food, the wooden table and the cane chairs; reduce noise; keep colours true to life. Warm, inviting editorial lifestyle photography with soft cinematic contrast. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+extra dishes, removed dishes, changed food, extra glasses, bottles, candles, changed table, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.10 `photo_3` — Sleeping
+- **Source:** `images/Uncategorized/photo_3.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of a bedroom under a high timber ceiling in a real Sri Lankan villa into a cinematic, professional architectural interior photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same room, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the wooden double bed with white linen and two white pillows, the sloped ceiling with dark timber beams, the single pendant bulb, the patterned curtains on the left, the small window on the back wall, the doorway on the right and the floor. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the lens distortion so that the walls and curtains are vertical; balance the exposure; add soft natural daylight and a warm glow from the existing pendant bulb; keep the linen crisp white; bring out the fine texture of the timber beams, linen and curtains; reduce noise; keep colours true to life. Calm, restful editorial bedroom photography with soft cinematic contrast. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+extra pillows, cushions, throws, towels, bedside tables, lamps, rugs, changed bed, changed curtains, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
+
+### 9.11 `bedroom_1_07` — Sleeping
+- **Source:** `images/bedrooms/bedroom_1/bedroom_1_07.jpg`
+- **Aspect ratio:** 3:4 portrait · **Lens:** 24 mm, verticals straight
+
+**Prompt**
+```text
+Enhance this exact photograph of a four-poster bed in a bedroom of a real Sri Lankan villa into a cinematic, professional architectural interior photograph, as if shot on a full-frame camera with a 24 mm lens on a tripod.
+
+Keep exactly the same room, the same camera position and the same framing. Every object stays exactly where it is, with the same shape, size, colour, material and count: the dark wooden four-poster bed frame, the white linen and pillows, the blue-and-white patterned curtain in the foreground on the left, the warm walls and the ceiling. Do not add, remove, move, replace or restyle anything.
+
+Improve only the photographic quality: correct the lens distortion so that the bed posts are vertical; balance the exposure and neutralise the strong yellow cast; keep a soft, warm light and crisp white linen; bring out the fine texture of the timber posts, linen and curtain; reduce noise; keep colours true to life. Calm, atmospheric editorial bedroom photography with gentle cinematic depth. Ultra-sharp, 4K.
+```
+
+**Avoid**
+```text
+mosquito net, canopy fabric, extra pillows, throws, rugs, lamps, changed bed frame, changed curtain pattern, people, pets, extra furniture, extra plants, flowers, decor, artwork, changed layout, extra windows or doors, outpainted areas, wider view, fisheye distortion, tilted verticals, HDR halos, oversaturation, colour cast, blown-out highlights, CGI, 3D render, illustration, painterly, text, logo, watermark
+```
