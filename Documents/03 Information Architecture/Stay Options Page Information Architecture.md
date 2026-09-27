@@ -43,7 +43,7 @@ The italic phrase uses the Bodoni Moda editorial accent.
 
 **Supporting text**
 
-> From Monday to Thursday, choose a stay sized to your group. Friday to Sunday nights are booked as the whole villa, for up to 15 guests.
+> Enjoy flexible weekday stays tailored to your party, or reserve the entire private villa for weekend gatherings of up to 15 guests.
 
 **Actions**
 
@@ -134,9 +134,9 @@ Public column labels are `Group size`, `Stay`, `Without A/C` and `With A/C`.
 
 **Notes below the table**
 
-> **Family stay or two bedrooms?** The Family stay uses a sleeping setup arranged by the host. Two bedrooms always means two separate rooms.
+> **Choosing your setup:** The Family stay provides a shared family layout, while Two Bedrooms offers two completely separate rooms.
 
-> **More than 10 guests?** The full villa adds extra sleeping arrangements, confirmed with the host.
+> **Groups over 10:** Additional sleeping arrangements are comfortably arranged and confirmed directly with your host.
 
 > **Want more space?** You can choose a larger option than your group needs.
 
@@ -148,11 +148,11 @@ Heading: `About A/C`. On wide screens it stays beside the rate comparison.
 
 **Without A/C**
 
-> Stand fans in every bedroom. Air conditioning stays off.
+> Natural tropical ventilation with dedicated cooling fans in every bedroom.
 
 **With A/C**
 
-> Air conditioning in two bedrooms. The other bedrooms have stand fans.
+> Air-conditioned comfort in two bedrooms, with gentle cooling fans in the remaining rooms.
 
 **Availability note**
 
@@ -217,7 +217,7 @@ Confirm the common facilities and explain request-based arrangements without rep
 
 **Supporting text**
 
-> Electricity, gas, Wi-Fi and use of the full kitchen are part of the nightly rate.
+> All utilities, high-speed Wi-Fi, and exclusive use of the fully equipped kitchen are seamlessly included in your nightly rate.
 
 Source: `package_details.md` §1 (bundled utilities).
 
@@ -234,10 +234,10 @@ Organise the content into four short groups rather than individual amenity cards
 
 **Kitchen**
 
-- Gas stove
-- Refrigerator and freezer
-- Rice cooker and kettle
-- Cookware, cutlery and glassware
+- Fully equipped self-catering kitchen
+- Full-size refrigeration and cold storage
+- Complete cookware, tableware and glassware
+- Tea and hot beverage preparation essentials
 
 **Comfort**
 
@@ -257,22 +257,18 @@ Organise the content into four short groups rather than individual amenity cards
 
 Keep request-based arrangements visually subordinate to the included list.
 
-**Private chef**
-
-> Arranged in advance. Guests cover the cost of ingredients.
-
 **BBQ setup**
 
 > The grill is prepared before you arrive.
 
 **Request note**
 
-> Add these under special requests in your inquiry. The host confirms availability and any extra charge.
+> Add this under special requests in your inquiry. The host confirms availability and any extra charge.
 
 ### Information and interaction rules
 
 - Do not repeat package prices, bedroom counts or guest limits here. The general statement that utilities are included is permitted.
-- Do not present private-chef service, ingredients or BBQ equipment as automatically included.
+- Do not present BBQ equipment as automatically included. The host does not provide private chef services.
 - Do not add airport transfers, tours or activities until the host confirms they can be arranged.
 - Nearby attractions are not stay inclusions.
 - This is a concise confirmation section; the homepage remains the main visual amenities overview.
@@ -300,15 +296,15 @@ Set final expectations, explain the inquiry process and provide the page's closi
 
 **Check-in**
 
-> From 1:00 PM
+> Afternoon arrival, coordinated with your host
 
 **Check-out**
 
-> By 10:00 AM
+> Morning departure
 
-**Later check-out**
+**Late check-out**
 
-> Up to 11:30 AM, on request, if the host can arrange it
+> Available upon request, subject to availability
 
 **Long weekends**
 
@@ -334,11 +330,11 @@ Sources: `package_details.md` §8 (late check-out) and §3 (weekend booking poli
 
 **Statement (shown in quotation marks)**
 
-> “Sending an inquiry doesn’t reserve your dates.”
+> “Inquiries are completely free and carry no obligation.”
 
 **Supporting text**
 
-> WhatsApp opens with your stay details ready to send. The host replies to confirm availability, the final amount and how to pay.
+> Your stay details will open directly in WhatsApp to send to the host, who will personally confirm availability, finalize pricing, and guide you through payment.
 
 ### Final action
 

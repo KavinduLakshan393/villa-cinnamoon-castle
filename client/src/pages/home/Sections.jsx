@@ -451,7 +451,6 @@ const amenityGroups = [
 ];
 
 const onRequest = [
-  'Private chef',
   'BBQ setup',
   'Lagoon or river boat safari',
   'Kayaking',

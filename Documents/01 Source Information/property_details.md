@@ -79,7 +79,6 @@
 * Dish drying rack, dinner plates, glassware, and cups
 * Large formal dining table with seating for the entire group
 * Refrigerator and freezer food storage
-* In-house private chef service available upon prior arrangement
 
 ### Living & Entertainment
 * Ground-floor living hall with traditional hand-carved wooden armchairs and caned seating

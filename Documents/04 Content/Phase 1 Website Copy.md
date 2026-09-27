@@ -164,7 +164,7 @@ Relevant amenities may be mentioned naturally within the earlier visual sections
 
 ### Content rule
 
-Do not mix included amenities with services or activities that require prior arrangement. Private chef service, BBQ setup, boat safaris, kayaking and snorkelling must appear separately under `Available on request`.
+Do not mix included amenities with services or activities that require prior arrangement. BBQ setup, boat safaris, kayaking and snorkelling must appear separately under `Available on request`.
 
 ## Available on Request
 
@@ -184,7 +184,6 @@ Do not mix included amenities with services or activities that require prior arr
 
 **Items**
 
-- Private chef
 - BBQ setup
 - Lagoon or river boat safari
 - Kayaking
@@ -653,8 +652,8 @@ The authoritative structure and working copy are maintained in `../03 Informatio
 
 - Keep this section focused on self-catering and shared meals.
 - Do not describe every utensil individually.
-- Do not imply that food, ingredients or chef service are included with the stay.
-- Private chef service must appear separately under `Available on request`.
+- Do not imply that food or ingredients are included with the stay.
+- The host does not provide private chef services.
 
 ## Outdoor Setting
 

@@ -24,8 +24,8 @@ function Hero() {
         </RevealHeading>
         <div className="stay-hero__aside" data-reveal="fade">
           <p className="lead">
-            From Monday to Thursday, choose a stay sized to your group. Friday to Sunday nights are booked as the whole
-            villa, for up to 15 guests.
+            Enjoy flexible weekday stays tailored to your party, or reserve the entire private villa for weekend
+            gatherings of up to 15 guests.
           </p>
           <div className="stay-hero__actions">
             <Button to={inquiryPath}>Send Inquiry</Button>
@@ -94,11 +94,12 @@ function WeekdayTable() {
       </table>
       <ul className="rate-notes">
         <li>
-          <strong>Family stay or two bedrooms?</strong> The Family stay uses a sleeping setup arranged by the host. Two
-          bedrooms always means two separate rooms.
+          <strong>Choosing your setup:</strong> The Family stay provides a shared family layout, while Two Bedrooms
+          offers two completely separate rooms.
         </li>
         <li>
-          <strong>More than 10 guests?</strong> The full villa adds extra sleeping arrangements, confirmed with the host.
+          <strong>Groups over 10:</strong> Additional sleeping arrangements are comfortably arranged and confirmed
+          directly with your host.
         </li>
         <li>
           <strong>Want more space?</strong> You can choose a larger option than your group needs.
@@ -117,11 +118,11 @@ function CoolingNotes() {
       <dl className="cooling__list">
         <div>
           <dt>Without A/C</dt>
-          <dd>Stand fans in every bedroom. Air conditioning stays off.</dd>
+          <dd>Natural tropical ventilation with dedicated cooling fans in every bedroom.</dd>
         </div>
         <div>
           <dt>With A/C</dt>
-          <dd>Air conditioning in two bedrooms. The other bedrooms have stand fans.</dd>
+          <dd>Air-conditioned comfort in two bedrooms, with gentle cooling fans in the remaining rooms.</dd>
         </div>
       </dl>
       <p className="caption">A/C is not offered with the Couples or Family stay.</p>
@@ -254,7 +255,15 @@ const included = [
     title: 'Privacy & living',
     items: ['No other guests in the villa', 'Ground-floor living room', 'Upstairs lounge', 'Dining table for the whole group'],
   },
-  { title: 'Kitchen', items: ['Gas stove', 'Refrigerator and freezer', 'Rice cooker and kettle', 'Cookware, cutlery and glassware'] },
+  {
+    title: 'Kitchen',
+    items: [
+      'Fully equipped self-catering kitchen',
+      'Full-size refrigeration and cold storage',
+      'Complete cookware, tableware and glassware',
+      'Tea and hot beverage preparation essentials',
+    ],
+  },
   {
     title: 'Comfort',
     items: ['Wi-Fi', 'TV with satellite channels', 'Hot-water showers', 'Bedroom cooling to match your option'],
@@ -270,7 +279,7 @@ function Included() {
           <Eyebrow>Your stay</Eyebrow>
           <RevealHeading id="included-title">Included with every stay.</RevealHeading>
           <p className="lead" data-reveal="fade">
-            Electricity, gas, Wi-Fi and use of the full kitchen are part of the nightly rate.
+            All utilities, high-speed Wi-Fi, and exclusive use of the fully equipped kitchen are seamlessly included in your nightly rate.
           </p>
         </header>
         <div className="included__grid">
@@ -290,16 +299,12 @@ function Included() {
           <h3 className="request__title">Available on request</h3>
           <dl className="request__list">
             <div>
-              <dt>Private chef</dt>
-              <dd>Arranged in advance. Guests cover the cost of ingredients.</dd>
-            </div>
-            <div>
               <dt>BBQ setup</dt>
               <dd>The grill is prepared before you arrive.</dd>
             </div>
           </dl>
           <p className="caption">
-            Add these under special requests in your inquiry. The host confirms availability and any extra charge.
+            Add this under special requests in your inquiry. The host confirms availability and any extra charge.
           </p>
         </div>
       </div>
@@ -308,9 +313,9 @@ function Included() {
 }
 
 const stayFacts = [
-  { label: 'Check-in', value: 'From 1:00 PM' },
-  { label: 'Check-out', value: 'By 10:00 AM' },
-  { label: 'Later check-out', value: 'Up to 11:30 AM, on request, if the host can arrange it' },
+  { label: 'Check-in', value: 'Afternoon arrival, coordinated with your host' },
+  { label: 'Check-out', value: 'Morning departure' },
+  { label: 'Late check-out', value: 'Available upon request, subject to availability' },
   { label: 'Long weekends', value: 'A two-night minimum may apply on long weekends and festive holidays' },
 ];
 
@@ -349,10 +354,10 @@ function BeforeYouInquire() {
         </ol>
 
         <div className="before__close" data-reveal="fade">
-          <p className="before__statement">“Sending an inquiry doesn’t reserve your dates.”</p>
+          <p className="before__statement">“Inquiries are completely free and carry no obligation.”</p>
           <p className="body-copy">
-            WhatsApp opens with your stay details ready to send. The host replies to confirm availability, the final
-            amount and how to pay.
+            Your stay details will open directly in WhatsApp to send to the host, who will personally confirm
+            availability, finalize pricing, and guide you through payment.
           </p>
           <Button to={inquiryPath}>Send Inquiry</Button>
         </div>
