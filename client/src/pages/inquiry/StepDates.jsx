@@ -60,11 +60,11 @@ export default function StepDates({ state, update, stay, onContinue }) {
       </h2>
 
       <div className="date-fields" role="group" aria-label="Stay dates. Select a field, then choose a date in the calendar.">
-        {field('checkIn', checkInRef, 'Check-in', checkIn, 'From 1:00 PM')}
+        {field('checkIn', checkInRef, 'Check-in', checkIn, 'Afternoon arrival')}
         <span className="date-fields__arrow" aria-hidden="true">
           →
         </span>
-        {field('checkOut', checkOutRef, 'Check-out', checkOut, 'By 10:00 AM')}
+        {field('checkOut', checkOutRef, 'Check-out', checkOut, 'Morning departure')}
       </div>
 
       <div className="step__card">
@@ -79,7 +79,7 @@ export default function StepDates({ state, update, stay, onContinue }) {
               <span className={`type-badge type-badge--${stay.type}`}>{stay.label}</span>
               {stay.type === 'mixed' && <span className="stay-feedback__split">{describeSplit(stay)}</span>}
             </p>
-            <p className="caption">Availability is confirmed by the host after you send the inquiry.</p>
+            <p className="caption">The host will personally confirm availability once your inquiry is received.</p>
           </>
         ) : (
           <p className={`stay-feedback__guide${showError ? ' is-error' : ''}`}>

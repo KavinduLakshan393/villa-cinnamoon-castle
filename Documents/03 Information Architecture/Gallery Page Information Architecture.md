@@ -42,7 +42,7 @@ The italic phrase uses the Bodoni Moda editorial accent and must not break acros
 
 **Supporting text**
 
-> Six parts of the villa, inside and out. Scroll through them, or open any photo to see it full screen.
+> Explore the living spaces, quiet corners, and natural surroundings of our private sanctuary in Arachchikanda.
 
 ### Rules
 

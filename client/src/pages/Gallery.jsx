@@ -79,7 +79,8 @@ export default function Gallery() {
               A closer look at <span className="editorial">the villa.</span>
             </RevealHeading>
             <p className="lead gallery-hero__text" data-reveal="fade">
-              Six parts of the villa, inside and out. Scroll through them, or open any photo to see it full screen.
+              Explore the living spaces, quiet corners, and natural surroundings of our private sanctuary in
+              Arachchikanda.
             </p>
           </div>
         </section>

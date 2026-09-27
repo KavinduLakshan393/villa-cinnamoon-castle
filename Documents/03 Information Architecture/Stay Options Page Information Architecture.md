@@ -158,32 +158,21 @@ Heading: `About A/C`. On wide screens it stays beside the rate comparison.
 
 > A/C is not offered with the Couples or Family stay.
 
-### Mixed-stay calculation
+### Mixed-stay transparent pricing
 
-Use a compact visual equation with a worked example taken from the official catalogue (`package_details.md` §5, case C). Calculate the figures from the active package data; do not hard-code them.
+Presents a clear hospitality reassurance card explaining that stays spanning weekdays and weekends are billed transparently at their respective nightly rates without rounding up, with a direct action button to calculate for the visitor's specific dates in the inquiry form.
 
-**Example label**
+**Heading**
 
-> Friday check-in, Tuesday check-out · full villa with A/C
+> Stays across weekdays & weekends
 
-**Equation**
+**Supporting text**
 
-> 3 weekend nights × Rs. 23,000  
-> +  
-> 1 weekday night × Rs. 19,900  
-> = Estimated total Rs. 88,900
+> If your trip spans both weekday and weekend nights, each night is billed transparently at its individual rate—never rounded up. Select your dates in the inquiry form to instantly see your personalized breakdown.
 
-**Calculation note**
+**Action**
 
-> The inquiry form works this out for your own dates and group. The host confirms the final amount.
-
-### Section action
-
-> Send Inquiry
-
-**Rate basis note (beside the action)**
-
-> All rates are per night for the whole group, in Sri Lankan rupees.
+> Calculate for your dates
 
 ### Information and interaction rules
 

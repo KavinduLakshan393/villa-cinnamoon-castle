@@ -19,7 +19,7 @@ export default function Summary({ state, stay, est, showOptions, onEdit, editBef
         <p className="summary__title">Your stay</p>
         <p className="summary__empty">Choose your dates to see the options and an estimated total.</p>
         <p className="summary__assure">
-          Sending an inquiry doesn’t reserve your dates. The host confirms availability, the final amount and payment
+          Inquiries carry no obligation. The host will personally confirm availability, rates, and booking details
           on WhatsApp.
         </p>
       </div>
@@ -69,8 +69,8 @@ export default function Summary({ state, stay, est, showOptions, onEdit, editBef
         </div>
       )}
       <p className="summary__assure">
-        This is an estimate. Sending an inquiry doesn’t reserve your dates; the host confirms availability and the
-        final amount on WhatsApp.
+        This estimate carries no obligation. The host will personally confirm availability and final details on
+        WhatsApp.
       </p>
     </div>
   );

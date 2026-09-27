@@ -268,7 +268,7 @@ export function Overview() {
             throughout the stay.”
           </ScrubText>
           <ul className="facts" aria-label="Included in every stay">
-            {['Two living areas', 'Full kitchen', 'Two bathrooms', 'Wi-Fi'].map((fact, i) => (
+            {['Five bedrooms', 'Two living areas', 'Full kitchen', 'Two bathrooms'].map((fact, i) => (
               <li key={fact} className="facts__item" data-reveal="fade">
                 <span className="facts__index">{String(i + 1).padStart(2, '0')}</span>
                 {fact}

@@ -90,10 +90,10 @@ The bottom row shows `Arachchikanda`, a 0–100 loading counter and `Hikkaduwa`.
 
 **Supporting details**
 
+- Five bedrooms
 - Two living areas
 - Full kitchen
 - Two bathrooms
-- Wi-Fi
 
 ### Content rule
 

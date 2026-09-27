@@ -4,7 +4,7 @@ import Button from '../components/Button.jsx';
 import { RevealHeading, Eyebrow } from '../components/Reveal.jsx';
 import { useFadeReveals } from '../lib/reveal.js';
 import { inquiryPath } from '../data/site.js';
-import { stayRows, rateFor, formatRupees } from '../data/packages.js';
+import { stayRows, formatRupees } from '../data/packages.js';
 import './StayOptions.css';
 
 const NOT_OFFERED = 'Not offered';
@@ -166,44 +166,23 @@ function WeekendBlock() {
   );
 }
 
-// Worked example from the official catalogue (package_details.md §5, case C).
 function MixedStay() {
-  const weekendRate = rateFor('weekend-villa', 'AC');
-  const weekdayRate = rateFor('full-villa', 'AC');
-  if (weekendRate === null || weekdayRate === null) return null;
-  const weekendNights = 3;
-  const weekdayNights = 1;
-  const total = weekendNights * weekendRate + weekdayNights * weekdayRate;
-
   return (
     <div className="rate-group mixed" data-reveal="fade">
-      <header className="rate-group__header">
-        <h3 className="subheading">Mixed stays</h3>
-        <p className="caption">Friday check-in, Tuesday check-out · full villa with A/C</p>
-      </header>
-      <div className="mixed__equation" role="group" aria-label="Example mixed-stay estimate">
-        <p className="mixed__term">
-          <span className="mixed__nights">{weekendNights} weekend nights</span>
-          <span className="mixed__rate">× {formatRupees(weekendRate)}</span>
-        </p>
-        <span className="mixed__op" aria-hidden="true">
-          +
-        </span>
-        <p className="mixed__term">
-          <span className="mixed__nights">{weekdayNights} weekday night</span>
-          <span className="mixed__rate">× {formatRupees(weekdayRate)}</span>
-        </p>
-        <span className="mixed__op" aria-hidden="true">
-          =
-        </span>
-        <p className="mixed__term mixed__term--total">
-          <span className="mixed__nights">Estimated total</span>
-          <span className="mixed__rate">{formatRupees(total)}</span>
-        </p>
+      <div className="mixed__card">
+        <div className="mixed__content">
+          <h3 className="subheading">Stays across weekdays &amp; weekends</h3>
+          <p className="body-copy">
+            If your trip spans both weekday and weekend nights, each night is billed transparently at its individual
+            rate—never rounded up. Select your dates in the inquiry form to instantly see your personalized breakdown.
+          </p>
+        </div>
+        <div className="mixed__action">
+          <Button to={inquiryPath} variant="swipe" tone="dark">
+            Calculate for your dates
+          </Button>
+        </div>
       </div>
-      <p className="body-copy">
-        The inquiry form works this out for your own dates and group. The host confirms the final amount.
-      </p>
     </div>
   );
 }
@@ -239,11 +218,6 @@ function Rates() {
             <MixedStay />
           </div>
           <CoolingNotes />
-        </div>
-
-        <div className="rates__action" data-reveal="fade">
-          <Button to={inquiryPath}>Send Inquiry</Button>
-          <p className="caption">All rates are per night for the whole group, in Sri Lankan rupees.</p>
         </div>
       </div>
     </section>
