@@ -5,6 +5,8 @@ import { RevealHeading, ScrubText, Eyebrow } from '../../components/Reveal.jsx';
 import Mosaic from './Mosaic.jsx';
 import Cinemagraph from './Cinemagraph.jsx';
 import { useOpenPhoto } from './PhotoViewer.jsx';
+import SideLines from './SideLines.jsx';
+import { OVERVIEW_LINES, QUOTE_LINES, INQUIRY_LINES } from './lines.js';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
 
@@ -252,6 +254,7 @@ const NEARBY_ITEMS = photosOf(NEARBY_COLUMNS);
 export function Overview() {
   return (
     <section id="villa" className="section overview" aria-labelledby="villa-title">
+      <SideLines {...OVERVIEW_LINES} start="top 90%" end="bottom 70%" />
       <div className="container grid-12">
         <Eyebrow className="overview__eyebrow">
           The villa
@@ -315,6 +318,7 @@ export function SharedLiving() {
 export function QuoteBand({ children }) {
   return (
     <section className="section quote-band" aria-label="About the villa">
+      <SideLines {...QUOTE_LINES} start="top 95%" end="bottom 45%" />
       <div className="container">
         <ScrubText as="blockquote" className="quote-band__text">
           {children}
@@ -638,6 +642,7 @@ export function StayPreview() {
 export function InquiryCta() {
   return (
     <section className="section inquiry-cta" aria-labelledby="inquiry-title">
+      <SideLines {...INQUIRY_LINES} start="top 90%" end="bottom 95%" />
       <div className="container grid-12">
         <Frame
           className="inquiry-cta__image"

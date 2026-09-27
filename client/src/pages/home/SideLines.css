@@ -1,0 +1,38 @@
+/* ---------- Two side lines ---------- */
+
+.has-lines {
+  position: relative;
+}
+
+/* The section's content sits above the lines. */
+.has-lines > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.side-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.side-lines svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.side-lines path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.75px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The right line is the quieter of the pair. */
+.side-lines__right {
+  opacity: 0.5;
+}
