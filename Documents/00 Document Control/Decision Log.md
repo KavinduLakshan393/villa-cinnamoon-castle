@@ -205,13 +205,29 @@ This log records confirmed product, content and UX decisions. It is not a discus
 - **Decision:**
   - Every Home mosaic photograph (and the mezzanine lead image) is a button that opens the Gallery viewer on that section's set. The viewer bar shows the section name.
   - On hover (mouse and trackpad only), the frame draws in, the photograph eases closer, and the other photographs in the mosaic dim. A round `View` label follows the pointer. Keyboard focus shows the same state with a visible focus ring.
-  - A brand-green line drawn by scrolling runs behind the text and photographs:
+  - *Superseded by DEC-024 (2026-09-27):* A brand-green line drawn by scrolling runs behind the text and photographs:
     - Travelling segments through Overview and Shared living, and through Sleeping, Kitchen and Outside into the Balcony video (desktop only).
     - A line from the Location section that draws past the rates and reviews and stops at the `Send Inquiry` button (desktop only).
     - A villa-to-beach route in the Nearby section, labelled `The villa`, `Hikkaduwa Beach` and `3.5 km · about 5 minutes`. The route is decorative (`aria-hidden`), because the heading already states the distance.
   - Every scroll-linked effect now follows the reduced-motion setting live. Turning it on mid-visit stops the parallax, drift, word scrub and videos (the poster is shown), and draws the lines fully and still.
 - **Not adopted:** Velocity-based image bending (reference: Lusion.co).
 - **Affected documents:** `04 Content/Phase 1 Website Copy.md` (route labels).
+
+### DEC-024 — Scroll-drawn line removed
+
+- **Status:** Approved (2026-09-27)
+- **Decision:** The scroll-drawn line from DEC-023 is removed from the Home page: all four paths, including the villa-to-beach route and its labels in the Nearby section. It did not match the rest of the site. The openable photographs, hover state and live reduced-motion handling from DEC-023 stay.
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md` (route labels superseded).
+
+### DEC-025 — Smooth wheel scrolling and cinemagraph card reveal
+
+- **Status:** Approved (2026-09-27)
+- **Decision:**
+  - Mouse-wheel and trackpad scrolling glides to a stop (Lenis, `lerp` 0.085) instead of jumping by the browser's wheel step. Touch keeps native scrolling. With reduced motion the page uses native scrolling. Scrolling pauses while the intro, mobile menu or photo viewer holds the page.
+  - The Balcony and Hikkaduwa Beach videos enter as a rounded inset card, open to full screen as the section fills the viewport, and close back into a card as it leaves. The video's parallax is unchanged. There is no card effect with reduced motion.
+  - The video quotes are revealed against the whole section, so every word is fully shown when the video fills the screen.
+- **Not adopted:** Colour-matched fade bands above and below the videos (tried and rejected, 2026-09-26).
+- **Affected documents:** None (motion only; copy unchanged).
 
 ## Open decisions and launch dependencies
 

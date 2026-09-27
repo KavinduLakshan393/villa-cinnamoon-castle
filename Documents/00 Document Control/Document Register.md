@@ -106,6 +106,7 @@ The files under `Sample components/` are **samples**, not approved designs. They
 - **2026-09-24 — On-request location map (DEC-021):** Updated the Maps paragraph of the privacy copy in `Privacy Page Information Architecture.md` to describe the `Show map` behaviour.
 - **2026-09-26 — Home media rework (DEC-022):** Added the Quote band, Balcony and Hikkaduwa Beach entries to `Phase 1 Website Copy.md` and raised the homepage Nearby image limit from two to four. The superseded wording is quoted in place. Added `06 Design/Home Page Image and Video Prompts.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
 - **2026-09-26 — Openable photographs and scroll-drawn path (DEC-023):** Added the Nearby route labels to `Phase 1 Website Copy.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-27 — Scroll-drawn line removed (DEC-024):** Superseded the Nearby route labels in `Phase 1 Website Copy.md`; the removed wording is quoted in place. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
 
 ## Document control rules
 
