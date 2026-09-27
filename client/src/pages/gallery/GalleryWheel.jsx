@@ -46,6 +46,7 @@ export default function GalleryWheel({ chapters, scopeRef, getSection }) {
 
   useGSAP(
     () => {
+      if (narrow) return;
       const state = { f: 0 };
       const ease = prefersReducedMotion()
         ? (v) => {
@@ -78,11 +79,13 @@ export default function GalleryWheel({ chapters, scopeRef, getSection }) {
       });
       return () => trigger.kill();
     },
-    { dependencies: [chapters, render] },
+    { dependencies: [chapters, render, narrow] },
   );
 
   // Keeps the rotation right after a resize (the radius changes with the viewport).
   useEffect(() => ScrollTrigger.refresh(), [narrow]);
+
+  if (narrow) return null;
 
   const go = (key) => {
     const el = getSection(key);
@@ -91,7 +94,7 @@ export default function GalleryWheel({ chapters, scopeRef, getSection }) {
 
   return (
     <nav
-      className={`wheel${narrow ? ' wheel--compact' : ''}${inView ? ' is-in-view' : ''}`}
+      className={`wheel${inView ? ' is-in-view' : ''}`}
       ref={rootRef}
       aria-label="Gallery sections"
     >
@@ -129,12 +132,6 @@ export default function GalleryWheel({ chapters, scopeRef, getSection }) {
           </li>
         ))}
       </ol>
-
-      {/* Compact wheel (phones and tablets): the chapter on screen, named beside the dial. */}
-      <p className="wheel__current" aria-hidden="true">
-        <span className="wheel__index">{String(active + 1).padStart(2, '0')}</span>
-        <span className="wheel__title">{chapters[active].title}</span>
-      </p>
     </nav>
   );
 }

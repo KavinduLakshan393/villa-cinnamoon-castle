@@ -142,7 +142,7 @@ Walk the visitor through the villa one part at a time, with every selected photo
 - A thin half-wheel sits at the left edge of the page, with a rim, a small hub and one spoke between each pair of chapters. Only the right half is visible, because its centre sits on the page edge.
 - As the visitor scrolls, the wheel turns so the chapter on screen faces the photographs (3 o'clock). A fixed green arc on the rim marks it, and its label is emphasised. Neighbouring labels fade as they turn away.
 - Selecting a label scrolls to that chapter. The wheel is a `nav` named "Gallery sections", and the current label has `aria-current`.
-- Below 900 px, a small half-wheel sits at the bottom-left while the chapters are on screen, with the current chapter named beside it.
+- Below 900 px (mobile and tablet viewports), the wheel is omitted to keep the photographs and chapter headers unobstructed.
 - With reduced motion, the wheel moves without easing and the photographs do not drift.
 
 ### Photographs and hover

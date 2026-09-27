@@ -105,64 +105,9 @@
   display: none;
 }
 
-/* ---------- Compact wheel (below 900 px) ----------
-   A small half-dial fixed at the bottom-left while the chapters are on screen,
-   with the current chapter named beside it. */
-
-.wheel--compact {
-  --r: 58px;
-  position: fixed;
-  left: 0;
-  top: auto;
-  bottom: max(20px, env(safe-area-inset-bottom));
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  height: calc(var(--r) * 2);
-  padding-left: calc(var(--r) + 12px);
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s ease;
-}
-
-.wheel--compact.is-in-view {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-}
-
-.wheel--compact .wheel__dial {
-  border-radius: 0 50% 50% 0;
-}
-
-.wheel--compact .wheel__svg {
-  filter: drop-shadow(0 4px 14px rgba(12, 16, 13, 0.12));
-}
-
-.wheel--compact .wheel__rim {
-  fill: rgba(252, 251, 248, 0.92);
-  stroke-opacity: 0.35;
-}
-
-.wheel--compact .wheel__labels {
-  display: none;
-}
-
-.wheel--compact .wheel__current {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: rgba(252, 251, 248, 0.92);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 14px rgba(12, 16, 13, 0.12);
-}
-
-.wheel--compact .wheel__current .wheel__index {
-  color: var(--accent);
+/* Below 900 px: omit the wheel entirely on mobile & tablet viewports */
+@media (max-width: 899px) {
+  .wheel {
+    display: none !important;
+  }
 }

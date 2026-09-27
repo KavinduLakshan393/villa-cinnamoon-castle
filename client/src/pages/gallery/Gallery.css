@@ -113,9 +113,4 @@
   }
 }
 
-/* Compact wheel: leave room for it at the bottom of the last chapter. */
-@media (max-width: 899px) {
-  .gallery-chapters__content {
-    padding-bottom: 160px;
-  }
-}
+
