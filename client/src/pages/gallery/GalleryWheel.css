@@ -1,0 +1,168 @@
+/* ---------- Gallery wheel ----------
+   Only the right half of the dial shows: its centre sits on the left edge of the
+   page. --r is the radius; the chapter facing the photographs is at 3 o'clock. */
+
+.wheel {
+  --r: clamp(220px, 34vh, 340px);
+  --wheel-rotation: 0deg;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+}
+
+.wheel__dial {
+  position: absolute;
+  left: calc(var(--r) * -1);
+  top: 50%;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.wheel__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.wheel__rim,
+.wheel__hub,
+.wheel__spokes line {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-opacity: 0.28;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.wheel__hub {
+  stroke-opacity: 0.5;
+}
+
+.wheel__marker {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Labels ride on the dial at 42 % of the radius, upright, fading as they turn away. */
+.wheel__labels {
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
+
+.wheel__labels li {
+  position: absolute;
+  left: calc(var(--x, 1) * var(--r) * 0.42);
+  top: calc(var(--y, 0) * var(--r) * 0.42);
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.wheel__label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 4px;
+  color: var(--text-secondary);
+  transition: color 0.4s ease;
+}
+
+.wheel__index {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wheel__title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.wheel__label[aria-current='true'] {
+  color: var(--text-primary);
+}
+
+.wheel__label[aria-current='true'] .wheel__index {
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .wheel__label:hover {
+    color: var(--text-primary);
+  }
+}
+
+.wheel__current {
+  display: none;
+}
+
+/* ---------- Compact wheel (below 900 px) ----------
+   A small half-dial fixed at the bottom-left while the chapters are on screen,
+   with the current chapter named beside it. */
+
+.wheel--compact {
+  --r: 58px;
+  position: fixed;
+  left: 0;
+  top: auto;
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  height: calc(var(--r) * 2);
+  padding-left: calc(var(--r) + 12px);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.wheel--compact.is-in-view {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.wheel--compact .wheel__dial {
+  border-radius: 0 50% 50% 0;
+}
+
+.wheel--compact .wheel__svg {
+  filter: drop-shadow(0 4px 14px rgba(12, 16, 13, 0.12));
+}
+
+.wheel--compact .wheel__rim {
+  fill: rgba(252, 251, 248, 0.92);
+  stroke-opacity: 0.35;
+}
+
+.wheel--compact .wheel__labels {
+  display: none;
+}
+
+.wheel--compact .wheel__current {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(252, 251, 248, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(12, 16, 13, 0.12);
+}
+
+.wheel--compact .wheel__current .wheel__index {
+  color: var(--accent);
+}

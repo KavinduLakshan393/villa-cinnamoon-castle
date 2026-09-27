@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import Hero from './home/Hero.jsx';
 import GoogleReviews from './home/GoogleReviews.jsx';
 import { PhotoViewerProvider } from './home/PhotoViewer.jsx';
-import CursorLabel from '../components/CursorLabel.jsx';
 import {
   Overview,
   SharedLiving,
@@ -49,7 +48,6 @@ export default function Home() {
         <GoogleReviews />
         <InquiryCta />
       </div>
-      <CursorLabel />
     </PhotoViewerProvider>
   );
 }

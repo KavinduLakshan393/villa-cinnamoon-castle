@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Intro from './components/Intro.jsx';
+import CursorLabel from './components/CursorLabel.jsx';
 import { scrollToSection } from './components/SmartLink.jsx';
 import Home from './pages/Home.jsx';
 import StayOptions from './pages/StayOptions.jsx';
@@ -126,6 +127,7 @@ export default function App() {
         <Footer />
       </div>
       {introVisible && <Intro onDone={hideIntro} />}
+      <CursorLabel />
     </>
   );
 }

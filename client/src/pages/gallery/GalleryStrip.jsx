@@ -38,12 +38,13 @@ export default function GalleryStrip({ onOpen }) {
   return (
     <div className="strip" ref={rootRef}>
       <ul className="strip__list" aria-label="Selected views">
-        {chapters.map((chapter) => (
+        {chapters.map((chapter, i) => (
           <li key={chapter.key} className="strip__item">
             <button
               type="button"
               className="strip__card"
-              onClick={(event) => onOpen(chapter.key, event.currentTarget)}
+              onClick={(event) => onOpen(chapter.lead, event.currentTarget)}
+              data-photo={chapter.lead}
               aria-label={`${chapter.title}: ${chapter.label}. Open in the gallery viewer`}
             >
               <ResponsiveImage
@@ -54,7 +55,7 @@ export default function GalleryStrip({ onOpen }) {
               />
               <span className="strip__shade" aria-hidden="true" />
               <span className="strip__meta" aria-hidden="true">
-                <span className="strip__index">{chapter.index}</span>
+                <span className="strip__index">{String(i + 1).padStart(2, '0')}</span>
                 <span className="strip__title">{chapter.title}</span>
                 <span className="strip__label">{chapter.label}</span>
               </span>

@@ -97,12 +97,15 @@ html.viewer-open body {
   display: contents;
 }
 
+/* Full width, height from the photo's aspect ratio (its width/height attributes),
+   capped below; the photo is contained inside, so the box is known before it loads. */
 .viewer__image {
-  width: auto;
+  width: 100%;
   height: auto;
   max-width: 100%;
-  max-height: calc(100vh - 64px - 60px - 110px);
-  max-height: calc(100dvh - 64px - 60px - 110px);
+  /* As large as the screen allows: below the bar, above the caption (and the rail when shown). */
+  max-height: calc(100vh - 64px - 52px);
+  max-height: calc(100dvh - 64px - 52px);
   object-fit: contain;
 }
 
@@ -153,6 +156,11 @@ html.viewer-open body {
     overflow-x: auto;
     padding: 14px var(--gutter) 18px;
     scrollbar-width: none;
+  }
+
+  .viewer__image {
+    max-height: calc(100vh - 64px - 52px - 104px);
+    max-height: calc(100dvh - 64px - 52px - 104px);
   }
 
   .viewer__thumb {
@@ -209,6 +217,11 @@ html.viewer-open body {
   .viewer {
     grid-template-rows: auto minmax(0, 1fr) 76px;
   }
+
+  .viewer__image {
+    max-height: calc(100vh - 64px - 52px - 76px);
+    max-height: calc(100dvh - 64px - 52px - 76px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -216,4 +229,26 @@ html.viewer-open body {
   .viewer__figure {
     animation: none;
   }
+}
+
+/* ---------- Open and close flight ---------- */
+
+/* While the copy flies in, the real photo waits underneath it. */
+.viewer.is-flying .viewer__image {
+  visibility: hidden;
+}
+
+.viewer-ghost {
+  position: fixed;
+  z-index: 130;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: left, top, width, height;
+}
+
+.viewer-ghost img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

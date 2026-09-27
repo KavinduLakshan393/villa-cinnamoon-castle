@@ -29,7 +29,7 @@ export function useOpenPhoto(items, chapterTitle) {
   return useCallback(
     (name, opener) => {
       if (!open) return;
-      const set = items.map((item) => ({ ...item, caption: item.caption ?? item.alt, chapterTitle }));
+      const set = items.map((item) => ({ ...item, caption: item.caption ?? item.alt, chapterTitle: item.chapterTitle ?? chapterTitle }));
       open(set, Math.max(0, set.findIndex((item) => item.name === name)), opener);
     },
     [open, items, chapterTitle],

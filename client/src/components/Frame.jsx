@@ -29,6 +29,7 @@ export default function Frame({
         onClick: (event) => onOpen(name, event.currentTarget),
         'aria-label': `View larger: ${alt}`,
         'data-cursor': 'View',
+        'data-photo': name,
       }
     : {};
 
