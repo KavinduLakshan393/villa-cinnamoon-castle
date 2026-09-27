@@ -15,7 +15,7 @@ function FieldError({ id, message }) {
   );
 }
 
-export default function StepDetails({ state, update, summary, onBack, onSubmit, sending }) {
+export default function StepDetails({ state, update, summary, onBack, onSubmit, sending, submitError }) {
   // Errors appear after a field loses focus, and again on submission — never per keystroke.
   const [touched, setTouched] = useState({});
   const nameRef = useRef(null);
@@ -170,6 +170,15 @@ export default function StepDetails({ state, update, summary, onBack, onSubmit, 
         </svg>
         <p>WhatsApp will open with your inquiry details. Review the message and tap Send to contact the host.</p>
       </div>
+
+      {submitError && (
+        <p className="form-error" role="alert">
+          <span className="error-icon" aria-hidden="true">
+            !
+          </span>
+          {submitError}
+        </p>
+      )}
 
       <div className="step__actions">
         <BackButton onClick={onBack} />

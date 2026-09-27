@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum StayType {
+  WEEKDAY
+  WEEKEND
+
+  @@map("stay_type")
+}
+
+enum CoolingType {
+  NOT_APPLICABLE
+  NON_AC
+  AC
+
+  @@map("cooling_type")
+}
+
+enum InquiryStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+
+  @@map("inquiry_status")
+}
+
+enum StayPortion {
+  WEEKDAY
+  WEEKEND
+
+  @@map("stay_portion")
+}
+
+model Admin {
+  id           String         @id @default(uuid()) @db.Uuid
+  email        String         @unique @db.VarChar(320)
+  passwordHash String         @map("password_hash") @db.VarChar(255)
+  displayName  String         @map("display_name") @db.VarChar(120)
+  isActive     Boolean        @default(true) @map("is_active")
+  lastLoginAt  DateTime?      @map("last_login_at") @db.Timestamptz(3)
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions     AdminSession[]
+  decisions    Inquiry[]      @relation("InquiryDecisionAdmin")
+
+  @@map("admins")
+}
+
+model AdminSession {
+  id            String         @id @default(uuid()) @db.Uuid
+  adminId       String         @map("admin_id") @db.Uuid
+  userAgent     String?        @map("user_agent") @db.VarChar(500)
+  expiresAt     DateTime       @map("expires_at") @db.Timestamptz(3)
+  lastUsedAt    DateTime?      @map("last_used_at") @db.Timestamptz(3)
+  revokedAt     DateTime?      @map("revoked_at") @db.Timestamptz(3)
+  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  admin         Admin          @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  refreshTokens RefreshToken[]
+
+  @@index([adminId, expiresAt])
+  @@map("admin_sessions")
+}
+
+/// One immutable refresh-token record per rotation. Only a SHA-256 hash is
+/// stored; the raw token exists solely in the administrator's HttpOnly cookie.
+model RefreshToken {
+  id             String       @id @default(uuid()) @db.Uuid
+  adminSessionId String       @map("admin_session_id") @db.Uuid
+  tokenHash      String       @unique @map("token_hash") @db.Char(64)
+  expiresAt      DateTime     @map("expires_at") @db.Timestamptz(3)
+  usedAt         DateTime?    @map("used_at") @db.Timestamptz(3)
+  revokedAt      DateTime?    @map("revoked_at") @db.Timestamptz(3)
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  adminSession   AdminSession @relation(fields: [adminSessionId], references: [id], onDelete: Cascade)
+
+  @@index([adminSessionId, expiresAt])
+  @@map("refresh_tokens")
+}
+
+/// One customer-facing stay row, such as "Two bedrooms" or "The whole villa".
+/// Its flat/Non-A/C/A/C prices live in PackageVariant to avoid repeating the
+/// shared display name, capacity and weekday/weekend classification.
+model StayOption {
+  id           String           @id @default(uuid()) @db.Uuid
+  code         String           @unique @db.VarChar(80)
+  publicName   String           @map("public_name") @db.VarChar(160)
+  publicDetail String           @map("public_detail") @db.VarChar(300)
+  stayType     StayType         @map("stay_type")
+  minGuests    Int              @map("min_guests") @db.SmallInt
+  maxGuests    Int              @map("max_guests") @db.SmallInt
+  displayOrder Int              @default(0) @map("display_order")
+  isActive     Boolean          @default(true) @map("is_active")
+  deletedAt    DateTime?        @map("deleted_at") @db.Timestamptz(3)
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+  variants     PackageVariant[]
+
+  @@index([stayType, isActive, displayOrder])
+  @@map("stay_options")
+}
+
+/// A priced variant belonging to one StayOption. A group may have one flat
+/// NOT_APPLICABLE variant or distinct NON_AC and AC variants.
+model PackageVariant {
+  id           String             @id @default(uuid()) @db.Uuid
+  stayOptionId String             @map("stay_option_id") @db.Uuid
+  code         String             @unique @db.VarChar(80)
+  title        String             @db.VarChar(180)
+  coolingType  CoolingType        @map("cooling_type")
+  nightlyRate  Decimal            @map("nightly_rate") @db.Decimal(12, 2)
+  displayOrder Int                @default(0) @map("display_order")
+  isActive     Boolean            @default(true) @map("is_active")
+  deletedAt    DateTime?          @map("deleted_at") @db.Timestamptz(3)
+  createdAt    DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  stayOption   StayOption         @relation(fields: [stayOptionId], references: [id], onDelete: Restrict)
+  inquiryLines InquiryQuoteLine[]
+
+  @@unique([stayOptionId, coolingType])
+  @@index([stayOptionId, isActive, displayOrder])
+  @@map("package_variants")
+}
+
+model Inquiry {
+  id               String             @id @default(uuid()) @db.Uuid
+  reference        String             @unique @db.VarChar(24)
+  customerName     String             @map("customer_name") @db.VarChar(160)
+  whatsappNumber   String             @map("whatsapp_number") @db.VarChar(16)
+  checkIn          DateTime           @map("check_in") @db.Date
+  checkOut         DateTime           @map("check_out") @db.Date
+  guestCount       Int                @map("guest_count") @db.SmallInt
+  specialRequests  String?            @map("special_requests") @db.VarChar(500)
+  consentedAt      DateTime           @map("consented_at") @db.Timestamptz(3)
+  status           InquiryStatus      @default(PENDING)
+  decidedAt        DateTime?          @map("decided_at") @db.Timestamptz(3)
+  decidedByAdminId String?            @map("decided_by_admin_id") @db.Uuid
+  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+  decidedByAdmin   Admin?             @relation("InquiryDecisionAdmin", fields: [decidedByAdminId], references: [id], onDelete: Restrict)
+  quoteLines       InquiryQuoteLine[]
+
+  @@index([checkIn, createdAt])
+  @@index([status, createdAt])
+  @@index([whatsappNumber])
+  @@map("inquiries")
+}
+
+/// Immutable commercial facts captured when the inquiry is submitted. The
+/// selected variant relation provides traceability; quoted labels and rate are
+/// intentionally the historical values for this inquiry, like an order line.
+model InquiryQuoteLine {
+  id                 String         @id @default(uuid()) @db.Uuid
+  inquiryId          String         @map("inquiry_id") @db.Uuid
+  packageVariantId   String         @map("package_variant_id") @db.Uuid
+  portion            StayPortion
+  nightCount         Int            @map("night_count") @db.SmallInt
+  quotedStayName     String         @map("quoted_stay_name") @db.VarChar(160)
+  quotedPackageTitle String         @map("quoted_package_title") @db.VarChar(180)
+  quotedCoolingType  CoolingType    @map("quoted_cooling_type")
+  quotedNightlyRate  Decimal        @map("quoted_nightly_rate") @db.Decimal(12, 2)
+  createdAt          DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  inquiry            Inquiry        @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+  packageVariant     PackageVariant @relation(fields: [packageVariantId], references: [id], onDelete: Restrict)
+
+  @@unique([inquiryId, portion])
+  @@index([packageVariantId])
+  @@map("inquiry_quote_lines")
+}

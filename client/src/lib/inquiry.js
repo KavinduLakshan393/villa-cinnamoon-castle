@@ -77,6 +77,7 @@ function resolve(stayKey, cooling, rows) {
   );
   const flat = row.ac === null; // Couples and Family stays have one rate.
   return {
+    variantId: cooling === 'ac' ? row.acVariantId : row.standardVariantId,
     name: flat ? row.name : `${row.name}, ${coolingLabel(cooling)}`,
     title: pkg?.title ?? row.name,
     rate,
@@ -157,10 +158,11 @@ export function checkName(name) {
 
 const lkr = (amount) => formatRupees(amount).replace('Rs.', 'LKR');
 
-export function buildMessage(state, est, phone) {
+export function buildMessage(state, est, phone, reference) {
   const { stay } = est;
   const lines = [
     'Villa Cinnamoon Castle — Stay Inquiry',
+    ...(reference ? [`Reference: ${reference}`] : []),
     '',
     `Check-in: ${formatShort(state.checkIn)} (Afternoon arrival)`,
     `Check-out: ${formatShort(state.checkOut)} (Morning departure)`,

@@ -24,7 +24,7 @@ async function copyText(text) {
  * Opening WhatsApp does not prove the message was sent, so this state never says
  * "sent" (Inquiry IA — Return state).
  */
-export default function SentState({ url, message, blocked, onEdit }) {
+export default function SentState({ url, message, blocked, reference, onEdit }) {
   const [copied, setCopied] = useState(null);
 
   return (
@@ -33,6 +33,7 @@ export default function SentState({ url, message, blocked, onEdit }) {
         WhatsApp opened
       </h2>
       <p className="lead">Review the prepared message in WhatsApp and tap Send. The host will reply there after receiving it.</p>
+      {reference && <p className="type-badge">Inquiry reference: {reference}</p>}
       {blocked && (
         <p className="form-error" role="alert">
           <span className="error-icon" aria-hidden="true">

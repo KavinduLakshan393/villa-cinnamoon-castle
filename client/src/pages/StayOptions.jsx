@@ -5,6 +5,7 @@ import { RevealHeading, Eyebrow } from '../components/Reveal.jsx';
 import { useFadeReveals } from '../lib/reveal.js';
 import { inquiryPath } from '../data/site.js';
 import { stayRows, formatRupees } from '../data/packages.js';
+import { usePackages } from '../data/PackagesContext.jsx';
 import './StayOptions.css';
 
 const NOT_OFFERED = 'Not offered';
@@ -342,6 +343,7 @@ function BeforeYouInquire() {
 
 export default function StayOptions() {
   const pageRef = useRef(null);
+  usePackages();
   useFadeReveals(pageRef);
 
   return (

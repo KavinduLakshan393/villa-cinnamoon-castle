@@ -6,38 +6,38 @@
 
 ## 🏰 Overview
 
-Villa Cinnamoon Castle is an authentic Dutch-colonial-inspired private 5-bedroom retreat. This repository houses the complete full-stack web application designed to deliver an editorial, ultra-premium guest experience with seamless reservation capabilities, transparent weekend/weekday pricing, real-time availability calendar, and comprehensive administrative controls.
+Villa Cinnamoon Castle is an authentic Dutch-colonial-inspired private 5-bedroom retreat. This repository houses the full-stack web application for an editorial guest experience, transparent weekday/weekend pricing, WhatsApp-assisted stay inquiries and focused administrative controls.
 
 ---
 
 ## 📐 Architecture & Tech Stack
 
 ### Frontend (`/client`)
-- **Core**: React 18 + Vite
-- **Styling**: Vanilla CSS with custom Luxury Cinnamon Design Tokens (`tokens.css`, `global.css`)
-- **Motion & Interactions**: GSAP 3 (ScrollTrigger, mouse-parallax) & Lenis smooth scroll
-- **Routing**: React Router v6
-- **Icons**: Lucide React
+- **Core**: React 19 + Vite
+- **Styling**: Vanilla CSS using the shared tokens in `src/styles/tokens.css`
+- **Motion & interactions**: GSAP 3, ScrollTrigger and Lenis smooth scroll
+- **Routing**: React Router
+- **Admin UI**: Authenticated inquiries and package-management screens using the same public-site design tokens
 
 ### Backend (`/server`)
-- **Runtime**: Node.js + Express (ES Modules)
-- **Database ORM**: Prisma ORM with SQLite database
-- **Security & Validation**: bcryptjs, CORS, input sanitization
-- **API Endpoints**: RESTful calendar, packages, reservations, reviews, and admin dashboard
+- **Runtime**: Node.js + Express 5 (ES Modules and TypeScript)
+- **Database**: PostgreSQL with Prisma ORM and 3NF migrations
+- **Security**: Argon2id passwords, short-lived access JWTs, rotating opaque refresh tokens in HttpOnly cookies, CORS, origin checks and rate limiting
+- **API endpoints**: Public packages/inquiries plus authenticated package CRUD and inquiry decisions
 
 ---
 
 ## 🌟 Key Features
 
 1. **Editorial Parallax Hero**: Cinematic visual storytelling combining authentic property photography, GSAP scroll triggers, mouse tilt parallax, and refined typography.
-2. **Interactive Availability Calendar**: Visual indicator of available dates, dynamic weekday vs. weekend pricing rules, and booking restrictions.
-3. **Multi-Step Reservation Flow**:
+2. **Date & Pricing Flow**: Dynamic weekday/weekend classification and transparent estimated pricing.
+3. **Multi-Step Inquiry Flow**:
    - Date selection with duration calculation
    - Tiered package selection (Weekend Non-A/C, Weekend Full A/C, Weekday options)
    - Guest count stepper with pricing recalculation
-   - WhatsApp direct confirmation dispatch
+   - Database persistence followed by a customer-reviewed WhatsApp handoff to the host
 4. **Verified Guest Reviews**: Authentic traveler ratings, stay category badges, and testimonial carousel.
-5. **Staff/Admin Portal**: Booking request verification, status updates (Pending/Approved/Declined), review moderation, and rate configuration.
+5. **Admin Portal**: Secure sign-in, date-grouped inquiry priority, Accept/Reject WhatsApp drafts and full package/price-variant CRUD.
 
 ---
 
@@ -45,26 +45,39 @@ Villa Cinnamoon Castle is an authentic Dutch-colonial-inspired private 5-bedroom
 
 ### Prerequisites
 - Node.js 18+ installed
-- npm or pnpm
+- PostgreSQL 18 (local or hosted)
+- npm
 
-### 1. Server Setup
-```bash
-cd server
-npm install
-npx prisma generate
-npx prisma db push
-npm run prisma:seed
+### 1. Install and configure
+```powershell
+npm --prefix client install
+npm --prefix server install
+Copy-Item server/.env.example server/.env
+```
+
+Set the PostgreSQL URLs and `AUTH_ACCESS_TOKEN_SECRET` in `server/.env`, then run:
+
+```powershell
+npm run db:migrate:deploy
+npm run db:seed
+npm run admin:create
+```
+
+### 2. Run locally
+
+Backend terminal:
+
+```powershell
+npm run server:dev
+```
+
+Frontend terminal:
+
+```powershell
 npm run dev
 ```
-*Backend API server runs at `http://localhost:5000`.*
 
-### 2. Client Setup
-```bash
-cd ../client
-npm install
-npm run dev
-```
-*Frontend dev server runs at `http://localhost:5173`.*
+The API runs at `http://localhost:4000`, the site at `http://localhost:5173`, and the admin sign-in at `http://localhost:5173/admin/login`.
 
 ---
 
@@ -75,17 +88,17 @@ npm run dev
 │   ├── public/                 # Static villa photography & assets
 │   ├── src/
 │   │   ├── components/         # Modular UI components (Hero, Booking, Stepper, Layout)
-│   │   ├── context/            # Global Booking & Calendar state providers
+│   │   ├── admin/              # Admin authentication and dashboard views
 │   │   ├── data/               # Property photography & metadata constants
 │   │   ├── pages/              # View routes (Home, Villa, Packages, Reserve, Admin)
-│   │   ├── services/           # Axios/Fetch API client service
+│   │   ├── lib/                # Fetch client, inquiry and interaction utilities
 │   │   └── styles/             # Design tokens & global typography
 ├── server/                     # Express + Prisma Backend
 │   ├── prisma/                 # Schema definition & database seeder
 │   └── src/
-│       ├── routes/             # API routes (calendar, bookings, packages, reviews, admin)
-│       ├── utils/              # Pricing engine & date utilities
-│       └── server.js           # Express app initialization
+│       ├── auth/               # Access/refresh-token authentication services
+│       ├── routes/             # Auth, packages and inquiry REST endpoints
+│       └── server.ts           # Express app initialization
 ├── Documents/                  # Architecture, business rules & design manifests
 ├── Sample Design V.1.0/        # Reference UI templates & audits
 └── package.json                # Root workspace configuration
@@ -95,10 +108,10 @@ npm run dev
 
 ## 🎨 Design System & Palette
 
-- **Deep Cinnamon**: `#6A2E16` / `#4A1E0E` — Earthy warmth of Sri Lankan cinnamon heritage.
-- **Sand & Cream**: `#FAF6F0` / `#F0E8DD` — Serene natural surfaces.
-- **Antique Gold**: `#D4AF37` / `#C5A028` — Subtle luxury accents.
-- **Charcoal Forest**: `#1A1E17` — Deep grounding contrast for typography.
+- **Background / surface**: `#F3F1EB` / `#FCFBF8`
+- **Primary / secondary text**: `#171A17` / `#626862`
+- **Accent / hover**: `#285447` / `#1E4238`
+- **Typography**: Plus Jakarta Sans with Bodoni Moda editorial accents
 
 ---
 

@@ -9,6 +9,7 @@ import SideLines from './SideLines.jsx';
 import { OVERVIEW_LINES, QUOTE_LINES, INQUIRY_LINES } from './lines.js';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
+import { usePackages } from '../../data/PackagesContext.jsx';
 
 // ---------- Home photographs ----------
 // Each mosaic's photographs, in columns. Selecting a photo opens the viewer on
@@ -597,6 +598,7 @@ export function Location() {
 }
 
 export function StayPreview() {
+  usePackages();
   const weekday = startingRate('WEEKDAY');
   const weekend = startingRate('WEEKEND');
   const blocks = [
