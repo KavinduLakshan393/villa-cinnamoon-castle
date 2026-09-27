@@ -584,5 +584,115 @@
       1440,
       6138
     ]
+  },
+  "gal-front-yard": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-night": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-driveway": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-palms": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-balcony-door": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-balcony-walkway": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-living-from-above": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-upstairs-dining": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-bed-timber": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
+  },
+  "gal-bed-four-poster": {
+    "width": 5760,
+    "height": 7680,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      5760
+    ]
   }
 }

@@ -84,6 +84,25 @@ const media = [
     widths,
     grade: false,
   })),
+
+  // Gallery second set: enhanced from the remaining good photographs (prompts section 9).
+  ...[
+    ['gal-front-yard', 'front_yard_01'],
+    ['gal-night', 'exterior_07'],
+    ['gal-driveway', 'photo_7'],
+    ['gal-palms', 'backyard_02'],
+    ['gal-balcony-door', 'balcony_03'],
+    ['gal-balcony-walkway', 'balcony_11'],
+    ['gal-living-from-above', 'living_room_1_04'],
+    ['gal-upstairs-dining', 'photo_2'],
+    ['gal-bed-timber', 'photo_3'],
+    ['gal-bed-four-poster', 'bedroom_1_07'],
+  ].map(([name, source]) => ({
+    name,
+    file: `Enhanced/${source}-enhanced-4k.jpg`,
+    widths: [480, 720, 960, 1440],
+    grade: false,
+  })),
 ];
 
 const only = process.argv.slice(2);
