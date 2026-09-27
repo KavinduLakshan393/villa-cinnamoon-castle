@@ -91,9 +91,11 @@ export function useFadeReveals(scope) {
 /**
  * Secondary reveal — words brighten in sequence as the visitor scrolls
  * (Sample components/Text reveal animation/text_reveal 2.html). Scrubbed directly
- * against native scroll; the page is never pinned or slowed down.
+ * against native scroll; the page is never pinned or slowed down. `start`/`end`
+ * refer to the text itself, or to its closest ancestor matching `within` (a
+ * selector, e.g. a whole section).
  */
-export function useWordScrub(ref, { start = 'top 82%', end = 'bottom 45%', dim = 0.16 } = {}) {
+export function useWordScrub(ref, { start = 'top 82%', end = 'bottom 45%', dim = 0.16, within } = {}) {
   useGSAP(
     () => {
       const el = ref.current;
@@ -106,7 +108,7 @@ export function useWordScrub(ref, { start = 'top 82%', end = 'bottom 45%', dim =
           opacity: 1,
           ease: 'none',
           stagger: 0.1,
-          scrollTrigger: { trigger: el, start, end, scrub: true },
+          scrollTrigger: { trigger: (within && el.closest(within)) || el, start, end, scrub: true },
         });
 
         return () => split.revert();

@@ -23,9 +23,9 @@ export function RevealHeading({
 }
 
 /** Secondary reveal: words brighten in sequence with scroll progress. */
-export function ScrubText({ as: Tag = 'p', className, start, end, children, ...rest }) {
+export function ScrubText({ as: Tag = 'p', className, start, end, within, children, ...rest }) {
   const ref = useRef(null);
-  useWordScrub(ref, { start, end });
+  useWordScrub(ref, { start, end, within });
   return (
     <Tag ref={ref} className={className} {...rest}>
       {children}

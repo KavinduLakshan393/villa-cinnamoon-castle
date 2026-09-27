@@ -11,6 +11,7 @@
   overflow: hidden;
   background: var(--text-primary);
   color: var(--text-on-image);
+  will-change: clip-path;
 }
 
 .cinema__frame {
@@ -73,8 +74,9 @@
 
 .cinema__toggle {
   position: absolute;
-  top: clamp(20px, 3vw, 32px);
-  right: var(--gutter);
+  /* Inside the card's inset too, so the control is never clipped. */
+  top: calc(6% + 16px);
+  right: calc(6% + 16px);
   z-index: 2;
   display: grid;
   place-items: center;

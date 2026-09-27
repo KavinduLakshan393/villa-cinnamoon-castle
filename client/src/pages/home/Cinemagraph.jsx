@@ -79,6 +79,29 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
     { scope: sectionRef, dependencies: [allowed] },
   );
 
+  // Rounded inset card that opens to full screen as the section arrives and
+  // closes back into a card as it leaves. Only the section's clip changes; the
+  // video's parallax drift above runs untouched inside it.
+  useGSAP(
+    () =>
+      withMotion(() => {
+        const narrow = window.innerWidth < 760;
+        // Side insets stay inside the page gutter, so the quote is never clipped.
+        const card = `inset(${narrow ? '2.5% 2.5% 2.5% 2.5%' : '5% 3% 5% 3%'} round ${narrow ? 22 : 40}px)`;
+        const full = 'inset(0% 0% 0% 0% round 0px)';
+        // Opens while the section rises into view (full as its top meets the top of the
+        // screen), holds briefly, then closes as it scrolls away.
+        gsap
+          .timeline({
+            scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: true },
+          })
+          .fromTo(sectionRef.current, { clipPath: card }, { clipPath: full, ease: 'power2.in', duration: 0.46 })
+          .to(sectionRef.current, { clipPath: full, duration: 0.08 })
+          .to(sectionRef.current, { clipPath: card, ease: 'power2.out', duration: 0.46 });
+      }),
+    { scope: sectionRef },
+  );
+
   const titleId = `${id}-quote`;
 
   return (
@@ -126,7 +149,8 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
 
       <div className="cinema__content container">
         <Eyebrow className="cinema__eyebrow">{eyebrow}</Eyebrow>
-        <ScrubText as="h2" id={titleId} className="cinema__quote" start="top 92%" end="bottom 55%">
+        {/* Revealed against the section: complete as the video fills the screen. */}
+        <ScrubText as="h2" id={titleId} className="cinema__quote" within=".cinema" start="top 70%" end="top top">
           {children}
         </ScrubText>
         {note && (
