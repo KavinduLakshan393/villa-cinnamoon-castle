@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap, EASE, markIntroLifting, prefersReducedMotion } from '../lib/motion.js';
+import { scrollToTarget } from '../lib/smoothScroll.js';
 import './Intro.css';
 
 // Short phrases drawn from the villa itself; the name stays on screen as the intro lifts.
@@ -114,7 +115,7 @@ export default function Intro({ onDone }) {
     function lift() {
       const root = rootRef.current;
       document.documentElement.classList.remove('is-intro');
-      window.scrollTo(0, 0);
+      scrollToTarget(0, { immediate: true });
       markIntroLifting();
 
       if (reduce) {

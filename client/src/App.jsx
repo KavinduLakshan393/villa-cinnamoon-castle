@@ -13,6 +13,7 @@ import Placeholder from './pages/Placeholder.jsx';
 import { gsap, ScrollTrigger, introState, prefersReducedMotion } from './lib/motion.js';
 import { site } from './data/site.js';
 import { recordNavigation } from './lib/navigation.js';
+import { initSmoothScroll, scrollToTarget } from './lib/smoothScroll.js';
 
 const titles = {
   '/': `${site.name} — Private villa near Hikkaduwa`,
@@ -60,7 +61,7 @@ function usePageTransition(pageRef) {
     renderedPath.current = shown.pathname;
     const hash = shown.hash.slice(1);
     if (hash) scrollToSection(hash, { instant: true });
-    else window.scrollTo(0, 0);
+    else scrollToTarget(0, { immediate: true });
     ScrollTrigger.refresh();
 
     const reduce = prefersReducedMotion();
@@ -88,7 +89,11 @@ export default function App() {
     // Recalculate trigger positions once every late image and font has settled.
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener('load', refresh);
-    return () => window.removeEventListener('load', refresh);
+    const stopSmoothScroll = initSmoothScroll();
+    return () => {
+      window.removeEventListener('load', refresh);
+      stopSmoothScroll();
+    };
   }, []);
 
   return (

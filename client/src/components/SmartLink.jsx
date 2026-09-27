@@ -1,14 +1,10 @@
 import { forwardRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { prefersReducedMotion } from '../lib/motion.js';
+import { scrollToTarget } from '../lib/smoothScroll.js';
 
 export function scrollToSection(id, { instant = false } = {}) {
   const target = id ? document.getElementById(id) : null;
-  if (!target) {
-    window.scrollTo({ top: 0, behavior: instant || prefersReducedMotion() ? 'auto' : 'smooth' });
-    return;
-  }
-  target.scrollIntoView({ behavior: instant || prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  scrollToTarget(target ?? 0, { immediate: instant });
 }
 
 /**
