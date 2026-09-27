@@ -20,19 +20,19 @@ const HERO_MEDIA = {
 };
 const HERO_ALT = 'Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence';
 
-function HeroMedia({ sectionRef, paused, allowed }) {
+function HeroMedia({ sectionRef, allowed }) {
   const variant = useMediaQuery(PORTRAIT_QUERY) ? 'portrait' : 'landscape';
   const { video, poster } = HERO_MEDIA[variant];
   const videoRef = useRef(null);
 
-  // Play only while the Hero is on screen and the visitor has not paused it.
+  // Play while the Hero is on screen.
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return undefined;
     el.muted = true; // React does not write the muted attribute; iOS needs it set before play().
     let visible = true;
     const sync = () => {
-      if (paused || !visible || document.hidden) el.pause();
+      if (!visible || document.hidden) el.pause();
       else el.play().catch(() => {}); // Autoplay can be refused (e.g. iOS Low Power Mode): the poster stays.
     };
     const observer = new IntersectionObserver(([entry]) => {
@@ -46,7 +46,7 @@ function HeroMedia({ sectionRef, paused, allowed }) {
       observer.disconnect();
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [paused, variant, sectionRef, allowed]);
+  }, [variant, sectionRef, allowed]);
 
   if (!allowed) {
     return <img src={poster} alt={HERO_ALT} className="hero__media" fetchPriority="high" data-hero-image="" />;
@@ -108,7 +108,6 @@ function useCyclingPhrase(active, sectionRef) {
 export default function Hero() {
   const sectionRef = useRef(null);
   const [cycling, setCycling] = useState(false);
-  const [videoPaused, setVideoPaused] = useState(false);
   const videoAllowed = useVideoAllowed();
   const { phrase, leaving } = useCyclingPhrase(cycling, sectionRef);
   const entered = useRef(false);
@@ -167,30 +166,9 @@ export default function Hero() {
   return (
     <section className="hero" ref={sectionRef} data-nav-overlay="" aria-labelledby="hero-title">
       <div className="hero__parallax">
-        <HeroMedia sectionRef={sectionRef} paused={videoPaused} allowed={videoAllowed} />
+        <HeroMedia sectionRef={sectionRef} allowed={videoAllowed} />
       </div>
       <div className="hero__shade" aria-hidden="true" />
-
-      {/* WCAG 2.2.2: moving background content can be paused. */}
-      {videoAllowed && (
-        <button
-          type="button"
-          className="hero__video-toggle"
-          onClick={() => setVideoPaused((value) => !value)}
-          aria-label={videoPaused ? 'Play background video' : 'Pause background video'}
-          data-hero-fade=""
-        >
-          {videoPaused ? (
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M5 3.5v9l7-4.5z" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M5.5 3.5v9M10.5 3.5v9" />
-            </svg>
-          )}
-        </button>
-      )}
 
       <div className="hero__content">
         <div className="hero__title-block">

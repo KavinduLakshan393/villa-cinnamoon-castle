@@ -22,7 +22,6 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
   const poster = `/media/${name}-video-${variant}-poster.jpg`;
   const allowed = useVideoAllowed();
   const [near, setNear] = useState(false);
-  const [paused, setPaused] = useState(false);
 
   // Start fetching the clip one screen before the section arrives.
   useEffect(() => {
@@ -40,14 +39,14 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
     return () => observer.disconnect();
   }, [allowed]);
 
-  // Play only while the section is on screen and the visitor has not paused it.
+  // Play while the section is on screen.
   useEffect(() => {
     const el = videoRef.current;
     if (!el || !near) return undefined;
     el.muted = true; // iOS needs muted set before play().
     let visible = false;
     const sync = () => {
-      if (paused || !visible || document.hidden) el.pause();
+      if (!visible || document.hidden) el.pause();
       else el.play().catch(() => {}); // Autoplay can be refused: the poster stays.
     };
     const observer = new IntersectionObserver(([entry]) => {
@@ -60,7 +59,7 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
       observer.disconnect();
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [near, paused, variant, allowed]);
+  }, [near, variant, allowed]);
 
   // The picture drifts slightly slower than the page.
   useGSAP(
@@ -117,6 +116,7 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
             muted
             loop
             playsInline
+            autoPlay
             preload={near ? 'auto' : 'none'}
             disablePictureInPicture
             aria-hidden="true"
@@ -126,26 +126,6 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
         )}
       </div>
       <div className="cinema__shade" aria-hidden="true" />
-
-      {/* WCAG 2.2.2: moving background content can be paused. */}
-      {allowed && (
-        <button
-          type="button"
-          className="cinema__toggle"
-          onClick={() => setPaused((value) => !value)}
-          aria-label={paused ? 'Play background video' : 'Pause background video'}
-        >
-          {paused ? (
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M5 3.5v9l7-4.5z" />
-            </svg>
-          ) : (
-            <svg viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M5.5 3.5v9M10.5 3.5v9" />
-            </svg>
-          )}
-        </button>
-      )}
 
       <div className="cinema__content container">
         <Eyebrow className="cinema__eyebrow">{eyebrow}</Eyebrow>

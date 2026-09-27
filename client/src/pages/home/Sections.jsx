@@ -290,8 +290,8 @@ export function SharedLiving() {
           <Eyebrow>Shared living</Eyebrow>
           <RevealHeading id="shared-title">Two living areas, so the group can spread out.</RevealHeading>
           <p className="body-copy split-intro__copy" data-reveal="fade">
-            The main living room is downstairs with seating and a TV. Upstairs, the open mezzanine offers a quieter place to
-            sit.
+            Thoughtfully designed across two levels, offering generous living spaces to gather together or find a quiet
+            moment to unwind.
           </p>
         </header>
         <Frame
@@ -337,8 +337,8 @@ export function Sleeping() {
           <Eyebrow>Sleeping arrangements</Eyebrow>
           <RevealHeading id="sleeping-title">Five bedrooms, prepared for your group.</RevealHeading>
           <p className="body-copy" data-reveal="fade">
-            Two bedrooms have air conditioning on A/C stay options. The remaining bedrooms have stand fans. For groups above
-            10, extra sleeping arrangements are confirmed with the host during the inquiry.
+            Five restful bedrooms tailored for privacy and comfort, with flexible arrangements thoughtfully prepared to
+            suit your group’s needs.
           </p>
         </div>
         <Mosaic
@@ -361,8 +361,8 @@ export function KitchenDining() {
           <Eyebrow>Kitchen &amp; dining</Eyebrow>
           <RevealHeading id="kitchen-title">Cook your own meals and eat together.</RevealHeading>
           <p className="body-copy split-intro__copy" data-reveal="fade">
-            The kitchen includes a gas stove, refrigerator, rice cooker, kettle, cookware and tableware. A dining area is
-            available for shared meals.
+            A fully equipped kitchen and welcoming dining area provide everything you need to prepare meals at your own pace
+            and gather together around the table.
           </p>
         </header>
       </div>
@@ -655,7 +655,7 @@ export function InquiryCta() {
           <Eyebrow>Send an inquiry</Eyebrow>
           <RevealHeading id="inquiry-title">Send your dates to the host.</RevealHeading>
           <p className="body-copy" data-reveal="fade">
-            This is an inquiry only. The host will confirm availability and pricing on WhatsApp.
+            No obligation. Your host will reach out directly on WhatsApp to confirm availability and assist you.
           </p>
           <div data-reveal="fade">
             <Button to={inquiryPath}>Send Inquiry</Button>

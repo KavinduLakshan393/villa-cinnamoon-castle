@@ -72,49 +72,6 @@
   opacity: 0.86;
 }
 
-.cinema__toggle {
-  position: absolute;
-  /* Inside the card's inset too, so the control is never clipped. */
-  top: calc(6% + 16px);
-  right: calc(6% + 16px);
-  z-index: 2;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(250, 249, 245, 0.45);
-  border-radius: 50%;
-  color: var(--text-on-image);
-  background: rgba(17, 20, 17, 0.28);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  transition:
-    background-color 0.3s ease,
-    border-color 0.3s ease;
-}
-
-.cinema__toggle svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-@media (hover: hover) {
-  .cinema__toggle:hover {
-    background: rgba(17, 20, 17, 0.5);
-    border-color: var(--text-on-image);
-  }
-}
-
-.cinema__toggle:focus-visible {
-  outline: 2px solid var(--text-on-image);
-  outline-offset: 3px;
-}
-
 /* Portrait screens: the 9:16 cut fills the section; the quote spans the width. */
 @media (max-aspect-ratio: 4/5) {
   .cinema__quote {

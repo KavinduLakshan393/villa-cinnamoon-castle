@@ -488,7 +488,7 @@ Added under DEC-016 (2026-09-23).
 
 **Supporting text**
 
-> This is an inquiry only. The host will confirm availability and pricing on WhatsApp.
+> No obligation. Your host will reach out directly on WhatsApp to confirm availability and assist you.
 
 **CTA**
 
@@ -583,7 +583,7 @@ The authoritative structure and working copy are maintained in `../03 Informatio
 
 **Supporting text**
 
-> The main living room is downstairs with seating and a TV. Upstairs, the open mezzanine offers a quieter place to sit.
+> Thoughtfully designed across two levels, offering generous living spaces to gather together or find a quiet moment to unwind.
 
 **Image captions**
 
@@ -614,7 +614,7 @@ The authoritative structure and working copy are maintained in `../03 Informatio
 
 **Supporting text**
 
-> Two bedrooms have air conditioning on A/C stay options. The remaining bedrooms have stand fans. For groups above 10, extra sleeping arrangements are confirmed with the host during the inquiry.
+> Five restful bedrooms tailored for privacy and comfort, with flexible arrangements thoughtfully prepared to suit your group’s needs.
 
 ### Content rules
 
@@ -647,7 +647,7 @@ The authoritative structure and working copy are maintained in `../03 Informatio
 
 **Supporting text**
 
-> The kitchen includes a gas stove, refrigerator, rice cooker, kettle, cookware and tableware. A dining area is available for shared meals.
+> A fully equipped kitchen and welcoming dining area provide everything you need to prepare meals at your own pace and gather together around the table.
 
 ### Content rules
 
