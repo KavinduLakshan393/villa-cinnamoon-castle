@@ -16,7 +16,7 @@ import {
   whatsappUrl,
 } from '../lib/inquiry.js';
 import { getPreviousPath } from '../lib/navigation.js';
-import { prefersReducedMotion } from '../lib/motion.js';
+import { scrollToTarget } from '../lib/smoothScroll.js';
 import './inquiry/Inquiry.css';
 
 const STEPS = ['Dates', 'Stay option', 'Your details'];
@@ -112,7 +112,7 @@ export default function Inquiry() {
       return;
     }
     const top = layoutRef.current.getBoundingClientRect().top + window.scrollY - 110;
-    if (window.scrollY > top) window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    if (window.scrollY > top) scrollToTarget(top);
     document.getElementById('step-heading')?.focus({ preventScroll: true });
   }, [step, sent]);
 

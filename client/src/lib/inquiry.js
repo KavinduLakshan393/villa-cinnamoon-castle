@@ -162,8 +162,8 @@ export function buildMessage(state, est, phone) {
   const lines = [
     'Villa Cinnamoon Castle — Stay Inquiry',
     '',
-    `Check-in: ${formatShort(state.checkIn)} — from 1:00 PM`,
-    `Check-out: ${formatShort(state.checkOut)} — by 10:00 AM`,
+    `Check-in: ${formatShort(state.checkIn)} (Afternoon arrival)`,
+    `Check-out: ${formatShort(state.checkOut)} (Morning departure)`,
     `Nights: ${stay.nights} — ${stay.label}${stay.type === 'mixed' ? ` (${describeSplit(stay)})` : ''}`,
     '',
     `Guests: ${state.guests}`,

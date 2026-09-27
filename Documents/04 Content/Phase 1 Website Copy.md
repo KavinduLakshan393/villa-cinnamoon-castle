@@ -90,10 +90,10 @@ The bottom row shows `Arachchikanda`, a 0–100 loading counter and `Hikkaduwa`.
 
 **Supporting details**
 
+- Five bedrooms
 - Two living areas
 - Full kitchen
 - Two bathrooms
-- Wi-Fi
 
 ### Content rule
 
@@ -164,7 +164,7 @@ Relevant amenities may be mentioned naturally within the earlier visual sections
 
 ### Content rule
 
-Do not mix included amenities with services or activities that require prior arrangement. Private chef service, BBQ setup, boat safaris, kayaking and snorkelling must appear separately under `Available on request`.
+Do not mix included amenities with services or activities that require prior arrangement. BBQ setup, boat safaris, kayaking and snorkelling must appear separately under `Available on request`.
 
 ## Available on Request
 
@@ -184,7 +184,6 @@ Do not mix included amenities with services or activities that require prior arr
 
 **Items**
 
-- Private chef
 - BBQ setup
 - Lagoon or river boat safari
 - Kayaking
@@ -201,6 +200,60 @@ Do not mix included amenities with services or activities that require prior arr
 - Do not imply that every activity is operated directly by the villa.
 - Do not advertise a fixed price unless the host has supplied and approved it.
 
+## Home Quote Band
+
+### Information structure
+
+- Text-only interlude between Shared living and Sleeping arrangements (DEC-022)
+- One quote, revealed word by word with scroll (text reveal 2)
+
+### Current working copy
+
+> Five bedrooms, two living areas and a garden, *shared by one group* and no one else.
+
+## Balcony
+
+### Information structure
+
+- Full-screen cinemagraph after the Outside section (DEC-022): desktop 16:9 and mobile 9:16 loops, with a pause control
+- One eyebrow and one quote in the lower left, revealed word by word with scroll
+
+### Current working copy
+
+**Eyebrow**
+
+> The balcony
+
+**Quote**
+
+> Mornings on the balcony, *above the palms,* with nowhere else to be.
+
+## Hikkaduwa Beach
+
+### Information structure
+
+- Full-screen aerial cinemagraph between the Amenities and Nearby sections (DEC-022): desktop 16:9 and mobile 9:16 loops, with a pause control
+- One eyebrow, one quote in the lower left (text reveal 2) and one distance line
+
+### Current working copy
+
+**Eyebrow**
+
+> Hikkaduwa Beach
+
+**Quote**
+
+> Reef, surf and golden sand, *five minutes down the road.*
+
+**Distance line**
+
+> Nearby · 3.5 km from the villa, about 5 minutes by car
+
+### Content rules
+
+- Always present the beach as a nearby place, never as part of the villa.
+- The source aerial photograph must be licensed or replaced with an owned photograph before launch.
+
 ## Nearby Hikkaduwa
 
 ### Information structure
@@ -208,8 +261,10 @@ Do not mix included amenities with services or activities that require prior arr
 - One section label
 - One factual heading
 - One short supporting paragraph
-- No more than two selected destination or activity images
+- Up to four selected destination or activity images, each captioned `Nearby — …` (DEC-022)
 - No CTA; the map and directions appear later in the Location section
+
+*Superseded by DEC-022 (2026-09-26): "No more than two selected destination or activity images".*
 
 ### Current working copy
 
@@ -225,12 +280,16 @@ Do not mix included amenities with services or activities that require prior arr
 
 > The town, beach, coral reef and surf spots are a short trip from the villa. Galle Fort is around 20 minutes away by road.
 
+*Superseded by DEC-024 (2026-09-27): the route labels "The villa", "Hikkaduwa Beach" and "3.5 km · about 5 minutes" (decorative line, DEC-023).*
+
 ### Content rules
 
 - Clearly present beach, reef and activity images as nearby experiences rather than on-property facilities.
 - Use approximate travel times because road conditions may vary.
 - Do not repeat the full `Available on request` list in this section.
-- Use no more than two images on the homepage; additional destination media can appear in the separate Gallery page.
+- Use no more than four images on the homepage; additional destination media can appear in the separate Gallery page.
+
+*Superseded by DEC-022 (2026-09-26): "Use no more than two images on the homepage".*
 
 ## Location
 
@@ -323,8 +382,12 @@ Place the Location section immediately after `Nearby Hikkaduwa` and before the h
 - One section label
 - One direct heading
 - Official Google rating and total review count
-- Three selected Google review cards
-- Static grid on desktop and horizontal manual swipe on mobile
+- Selected Google review cards (six or more recommended) split across two rows
+- Two continuously moving rows (DEC-020): the upper row drifts right and the lower row drifts left
+- A visible `Pause reviews` / `Play reviews` control; motion also pauses on hover, on keyboard focus and while the section is off-screen
+- With reduced motion, both rows are static and can be swiped or scrolled
+
+*Superseded by DEC-020 (2026-09-24): "Three selected Google review cards" and "Static grid on desktop and horizontal manual swipe on mobile".*
 - Link to view all reviews on Google
 - Link for previous guests to leave a Google review
 
@@ -353,7 +416,7 @@ Place the Location section immediately after `Nearby Hikkaduwa` and before the h
 - Do not add a website review-submission form in Phase 1.
 - Do not fabricate review text, guest names, ratings or the total review count.
 - Use data from the official Villa Cinnamoon Castle Google Business Profile.
-- Do not auto-rotate the review cards. Mobile users may swipe them manually.
+- Review rows move continuously by approved exception (DEC-020). They must stay slow (about 40 px per second), loop seamlessly and never move without a visible pause control. Long reviews are shortened with a link to the full review on Google.
 - Link each available action to the appropriate official Google Maps or Google review destination.
 
 ## Send Inquiry
@@ -424,7 +487,7 @@ Added under DEC-016 (2026-09-23).
 
 **Supporting text**
 
-> This is an inquiry only. The host will confirm availability and pricing on WhatsApp.
+> No obligation. Your host will reach out directly on WhatsApp to confirm availability and assist you.
 
 **CTA**
 
@@ -519,7 +582,7 @@ The authoritative structure and working copy are maintained in `../03 Informatio
 
 **Supporting text**
 
-> The main living room is downstairs with seating and a TV. Upstairs, the open mezzanine offers a quieter place to sit.
+> Thoughtfully designed across two levels, offering generous living spaces to gather together or find a quiet moment to unwind.
 
 **Image captions**
 
@@ -550,7 +613,7 @@ The authoritative structure and working copy are maintained in `../03 Informatio
 
 **Supporting text**
 
-> Two bedrooms have air conditioning on A/C stay options. The remaining bedrooms have stand fans. For groups above 10, extra sleeping arrangements are confirmed with the host during the inquiry.
+> Five restful bedrooms tailored for privacy and comfort, with flexible arrangements thoughtfully prepared to suit your group’s needs.
 
 ### Content rules
 
@@ -583,14 +646,14 @@ The authoritative structure and working copy are maintained in `../03 Informatio
 
 **Supporting text**
 
-> The kitchen includes a gas stove, refrigerator, rice cooker, kettle, cookware and tableware. A dining area is available for shared meals.
+> A fully equipped kitchen and welcoming dining area provide everything you need to prepare meals at your own pace and gather together around the table.
 
 ### Content rules
 
 - Keep this section focused on self-catering and shared meals.
 - Do not describe every utensil individually.
-- Do not imply that food, ingredients or chef service are included with the stay.
-- Private chef service must appear separately under `Available on request`.
+- Do not imply that food or ingredients are included with the stay.
+- The host does not provide private chef services.
 
 ## Outdoor Setting
 

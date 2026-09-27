@@ -123,8 +123,7 @@ export default function StepDetails({ state, update, summary, onBack, onSubmit, 
           />
           <div className="field__foot">
             <p id="inq-requests-hint" className="field__hint">
-              BBQ setup, dietary needs, expected arrival time or other requests. Please don’t include payment or medical
-              details.
+              BBQ grill setup, estimated arrival time, or special preferences. Please do not include payment details.
             </p>
             <p
               id="inq-requests-count"
@@ -156,8 +155,7 @@ export default function StepDetails({ state, update, summary, onBack, onSubmit, 
               </svg>
             </span>
             <span className="consent__text">
-              I understand that this is an inquiry. The host will confirm availability, the final amount and payment
-              details on WhatsApp.
+              I understand this is an inquiry with no obligation. The host will confirm availability and final details on WhatsApp.
             </span>
           </label>
           <FieldError id="inq-consent-error" message={show('consent', consentError)} />

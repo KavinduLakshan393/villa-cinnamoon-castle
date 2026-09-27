@@ -41,7 +41,6 @@ export default function Button({ to, variant = 'fill', tone = 'accent', size, ex
 
   const inner = (
     <>
-      {variant === 'fill' && <span className="btn__fill" aria-hidden="true" />}
       {content}
       {isExternal && <span className="sr-only"> (opens in a new tab)</span>}
     </>

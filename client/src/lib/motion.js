@@ -17,9 +17,22 @@ export const EASE = {
 };
 
 export const reducedMotionQuery = '(prefers-reduced-motion: reduce)';
+export const motionQuery = '(prefers-reduced-motion: no-preference)';
 
 export function prefersReducedMotion() {
   return typeof window !== 'undefined' && window.matchMedia(reducedMotionQuery).matches;
+}
+
+/**
+ * Runs `setup` only while motion is allowed. Everything it creates (tweens,
+ * ScrollTriggers, SplitText) is reverted the moment the visitor turns reduced
+ * motion on mid-visit, and rebuilt if they turn it off again. Use inside useGSAP:
+ * `useGSAP(() => withMotion(() => { ... }), { scope })`.
+ */
+export function withMotion(setup, query = motionQuery) {
+  const mm = gsap.matchMedia();
+  mm.add(query, setup);
+  return () => mm.revert();
 }
 
 // Keeps the html.has-motion flag in sync if the visitor changes the OS setting mid-visit.

@@ -37,12 +37,6 @@
   }
 }
 
-.gallery-full__header {
-  display: grid;
-  gap: 28px;
-  margin-bottom: clamp(32px, 4vw, 56px);
-}
-
 .gallery-close__panel {
   display: grid;
   gap: 24px;
@@ -60,3 +54,63 @@
 .gallery-hero__title .editorial {
   white-space: nowrap;
 }
+
+/* ---------- Chapters beside the wheel ---------- */
+
+.gallery-chapters {
+  --wheel-r: clamp(220px, 34vh, 340px);
+  position: relative;
+}
+
+.gallery-chapters__content {
+  display: grid;
+  gap: clamp(96px, 12vw, 180px);
+  padding: clamp(96px, 10vw, 160px) var(--gutter) calc(var(--section-space) / 2);
+}
+
+.gallery-chapter {
+  display: grid;
+  gap: clamp(28px, 3.5vw, 48px);
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+.gallery-chapter__head {
+  display: grid;
+  gap: 12px;
+}
+
+.gallery-chapter__index {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.gallery-chapter__title {
+  font-size: var(--fs-section);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.gallery-chapter__label {
+  color: var(--text-secondary);
+}
+
+/* Wide screens: the wheel keeps a column at the left edge; the photographs fill the rest. */
+@media (min-width: 900px) {
+  .gallery-chapters .wheel {
+    --r: var(--wheel-r);
+  }
+
+  .gallery-chapters {
+    display: grid;
+    grid-template-columns: calc(var(--wheel-r) + 24px) minmax(0, 1fr);
+  }
+
+  .gallery-chapters__content {
+    padding-left: 0;
+  }
+}
+
+

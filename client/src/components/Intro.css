@@ -60,17 +60,12 @@
   right: var(--gutter);
   bottom: clamp(28px, 6vh, 56px);
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
+  place-items: center;
   font-size: var(--fs-eyebrow);
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(250, 249, 245, 0.6);
-}
-
-.intro__meta > :last-child {
-  text-align: right;
 }
 
 .intro__counter {
@@ -109,13 +104,6 @@
   display: grid;
   place-items: center;
   height: 1.3em;
-}
-
-@media (max-width: 599px) {
-  .intro__meta > span:first-child,
-  .intro__meta > span:last-child {
-    font-size: 0.6875rem;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

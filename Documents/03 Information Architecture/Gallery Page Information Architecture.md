@@ -2,7 +2,7 @@
 
 ## Status
 
-This is the Phase 1 information-architecture baseline for the dedicated public Gallery page. It was updated during implementation under DEC-018 (2026-09-23). The previous version is preserved in `../99 Archive/Gallery Page Information Architecture - Pre-Implementation 2026-09-23.md`. Use the approved system in `../06 Design/Colour and Typography.md`.
+This is the Phase 1 information-architecture baseline for the dedicated public Gallery page. It was updated during implementation under DEC-018 (2026-09-23), and again under DEC-026 (2026-09-27), when the filtered grid was replaced by villa chapters tracked by a scroll wheel. Previous versions are preserved in `../99 Archive/Gallery Page Information Architecture - Pre-Implementation 2026-09-23.md` and `../99 Archive/Gallery Page Information Architecture - Pre-Wheel 2026-09-27.md`. Use the approved system in `../06 Design/Colour and Typography.md`.
 
 The page uses a curated horizontal visual strip inspired by the `Selected work` section on Elephant Skin. The reference is used for composition and interaction principles only. Villa Cinnamoon Castle must retain its own content, typography, colour system and visual identity.
 
@@ -16,7 +16,7 @@ The five bedrooms must be presented as one sleeping experience. They must not ap
 
 1. Gallery Hero
 2. Featured Gallery Strip
-3. Full Gallery
+3. Villa Chapters with the Wheel
 4. Closing Inquiry
 5. Global Footer — not counted as a page content section
 
@@ -42,7 +42,7 @@ The italic phrase uses the Bodoni Moda editorial accent and must not break acros
 
 **Supporting text**
 
-> Six views of the spaces your group shares, inside and out. Open any view to see more photos.
+> Explore the living spaces, quiet corners, and natural surroundings of our private sanctuary in Arachchikanda.
 
 ### Rules
 
@@ -57,7 +57,7 @@ The italic phrase uses the Bodoni Moda editorial accent and must not break acros
 
 ### Purpose
 
-Provide a curated, high-impact entry into the villa's main visual stories. This is the adapted component inspired by Elephant Skin's numbered horizontal `Selected work` strip. It does not replace the Full Gallery.
+Provide a curated, high-impact entry into the villa's main visual stories. This is the adapted component inspired by Elephant Skin's numbered horizontal `Selected work` strip. It does not replace the villa chapters.
 
 ### Section header
 
@@ -67,14 +67,16 @@ None. The Gallery Hero text introduces the strip directly (DEC-018). The strip l
 
 Use six tall image cards in this order:
 
-| Index | Public title | Supporting label | Lead image |
+| Index | Public title | Supporting label | Lead image (highlight) |
 |---:|---|---|---|
-| 01 | Arrival | Villa & entrance | `images/hero/villa-arrival-hero-8k.jpg` (facade crop) |
-| 02 | Shared living | Two lounges, downstairs and up | `images/living_rooms/living_room_2/living_room_2_04.jpg` |
-| 03 | Sleeping spaces | Five bedrooms | `images/bedrooms/bedroom_1/bedroom_1_04.jpg` |
-| 04 | Kitchen & dining | Cooking & shared meals | `images/kitchen_and_dining/dining_area/dining_area_01.jpg` (watermark cropped) |
-| 05 | Garden & outside | Courtyard, veranda & greenery | `images/outdoor_and_garden/backyard/backyard_01.jpg` |
-| 06 | Around Hikkaduwa | Nearby coast & activities | `images/nearby_attractions_and_activities/attraction_08.jpg` |
+| 01 | Arrival | The villa & entrance | `villa-facade` (8K hero, facade crop) |
+| 02 | Shared living | Two living areas, downstairs and up | `home-living-mezzanine` (mezzanine composite) |
+| 03 | Sleeping | Five bedrooms and two bathrooms | `home-bed-pendant` (`bedroom_4_03`, enhanced) |
+| 04 | Kitchen & dining | Cooking and shared meals | `home-kitchen` (kitchen composite) |
+| 05 | Garden & outside | Veranda, balcony and greenery | `home-porch` (veranda composite) |
+| 06 | Around Hikkaduwa | Nearby coast and activities | `home-nearby-coast` (`attraction_08`, enhanced) |
+
+*Superseded by DEC-026 (2026-09-27): the lead images `living_room_2_04`, `bedroom_1_04`, `dining_area_01` and `backyard_01`, and the labels "Villa & entrance", "Two lounges, downstairs and up", "Sleeping spaces / Five bedrooms", "Cooking & shared meals", "Courtyard, veranda & greenery" and "Nearby coast & activities".*
 
 ### Card anatomy
 
@@ -113,68 +115,57 @@ Do not add descriptions, amenity lists or CTA buttons inside the cards.
 
 ### Card destination
 
-Selecting a card opens the Full Gallery viewer at the first image in that visual chapter. It must not navigate to a separate page for each chapter.
+Selecting a card opens the full-screen viewer at the chapter's highlight photo, and the photograph grows out of the card into the viewer (DEC-026). It must not navigate to a separate page for each chapter.
 
 The viewer retains the selected chapter context while allowing movement to adjacent images.
 
 ---
 
-## Section 3 — Full Gallery
+## Section 3 — Villa Chapters with the Wheel
+
+*Supersedes the "Full Gallery" section (the header "Explore more of the villa.", the filters, the editorial grid and `Load more`) under DEC-026 (2026-09-27). The previous text is preserved in the archived version.*
 
 ### Purpose
 
-Provide complete visual browsing after the curated strip, using a selected set of the strongest media rather than every source file.
+Walk the visitor through the villa one part at a time, with every selected photograph on the page, while a wheel shows where they are.
 
-### Section header
+### Chapters
 
-**Eyebrow**
+- The six chapters follow the strip order: Arrival, Shared living, Sleeping, Kitchen & dining, Garden & outside, Around Hikkaduwa.
+- Each chapter has a two-digit index, a title (masked line reveal), the supporting label and its photographs.
+- The Shared living mezzanine is a wide lead image above that chapter's photographs.
+- The other photographs sit in three columns that drift at different speeds against native scroll (two-up on narrow screens).
+- All sleeping images belong to the single `Sleeping` chapter. There are no per-bedroom groups.
 
-> Full gallery
+### Wheel
 
-**Headline**
+- A thin half-wheel sits at the left edge of the page, with a rim, a small hub and one spoke between each pair of chapters. Only the right half is visible, because its centre sits on the page edge.
+- As the visitor scrolls, the wheel turns so the chapter on screen faces the photographs (3 o'clock). A fixed green arc on the rim marks it, and its label is emphasised. Neighbouring labels fade as they turn away.
+- Selecting a label scrolls to that chapter. The wheel is a `nav` named "Gallery sections", and the current label has `aria-current`.
+- Below 900 px (mobile and tablet viewports), the wheel is omitted to keep the photographs and chapter headers unobstructed.
+- With reduced motion, the wheel moves without easing and the photographs do not drift.
 
-> Explore more of the villa.
+### Photographs and hover
 
-### Filters
+- Every photograph opens in the full-screen viewer.
+- On hover (mouse and trackpad only), the frame draws in, the photograph eases closer, the other photographs in the chapter dim, and a round `View` label follows the pointer. Keyboard focus shows the same state with a focus ring.
 
-Use these filter labels:
+### Current curated set (39 photographs)
 
-- All
-- Villa & Arrival
-- Living & Dining
-- Sleeping
-- Garden & Outside
-- Around Hikkaduwa
+- **Arrival (6):** villa facade (8K crop), roadside sign (`exterior_08`), driveway (`photo_7`), front garden (`front_yard_01`), the villa after dark (`exterior_07`), the villa among the trees (`balcony_04`).
+- **Shared living (9):** mezzanine composite, upstairs sitting area (`living_room_2_03`), downstairs living room (`living_room_1_03`), upstairs dining corner (`living_room_2_05`), upstairs dining table (`photo_2`), looking down from the landing (`living_room_1_04`), by the front door (`living_room_1_07`), the staircase (`photo_6`), from the landing (`living_room_1_05`).
+- **Sleeping (12):** `bedroom_4_03`, `bedroom_1_02`, `photo_3`, `bedroom_1_07`, `bedroom_1_09`, `bedroom_2_05`, `bedroom_2_02` (watermark removed), `bedroom_3_01`, `bedroom_3_02`, `bedroom_4_04`, `bedroom_3_04`, one bathroom. Captions never use bedroom numbers.
+- **Kitchen & dining (3):** kitchen composite, dining area (`dining_area_03`), dining by the staircase (`dining_area_05`).
+- **Garden & outside (5):** veranda composite, upstairs balcony (`backyard_01`), balcony doorway (`balcony_03`), balcony walkway (`balcony_11`), among the palms (`backyard_02`).
+- **Around Hikkaduwa (4):** coast (`attraction_08`), reef (`attraction_01`), sea turtle (`attraction_02`), lagoon kayaking (`attraction_07`).
 
-`All` is selected by default. Filters change the visible set without reloading the page.
-
-Do not create `Bedroom 1`, `Bedroom 2`, `Bedroom 3`, `Bedroom 4` or `Bedroom 5` filters. All sleeping images belong to the single `Sleeping` group.
-
-### Grid
-
-- Use an editorial CSS grid with a controlled mixture of portrait and landscape spans.
-- Preserve a logical DOM and keyboard order; do not use dense packing that visually reorders content.
-- Avoid an endless masonry wall.
-- Load an intentionally selected initial set.
-- If more approved media is available, use `Load more` rather than infinite scroll.
-- Keep image aspect ratios stable while files load to prevent layout shift.
-- Use responsive image sizes and lazy loading below the fold.
-
-### Current curated set
-
-The set has 27 images; 15 show before `Load more`.
-
-- **Villa & Arrival:** villa facade (8K crop), driveway (`photo_7`), roadside sign (`exterior_08`), front (`front_yard_01`), villa after dark (`exterior_07`).
-- **Living & Dining:** upstairs mezzanine (`living_room_2_04`), downstairs living room (`living_room_1_06`), downstairs seating (`living_room_1_01`), upstairs lounge (`living_room_2_02`), upstairs landing (`living_room_2_08`), dining area (`dining_area_01`, cropped), dining and staircase (`dining_area_05`), kitchen (`full_kitchen_01`).
-- **Sleeping:** `bedroom_1_04`, `bedroom_4_03`, `bedroom_1_07`, `bedroom_4_04`, `bedroom_3_01`, `bedroom_1_01`. Captions never use bedroom numbers.
-- **Garden & Outside:** balcony view (`backyard_01`), veranda (`porch_01`), balcony doorway (`balcony_03`), balcony from the garden (`balcony_04`), palms (`backyard_02`).
-- **Around Hikkaduwa:** coast (`attraction_08`), reef (`attraction_01`), lagoon kayaking (`attraction_11`, captioned "arranged on request").
+All photographs are the enhanced versions: the Home cinematic set and the Gallery second set (`Documents/06 Design/Home Page Image and Video Prompts.md`, sections 1–5 and 9).
 
 **Excluded:**
 
-- `dining_area_04` — visible alcohol branding
-- Watermarked files, such as `front_yard_03` and `bedroom_2_02`
-- Close-up guest photographs, such as `attraction_12`, until publication consent is confirmed
+- `dining_area_04`: visible alcohol branding. An enhanced version exists but is not used.
+- Watermarked originals, such as `front_yard_03` and `dining_area_01`.
+- Group photographs with identifiable guests, until publication consent is confirmed. `attraction_02` and `attraction_07` also need consent before launch (DEC-022).
 
 ### Media selection rules
 
@@ -189,7 +180,7 @@ The set has 27 images; 15 show before `Load more`.
 
 ### Full-screen viewer
 
-Opening an image displays an accessible full-screen viewer with:
+Opening an image displays an accessible full-screen viewer with the following (the same viewer serves the Home photographs):
 
 - Large image
 - Close button
@@ -207,6 +198,9 @@ Viewer behaviour:
 - Focus is trapped inside the viewer while open and returns to the originating image when closed.
 - Background page scrolling is disabled while open.
 - Images remain usable with zoom at browser level.
+- Opening: the selected photograph grows from its card or tile into the viewer (0.8 s) while the dark background fades in (DEC-026).
+- Closing: the photograph on screen shrinks back into its tile (0.7 s). When that tile is off screen, the viewer fades out.
+- With reduced motion, the viewer simply fades.
 - Captions never use bedroom numbers.
 - Decorative images use empty alternative text; informative images receive concise factual alternative text.
 

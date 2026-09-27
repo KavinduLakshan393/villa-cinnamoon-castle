@@ -155,6 +155,103 @@ This log records confirmed product, content and UX decisions. It is not a discus
 - **Verification:** A network audit of all five public pages found requests only to the site's own origin, no cookies, no local storage, and only the session entry `vcc-inquiry`.
 - **Affected documents:** `03 Information Architecture/Privacy Page Information Architecture.md`.
 
+### DEC-020 — Moving Google Reviews rows
+
+- **Status:** Approved (2026-09-24)
+- **Decision:** Show the Google Reviews as two continuously moving rows. The upper row moves right and the lower row moves left. This replaces the earlier three-card static grid and supersedes the rule "Do not auto-rotate the review cards".
+- **Accessibility conditions (WCAG 2.2.2):**
+  - A visible `Pause reviews` control.
+  - Motion pauses on hover, on keyboard focus and while the section is off-screen.
+  - Duplicate loop copies are hidden from assistive technology and keyboard focus.
+  - With reduced motion, the rows are static and can be swiped or scrolled.
+- **Data rule (unchanged from DEC-010):** Only real reviews from the official Google Business Profile. The section stays hidden until they are supplied.
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md`.
+
+### DEC-021 — Location map loads only on request
+
+- **Status:** Approved (2026-09-24)
+- **Decision:** The embedded Google map in the Home Location section shows a placeholder with a `Show map` button. The map loads only after the visitor selects it (NFR-PRV-04). The `Get Directions` link opens the verified Google Maps destination.
+- **Verification:** A network audit showed no Google request before the click; the map loads from `google.com` only after it.
+- **Affected documents:** `03 Information Architecture/Privacy Page Information Architecture.md`. The Maps paragraph of the privacy copy now describes the on-request map.
+
+### DEC-022 — Home media rework, cinemagraph interludes and quote band
+
+- **Status:** Approved (2026-09-26)
+- **Decision:**
+  - The Home sections after the Overview use the enhanced cinematic photographs from `images/Final Homepage 8K masters and videos/`:
+    - Shared living: one wide mezzanine image plus a six-photo mosaic.
+    - Sleeping: nine bedroom photos and one bathroom photo.
+    - Kitchen & dining: one kitchen photo and two dining photos.
+    - Outside: four photos.
+    - Nearby: four photos.
+  - Photographs sit in columns that drift at different speeds against native scroll. The page is never pinned. On screens narrower than 760 px, or with reduced motion, the drift is off.
+  - Three interludes are added:
+    - A text-only quote band after Shared living.
+    - A full-screen **Balcony** cinemagraph after Outside.
+    - A full-screen **Hikkaduwa Beach** cinemagraph between Amenities and Nearby.
+  - Each quote uses the secondary word-scrub reveal (text reveal 2) and is real page text, not burned into the video.
+  - Each cinemagraph has separate desktop (16:9) and mobile (9:16) loops and a pause control (WCAG 2.2.2). The video downloads only when the section is about to enter the viewport and plays only while it is on screen. With reduced motion or data saver, the page shows the poster frame instead.
+  - The beach section is labelled as nearby, with the distance (`Nearby · 3.5 km from the villa, about 5 minutes by car`), so it is not read as a villa facility.
+- **Supersedes:** In `Phase 1 Website Copy.md` (Nearby Hikkaduwa), the rule that allowed no more than two destination images on the homepage.
+- **Composite images:** The mezzanine, kitchen and veranda images were generated from several real photographs of the same space. They were checked against the originals before use.
+- **Launch dependencies:**
+  - The Hikkaduwa aerial source image was downloaded from the web. It must be licensed or replaced with an owned photograph before launch.
+  - `attraction_02` and `attraction_07` show identifiable people. Their publication consent must be confirmed before launch (Content Inventory rule).
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md` (new Quote band, Balcony and Hikkaduwa Beach entries; Nearby rules); `06 Design/Home Page Image and Video Prompts.md` (generation prompts).
+
+### DEC-023 — Openable Home photographs and the scroll-drawn path
+
+- **Status:** Approved (2026-09-26)
+- **Decision:**
+  - Every Home mosaic photograph (and the mezzanine lead image) is a button that opens the Gallery viewer on that section's set. The viewer bar shows the section name.
+  - On hover (mouse and trackpad only), the frame draws in, the photograph eases closer, and the other photographs in the mosaic dim. A round `View` label follows the pointer. Keyboard focus shows the same state with a visible focus ring.
+  - *Superseded by DEC-024 (2026-09-27):* A brand-green line drawn by scrolling runs behind the text and photographs:
+    - Travelling segments through Overview and Shared living, and through Sleeping, Kitchen and Outside into the Balcony video (desktop only).
+    - A line from the Location section that draws past the rates and reviews and stops at the `Send Inquiry` button (desktop only).
+    - A villa-to-beach route in the Nearby section, labelled `The villa`, `Hikkaduwa Beach` and `3.5 km · about 5 minutes`. The route is decorative (`aria-hidden`), because the heading already states the distance.
+  - Every scroll-linked effect now follows the reduced-motion setting live. Turning it on mid-visit stops the parallax, drift, word scrub and videos (the poster is shown), and draws the lines fully and still.
+- **Not adopted:** Velocity-based image bending (reference: Lusion.co).
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md` (route labels).
+
+### DEC-024 — Scroll-drawn line removed
+
+- **Status:** Approved (2026-09-27)
+- **Decision:** The scroll-drawn line from DEC-023 is removed from the Home page: all four paths, including the villa-to-beach route and its labels in the Nearby section. It did not match the rest of the site. The openable photographs, hover state and live reduced-motion handling from DEC-023 stay.
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md` (route labels superseded).
+
+### DEC-025 — Smooth wheel scrolling and cinemagraph card reveal
+
+- **Status:** Approved (2026-09-27)
+- **Decision:**
+  - Mouse-wheel and trackpad scrolling glides to a stop (Lenis, `lerp` 0.085) instead of jumping by the browser's wheel step. Touch keeps native scrolling. With reduced motion the page uses native scrolling. Scrolling pauses while the intro, mobile menu or photo viewer holds the page.
+  - The Balcony and Hikkaduwa Beach videos enter as a rounded inset card, open to full screen as the section fills the viewport, and close back into a card as it leaves. The video's parallax is unchanged. There is no card effect with reduced motion.
+  - The video quotes are revealed against the whole section, so every word is fully shown when the video fills the screen.
+- **Not adopted:** Colour-matched fade bands above and below the videos (tried and rejected, 2026-09-26).
+- **Affected documents:** None (motion only; copy unchanged).
+
+### DEC-026 — Gallery chapters with a scroll wheel, enhanced photographs and viewer flight
+
+- **Status:** Approved (2026-09-27)
+- **Decision:**
+  - The Gallery page keeps the Hero and the featured strip. The strip now shows each chapter's highlight photograph from the enhanced set.
+  - The filtered grid is replaced by six villa chapters. A thin half-wheel at the left edge (a small wheel at the bottom-left on narrow screens) turns with the scroll to show the chapter on screen.
+  - The Gallery uses only enhanced photographs: the Home cinematic set plus 10 photographs from the second set. `dining_area_04` stays excluded for its visible alcohol branding.
+  - Photographs open and close in the viewer with a flight animation from and back to their tile.
+  - The Hero supporting text changes to "Six parts of the villa, inside and out. Scroll through them, or open any photo to see it full screen."
+- **Supersedes:** In DEC-018 and the Gallery IA, the Full Gallery section (header, filters, grid, `Load more`) and the original strip lead images and labels.
+- **Affected documents:** `03 Information Architecture/Gallery Page Information Architecture.md` (previous version archived); `06 Design/Home Page Image and Video Prompts.md` (section 9).
+
+### DEC-027 — Two side lines on the Home page
+
+- **Status:** Approved (2026-09-27)
+- **Decision:** Two fine (1.75 px) brand-green curved lines, one from each side of the page, draw toward each other with scroll in three sections:
+  - Overview: they close in beneath the facts.
+  - Quote band: they cross and wrap the quote.
+  - Send Inquiry: they meet at the button.
+
+  The right line is at half opacity. The lines stay in the margins and gaps and never cross text. They draw across the whole time the section is on screen, stay drawn, and are shown complete with reduced motion. Desktop and mobile have separate shapes.
+- **Affected documents:** None (visual only; no copy).
+
 ## Open decisions and launch dependencies
 
 ### OPEN-001 — Official Google destination

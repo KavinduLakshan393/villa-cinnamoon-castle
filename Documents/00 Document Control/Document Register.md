@@ -67,6 +67,7 @@ The most recent approved decision takes precedence over older text at the same l
 | `03 Information Architecture/Privacy Page Information Architecture.md` | Privacy page structure, working copy and implementation policy | **Active — authoritative** | Requires final operational and legal review before publication |
 | `04 Content/Phase 1 Website Copy.md` | Consolidated public-facing copy | **Active — supporting** | Reconciled to current page IA; page-specific IA documents remain authoritative for structure and interaction |
 | `04 Content/Phase 1 Content Inventory.md` | Reviewed media and recommended shortlist | **Active — supporting** | Controls media-selection guidance, not final visual composition |
+| `06 Design/Home Page Image and Video Prompts.md` | Generation prompts for the Home page photographs, composites and cinemagraphs | **Active — supporting** | Working tool record for DEC-022; does not govern copy or structure |
 
 ## External working artifacts
 
@@ -100,6 +101,14 @@ The files under `Sample components/` are **samples**, not approved designs. They
   - Refined the public copy in `Privacy Page Information Architecture.md` and recorded the self-hosted-font requirement and the network-audit result.
   - Preserved the previous version in `99 Archive`.
   - **Sinhala synchronization:** Not required, because no Sinhala Privacy document exists.
+
+- **2026-09-24 — Moving Google Reviews (DEC-020):** Replaced the static-review-grid and no-auto-rotation rules in `Phase 1 Website Copy.md`. The superseded wording is quoted in place. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-24 — On-request location map (DEC-021):** Updated the Maps paragraph of the privacy copy in `Privacy Page Information Architecture.md` to describe the `Show map` behaviour.
+- **2026-09-26 — Home media rework (DEC-022):** Added the Quote band, Balcony and Hikkaduwa Beach entries to `Phase 1 Website Copy.md` and raised the homepage Nearby image limit from two to four. The superseded wording is quoted in place. Added `06 Design/Home Page Image and Video Prompts.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-26 — Openable photographs and scroll-drawn path (DEC-023):** Added the Nearby route labels to `Phase 1 Website Copy.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-27 — Scroll-drawn line removed (DEC-024):** Superseded the Nearby route labels in `Phase 1 Website Copy.md`; the removed wording is quoted in place. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-27 — Gallery chapters and wheel (DEC-026):** Updated `Gallery Page Information Architecture.md`: the strip leads and labels, the new Section 3 (villa chapters with the wheel), the curated set of 39 enhanced photographs, the viewer flight and the Hero supporting text. The previous version is archived as `99 Archive/Gallery Page Information Architecture - Pre-Wheel 2026-09-27.md`. **Sinhala synchronization:** Not required, because no Sinhala Gallery IA document exists.
+- **2026-09-27 — Two side lines (DEC-027):** Visual only; no document text changed.
 
 ## Document control rules
 

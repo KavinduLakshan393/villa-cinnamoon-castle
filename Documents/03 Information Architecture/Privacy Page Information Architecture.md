@@ -115,7 +115,9 @@ This information is used for website delivery, reliability and security. The web
 
 The website may link to Google Maps, Google Reviews, Airbnb, Facebook, Instagram and TikTok. When you choose one of these links, the external service may process information according to its own privacy policy.
 
-The website does not load an interactive map automatically. If an embedded map or another third-party service is added in the future, this notice will be updated first.
+The Location section on the home page can show a Google map. The map does not load automatically: it loads only after you select “Show map”. Google then receives technical information, such as your IP address, and processes it under its own privacy policy.
+
+If another third-party service is added in the future, this notice will be updated first.
 
 *(Implementation rule, not public copy: any such addition also requires the consent controls that applicable law requires before it is enabled.)*
 

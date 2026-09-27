@@ -1,0 +1,113 @@
+/* ---------- Gallery wheel ----------
+   Only the right half of the dial shows: its centre sits on the left edge of the
+   page. --r is the radius; the chapter facing the photographs is at 3 o'clock. */
+
+.wheel {
+  --r: clamp(220px, 34vh, 340px);
+  --wheel-rotation: 0deg;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+}
+
+.wheel__dial {
+  position: absolute;
+  left: calc(var(--r) * -1);
+  top: 50%;
+  width: calc(var(--r) * 2);
+  height: calc(var(--r) * 2);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.wheel__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.wheel__rim,
+.wheel__hub,
+.wheel__spokes line {
+  fill: none;
+  stroke: var(--text-primary);
+  stroke-opacity: 0.28;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.wheel__hub {
+  stroke-opacity: 0.5;
+}
+
+.wheel__marker {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Labels ride on the dial at 42 % of the radius, upright, fading as they turn away. */
+.wheel__labels {
+  position: absolute;
+  left: 0;
+  top: 50%;
+}
+
+.wheel__labels li {
+  position: absolute;
+  left: calc(var(--x, 1) * var(--r) * 0.42);
+  top: calc(var(--y, 0) * var(--r) * 0.42);
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.wheel__label {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 4px;
+  color: var(--text-secondary);
+  transition: color 0.4s ease;
+}
+
+.wheel__index {
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wheel__title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.wheel__label[aria-current='true'] {
+  color: var(--text-primary);
+}
+
+.wheel__label[aria-current='true'] .wheel__index {
+  color: var(--accent);
+}
+
+@media (hover: hover) {
+  .wheel__label:hover {
+    color: var(--text-primary);
+  }
+}
+
+.wheel__current {
+  display: none;
+}
+
+/* Below 900 px: omit the wheel entirely on mobile & tablet viewports */
+@media (max-width: 899px) {
+  .wheel {
+    display: none !important;
+  }
+}

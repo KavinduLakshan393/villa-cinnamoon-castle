@@ -131,7 +131,7 @@ Weekday packages offer flexible pricing tailored for couples, small family retre
   - Non-A/C: **Rs. 17,900/=**
   - A/C: **Rs. 19,900/=**
 * **Capacity:** Up to 15 Guests (Full property exclusivity)
-* **Description:** Maximum capacity booking accommodating up to 15 guests with extra bedding/arrangements. Complete private estate exclusivity with in-house chef coordination available.
+* **Description:** Maximum capacity booking accommodating up to 15 guests with extra bedding/arrangements. Complete private estate exclusivity.
 
 ---
 
@@ -210,7 +210,6 @@ All packages, regardless of tier, include access to the following property facil
   - Fully equipped granite kitchen with 2-burner gas stove.
   - Electric rice cooker, electric kettle, cookware, cutlery, and glassware.
   - Refrigerator and freezer storage.
-  - In-house private chef service available upon prior arrangement (cost of ingredients borne by guests).
 * **Living & Lounging:**
   - Spacious ground-floor living room with traditional antique armchairs.
   - Upstairs mezzanine lounge with vaulted timber ceilings and tropical breezes.

@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import ResponsiveImage from '../../components/ResponsiveImage.jsx';
 import { chapters } from '../../data/gallery.js';
-import { gsap, EASE, prefersReducedMotion, useGSAP } from '../../lib/motion.js';
+import { gsap, EASE, useGSAP, withMotion } from '../../lib/motion.js';
 import './GalleryStrip.css';
 
 /**
@@ -15,35 +15,36 @@ export default function GalleryStrip({ onOpen }) {
   const rootRef = useRef(null);
 
   useGSAP(
-    () => {
-      if (prefersReducedMotion()) return;
-      const cards = gsap.utils.toArray('.strip__card', rootRef.current);
-      gsap.fromTo(
-        cards,
-        { clipPath: 'inset(100% 0% 0% 0%)' },
-        {
-          clipPath: 'inset(0% 0% 0% 0%)',
-          duration: 1.2,
-          stagger: 0.08,
-          ease: EASE.reveal,
-          // Keep the final inline value: clearing it would let the CSS pre-reveal
-          // rule (clip-path: inset(100%)) hide the cards again.
-          scrollTrigger: { trigger: rootRef.current, start: 'top 88%', once: true },
-        },
-      );
-    },
+    () =>
+      withMotion(() => {
+        const cards = gsap.utils.toArray('.strip__card', rootRef.current);
+        gsap.fromTo(
+          cards,
+          { clipPath: 'inset(100% 0% 0% 0%)' },
+          {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            duration: 1.2,
+            stagger: 0.08,
+            ease: EASE.reveal,
+            // Keep the final inline value: clearing it would let the CSS pre-reveal
+            // rule (clip-path: inset(100%)) hide the cards again.
+            scrollTrigger: { trigger: rootRef.current, start: 'top 88%', once: true },
+          },
+        );
+      }),
     { scope: rootRef },
   );
 
   return (
     <div className="strip" ref={rootRef}>
       <ul className="strip__list" aria-label="Selected views">
-        {chapters.map((chapter) => (
+        {chapters.map((chapter, i) => (
           <li key={chapter.key} className="strip__item">
             <button
               type="button"
               className="strip__card"
-              onClick={(event) => onOpen(chapter.key, event.currentTarget)}
+              onClick={(event) => onOpen(chapter.lead, event.currentTarget)}
+              data-photo={chapter.lead}
               aria-label={`${chapter.title}: ${chapter.label}. Open in the gallery viewer`}
             >
               <ResponsiveImage
@@ -54,7 +55,7 @@ export default function GalleryStrip({ onOpen }) {
               />
               <span className="strip__shade" aria-hidden="true" />
               <span className="strip__meta" aria-hidden="true">
-                <span className="strip__index">{chapter.index}</span>
+                <span className="strip__index">{String(i + 1).padStart(2, '0')}</span>
                 <span className="strip__title">{chapter.title}</span>
                 <span className="strip__label">{chapter.label}</span>
               </span>

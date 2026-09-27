@@ -38,3 +38,60 @@
   transform: translateY(-4px);
   opacity: 0.6;
 }
+
+/* ---------- Openable frames (Home photographs) ---------- */
+
+button.frame__window {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  color: inherit;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* The focus ring sits on the figure: clip-path on the window would cut it off. */
+.frame--interactive .frame__window:focus-visible {
+  outline: none;
+}
+
+.frame--interactive:has(.frame__window:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Hover, mouse and trackpad only: the frame draws in while the photograph eases
+   closer (independent `scale`, so it composes with the parallax transform). */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .frame--interactive .frame__window {
+    clip-path: inset(0 round 0);
+    transition: clip-path 1s var(--ease-out);
+  }
+
+  .frame--interactive .frame__media {
+    transition: scale 1.4s var(--ease-out);
+  }
+
+  .frame--interactive .frame__caption::before {
+    transition: width 0.8s var(--ease-out);
+  }
+
+  .frame--interactive .frame__window:hover,
+  .frame--interactive .frame__window:focus-visible {
+    clip-path: inset(clamp(6px, 1.4%, 14px) round 2px);
+  }
+
+  /* !important: GSAP writes an inline `scale: none` on the parallax image. */
+  .frame--interactive .frame__window:hover .frame__media,
+  .frame--interactive .frame__window:focus-visible .frame__media {
+    scale: 1.07 !important;
+  }
+
+  .frame--interactive:has(.frame__window:hover) .frame__caption::before,
+  .frame--interactive:has(.frame__window:focus-visible) .frame__caption::before {
+    width: 36px;
+  }
+}

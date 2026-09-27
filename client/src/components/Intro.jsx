@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap, EASE, markIntroLifting, prefersReducedMotion } from '../lib/motion.js';
+import { scrollToTarget } from '../lib/smoothScroll.js';
 import './Intro.css';
 
 // Short phrases drawn from the villa itself; the name stays on screen as the intro lifts.
@@ -9,12 +10,15 @@ const PHRASE_MS = 950;
 const MIN_DURATION = PHRASES.length * PHRASE_MS + 700;
 const MAX_WAIT = 9000;
 
+// Waits for the Hero's first picture: an image's load, or a video's first decoded frame.
 function waitForHeroImage() {
-  const img = document.querySelector('[data-hero-image]');
-  if (!img || img.complete) return Promise.resolve();
+  const el = document.querySelector('[data-hero-image]');
+  if (!el) return Promise.resolve();
+  const isVideo = el.tagName === 'VIDEO';
+  if (isVideo ? el.readyState >= 2 : el.complete) return Promise.resolve();
   return new Promise((resolve) => {
-    img.addEventListener('load', resolve, { once: true });
-    img.addEventListener('error', resolve, { once: true });
+    el.addEventListener(isVideo ? 'loadeddata' : 'load', resolve, { once: true });
+    el.addEventListener('error', resolve, { once: true });
   });
 }
 
@@ -111,7 +115,7 @@ export default function Intro({ onDone }) {
     function lift() {
       const root = rootRef.current;
       document.documentElement.classList.remove('is-intro');
-      window.scrollTo(0, 0);
+      scrollToTarget(0, { immediate: true });
       markIntroLifting();
 
       if (reduce) {
@@ -141,9 +145,7 @@ export default function Intro({ onDone }) {
         </span>
       </div>
       <div className="intro__meta" aria-hidden="true">
-        <span>Arachchikanda</span>
         <Counter value={count} />
-        <span>Hikkaduwa</span>
       </div>
     </div>
   );

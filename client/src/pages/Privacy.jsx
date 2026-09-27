@@ -128,9 +128,11 @@ export default function Privacy() {
             choose one of these links, that service may process information according to its own privacy policy.
           </p>
           <p>
-            The website does not load an interactive map automatically. If an embedded map or another third-party
-            service is added in the future, this notice will be updated first.
+            The Location section on the home page can show a Google map. The map does not load automatically: it loads
+            only after you select “Show map”. Google then receives technical information, such as your IP address, and
+            processes it under its own privacy policy.
           </p>
+          <p>If another third-party service is added in the future, this notice will be updated first.</p>
           <p>
             Read the <External href="https://policies.google.com/privacy">Google Privacy Policy</External>.
           </p>

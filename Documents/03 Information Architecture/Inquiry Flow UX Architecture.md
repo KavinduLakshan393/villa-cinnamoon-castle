@@ -70,7 +70,7 @@ After a valid range is selected, show:
 
 **Availability note**
 
-> Availability is confirmed by the host after you send the inquiry.
+> The host will personally confirm availability once your inquiry is received.
 
 ### Actions
 
@@ -84,7 +84,7 @@ The Continue button remains disabled until both dates form a valid range. Explai
 
 ### Heading
 
-> Choose an option for your group.
+> Select the ideal arrangement for your group.
 
 ### Guest control
 
@@ -142,7 +142,7 @@ Do not make the visitor calculate or combine the amounts manually.
 
 ### Cooling note
 
-> A/C options include air conditioning in two bedrooms. The remaining bedrooms have stand fans.
+> Air conditioning is available in two bedrooms, with stand fans provided throughout other rooms.
 
 Show this beside the relevant A/C choices. Do not hide it in a tooltip.
 
@@ -194,14 +194,14 @@ Continue remains disabled until guest count and every required package choice ar
 **Special requests**
 
 - Optional multiline field
-- Supporting prompt: `BBQ setup, dietary needs, expected arrival time or other requests`
+- Supporting prompt: `BBQ grill setup, estimated arrival time, or special preferences. Please do not include payment details.`
 - Display an appropriate character limit and remaining count
 
 ### Consent
 
 Required checkbox:
 
-> I understand that this is an inquiry. The host will confirm availability, the final amount and payment details on WhatsApp.
+> I understand this is an inquiry with no obligation. The host will confirm availability and final details on WhatsApp.
 
 ### Final review
 
@@ -236,8 +236,8 @@ This exact label is used without an emoji. Prevent repeated activation while the
 ```text
 Villa Cinnamoon Castle — Stay Inquiry
 
-Check-in: {check_in_date} — from 1:00 PM
-Check-out: {check_out_date} — by 10:00 AM
+Check-in: {check_in_date} (Afternoon arrival)
+Check-out: {check_out_date} (Morning departure)
 Nights: {total_nights} — {date_type_label}
 
 Guests: {guest_count}

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import ResponsiveImage from '../../components/ResponsiveImage.jsx';
 import Button from '../../components/Button.jsx';
 import { inquiryPath } from '../../data/site.js';
-import { gsap, EASE, introState, prefersReducedMotion, whenIntroLifts, useGSAP } from '../../lib/motion.js';
+import { gsap, EASE, introState, reducedMotionQuery, motionQuery, whenIntroLifts, useGSAP } from '../../lib/motion.js';
+import { PORTRAIT_QUERY, useMediaQuery, useReducedMotion, useVideoAllowed } from '../../lib/media.js';
 import './Hero.css';
 
 // The dynamic phrase names who (or what) the villa is for. Every option is true of
@@ -11,12 +11,72 @@ const PHRASES = ['the whole group', 'family reunions', 'old friends', 'slow week
 const HOLD_MS = 2800;
 const SWAP_MS = 450;
 
+// Cinemagraph hero (8 s generated clip, stabilised, texture-cleaned and crossfaded
+// into a seamless 9 s loop). Portrait screens get the 9:16 cut. Each poster is the
+// clip's first frame, so the hand-off from poster to video is invisible.
+const HERO_MEDIA = {
+  landscape: { video: '/media/hero-video-desktop.mp4', poster: '/media/hero-video-desktop-poster.jpg' },
+  portrait: { video: '/media/hero-video-mobile.mp4', poster: '/media/hero-video-mobile-poster.jpg' },
+};
+const HERO_ALT = 'Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence';
+
+function HeroMedia({ sectionRef, allowed }) {
+  const variant = useMediaQuery(PORTRAIT_QUERY) ? 'portrait' : 'landscape';
+  const { video, poster } = HERO_MEDIA[variant];
+  const videoRef = useRef(null);
+
+  // Play while the Hero is on screen.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return undefined;
+    el.muted = true; // React does not write the muted attribute; iOS needs it set before play().
+    let visible = true;
+    const sync = () => {
+      if (!visible || document.hidden) el.pause();
+      else el.play().catch(() => {}); // Autoplay can be refused (e.g. iOS Low Power Mode): the poster stays.
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    });
+    observer.observe(sectionRef.current);
+    document.addEventListener('visibilitychange', sync);
+    sync();
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', sync);
+    };
+  }, [variant, sectionRef, allowed]);
+
+  if (!allowed) {
+    return <img src={poster} alt={HERO_ALT} className="hero__media" fetchPriority="high" data-hero-image="" />;
+  }
+  return (
+    <video
+      key={variant}
+      ref={videoRef}
+      className="hero__media"
+      src={video}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      autoPlay
+      preload="auto"
+      disablePictureInPicture
+      aria-hidden="true"
+      data-hero-image=""
+    />
+  );
+}
+
 function useCyclingPhrase(active, sectionRef) {
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
-    if (!active || prefersReducedMotion()) return undefined;
+    if (!active || reduced) return undefined;
 
     let visible = true;
     const observer = new IntersectionObserver(([entry]) => {
@@ -40,7 +100,7 @@ function useCyclingPhrase(active, sectionRef) {
       clearInterval(interval);
       clearTimeout(swap);
     };
-  }, [active, sectionRef]);
+  }, [active, reduced, sectionRef]);
 
   return { phrase: PHRASES[index], leaving };
 }
@@ -48,49 +108,57 @@ function useCyclingPhrase(active, sectionRef) {
 export default function Hero() {
   const sectionRef = useRef(null);
   const [cycling, setCycling] = useState(false);
+  const videoAllowed = useVideoAllowed();
   const { phrase, leaving } = useCyclingPhrase(cycling, sectionRef);
+  const entered = useRef(false);
 
   useGSAP(
     () => {
       const q = gsap.utils.selector(sectionRef);
-      if (prefersReducedMotion()) {
+      const mm = gsap.matchMedia();
+      mm.add(reducedMotionQuery, () => {
+        entered.current = true;
         setCycling(true);
-        return;
-      }
-
-      const lines = q('.hero__line > span');
-      const fades = q('[data-hero-fade]');
-      const fromIntro = introState.active;
-      gsap.set(lines, { yPercent: 118 });
-      gsap.set(fades, { opacity: 0, y: 18 });
-      gsap.set(q('.hero__media'), { scale: fromIntro ? 1.12 : 1.05 });
-
-      let cancelled = false;
-      whenIntroLifts().then(() => {
-        if (cancelled) return;
-        gsap
-          .timeline()
-          .to(q('.hero__media'), { scale: 1, duration: fromIntro ? 2.6 : 1.6, ease: EASE.out }, 0)
-          .to(lines, { yPercent: 0, duration: 1.25, stagger: 0.1, ease: EASE.reveal }, fromIntro ? 0.8 : 0.15)
-          .to(fades, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: EASE.out }, '<0.35')
-          .add(() => setCycling(true), '-=0.4');
       });
+      mm.add(motionQuery, () => {
+        // Scroll parallax: the photograph drifts slower than the page; scrubbed to native scroll.
+        gsap.to(q('.hero__parallax'), {
+          yPercent: 14,
+          ease: 'none',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
+        });
+        gsap.to(q('.hero__content'), {
+          y: -48,
+          ease: 'none',
+          scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
+        });
 
-      // Scroll parallax: the photograph drifts slower than the page; scrubbed to native scroll.
-      gsap.to(q('.hero__parallax'), {
-        yPercent: 14,
-        ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
-      });
-      gsap.to(q('.hero__content'), {
-        y: -48,
-        ease: 'none',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top top', end: 'bottom top', scrub: true },
-      });
+        // The entrance plays once per visit, not again if motion is switched back on.
+        if (entered.current) return undefined;
+        entered.current = true;
+        const lines = q('.hero__line > span');
+        const fades = q('[data-hero-fade]');
+        const fromIntro = introState.active;
+        gsap.set(lines, { yPercent: 118 });
+        gsap.set(fades, { opacity: 0, y: 18 });
+        gsap.set(q('.hero__media'), { scale: fromIntro ? 1.12 : 1.05 });
 
-      return () => {
-        cancelled = true;
-      };
+        let cancelled = false;
+        whenIntroLifts().then(() => {
+          if (cancelled) return;
+          gsap
+            .timeline()
+            .to(q('.hero__media'), { scale: 1, duration: fromIntro ? 2.6 : 1.6, ease: EASE.out }, 0)
+            .to(lines, { yPercent: 0, duration: 1.25, stagger: 0.1, ease: EASE.reveal }, fromIntro ? 0.8 : 0.15)
+            .to(fades, { opacity: 1, y: 0, duration: 1, stagger: 0.08, ease: EASE.out }, '<0.35')
+            .add(() => setCycling(true), '-=0.4');
+        });
+
+        return () => {
+          cancelled = true;
+        };
+      });
+      return () => mm.revert();
     },
     { scope: sectionRef },
   );
@@ -98,14 +166,7 @@ export default function Hero() {
   return (
     <section className="hero" ref={sectionRef} data-nav-overlay="" aria-labelledby="hero-title">
       <div className="hero__parallax">
-        <ResponsiveImage
-          name="hero-arrival"
-          alt="Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence"
-          sizes="100vw"
-          priority
-          className="hero__media"
-          data-hero-image=""
-        />
+        <HeroMedia sectionRef={sectionRef} allowed={videoAllowed} />
       </div>
       <div className="hero__shade" aria-hidden="true" />
 

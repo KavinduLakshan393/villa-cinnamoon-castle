@@ -1,0 +1,290 @@
+/* ---------- Header & summary ---------- */
+
+.google-reviews {
+  overflow: hidden;
+}
+
+.google-reviews__head {
+  display: grid;
+  gap: 28px;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.google-reviews__intro {
+  display: grid;
+  gap: 28px;
+}
+
+.google-reviews__summary {
+  display: grid;
+  gap: 20px;
+  align-content: end;
+}
+
+.google-reviews__score {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.google-reviews__rating {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.google-reviews__count {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.google-reviews__pending {
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 28em;
+}
+
+.google-reviews__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (min-width: 900px) {
+  .google-reviews__head {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: end;
+    column-gap: clamp(32px, 5vw, 96px);
+  }
+
+  .google-reviews__summary {
+    justify-items: start;
+  }
+}
+
+/* ---------- Stars ---------- */
+
+.stars {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  --star: 15px;
+}
+
+.stars--large {
+  --star: 20px;
+}
+
+.stars__base,
+.stars__fill {
+  display: inline-flex;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.stars svg {
+  width: var(--star);
+  height: var(--star);
+  flex-shrink: 0;
+}
+
+.stars__base svg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.4;
+}
+
+.stars__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+}
+
+.stars__fill svg {
+  fill: var(--text-primary);
+}
+
+/* ---------- Marquee rows ---------- */
+
+.google-reviews__rows {
+  display: grid;
+  gap: 16px;
+}
+
+.marquee {
+  --marquee-gap: 16px;
+  position: relative;
+  overflow: hidden;
+  /* Soft edges so cards fade in and out rather than being cut off. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-left var(--marquee-duration, 60s) linear infinite;
+  will-change: transform;
+}
+
+.marquee--right .marquee__track {
+  animation-name: marquee-right;
+}
+
+/* Each group ends with one gap, so -50% equals exactly one group: a seamless loop. */
+.marquee__group {
+  display: flex;
+  gap: var(--marquee-gap);
+  padding-right: var(--marquee-gap);
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Paused by the control, when off-screen, on hover and while a link inside is focused. */
+.marquee.is-paused .marquee__track,
+.marquee:hover .marquee__track,
+.marquee:focus-within .marquee__track {
+  animation-play-state: paused;
+}
+
+/* Reduced motion: a static row the visitor can swipe or scroll. */
+.marquee.is-still {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-mask-image: none;
+  mask-image: none;
+  padding-inline: var(--gutter);
+  scrollbar-width: thin;
+}
+
+.marquee.is-still .marquee__track {
+  animation: none;
+}
+
+.marquee.is-still .review-card {
+  scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none !important;
+  }
+}
+
+/* ---------- Review card ---------- */
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: clamp(280px, 30vw, 380px);
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.review-card__text {
+  flex: 1;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.review-card__more {
+  align-self: flex-start;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.review-card__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.review-card__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.review-card__name {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.review-card__date {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ---------- Pause control ---------- */
+
+.google-reviews__controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.marquee-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: border-color 0.3s ease;
+}
+
+.marquee-toggle svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .marquee-toggle:hover {
+    border-color: var(--text-primary);
+  }
+}

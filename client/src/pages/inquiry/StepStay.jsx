@@ -96,8 +96,8 @@ function GuestStepper({ guests, onChange }) {
       </div>
       <p id="guest-hint" className="field__hint">
         {guests > 10
-          ? 'Groups above 10 use extra sleeping arrangements, confirmed with the host.'
-          : `From ${MIN_GUESTS} to ${MAX_GUESTS} guests, including children.`}
+          ? 'Groups of 11 to 15 are accommodated with additional bedding, arranged with the host.'
+          : `Welcoming up to ${MAX_GUESTS} guests, including children.`}
       </p>
     </div>
   );
@@ -105,7 +105,7 @@ function GuestStepper({ guests, onChange }) {
 
 const CoolingNote = () => (
   <p className="cooling-note">
-    <strong>With A/C:</strong> air conditioning in two bedrooms. The other bedrooms have stand fans.
+    <strong>With A/C:</strong> air conditioning is available in two bedrooms, with stand fans provided throughout other rooms.
   </p>
 );
 
@@ -258,7 +258,7 @@ export default function StepStay({ state, update, stay, summary, onBack, onConti
   return (
     <div className="step">
       <h2 className="step__heading" id="step-heading" tabIndex={-1}>
-        Choose an option for your group.
+        Select the ideal arrangement for your group.
       </h2>
 
       <GuestStepper guests={state.guests} onChange={(guests) => update({ guests })} />
