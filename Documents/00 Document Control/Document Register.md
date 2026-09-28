@@ -68,6 +68,7 @@ The most recent approved decision takes precedence over older text at the same l
 | `04 Content/Phase 1 Website Copy.md` | Consolidated public-facing copy | **Active — supporting** | Reconciled to current page IA; page-specific IA documents remain authoritative for structure and interaction |
 | `04 Content/Phase 1 Content Inventory.md` | Reviewed media and recommended shortlist | **Active — supporting** | Controls media-selection guidance, not final visual composition |
 | `06 Design/Home Page Image and Video Prompts.md` | Generation prompts for the Home page photographs, composites and cinemagraphs | **Active — supporting** | Working tool record for DEC-022; does not govern copy or structure |
+| `07 Work in Progress/Google Reviews Integration - Progress.md` | Progress record for the Google reviews integration: setup done, code built, work left | **Working — temporary** | Tracks unfinished work only; replaced by DEC-028 and the final documents when the feature ships |
 
 ## External working artifacts
 
