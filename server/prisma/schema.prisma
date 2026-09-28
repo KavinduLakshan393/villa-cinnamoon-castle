@@ -173,3 +173,54 @@ model InquiryQuoteLine {
   @@index([packageVariantId])
   @@map("inquiry_quote_lines")
 }
+
+enum GoogleSyncStatus {
+  NEVER
+  OK
+  ERROR
+
+  @@map("google_sync_status")
+}
+
+/// The single Google Business Profile connection used to read the villa's
+/// reviews (DEC-028). Only the OAuth refresh token is kept, encrypted with
+/// AES-256-GCM; access tokens are short-lived and never stored.
+model GoogleConnection {
+  id                    String           @id @default("default") @db.VarChar(16)
+  encryptedRefreshToken String           @map("encrypted_refresh_token") @db.Text
+  scope                 String           @db.VarChar(500)
+  accountName           String?          @map("account_name") @db.VarChar(120)
+  locationName          String?          @map("location_name") @db.VarChar(120)
+  locationTitle         String?          @map("location_title") @db.VarChar(200)
+  averageRating         Decimal?         @map("average_rating") @db.Decimal(3, 2)
+  totalReviewCount      Int?             @map("total_review_count")
+  needsReconnect        Boolean          @default(false) @map("needs_reconnect")
+  lastSyncStatus        GoogleSyncStatus @default(NEVER) @map("last_sync_status")
+  lastSyncMessage       String?          @map("last_sync_message") @db.VarChar(500)
+  lastSyncAt            DateTime?        @map("last_sync_at") @db.Timestamptz(3)
+  lastSuccessfulSyncAt  DateTime?        @map("last_successful_sync_at") @db.Timestamptz(3)
+  connectedByAdminId    String?          @map("connected_by_admin_id") @db.Uuid
+  connectedAt           DateTime         @default(now()) @map("connected_at") @db.Timestamptz(3)
+  updatedAt             DateTime         @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("google_connections")
+}
+
+/// One Google review, stored unedited as synced from the Business Profile API.
+/// Reviews removed on Google are deleted at the next complete sync.
+model GoogleReview {
+  id               String    @id @db.VarChar(200)
+  reviewerName     String    @map("reviewer_name") @db.VarChar(200)
+  isAnonymous      Boolean   @default(false) @map("is_anonymous")
+  starRating       Int       @map("star_rating") @db.SmallInt
+  comment          String?   @db.Text
+  createdAt        DateTime  @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime  @map("updated_at") @db.Timestamptz(3)
+  replyComment     String?   @map("reply_comment") @db.Text
+  replyUpdatedAt   DateTime? @map("reply_updated_at") @db.Timestamptz(3)
+  syncedAt         DateTime  @map("synced_at") @db.Timestamptz(3)
+
+  @@index([createdAt])
+  @@index([starRating, createdAt])
+  @@map("google_reviews")
+}
