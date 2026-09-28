@@ -2,6 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { apiRequest } from '../lib/api.js';
 import Button from '../components/Button.jsx';
+import LoadingSpinner from '../components/loading/LoadingSpinner.jsx';
+import { useDelayedLoading } from '../components/loading/useDelayedLoading.js';
+import AdminPackagesSkeleton from './loading/AdminPackagesSkeleton.jsx';
 
 const coolingLabels = { NOT_APPLICABLE: 'Flat rate', NON_AC: 'Without A/C', AC: 'With A/C' };
 const emptyVariant = (coolingType = 'NOT_APPLICABLE') => ({
@@ -79,8 +82,11 @@ function DeletePackageDialog({ packageName, busy, onClose, onDelete }) {
           <button ref={closeRef} type="button" className="admin-secondary-button" onClick={requestClose} disabled={busy}>
             Close
           </button>
-          <button ref={deleteRef} type="button" className="admin-delete-button" onClick={onDelete} disabled={busy}>
-            {busy ? 'Deleting…' : 'Delete'}
+          <button ref={deleteRef} type="button" className="admin-delete-button" onClick={onDelete} disabled={busy} aria-busy={busy || undefined}>
+            <span className="loading-inline">
+              {busy && <LoadingSpinner size="sm" />}
+              {busy ? 'Deleting…' : 'Delete'}
+            </span>
           </button>
         </div>
       </section>
@@ -90,11 +96,11 @@ function DeletePackageDialog({ packageName, busy, onClose, onDelete }) {
 
 function VariantEditor({ variant, onChanged, onDeleted }) {
   const [form, setForm] = useState({ ...variant, nightlyRate: String(variant.nightlyRate) });
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState(null);
   const update = (field, value) => setForm((current) => ({ ...current, [field]: value }));
 
   const save = async () => {
-    setBusy(true);
+    setBusy('save');
     try {
       await toast.promise(
         apiRequest(`/admin/package-variants/${variant.id}`, {
@@ -113,12 +119,12 @@ function VariantEditor({ variant, onChanged, onDeleted }) {
       await onChanged();
     } catch {
       /* toast.promise reports the request error. */
-    } finally { setBusy(false); }
+    } finally { setBusy(null); }
   };
 
   const remove = async () => {
     if (!window.confirm(`Delete “${variant.title}”? Existing inquiry history will be preserved.`)) return;
-    setBusy(true);
+    setBusy('delete');
     try {
       await toast.promise(
         apiRequest(`/admin/package-variants/${variant.id}`, { method: 'DELETE' }),
@@ -131,7 +137,7 @@ function VariantEditor({ variant, onChanged, onDeleted }) {
       await onDeleted();
     } catch {
       /* toast.promise reports the request error. */
-    } finally { setBusy(false); }
+    } finally { setBusy(null); }
   };
 
   return (
@@ -145,8 +151,12 @@ function VariantEditor({ variant, onChanged, onDeleted }) {
         <label className="admin-check"><input type="checkbox" checked={form.isActive} onChange={(e) => update('isActive', e.target.checked)} /><span>Visible to customers</span></label>
       </div>
       <div className="variant-editor__actions">
-        <button type="button" className="admin-secondary-button" onClick={save} disabled={busy}>{busy ? 'Saving…' : 'Save variant'}</button>
-        <button type="button" className="admin-danger-link" onClick={remove} disabled={busy}>Delete variant</button>
+        <button type="button" className="admin-secondary-button" onClick={save} disabled={Boolean(busy)} aria-busy={busy === 'save' || undefined}>
+          <span className="loading-inline">{busy === 'save' && <LoadingSpinner size="sm" />}{busy === 'save' ? 'Saving…' : 'Save variant'}</span>
+        </button>
+        <button type="button" className="admin-danger-link" onClick={remove} disabled={Boolean(busy)} aria-busy={busy === 'delete' || undefined}>
+          <span className="loading-inline">{busy === 'delete' && <LoadingSpinner size="sm" />}{busy === 'delete' ? 'Deleting…' : 'Delete variant'}</span>
+        </button>
       </div>
     </div>
   );
@@ -195,7 +205,7 @@ function AddVariant({ packageItem, onAdded }) {
         <label className="field"><span className="field__label">Cooling</span><select className="field__input" value={form.coolingType} onChange={(e) => setForm({ ...form, coolingType: e.target.value })}>{choices.map((choice) => <option key={choice} value={choice}>{coolingLabels[choice]}</option>)}</select></label>
         <label className="field"><span className="field__label">Nightly rate (LKR)</span><input className="field__input" type="number" min="0" required value={form.nightlyRate} onChange={(e) => setForm({ ...form, nightlyRate: e.target.value })} /></label>
       </div>
-      <div className="variant-editor__actions"><button className="admin-secondary-button" type="submit" disabled={busy}>{busy ? 'Adding…' : 'Add variant'}</button><button className="admin-text-button" type="button" onClick={() => setOpen(false)}>Cancel</button></div>
+      <div className="variant-editor__actions"><button className="admin-secondary-button" type="submit" disabled={busy} aria-busy={busy || undefined}><span className="loading-inline">{busy && <LoadingSpinner size="sm" />}{busy ? 'Adding…' : 'Add variant'}</span></button><button className="admin-text-button" type="button" onClick={() => setOpen(false)} disabled={busy}>Cancel</button></div>
     </form>
   );
 }
@@ -203,11 +213,11 @@ function AddVariant({ packageItem, onAdded }) {
 function PackageEditor({ item, reload }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({ ...item });
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const update = (field, value) => setForm((current) => ({ ...current, [field]: value }));
   const save = async () => {
-    setBusy(true);
+    setBusy('save');
     try {
       await toast.promise(
         apiRequest(`/admin/packages/${item.id}`, {
@@ -228,10 +238,10 @@ function PackageEditor({ item, reload }) {
     } catch {
       /* toast.promise reports the request error. */
     }
-    finally { setBusy(false); }
+    finally { setBusy(null); }
   };
   const remove = async () => {
-    setBusy(true);
+    setBusy('delete');
     try {
       await toast.promise(
         apiRequest(`/admin/packages/${item.id}`, { method: 'DELETE' }),
@@ -245,7 +255,7 @@ function PackageEditor({ item, reload }) {
     } catch {
       setDeleteOpen(false);
     } finally {
-      setBusy(false);
+      setBusy(null);
     }
   };
 
@@ -269,7 +279,7 @@ function PackageEditor({ item, reload }) {
             <label className="field"><span className="field__label">Display order</span><input className="field__input" type="number" min="0" value={form.displayOrder} onChange={(e) => update('displayOrder', e.target.value)} /></label>
             <label className="admin-check"><input type="checkbox" checked={form.isActive} onChange={(e) => update('isActive', e.target.checked)} /><span>Visible to customers</span></label>
           </div>
-          <div className="package-editor__actions"><Button size="sm" onClick={save} disabled={busy}>{busy ? 'Saving…' : 'Save package'}</Button><button type="button" className="admin-danger-link" onClick={() => setDeleteOpen(true)} disabled={busy}>Delete package</button></div>
+          <div className="package-editor__actions"><Button size="sm" onClick={save} disabled={Boolean(busy)} loading={busy === 'save'} loadingLabel="Saving…">Save package</Button><button type="button" className="admin-danger-link" onClick={() => setDeleteOpen(true)} disabled={Boolean(busy)}>Delete package</button></div>
           <section className="package-editor__variants" aria-label={`${item.publicName} price variants`}>
             <header><h3>Price variants</h3><p>Flat rate, or separate Non-A/C and A/C rates.</p></header>
             {item.variants.map((variant) => <VariantEditor key={variant.id} variant={variant} onChanged={reload} onDeleted={reload} />)}
@@ -281,7 +291,7 @@ function PackageEditor({ item, reload }) {
       {deleteOpen && (
         <DeletePackageDialog
           packageName={item.publicName}
-          busy={busy}
+          busy={Boolean(busy)}
           onClose={() => setDeleteOpen(false)}
           onDelete={remove}
         />
@@ -344,7 +354,7 @@ function CreatePackage({ onCreated }) {
           <div className="variant-editor" key={variant.coolingType}><h3>{coolingLabels[variant.coolingType]}</h3><div className="admin-form-grid admin-form-grid--variant"><label className="field"><span className="field__label">Variant code</span><input className="field__input" required value={variant.code} onChange={(e) => updateVariant(index, 'code', e.target.value)} /></label><label className="field"><span className="field__label">Public title</span><input className="field__input" required value={variant.title} onChange={(e) => updateVariant(index, 'title', e.target.value)} /></label><label className="field"><span className="field__label">Nightly rate (LKR)</span><input className="field__input" type="number" min="0" required value={variant.nightlyRate} onChange={(e) => updateVariant(index, 'nightlyRate', e.target.value)} /></label></div></div>
         ))}
       </div>
-      <div className="create-package__actions"><Button type="submit" disabled={busy}>{busy ? 'Creating…' : 'Create package'}</Button></div>
+      <div className="create-package__actions"><Button type="submit" loading={busy} loadingLabel="Creating…">Create package</Button></div>
     </form>
   );
 }
@@ -353,6 +363,7 @@ export default function AdminPackages() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const showSkeleton = useDelayedLoading(loading);
   const load = useCallback(async () => {
     setLoading(true); setError('');
     try { const result = await apiRequest('/admin/packages'); setItems(result.packages); }
@@ -365,7 +376,7 @@ export default function AdminPackages() {
     <section className="admin-page" aria-labelledby="admin-packages-title">
       <header className="admin-page__header"><div><p className="eyebrow">Stay catalogue</p><h1 id="admin-packages-title">Packages</h1><p className="lead">Create and maintain the stay options and rates shown to customers.</p></div><CreatePackage onCreated={load} /></header>
       {error && <InlineAlert message={error} />}
-      {loading ? <p className="admin-empty" role="status">Loading packages…</p> : <div className="package-editors">{items.map((item) => <PackageEditor key={item.id} item={item} reload={load} />)}</div>}
+      {loading && showSkeleton ? <AdminPackagesSkeleton /> : loading && items.length === 0 ? <div className="admin-loading-reserve" role="status" aria-label="Loading packages" /> : <div className="package-editors">{items.map((item) => <PackageEditor key={item.id} item={item} reload={load} />)}</div>}
     </section>
   );
 }

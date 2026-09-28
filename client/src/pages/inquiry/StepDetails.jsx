@@ -182,8 +182,8 @@ export default function StepDetails({ state, update, summary, onBack, onSubmit, 
 
       <div className="step__actions">
         <BackButton onClick={onBack} />
-        <Button type="submit" aria-busy={sending} disabled={sending} className={sending ? 'is-busy' : ''}>
-          {sending ? 'Opening WhatsApp…' : 'Send Inquiry'}
+        <Button type="submit" loading={sending} loadingLabel="Opening WhatsApp…">
+          Send Inquiry
         </Button>
       </div>
     </form>

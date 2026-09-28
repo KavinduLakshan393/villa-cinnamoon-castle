@@ -65,8 +65,8 @@ export default function AdminLogin() {
             />
           </div>
           {error && <p className="admin-alert is-error" role="alert">{error}</p>}
-          <Button type="submit" disabled={busy} className={busy ? 'is-busy' : ''}>
-            {busy ? 'Signing in…' : 'Sign in'}
+          <Button type="submit" loading={busy} loadingLabel="Signing in…">
+            Sign in
           </Button>
           <p className="caption">Forgot your password? Use the secure local password-reset command on the server.</p>
         </form>

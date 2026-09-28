@@ -10,6 +10,9 @@ import { OVERVIEW_LINES, QUOTE_LINES, INQUIRY_LINES } from './lines.js';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
 import { usePackages } from '../../data/PackagesContext.jsx';
+import { useDelayedLoading } from '../../components/loading/useDelayedLoading.js';
+import { StayPreviewSkeleton } from '../loading/PackageSkeletons.jsx';
+import LoadingSpinner from '../../components/loading/LoadingSpinner.jsx';
 
 // ---------- Home photographs ----------
 // Each mosaic's photographs, in columns. Selecting a photo opens the viewer on
@@ -526,6 +529,7 @@ export function Nearby() {
  */
 function LocationMap() {
   const [shown, setShown] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const frameRef = useRef(null);
 
   useEffect(() => {
@@ -534,14 +538,21 @@ function LocationMap() {
 
   if (shown) {
     return (
-      <div className="location__map">
+      <div className={`location__map${loaded ? ' is-loaded' : ' is-loading'}`} aria-busy={!loaded}>
         <iframe
           ref={frameRef}
           src={site.googleMapsEmbedUrl}
           title="Map showing Villa Cinnamoon Castle in Arachchikanda, Hikkaduwa"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
+          onLoad={() => setLoaded(true)}
         />
+        {!loaded && (
+          <div className="location__map-loading" role="status">
+            <LoadingSpinner size="lg" />
+            <span>Loading map…</span>
+          </div>
+        )}
       </div>
     );
   }
@@ -598,7 +609,8 @@ export function Location() {
 }
 
 export function StayPreview() {
-  usePackages();
+  const { ready } = usePackages();
+  const showSkeleton = useDelayedLoading(!ready);
   const weekday = startingRate('WEEKDAY');
   const weekend = startingRate('WEEKEND');
   const blocks = [
@@ -617,19 +629,25 @@ export function StayPreview() {
           <Eyebrow>Stay options</Eyebrow>
           <RevealHeading id="stay-title">Options for different group sizes.</RevealHeading>
         </header>
-        <div className="stay__blocks">
-          {blocks.map((block) => (
-            <article key={block.title} className="stay__block" data-reveal="fade">
-              <h3 className="stay__label">{block.title}</h3>
-              <p className="stay__rate">
-                <span className="stay__from">From</span>
-                <span className="stay__amount">{formatRupees(block.rate)}</span>
-                <span className="stay__unit">per night</span>
-              </p>
-              <p className="body-copy">{block.text}</p>
-            </article>
-          ))}
-        </div>
+        {ready ? (
+          <div className="stay__blocks">
+            {blocks.map((block) => (
+              <article key={block.title} className="stay__block" data-reveal="fade">
+                <h3 className="stay__label">{block.title}</h3>
+                <p className="stay__rate">
+                  <span className="stay__from">From</span>
+                  <span className="stay__amount">{formatRupees(block.rate)}</span>
+                  <span className="stay__unit">per night</span>
+                </p>
+                <p className="body-copy">{block.text}</p>
+              </article>
+            ))}
+          </div>
+        ) : showSkeleton ? (
+          <StayPreviewSkeleton />
+        ) : (
+          <div className="loading-reserve loading-reserve--packages" role="status" aria-label="Loading stay options" />
+        )}
         <div className="stay__action" data-reveal="fade">
           <Button to="/stay-options" variant="swipe" tone="dark">
             View Stay Options

@@ -312,10 +312,24 @@
 }
 
 .location__map {
+  position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background: var(--border);
+}
+
+.location__map-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  background: var(--background);
 }
 
 .location__map iframe {

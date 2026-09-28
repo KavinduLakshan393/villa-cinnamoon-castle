@@ -1,12 +1,21 @@
+import { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useAdminAuth } from './AuthContext.jsx';
+import LoadingSpinner from '../components/loading/LoadingSpinner.jsx';
 
 export default function AdminShell() {
   const { admin, logout } = useAdminAuth();
+  const [signingOut, setSigningOut] = useState(false);
   const signOut = async () => {
-    await logout();
-    toast.success('Signed out securely.');
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await logout();
+      toast.success('Signed out securely.');
+    } finally {
+      setSigningOut(false);
+    }
   };
   return (
     <div className="admin-shell">
@@ -16,7 +25,9 @@ export default function AdminShell() {
         </a>
         <div className="admin-header__account">
           <span className="admin-header__name">{admin.displayName}</span>
-          <button type="button" className="admin-text-button" onClick={signOut}>Sign out</button>
+          <button type="button" className="admin-text-button" onClick={signOut} disabled={signingOut} aria-busy={signingOut || undefined}>
+            <span className="loading-inline">{signingOut && <LoadingSpinner size="sm" />}{signingOut ? 'Signing out…' : 'Sign out'}</span>
+          </button>
         </div>
       </header>
       <div className="admin-shell__body">

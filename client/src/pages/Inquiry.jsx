@@ -19,6 +19,8 @@ import { getPreviousPath } from '../lib/navigation.js';
 import { scrollToTarget } from '../lib/smoothScroll.js';
 import { apiRequest } from '../lib/api.js';
 import { usePackages } from '../data/PackagesContext.jsx';
+import { useDelayedLoading } from '../components/loading/useDelayedLoading.js';
+import { InquiryOptionsSkeleton } from './loading/PackageSkeletons.jsx';
 import './inquiry/Inquiry.css';
 
 const STEPS = ['Dates', 'Stay option', 'Your details'];
@@ -82,6 +84,7 @@ export default function Inquiry() {
   const [announcement, setAnnouncement] = useState('');
   const layoutRef = useRef(null);
   const packageState = usePackages();
+  const showPackageSkeleton = useDelayedLoading(!packageState.ready);
 
   const update = useCallback((patch) => setState((s) => ({ ...s, ...patch })), []);
   useEffect(() => saveInquiry(state), [state]);
@@ -195,15 +198,21 @@ export default function Inquiry() {
           ) : step === 1 ? (
             <StepDates state={state} update={update} stay={stay} onContinue={() => goTo(2)} />
           ) : step === 2 ? (
-            <StepStay
-              state={state}
-              update={update}
-              stay={stay}
-              summary={inlineSummary}
-              onBack={() => goTo(1)}
-              onContinue={() => goTo(3)}
-              announce={announce}
-            />
+            packageState.ready ? (
+              <StepStay
+                state={state}
+                update={update}
+                stay={stay}
+                summary={inlineSummary}
+                onBack={() => goTo(1)}
+                onContinue={() => goTo(3)}
+                announce={announce}
+              />
+            ) : showPackageSkeleton ? (
+              <InquiryOptionsSkeleton />
+            ) : (
+              <div className="loading-reserve loading-reserve--inquiry" role="status" aria-label="Loading stay options" />
+            )
           ) : (
             <StepDetails
               state={state}

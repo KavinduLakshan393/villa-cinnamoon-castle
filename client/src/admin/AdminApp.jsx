@@ -1,6 +1,7 @@
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AdminAuthProvider, useAdminAuth } from './AuthContext.jsx';
+import LoadingSpinner from '../components/loading/LoadingSpinner.jsx';
 import AdminLogin from './AdminLogin.jsx';
 import AdminShell from './AdminShell.jsx';
 import AdminInquiries from './AdminInquiries.jsx';
@@ -12,7 +13,7 @@ function ProtectedAdmin() {
   if (status === 'loading') {
     return (
       <div className="admin-loading" role="status">
-        <span className="admin-loading__mark" aria-hidden="true" />
+        <LoadingSpinner />
         Checking your session…
       </div>
     );
@@ -22,7 +23,7 @@ function ProtectedAdmin() {
 
 function LoginRoute() {
   const { status } = useAdminAuth();
-  if (status === 'loading') return <div className="admin-loading">Checking your session…</div>;
+  if (status === 'loading') return <div className="admin-loading" role="status"><LoadingSpinner />Checking your session…</div>;
   return status === 'authenticated' ? <Navigate to="/admin/inquiries" replace /> : <AdminLogin />;
 }
 

@@ -6,6 +6,8 @@ import { useFadeReveals } from '../lib/reveal.js';
 import { inquiryPath } from '../data/site.js';
 import { stayRows, formatRupees } from '../data/packages.js';
 import { usePackages } from '../data/PackagesContext.jsx';
+import { useDelayedLoading } from '../components/loading/useDelayedLoading.js';
+import { StayRatesSkeleton } from './loading/PackageSkeletons.jsx';
 import './StayOptions.css';
 
 const NOT_OFFERED = 'Not offered';
@@ -188,7 +190,7 @@ function MixedStay() {
   );
 }
 
-function Rates() {
+function Rates({ packagesReady, showSkeleton }) {
   return (
     <section id="rates" className="section rates" aria-labelledby="rates-title">
       <div className="container">
@@ -213,11 +215,17 @@ function Rates() {
         </div>
 
         <div className="rates__layout">
-          <div className="rates__main">
-            <WeekdayTable />
-            <WeekendBlock />
-            <MixedStay />
-          </div>
+          {packagesReady ? (
+            <div className="rates__main">
+              <WeekdayTable />
+              <WeekendBlock />
+              <MixedStay />
+            </div>
+          ) : showSkeleton ? (
+            <StayRatesSkeleton />
+          ) : (
+            <div className="loading-reserve loading-reserve--rates" role="status" aria-label="Loading current rates" />
+          )}
           <CoolingNotes />
         </div>
       </div>
@@ -343,13 +351,14 @@ function BeforeYouInquire() {
 
 export default function StayOptions() {
   const pageRef = useRef(null);
-  usePackages();
+  const { ready } = usePackages();
+  const showSkeleton = useDelayedLoading(!ready);
   useFadeReveals(pageRef);
 
   return (
     <div className="stay-page" ref={pageRef}>
       <Hero />
-      <Rates />
+      <Rates packagesReady={ready} showSkeleton={showSkeleton} />
       <Included />
       <BeforeYouInquire />
     </div>
