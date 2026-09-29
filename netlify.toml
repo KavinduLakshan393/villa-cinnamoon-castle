@@ -1,0 +1,11 @@
+[build]
+  base = "client"
+  command = "npm run build"
+  publish = "dist"
+
+# The /api proxy is added above this rule after Render assigns the backend URL.
+# Keep the SPA fallback last so React Router routes resolve to index.html.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
