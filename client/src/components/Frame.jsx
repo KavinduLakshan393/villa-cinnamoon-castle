@@ -44,15 +44,16 @@ export default function Frame({
         style={ratio ? { aspectRatio: ratio } : undefined}
         {...interactive}
       >
-        <ResponsiveImage
-          name={name}
-          alt={onOpen ? '' : alt}
-          sizes={sizes}
-          className="frame__media"
-          data-parallax=""
-          onLoad={() => setLoaded(true)}
-          onError={() => setLoaded(true)}
-        />
+        <span className="frame__motion" data-parallax="">
+          <ResponsiveImage
+            name={name}
+            alt={onOpen ? '' : alt}
+            sizes={sizes}
+            className="frame__media"
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(true)}
+          />
+        </span>
       </Window>
       {caption && <figcaption className="frame__caption caption">{caption}</figcaption>}
     </figure>

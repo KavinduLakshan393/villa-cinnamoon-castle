@@ -13,6 +13,8 @@ import { usePackages } from '../../data/PackagesContext.jsx';
 import { useDelayedLoading } from '../../components/loading/useDelayedLoading.js';
 import { StayPreviewSkeleton } from '../loading/PackageSkeletons.jsx';
 import LoadingSpinner from '../../components/loading/LoadingSpinner.jsx';
+import { useFadeReveals } from '../../lib/reveal.js';
+import { ScrollTrigger } from '../../lib/motion.js';
 
 // ---------- Home photographs ----------
 // Each mosaic's photographs, in columns. Selecting a photo opens the viewer on
@@ -608,6 +610,31 @@ export function Location() {
   );
 }
 
+function StayBlocks({ blocks }) {
+  const blocksRef = useRef(null);
+  useFadeReveals(blocksRef);
+
+  useEffect(() => {
+    ScrollTrigger.refresh();
+  }, []);
+
+  return (
+    <div className="stay__blocks" ref={blocksRef}>
+      {blocks.map((block) => (
+        <article key={block.title} className="stay__block" data-reveal="fade">
+          <h3 className="stay__label">{block.title}</h3>
+          <p className="stay__rate">
+            <span className="stay__from">From</span>
+            <span className="stay__amount">{formatRupees(block.rate)}</span>
+            <span className="stay__unit">per night</span>
+          </p>
+          <p className="body-copy">{block.text}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+
 export function StayPreview() {
   const { ready } = usePackages();
   const showSkeleton = useDelayedLoading(!ready);
@@ -630,19 +657,7 @@ export function StayPreview() {
           <RevealHeading id="stay-title">Options for different group sizes.</RevealHeading>
         </header>
         {ready ? (
-          <div className="stay__blocks">
-            {blocks.map((block) => (
-              <article key={block.title} className="stay__block" data-reveal="fade">
-                <h3 className="stay__label">{block.title}</h3>
-                <p className="stay__rate">
-                  <span className="stay__from">From</span>
-                  <span className="stay__amount">{formatRupees(block.rate)}</span>
-                  <span className="stay__unit">per night</span>
-                </p>
-                <p className="body-copy">{block.text}</p>
-              </article>
-            ))}
-          </div>
+          <StayBlocks blocks={blocks} />
         ) : showSkeleton ? (
           <StayPreviewSkeleton />
         ) : (

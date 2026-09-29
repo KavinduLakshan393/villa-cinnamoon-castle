@@ -16,7 +16,7 @@ function InlineAlert({ message, success }) {
   return <p className={`admin-alert ${success ? 'is-success' : 'is-error'}`} role={success ? 'status' : 'alert'}>{message}</p>;
 }
 
-function DeletePackageDialog({ packageName, busy, onClose, onDelete }) {
+function DeleteDialog({ title, itemName, description, busy, onClose, onDelete }) {
   const closeRef = useRef(null);
   const deleteRef = useRef(null);
   const closeTimerRef = useRef(null);
@@ -66,16 +66,15 @@ function DeletePackageDialog({ packageName, busy, onClose, onDelete }) {
         className="admin-modal"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="delete-package-title"
-        aria-describedby="delete-package-description"
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
       >
         <span className="admin-modal__mark" aria-hidden="true">!</span>
         <div className="admin-modal__copy">
           <p className="eyebrow">Confirm deletion</p>
-          <h2 id="delete-package-title">Delete this package?</h2>
-          <p id="delete-package-description">
-            <strong>{packageName}</strong> and all of its current price variants will be removed from the customer website.
-            Existing inquiry history will remain safely stored.
+          <h2 id="delete-dialog-title">{title}</h2>
+          <p id="delete-dialog-description">
+            <strong>{itemName}</strong> {description}
           </p>
         </div>
         <div className="admin-modal__actions">
@@ -97,6 +96,7 @@ function DeletePackageDialog({ packageName, busy, onClose, onDelete }) {
 function VariantEditor({ variant, onChanged, onDeleted }) {
   const [form, setForm] = useState({ ...variant, nightlyRate: String(variant.nightlyRate) });
   const [busy, setBusy] = useState(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const update = (field, value) => setForm((current) => ({ ...current, [field]: value }));
 
   const save = async () => {
@@ -123,7 +123,6 @@ function VariantEditor({ variant, onChanged, onDeleted }) {
   };
 
   const remove = async () => {
-    if (!window.confirm(`Delete “${variant.title}”? Existing inquiry history will be preserved.`)) return;
     setBusy('delete');
     try {
       await toast.promise(
@@ -154,10 +153,20 @@ function VariantEditor({ variant, onChanged, onDeleted }) {
         <button type="button" className="admin-secondary-button" onClick={save} disabled={Boolean(busy)} aria-busy={busy === 'save' || undefined}>
           <span className="loading-inline">{busy === 'save' && <LoadingSpinner size="sm" />}{busy === 'save' ? 'Saving…' : 'Save variant'}</span>
         </button>
-        <button type="button" className="admin-danger-link" onClick={remove} disabled={Boolean(busy)} aria-busy={busy === 'delete' || undefined}>
+        <button type="button" className="admin-danger-link" onClick={() => setDeleteOpen(true)} disabled={Boolean(busy)}>
           <span className="loading-inline">{busy === 'delete' && <LoadingSpinner size="sm" />}{busy === 'delete' ? 'Deleting…' : 'Delete variant'}</span>
         </button>
       </div>
+      {deleteOpen && (
+        <DeleteDialog
+          title="Delete this price variant?"
+          itemName={variant.title}
+          description="will be removed from this package and the customer website. Existing inquiry history will remain safely stored."
+          busy={busy === 'delete'}
+          onClose={() => setDeleteOpen(false)}
+          onDelete={remove}
+        />
+      )}
     </div>
   );
 }
@@ -289,8 +298,10 @@ function PackageEditor({ item, reload }) {
         </div>
       </div>
       {deleteOpen && (
-        <DeletePackageDialog
-          packageName={item.publicName}
+        <DeleteDialog
+          title="Delete this package?"
+          itemName={item.publicName}
+          description="and all of its current price variants will be removed from the customer website. Existing inquiry history will remain safely stored."
           busy={Boolean(busy)}
           onClose={() => setDeleteOpen(false)}
           onDelete={remove}
