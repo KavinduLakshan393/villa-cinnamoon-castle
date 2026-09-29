@@ -8,8 +8,28 @@
   background: var(--border);
 }
 
+.frame__window.is-loading {
+  background: color-mix(in srgb, var(--border) 70%, var(--surface));
+}
+
+.frame__window.is-loading .frame__media {
+  opacity: 0;
+}
+
+.frame__window.is-loaded .frame__media {
+  opacity: 1;
+}
+
 .frame__window picture {
   display: contents;
+}
+
+/* GSAP owns this layer's translate transform for scroll parallax. */
+.frame__motion {
+  position: absolute;
+  inset: 0;
+  display: block;
+  will-change: transform;
 }
 
 /* 112 % tall so the ±5 % parallax drift never exposes the frame edge. */
@@ -20,7 +40,9 @@
   width: 100%;
   height: 112%;
   object-fit: cover;
-  will-change: transform;
+  transform: scale(1);
+  transition: opacity 0.45s ease;
+  will-change: transform, opacity;
 }
 
 .frame__caption {
@@ -64,7 +86,7 @@ button.frame__window {
 }
 
 /* Hover, mouse and trackpad only: the frame draws in while the photograph eases
-   closer (independent `scale`, so it composes with the parallax transform). */
+   closer. CSS owns the image scale; GSAP translates the wrapper above it. */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .frame--interactive .frame__window {
     clip-path: inset(0 round 0);
@@ -72,7 +94,9 @@ button.frame__window {
   }
 
   .frame--interactive .frame__media {
-    transition: scale 1.4s var(--ease-out);
+    transition:
+      transform 1s var(--ease-out),
+      opacity 0.45s ease;
   }
 
   .frame--interactive .frame__caption::before {
@@ -84,14 +108,19 @@ button.frame__window {
     clip-path: inset(clamp(6px, 1.4%, 14px) round 2px);
   }
 
-  /* !important: GSAP writes an inline `scale: none` on the parallax image. */
   .frame--interactive .frame__window:hover .frame__media,
   .frame--interactive .frame__window:focus-visible .frame__media {
-    scale: 1.07 !important;
+    transform: scale(1.055);
   }
 
   .frame--interactive:has(.frame__window:hover) .frame__caption::before,
   .frame--interactive:has(.frame__window:focus-visible) .frame__caption::before {
     width: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame__media {
+    transition: none;
   }
 }

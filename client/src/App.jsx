@@ -15,6 +15,7 @@ import { gsap, ScrollTrigger, introState, prefersReducedMotion } from './lib/mot
 import { site } from './data/site.js';
 import { recordNavigation } from './lib/navigation.js';
 import { initSmoothScroll, scrollToTarget } from './lib/smoothScroll.js';
+import AdminApp from './admin/AdminApp.jsx';
 
 const titles = {
   '/': `${site.name} — Private villa near Hikkaduwa`,
@@ -22,6 +23,9 @@ const titles = {
   '/gallery': `Gallery — ${site.name}`,
   '/inquiry': `Send Inquiry — ${site.name}`,
   '/privacy': `Privacy — ${site.name}`,
+  '/admin/login': `Admin Sign In — ${site.name}`,
+  '/admin/inquiries': `Inquiries — ${site.name} Admin`,
+  '/admin/packages': `Packages — ${site.name} Admin`,
 };
 
 /**
@@ -82,6 +86,7 @@ function usePageTransition(pageRef) {
 export default function App() {
   const pageRef = useRef(null);
   const shown = usePageTransition(pageRef);
+  const isAdmin = shown.pathname.startsWith('/admin');
   const [introVisible, setIntroVisible] = useState(introState.active);
   const hideIntro = useCallback(() => setIntroVisible(false), []);
 
@@ -97,12 +102,16 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (isAdmin) document.documentElement.classList.remove('is-intro', 'menu-open');
+  }, [isAdmin]);
+
   return (
     <>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <Navbar />
+      {!isAdmin && <Navbar />}
       <div className="page" ref={pageRef}>
         <main id="main" tabIndex={-1}>
           <Routes location={shown}>
@@ -111,6 +120,7 @@ export default function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/inquiry" element={<Inquiry />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/admin/*" element={<AdminApp />} />
             <Route
               path="*"
               element={
@@ -124,10 +134,10 @@ export default function App() {
             />
           </Routes>
         </main>
-        <Footer />
+        {!isAdmin && <Footer />}
       </div>
-      {introVisible && <Intro onDone={hideIntro} />}
-      <CursorLabel />
+      {!isAdmin && introVisible && <Intro onDone={hideIntro} />}
+      {!isAdmin && <CursorLabel />}
     </>
   );
 }

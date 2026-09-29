@@ -2,6 +2,8 @@
 node_modules/
 */node_modules/
 package-lock.json
+!client/package-lock.json
+!server/package-lock.json
 .pnpm-store/
 .yarn/cache/
 .yarn/unplugged/
@@ -23,6 +25,7 @@ out/
 .parcel-cache/
 .next/
 .nuxt/
+server/src/generated/
 coverage/
 .nyc_output/
 *.tsbuildinfo
@@ -120,3 +123,7 @@ images/**/*_enhanced.png
 images/**/*_generated.png
 images/living_rooms/living_room_2/living_room_2_double_height_mezzanine.png
 !images/Final Homepage 8K masters and videos/*
+
+# Google Business Profile setup (local screenshots and OAuth client downloads; never commit)
+Google business profile/
+client_secret*.json

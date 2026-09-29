@@ -17,6 +17,10 @@ import {
 } from '../lib/inquiry.js';
 import { getPreviousPath } from '../lib/navigation.js';
 import { scrollToTarget } from '../lib/smoothScroll.js';
+import { apiRequest } from '../lib/api.js';
+import { usePackages } from '../data/PackagesContext.jsx';
+import { useDelayedLoading } from '../components/loading/useDelayedLoading.js';
+import { InquiryOptionsSkeleton } from './loading/PackageSkeletons.jsx';
 import './inquiry/Inquiry.css';
 
 const STEPS = ['Dates', 'Stay option', 'Your details'];
@@ -75,9 +79,12 @@ export default function Inquiry() {
   const [state, setState] = useState(loadInquiry);
   const [params, setParams] = useSearchParams();
   const [sending, setSending] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [sent, setSent] = useState(null);
   const [announcement, setAnnouncement] = useState('');
   const layoutRef = useRef(null);
+  const packageState = usePackages();
+  const showPackageSkeleton = useDelayedLoading(!packageState.ready);
 
   const update = useCallback((patch) => setState((s) => ({ ...s, ...patch })), []);
   useEffect(() => saveInquiry(state), [state]);
@@ -118,19 +125,49 @@ export default function Inquiry() {
 
   const announce = useCallback((message) => setAnnouncement(message), []);
 
-  const submit = (phone) => {
+  const submit = async (phone) => {
     if (sending || !est) return;
     setSending(true);
-    const message = buildMessage(state, est, phone);
-    const url = whatsappUrl(message);
-    // Opened synchronously inside the click so pop-up blockers allow it.
-    // (A 'noopener' feature string would make window.open always return null, hiding a blocked tab.)
-    const opened = window.open(url, '_blank');
+    setSubmitError('');
+    // Reserve the user-initiated tab before the API request so pop-up blockers allow the handoff.
+    const opened = window.open('', '_blank');
     if (opened) opened.opener = null;
-    window.setTimeout(() => {
+    try {
+      if (packageState.error || est.lines.some((line) => !line.variantId)) {
+        throw new Error('Package information is temporarily unavailable. Please refresh the page and try again.');
+      }
+      const result = await apiRequest('/inquiries', {
+        method: 'POST',
+        retryAuth: false,
+        body: {
+          customerName: state.name.trim(),
+          whatsappNumber: phone,
+          checkIn: state.checkIn,
+          checkOut: state.checkOut,
+          guestCount: state.guests,
+          specialRequests: state.requests.trim() || null,
+          consent: state.consent,
+          selections: est.lines.map((line) => ({
+            portion: line.portion.toUpperCase(),
+            packageVariantId: line.variantId,
+          })),
+        },
+      });
+      const reference = result.inquiry.reference;
+      const message = buildMessage(state, est, phone, reference);
+      const url = whatsappUrl(message);
+      if (opened) opened.location.replace(url);
+      else {
+        const retry = window.open(url, '_blank');
+        if (retry) retry.opener = null;
+      }
+      setSent({ url, message, reference, blocked: !opened });
+    } catch (error) {
+      opened?.close();
+      setSubmitError(error.message || 'Your inquiry could not be saved. Please try again.');
+    } finally {
       setSending(false);
-      setSent({ url, message, blocked: !opened });
-    }, 600);
+    }
   };
 
   const previous = getPreviousPath();
@@ -161,15 +198,21 @@ export default function Inquiry() {
           ) : step === 1 ? (
             <StepDates state={state} update={update} stay={stay} onContinue={() => goTo(2)} />
           ) : step === 2 ? (
-            <StepStay
-              state={state}
-              update={update}
-              stay={stay}
-              summary={inlineSummary}
-              onBack={() => goTo(1)}
-              onContinue={() => goTo(3)}
-              announce={announce}
-            />
+            packageState.ready ? (
+              <StepStay
+                state={state}
+                update={update}
+                stay={stay}
+                summary={inlineSummary}
+                onBack={() => goTo(1)}
+                onContinue={() => goTo(3)}
+                announce={announce}
+              />
+            ) : showPackageSkeleton ? (
+              <InquiryOptionsSkeleton />
+            ) : (
+              <div className="loading-reserve loading-reserve--inquiry" role="status" aria-label="Loading stay options" />
+            )
           ) : (
             <StepDetails
               state={state}
@@ -178,6 +221,7 @@ export default function Inquiry() {
               onBack={() => goTo(2)}
               onSubmit={submit}
               sending={sending}
+              submitError={submitError}
             />
           )}
         </div>

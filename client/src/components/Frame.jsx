@@ -1,6 +1,7 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import ResponsiveImage from './ResponsiveImage.jsx';
 import { useParallax } from '../lib/reveal.js';
+import './loading/Loading.css';
 import './Frame.css';
 
 /**
@@ -20,6 +21,7 @@ export default function Frame({
   onOpen,
 }) {
   const frameRef = useRef(null);
+  const [loaded, setLoaded] = useState(false);
   useParallax(frameRef, { enabled: parallax });
 
   const Window = onOpen ? 'button' : 'div';
@@ -37,12 +39,21 @@ export default function Frame({
     <figure className={`frame${onOpen ? ' frame--interactive' : ''} ${className}`} data-reveal="fade">
       {/* ratio={null} leaves the aspect ratio to the stylesheet (e.g. per breakpoint). */}
       <Window
-        className="frame__window"
+        className={`frame__window ${loaded ? 'is-loaded' : 'is-loading'}`}
         ref={frameRef}
         style={ratio ? { aspectRatio: ratio } : undefined}
         {...interactive}
       >
-        <ResponsiveImage name={name} alt={onOpen ? '' : alt} sizes={sizes} className="frame__media" data-parallax="" />
+        <span className="frame__motion" data-parallax="">
+          <ResponsiveImage
+            name={name}
+            alt={onOpen ? '' : alt}
+            sizes={sizes}
+            className="frame__media"
+            onLoad={() => setLoaded(true)}
+            onError={() => setLoaded(true)}
+          />
+        </span>
       </Window>
       {caption && <figcaption className="frame__caption caption">{caption}</figcaption>}
     </figure>

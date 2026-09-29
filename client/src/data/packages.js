@@ -33,15 +33,53 @@ export const stayLabels = {
   'full-villa': { name: 'Full villa', detail: 'Five bedrooms plus extra sleeping arrangements' },
 };
 
+/** Replace the local fallback catalogue with the active database catalogue. */
+export function applyPackageApi(stayOptions) {
+  const nextPackages = [];
+  const nextLabels = {};
+  stayOptions.forEach((stay) => {
+    nextLabels[stay.code] = { name: stay.publicName, detail: stay.publicDetail };
+    stay.variants.forEach((variant) => {
+      nextPackages.push({
+        id: variant.id,
+        title: variant.title,
+        type: stay.stayType,
+        ac: variant.coolingType === 'NOT_APPLICABLE' ? 'NA' : variant.coolingType,
+        rate: Number(variant.nightlyRate),
+        minGuests: stay.minGuests,
+        maxGuests: stay.maxGuests,
+        stay: stay.code,
+        active: stay.isActive && variant.isActive,
+      });
+    });
+  });
+  packages.splice(0, packages.length, ...nextPackages);
+  Object.keys(stayLabels).forEach((key) => delete stayLabels[key]);
+  Object.assign(stayLabels, nextLabels);
+}
+
 /** One public row per stay: the Non-A/C (or flat) rate and the A/C rate, if offered. */
 export function stayRows(type) {
   const rows = new Map();
   packages
     .filter((p) => p.active && p.type === type)
     .forEach((p) => {
-      const row = rows.get(p.stay) ?? { key: p.stay, maxGuests: p.maxGuests, standard: null, ac: null, ...stayLabels[p.stay] };
-      if (p.ac === 'AC') row.ac = p.rate;
-      else row.standard = p.rate;
+      const row = rows.get(p.stay) ?? {
+        key: p.stay,
+        maxGuests: p.maxGuests,
+        standard: null,
+        standardVariantId: null,
+        ac: null,
+        acVariantId: null,
+        ...stayLabels[p.stay],
+      };
+      if (p.ac === 'AC') {
+        row.ac = p.rate;
+        row.acVariantId = p.id ?? null;
+      } else {
+        row.standard = p.rate;
+        row.standardVariantId = p.id ?? null;
+      }
       row.maxGuests = Math.max(row.maxGuests, p.maxGuests);
       rows.set(p.stay, row);
     });

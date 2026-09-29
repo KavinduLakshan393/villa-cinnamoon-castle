@@ -119,8 +119,9 @@ export function useWordScrub(ref, { start = 'top 82%', end = 'bottom 45%', dim =
 }
 
 /**
- * Gentle parallax: the image drifts inside its fixed-size frame. The image is
- * pre-sized to 112% of the frame (see .frame__media) so a ±5% drift never reveals an edge; only transform is animated.
+ * Gentle parallax: a wrapper translates the image inside its fixed-size frame.
+ * The image is pre-sized to 112% (see .frame__media), while its own transform
+ * remains available for the interactive hover zoom.
  */
 export function useParallax(frameRef, { amount = 5, enabled = true } = {}) {
   useGSAP(
