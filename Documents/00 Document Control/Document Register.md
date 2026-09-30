@@ -110,6 +110,10 @@ The files under `Sample components/` are **samples**, not approved designs. They
 - **2026-09-27 — Scroll-drawn line removed (DEC-024):** Superseded the Nearby route labels in `Phase 1 Website Copy.md`; the removed wording is quoted in place. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
 - **2026-09-27 — Gallery chapters and wheel (DEC-026):** Updated `Gallery Page Information Architecture.md`: the strip leads and labels, the new Section 3 (villa chapters with the wheel), the curated set of 39 enhanced photographs, the viewer flight and the Hero supporting text. The previous version is archived as `99 Archive/Gallery Page Information Architecture - Pre-Wheel 2026-09-27.md`. **Sinhala synchronization:** Not required, because no Sinhala Gallery IA document exists.
 - **2026-09-27 — Two side lines (DEC-027):** Visual only; no document text changed.
+- **2026-09-30 — Caption-free photographs and card-stack viewer (DEC-029):** Rewrote the Full-screen viewer section of `Gallery Page Information Architecture.md` and added the no-caption rule; added the Photo Viewer copy and the Nearby caption note to `Phase 1 Website Copy.md`. The superseded wording is quoted in place. **Sinhala synchronization:** Not required, because no Sinhala version of these documents exists.
+- **2026-09-30 — Mobile audit fixes (DEC-030):** Layout only; no document text changed.
+- **2026-09-30 — Bolder rewinding lines and view-triggered reveals (DEC-031):** Motion only; no document text changed.
+- **2026-09-30 — Animated cinnamon branches (DEC-032):** Visual only; no document text changed.
 
 ## Document control rules
 
