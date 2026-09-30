@@ -5,7 +5,8 @@ import './loading/Loading.css';
 import './Frame.css';
 
 /**
- * A cropped image frame with a gentle scroll parallax and an optional caption.
+ * A cropped image frame with a gentle scroll parallax. No caption is shown under
+ * the photograph: `alt` describes it, and the viewer announces its caption.
  * With `onOpen`, the frame becomes a button that opens the photo in the viewer:
  * on hover the frame draws in while the photo eases closer, and a "View" cursor
  * label follows the pointer (see CursorLabel).
@@ -13,7 +14,6 @@ import './Frame.css';
 export default function Frame({
   name,
   alt,
-  caption,
   ratio = '4 / 5',
   sizes,
   className = '',
@@ -55,7 +55,6 @@ export default function Frame({
           />
         </span>
       </Window>
-      {caption && <figcaption className="frame__caption caption">{caption}</figcaption>}
     </figure>
   );
 }

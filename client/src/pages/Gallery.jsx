@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react';
 import Button from '../components/Button.jsx';
 import Frame from '../components/Frame.jsx';
+import Branch from './home/Branch.jsx';
 import { RevealHeading, Eyebrow } from '../components/Reveal.jsx';
 import GalleryStrip from './gallery/GalleryStrip.jsx';
 import GalleryWheel from './gallery/GalleryWheel.jsx';
@@ -73,6 +74,7 @@ export default function Gallery() {
     <PhotoViewerProvider>
       <div className="gallery-page" ref={pageRef}>
         <section className="gallery-hero" aria-labelledby="gallery-title">
+          <Branch name="c" side="right" flip className="branch--gallery-hero" />
           <div className="container gallery-hero__grid">
             <Eyebrow>Gallery</Eyebrow>
             <RevealHeading as="h1" id="gallery-title" className="gallery-hero__title" start="top 100%" delay={0.1}>
@@ -89,6 +91,8 @@ export default function Gallery() {
         <GalleryChapters />
 
         <section className="section gallery-close" aria-labelledby="gallery-close-title">
+          <Branch name="a" side="left" className="branch--gallery-close" />
+          <Branch name="b" side="right" className="branch--gallery-close-right" />
           <div className="container">
             <div className="gallery-close__panel">
               <Eyebrow>Planning a stay?</Eyebrow>

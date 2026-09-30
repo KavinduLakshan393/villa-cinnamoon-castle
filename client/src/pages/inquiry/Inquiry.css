@@ -971,3 +971,10 @@ button.stepper-nav__link {
     transition: none;
   }
 }
+
+/* Narrow phones: a slimmer card edge keeps each calendar day about 44 px wide. */
+@media (max-width: 400px) {
+  .step__card {
+    padding-inline: 8px;
+  }
+}

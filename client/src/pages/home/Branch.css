@@ -1,0 +1,244 @@
+/* ---------- Cinnamon branches (decorative) ---------- */
+
+.has-branch {
+  position: relative;
+  /* The entrance starts beyond the page edge; never widen the page for it. */
+  overflow-x: clip;
+}
+
+/* The section's content stays above the branch. */
+.has-branch > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* The clips are truly transparent, so the leaves are solid: they cover the side
+   lines behind them (the branch follows the lines in the markup) and each other. */
+.branch {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.branch--left {
+  left: 0;
+}
+
+.branch--right {
+  right: 0;
+}
+
+.branch__inner {
+  position: relative;
+  will-change: transform, opacity;
+}
+
+.branch--left .branch__inner {
+  transform-origin: 0% 20%;
+}
+
+.branch--right .branch__inner {
+  transform-origin: 100% 20%;
+}
+
+/* One clip: the still poster holds the shape; the moving canvas replaces it once it plays. */
+.branch__clip {
+  position: relative;
+}
+
+.branch__clip img,
+.branch__clip canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.branch__clip canvas {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+
+.branch__clip.is-live canvas {
+  visibility: visible;
+}
+
+.branch__clip.is-live img {
+  visibility: hidden;
+}
+
+/* The source video only feeds the canvas. */
+.branch__clip video {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mirrors a clip so it can grow from the opposite edge. */
+.branch--flip .branch__clip {
+  transform: scaleX(-1);
+}
+
+/* The front clip sits over the one behind it. */
+.branch__main {
+  position: relative;
+  z-index: 1;
+}
+
+/* A second clip behind the first makes a fuller cluster. Each placement sets
+   where it sits (--extra-top), how wide it is and its tilt. */
+.branch__extra {
+  position: absolute;
+  top: var(--extra-top, 46%);
+  width: var(--extra-width, 120%);
+  transform: rotate(var(--extra-tilt, 0deg));
+}
+
+.branch--left .branch__extra {
+  left: 0;
+  transform-origin: 0% 50%;
+}
+
+.branch--right .branch__extra {
+  right: 0;
+  transform-origin: 100% 50%;
+}
+
+/* ---------- Placements ----------
+   Each branch hangs in empty space: a free column, or the gap above a section.
+   Clips a and b hang from a top corner; clip c reaches in sideways. */
+
+/* Home, Overview: reaches into the empty column under "The villa" (wide screens only). */
+.branch--overview {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .branch--overview {
+    display: block;
+    top: 40%;
+    width: clamp(230px, 23vw, 380px);
+    /* Kept low enough to leave the "The villa" eyebrow clear. */
+    --extra-top: -58%;
+    --extra-width: 50%;
+  }
+}
+
+/* Home, Overview: hangs from the top-right corner. */
+.branch--overview-right {
+  top: clamp(-130px, -9vw, -40px);
+  width: clamp(96px, 15vw, 280px);
+}
+
+/* Home, Quote band: a cluster from the top-left, and a spray from the lower right. */
+.branch--quote {
+  top: clamp(-150px, -10vw, -58px);
+  width: clamp(78px, 15vw, 270px);
+  --extra-top: 44%;
+  --extra-width: 104%;
+  --extra-tilt: 14deg;
+}
+
+.branch--quote-right {
+  bottom: clamp(-70px, -4vw, -20px);
+  width: clamp(110px, 21vw, 360px);
+}
+
+/* Home, Kitchen: fills the empty space under the first photograph (grid layouts only). */
+.branch--kitchen {
+  display: none;
+}
+
+@media (min-width: 760px) {
+  .branch--kitchen {
+    display: block;
+    bottom: clamp(60px, 9vw, 190px);
+    width: clamp(220px, 30vw, 520px);
+    --extra-top: -92%;
+    --extra-width: 58%;
+  }
+}
+
+/* Home, Outside: a cluster from the top-right, above the introduction. */
+.branch--outdoor {
+  top: clamp(-90px, -5vw, -36px);
+  width: clamp(84px, 16vw, 290px);
+  --extra-top: 20%;
+  --extra-width: 128%;
+  --extra-tilt: -4deg;
+}
+
+/* Home, Amenities: hangs from the top-right, clear of the heading on the left. */
+.branch--includes {
+  top: clamp(-130px, -9vw, -56px);
+  width: clamp(104px, 16vw, 290px);
+}
+
+/* Home, Send Inquiry: a cluster from the top-right, above the text column. */
+.branch--inquiry {
+  top: clamp(-110px, -7vw, -56px);
+  width: clamp(84px, 17vw, 310px);
+  --extra-top: 54%;
+  --extra-width: 112%;
+  --extra-tilt: -10deg;
+}
+
+/* Stay Options, Rates: a cluster from the top-right, beside the heading. */
+.branch--rates {
+  top: clamp(-120px, -8vw, -48px);
+  width: clamp(88px, 18vw, 320px);
+  --extra-top: 52%;
+  --extra-width: 114%;
+  --extra-tilt: -8deg;
+}
+
+/* Stay Options, Before you inquire: hangs from the top-left gap above the heading. */
+.branch--before {
+  top: clamp(-170px, -12vw, -84px);
+  width: clamp(76px, 11vw, 200px);
+}
+
+/* Stay Options, Before you inquire: a spray from the right, beside the heading. */
+.branch--before-right {
+  display: none;
+}
+
+@media (min-width: 1000px) {
+  .branch--before-right {
+    display: block;
+    top: clamp(40px, 5vw, 90px);
+    width: clamp(240px, 24vw, 400px);
+  }
+}
+
+/* Gallery, Hero: a spray from the right, above the introduction. */
+.branch--gallery-hero {
+  top: clamp(84px, 8vw, 120px);
+  width: clamp(120px, 24vw, 400px);
+}
+
+/* Gallery, closing panel: leaves hang in from behind the panel's top corners. */
+.branch--gallery-close {
+  top: clamp(-150px, -10vw, -64px);
+  width: clamp(96px, 17vw, 300px);
+}
+
+.branch--gallery-close-right {
+  top: clamp(-120px, -8vw, -50px);
+  width: clamp(88px, 14vw, 250px);
+}
+
+/* Phones: second layers are dropped and the sprays stay small, so the leaves
+   sit in the gaps and clear of the text and photographs. */
+@media (max-width: 759px) {
+  .branch__extra {
+    display: none;
+  }
+
+  .branch--quote-right {
+    width: 84px;
+    bottom: -52px;
+  }
+}

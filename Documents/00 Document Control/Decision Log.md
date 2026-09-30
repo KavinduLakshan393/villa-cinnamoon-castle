@@ -244,13 +244,64 @@ This log records confirmed product, content and UX decisions. It is not a discus
 ### DEC-027 — Two side lines on the Home page
 
 - **Status:** Approved (2026-09-27)
-- **Decision:** Two fine (1.75 px) brand-green curved lines, one from each side of the page, draw toward each other with scroll in three sections:
+- **Decision:** *(Line weight, opacity and "stay drawn" superseded by DEC-031.)* Two fine (1.75 px) brand-green curved lines, one from each side of the page, draw toward each other with scroll in three sections:
   - Overview: they close in beneath the facts.
   - Quote band: they cross and wrap the quote.
   - Send Inquiry: they meet at the button.
 
   The right line is at half opacity. The lines stay in the margins and gaps and never cross text. They draw across the whole time the section is on screen, stay drawn, and are shown complete with reduced motion. Desktop and mobile have separate shapes.
 - **Affected documents:** None (visual only; no copy).
+
+### DEC-029 — Caption-free photographs and the card-stack viewer
+
+- **Status:** Approved (2026-09-30)
+- **Decision:**
+  - No caption is shown under any photograph on the Home or Gallery pages. Alternative text stays. The Nearby photographs rely on the section heading ("Nearby", "Hikkaduwa is 3.5 km away") to mark them as nearby experiences.
+  - The photo viewer shows only the photograph, a counter (`03 / 12`) and Close. The chapter label, the visible caption and the thumbnail rail are removed on every layout. The caption is still announced to screen readers.
+  - Touch layouts use a full-screen card stack: the photograph follows the finger, the next one waits behind it, and a short swipe springs back. There are no arrows on touch layouts. A `Swipe to explore` hint shows once per visit.
+  - Pointer devices keep subtle Previous/Next buttons and the arrow keys.
+  - The viewer is a viewport overlay, not the browser Fullscreen API, which behaves inconsistently on iOS.
+- **Supersedes:** In DEC-022 and DEC-023, the photograph captions and the caption-line hover detail. In DEC-026 and the Gallery IA, the viewer's caption, chapter label and thumbnail rail.
+- **Affected documents:** `03 Information Architecture/Gallery Page Information Architecture.md`; `04 Content/Phase 1 Website Copy.md` (Nearby caption rule, viewer hint).
+
+### DEC-030 — Mobile audit fixes
+
+- **Status:** Approved (2026-09-30)
+- **Audit:** Every public page, the admin sign-in, and the admin Inquiries and Packages pages (rendered with mocked data) were checked at 360, 390, 430 and 768 px for horizontal overflow, touch targets under 44 px and text under 12 px. No page overflowed horizontally.
+- **Decision:**
+  - On narrow screens the photograph mosaics flow as a two-column masonry, so photographs of different heights leave no gaps. The desktop drifting columns are unchanged.
+  - Touch targets are at least 44 px: the footer links (including the legal row), the admin sign-out, filter and delete controls, and the admin logo link.
+  - On phones up to 400 px wide, the inquiry date card uses slimmer side padding, so each calendar day stays about 44 px wide.
+  - Admin screens use the dynamic viewport height, and no admin text is smaller than 12 px on phones.
+- **Not covered:** testing on physical devices, and the admin dialogs and the inquiry form's later steps beyond their first state.
+- **Affected documents:** None (layout only; no copy).
+
+### DEC-031 — Bolder rewinding lines and view-triggered text reveals
+
+- **Status:** Approved (2026-09-30)
+- **Decision:**
+  - The two side lines (DEC-027) are bolder: 3.5 px on desktop and 2.5 px on phones, with the right line at 72 % opacity. They ease after the scroll position instead of tracking it rigidly, and they rewind when the visitor scrolls back up.
+  - Heading and fade reveals start only when the element is really in view. They use an IntersectionObserver instead of stored scroll positions, which went stale when content above loaded late and made reveals play off screen.
+  - Scroll-linked effects are measured again whenever the page height changes.
+  - Reveals run at a steadier pace: headings take 1.6 s and fades 1.5 s, with an even ease instead of a fast start.
+- **Supersedes:** In DEC-027, "fine (1.75 px)", "half opacity" and "stay drawn".
+- **Related:** The animated cinnamon branches at the page edges (reference: ERA Residences) are recorded in DEC-032.
+- **Affected documents:** None (motion only; no copy).
+
+### DEC-032 — Animated cinnamon branches
+
+- **Status:** Approved (2026-09-30)
+- **Decision:**
+  - Decorative cinnamon branches grow in from the page edges on three pages:
+    - **Home:** Overview (left cluster on wide screens, and top-right), Quote band (top-left cluster and lower right), Kitchen & dining (left, in the empty space under the first photograph, grid layouts only), Outside (top-right cluster), Amenities (top-right) and Send Inquiry (top-right cluster).
+    - **Stay Options:** Rates (top-right cluster) and Before you inquire (top-left, and right on wide screens).
+    - **Gallery:** Hero (right) and the closing panel (both top corners, behind the panel).
+  - Each branch is a short looping video of moving leaves with real transparency, keyed from the supplied blue-screen footage (`video/Branch assests`). Each clip file carries its colour and its matte; the page joins them on a canvas, which works in every browser. The leaves are therefore solid: they cover the side lines and each other, and no background shows around them at any time, including while the page loads.
+  - A "cluster" layers a second clip behind the first for denser foliage. Phones show single, smaller branches that stay clear of text and photographs.
+  - The entrance follows the scroll and rewinds when scrolling back up. A clip loads shortly before it is reached and plays only while on screen.
+  - With reduced motion, still posters replace the clips and nothing moves.
+  - The branches are decorative: hidden from assistive technology, never clickable, and always behind the section content.
+- **Affected documents:** None. Visual only; no copy or structure changed.
 
 ## Open decisions and launch dependencies
 

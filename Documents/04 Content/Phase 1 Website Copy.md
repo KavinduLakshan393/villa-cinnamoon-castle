@@ -254,6 +254,22 @@ Do not mix included amenities with services or activities that require prior arr
 - Always present the beach as a nearby place, never as part of the villa.
 - The source aerial photograph must be licensed or replaced with an owned photograph before launch.
 
+## Photo Viewer
+
+### Current working copy (DEC-029)
+
+**Swipe hint (touch layouts, once per visit)**
+
+> Swipe to explore
+
+**Accessible labels**
+
+> Close photo viewer
+
+> Previous photo
+
+> Next photo
+
 ## Nearby Hikkaduwa
 
 ### Information structure
@@ -284,7 +300,7 @@ Do not mix included amenities with services or activities that require prior arr
 
 ### Content rules
 
-- Clearly present beach, reef and activity images as nearby experiences rather than on-property facilities.
+- Clearly present beach, reef and activity images as nearby experiences rather than on-property facilities. Since DEC-029 the photographs carry no visible caption, so the section eyebrow and headline do this; the `Nearby — …` captions remain as the text announced in the photo viewer.
 - Use approximate travel times because road conditions may vary.
 - Do not repeat the full `Available on request` list in this section.
 - Use no more than four images on the homepage; additional destination media can appear in the separate Gallery page.

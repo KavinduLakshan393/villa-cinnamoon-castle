@@ -3,15 +3,27 @@ html.viewer-open body {
   overflow: hidden;
 }
 
+/* ---------- Full-screen photo viewer ----------
+   The photograph fills the viewport; the counter, Close and the arrows float
+   over it. No caption and no thumbnail rail. */
+
 .viewer {
+  --viewer-bg: #101310;
+  --viewer-edge: clamp(14px, 2.4vw, 28px);
+  /* Room kept clear around the photograph (wider at the sides for the arrows). */
+  --viewer-pad-x: clamp(76px, 7vw, 128px);
+  --viewer-pad-y: clamp(20px, 4vh, 48px);
   position: fixed;
   inset: 0;
   z-index: 120;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  background: var(--text-primary);
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--viewer-bg);
   color: var(--text-on-image);
   animation: viewer-in 0.35s var(--ease-out) both;
+  overscroll-behavior: contain;
 }
 
 @keyframes viewer-in {
@@ -21,110 +33,141 @@ html.viewer-open body {
 }
 
 .viewer :focus-visible {
-  outline-color: var(--text-on-image);
+  outline: 2px solid var(--text-on-image);
+  outline-offset: 3px;
 }
 
-.viewer__bar {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 16px;
-  padding: 12px var(--gutter);
-  min-height: 64px;
-}
-
-.viewer__chapter {
-  font-size: var(--fs-eyebrow);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(250, 249, 245, 0.7);
-}
-
-.viewer__count {
-  font-size: var(--fs-nav);
-  font-variant-numeric: tabular-nums;
-}
-
-.viewer__close {
-  justify-self: end;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
-  padding: 0 4px;
-  font-size: var(--fs-nav);
-  font-weight: 500;
-}
-
-.viewer__close svg {
-  width: 14px;
-  height: 14px;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  fill: none;
-}
+/* ---------- Cards ---------- */
 
 .viewer__stage {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
-  padding: 0 var(--gutter);
-  min-height: 0;
-  touch-action: pan-y;
+  position: absolute;
+  inset: 0;
+  /* Horizontal swipes belong to the card stack; the page behind cannot scroll. */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.viewer__figure {
-  display: grid;
-  justify-items: center;
-  align-content: center;
-  gap: 14px;
-  height: 100%;
-  min-height: 0;
-  animation: viewer-image-in 0.45s var(--ease-out) both;
+.viewer__card {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  background: var(--viewer-bg);
+  will-change: transform, opacity;
 }
 
-@keyframes viewer-image-in {
-  from {
-    opacity: 0;
-    transform: scale(0.985);
-  }
+.viewer__card[data-slot='current'] {
+  z-index: 2;
 }
 
-.viewer__figure picture {
+/* Neighbours wait behind the front card, set back and unseen until a swipe
+   (or Next/Previous) brings one forward. They stay rendered so they are loaded. */
+.viewer__card:not([data-slot='current']) {
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.94);
+}
+
+/* While dragging, the front card reads as a lifted card. */
+.viewer__stage.is-dragging .viewer__card[data-slot='current'] {
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+.viewer__card picture {
   display: contents;
 }
 
-/* Full width, height from the photo's aspect ratio (its width/height attributes),
-   capped below; the photo is contained inside, so the box is known before it loads. */
 .viewer__image {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  /* As large as the screen allows: below the bar, above the caption (and the rail when shown). */
-  max-height: calc(100vh - 64px - 52px);
-  max-height: calc(100dvh - 64px - 52px);
+  position: absolute;
+  left: var(--viewer-pad-x);
+  top: var(--viewer-pad-y);
+  width: calc(100% - var(--viewer-pad-x) * 2);
+  height: calc(100% - var(--viewer-pad-y) * 2);
   object-fit: contain;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
-.viewer__caption {
-  font-size: 0.875rem;
-  color: rgba(250, 249, 245, 0.78);
-  text-align: center;
+/* ---------- Overlay controls ---------- */
+
+.viewer__count,
+.viewer__close,
+.viewer__nav,
+.viewer__hint {
+  position: absolute;
+  z-index: 3;
 }
 
+.viewer__count {
+  top: calc(var(--viewer-edge) + env(safe-area-inset-top));
+  left: calc(var(--viewer-edge) + env(safe-area-inset-left));
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(16, 19, 16, 0.46);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.viewer__count span {
+  opacity: 0.55;
+}
+
+.viewer__close,
 .viewer__nav {
   display: grid;
   place-items: center;
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(250, 249, 245, 0.3);
+  border: 1px solid rgba(250, 249, 245, 0.28);
   border-radius: 50%;
+  color: var(--text-on-image);
+  background: rgba(16, 19, 16, 0.46);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition:
     background-color 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.viewer__close {
+  top: calc(var(--viewer-edge) + env(safe-area-inset-top));
+  right: calc(var(--viewer-edge) + env(safe-area-inset-right));
+}
+
+.viewer__close svg {
+  width: 15px;
+  height: 15px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.viewer__nav {
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.72;
+}
+
+.viewer__nav--prev {
+  left: calc(var(--viewer-edge) + env(safe-area-inset-left));
+}
+
+.viewer__nav--next {
+  right: calc(var(--viewer-edge) + env(safe-area-inset-right));
 }
 
 .viewer__nav svg {
@@ -138,95 +181,65 @@ html.viewer-open body {
 }
 
 @media (hover: hover) {
+  .viewer__close:hover,
   .viewer__nav:hover {
-    background: rgba(250, 249, 245, 0.12);
+    background: rgba(250, 249, 245, 0.16);
     border-color: rgba(250, 249, 245, 0.6);
+    opacity: 1;
   }
 }
 
-.viewer__rail {
+/* ---------- Touch layouts: the card stack ----------
+   The photograph takes the whole screen; swiping replaces the arrows. */
+
+@media (hover: none), (max-width: 899px) {
+  .viewer {
+    --viewer-pad-x: 0px;
+    --viewer-pad-y: 0px;
+  }
+
+  .viewer__nav {
+    display: none;
+  }
+}
+
+.viewer__hint {
+  left: 50%;
+  bottom: calc(clamp(24px, 6vh, 56px) + env(safe-area-inset-bottom));
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(16, 19, 16, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: var(--fs-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translateX(-50%);
+  animation: viewer-hint 3.2s ease both;
+}
+
+/* The hint leaves as soon as the visitor swipes. */
+.viewer.has-swiped .viewer__hint {
   display: none;
 }
 
-@media (min-width: 1000px) and (min-height: 640px) {
-  .viewer__rail {
-    display: flex;
-    gap: 8px;
-    justify-content: safe center;
-    overflow-x: auto;
-    padding: 14px var(--gutter) 18px;
-    scrollbar-width: none;
+@keyframes viewer-hint {
+  0%,
+  100% {
+    opacity: 0;
   }
-
-  .viewer__image {
-    max-height: calc(100vh - 64px - 52px - 104px);
-    max-height: calc(100dvh - 64px - 52px - 104px);
-  }
-
-  .viewer__thumb {
-    position: relative;
-    display: block;
-    width: 56px;
-    height: 72px;
-    overflow: hidden;
-    opacity: 0.45;
-    transition: opacity 0.3s ease;
-  }
-
-  .viewer__thumb picture {
-    display: contents;
-  }
-
-  .viewer__thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .viewer__thumb[aria-current='true'] {
+  15%,
+  80% {
     opacity: 1;
-    outline: 1px solid var(--accent-soft);
-    outline-offset: 2px;
-  }
-
-  .viewer__thumb:hover {
-    opacity: 0.85;
-  }
-}
-
-@media (max-width: 599px) {
-  .viewer__stage {
-    grid-template-columns: minmax(0, 1fr);
-    padding: 0 12px;
-  }
-
-  /* Swipe on phones; the arrow buttons move below the image. */
-  .viewer__nav {
-    position: absolute;
-    bottom: -60px;
-  }
-
-  .viewer__nav--prev {
-    left: calc(50% - 60px);
-  }
-
-  .viewer__nav--next {
-    right: calc(50% - 60px);
-  }
-
-  .viewer {
-    grid-template-rows: auto minmax(0, 1fr) 76px;
-  }
-
-  .viewer__image {
-    max-height: calc(100vh - 64px - 52px - 76px);
-    max-height: calc(100dvh - 64px - 52px - 76px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .viewer,
-  .viewer__figure {
+  .viewer__hint {
     animation: none;
   }
 }
@@ -234,7 +247,7 @@ html.viewer-open body {
 /* ---------- Open and close flight ---------- */
 
 /* While the copy flies in, the real photo waits underneath it. */
-.viewer.is-flying .viewer__image {
+.viewer.is-flying .viewer__card[data-slot='current'] .viewer__image {
   visibility: hidden;
 }
 

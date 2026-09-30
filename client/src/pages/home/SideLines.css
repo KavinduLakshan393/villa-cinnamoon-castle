@@ -27,12 +27,19 @@
 .side-lines path {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 1.75px;
+  stroke-width: 3.5px;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 /* The right line is the quieter of the pair. */
 .side-lines__right {
-  opacity: 0.5;
+  opacity: 0.72;
+}
+
+/* Phones: a little lighter, so the lines do not crowd the narrow margins. */
+@media (max-width: 759px) {
+  .side-lines path {
+    stroke-width: 2.5px;
+  }
 }
