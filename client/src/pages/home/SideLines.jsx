@@ -11,8 +11,9 @@ const scale = (d, w, h) =>
   d.replace(/(-?\d*\.?\d+)\s+(-?\d*\.?\d+)/g, (_, x, y) => `${((x * w) / 100).toFixed(1)} ${((y * h) / 100).toFixed(1)}`);
 
 /**
- * Two fine curved lines, one from each side of the page, that draw toward each
- * other as the section scrolls into view and stay drawn. They sit behind the
+ * Two bold curved lines, one from each side of the page, that draw toward each
+ * other as the section scrolls into view and rewind as it scrolls back out.
+ * The drawing eases after the scroll rather than tracking it rigidly. They sit behind the
  * section's content (the parent gets `has-lines`). `desktop` and `mobile` are
  * { left, right } paths in a 0–100 box of the section. With reduced motion both
  * lines are shown complete and still.
@@ -46,7 +47,9 @@ export default function SideLines({ desktop, mobile, start = 'top 90%', end = 'b
           {
             attr: { 'stroke-dashoffset': 0 },
             ease: 'none',
-            scrollTrigger: { trigger: rootRef.current.parentElement, start, end, scrub: true },
+            // scrub: 1.2 eases the line toward the scroll position (about 1.2 s),
+            // so it glides instead of jumping, and rewinds when scrolling back up.
+            scrollTrigger: { trigger: rootRef.current.parentElement, start, end, scrub: 1.2 },
           },
         );
       }),

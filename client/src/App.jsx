@@ -115,8 +115,25 @@ export default function App() {
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener('load', refresh);
     const stopSmoothScroll = initSmoothScroll();
+
+    // Content that arrives late (API data, fonts, images) changes the page
+    // height after the scroll-linked effects measured their positions. Measure
+    // again whenever the height settles, so nothing plays early or late.
+    let height = document.body.offsetHeight;
+    let timer = 0;
+    const observer = new ResizeObserver(() => {
+      const next = document.body.offsetHeight;
+      if (next === height) return;
+      height = next;
+      clearTimeout(timer);
+      timer = setTimeout(refresh, 200);
+    });
+    observer.observe(document.body);
+
     return () => {
       window.removeEventListener('load', refresh);
+      observer.disconnect();
+      clearTimeout(timer);
       stopSmoothScroll();
     };
   }, []);

@@ -12,6 +12,7 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 export const EASE = {
   out: 'power3.out',
   reveal: 'power4.out',
+  steady: 'power2.out', // scroll reveals: an even pace, without a fast start
   inOut: 'power3.inOut',
   lift: 'expo.inOut',
 };
