@@ -1,7 +1,10 @@
 // Transparent video for every browser. A "stacked" clip carries its colour in
 // the top half (premultiplied, on black) and its matte in the bottom half; one
-// shared WebGL canvas joins the two and each clip copies the result to its own
-// 2D canvas. One context serves the whole page, so no context limit is reached.
+// shared WebGL canvas joins the two and each place the clip appears copies the
+// result to its own 2D canvas.
+//
+// Everything is shared: one WebGL context for the page, and one <video> (one
+// download, one decoder) per clip however many times that clip is on the page.
 
 const VERTEX = `
 attribute vec2 p;
@@ -66,14 +69,15 @@ function setup() {
 export const alphaVideoSupported = () => Boolean(setup());
 
 /**
- * Draws the current frame of a stacked clip, with its transparency, onto a 2D
- * canvas context. Returns false when there was nothing to draw yet.
+ * Joins the current frame of a stacked clip on the shared canvas. Returns the
+ * region holding the result ({ source, x, y, width, height }), or null when
+ * there is nothing to draw yet. The region is valid until the next call.
  */
-export function drawAlphaFrame(video, ctx) {
+function composeFrame(video) {
   const s = setup();
   const width = video.videoWidth;
   const height = video.videoHeight / 2;
-  if (!s || !width || video.readyState < 2) return false;
+  if (!s || !width || video.readyState < 2) return null;
   const { canvas, gl } = s;
   // The shared canvas only ever grows, so clips of different sizes do not reallocate it.
   if (canvas.width < width || canvas.height < height) {
@@ -84,17 +88,94 @@ export function drawAlphaFrame(video, ctx) {
   try {
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
   } catch {
-    return false;
+    return null;
   }
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-
-  const target = ctx.canvas;
-  if (target.width !== width || target.height !== height) {
-    target.width = width;
-    target.height = height;
-  }
-  ctx.clearRect(0, 0, width, height);
   // The viewport sits at the bottom-left of the shared canvas.
-  ctx.drawImage(canvas, 0, canvas.height - height, width, height, 0, 0, width, height);
-  return true;
+  return { source: canvas, x: 0, y: canvas.height - height, width, height };
+}
+
+// ---------- Shared clips ----------
+
+const clips = new Map(); // src -> { video, targets: Set<CanvasRenderingContext2D -> onFrame>, handle }
+
+function clipFor(src) {
+  let clip = clips.get(src);
+  if (clip) return clip;
+  const video = document.createElement('video');
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.preload = 'auto';
+  video.disablePictureInPicture = true;
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('aria-hidden', 'true');
+  // Kept in the document (unseen) so every browser is willing to play it.
+  video.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none';
+  video.src = src;
+  document.body.appendChild(video);
+  clip = { video, targets: new Map(), handle: 0, running: false };
+  clips.set(src, clip);
+  return clip;
+}
+
+function run(clip) {
+  if (clip.running) return;
+  clip.running = true;
+  const { video } = clip;
+  const perFrame = 'requestVideoFrameCallback' in video;
+  const tick = () => {
+    if (!clip.targets.size) {
+      clip.running = false;
+      video.pause();
+      return;
+    }
+    const frame = composeFrame(video);
+    if (frame) {
+      clip.targets.forEach((onFrame, ctx) => {
+        const target = ctx.canvas;
+        if (target.width !== frame.width || target.height !== frame.height) {
+          target.width = frame.width;
+          target.height = frame.height;
+        }
+        ctx.clearRect(0, 0, frame.width, frame.height);
+        ctx.drawImage(frame.source, frame.x, frame.y, frame.width, frame.height, 0, 0, frame.width, frame.height);
+        onFrame?.();
+      });
+    }
+    clip.handle = perFrame ? video.requestVideoFrameCallback(tick) : requestAnimationFrame(tick);
+  };
+  if (!document.hidden) video.play().catch(() => {});
+  clip.handle = perFrame ? video.requestVideoFrameCallback(tick) : requestAnimationFrame(tick);
+}
+
+/** Starts downloading a clip before it is needed. */
+export function preloadClip(src) {
+  if (setup()) clipFor(src);
+}
+
+/**
+ * Shows a clip on a 2D canvas context while subscribed; `onFrame` runs after each
+ * frame drawn. The clip plays while anything shows it and rests otherwise.
+ * Returns the function that stops showing it.
+ */
+export function showClip(src, ctx, onFrame) {
+  if (!setup()) return () => {};
+  const clip = clipFor(src);
+  clip.targets.set(ctx, onFrame);
+  run(clip);
+  return () => {
+    clip.targets.delete(ctx);
+  };
+}
+
+// Tabs in the background rest; clips resume when the tab returns.
+if (typeof document !== 'undefined') {
+  document.addEventListener('visibilitychange', () => {
+    clips.forEach((clip) => {
+      if (document.hidden) clip.video.pause();
+      else if (clip.targets.size) clip.video.play().catch(() => {});
+    });
+  });
 }

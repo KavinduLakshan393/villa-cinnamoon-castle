@@ -15,8 +15,8 @@ const SWAP_MS = 450;
 // into a seamless 9 s loop). Portrait screens get the 9:16 cut. Each poster is the
 // clip's first frame, so the hand-off from poster to video is invisible.
 const HERO_MEDIA = {
-  landscape: { video: '/media/hero-video-desktop.mp4', poster: '/media/hero-video-desktop-poster.jpg' },
-  portrait: { video: '/media/hero-video-mobile.mp4', poster: '/media/hero-video-mobile-poster.jpg' },
+  landscape: { video: '/media/hero-video-desktop.mp4', poster: '/media/hero-video-desktop-poster.webp' },
+  portrait: { video: '/media/hero-video-mobile.mp4', poster: '/media/hero-video-mobile-poster.webp' },
 };
 const HERO_ALT = 'Villa Cinnamoon Castle seen from its shaded gravel courtyard, framed by tall trees and a timber fence';
 

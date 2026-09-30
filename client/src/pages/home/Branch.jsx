@@ -1,70 +1,39 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { gsap, useGSAP, withMotion } from '../../lib/motion.js';
-import { useVideoAllowed } from '../../lib/media.js';
-import { alphaVideoSupported, drawAlphaFrame } from '../../lib/alphaVideo.js';
+import { useMediaQuery, useVideoAllowed } from '../../lib/media.js';
+import { alphaVideoSupported, preloadClip, showClip } from '../../lib/alphaVideo.js';
 import './Branch.css';
 
 // Pixel size of each clip, so a branch keeps its shape before anything loads.
 const CLIP_SIZE = { a: [658, 900], b: [576, 900], c: [900, 632] };
+// Phones show the branches small, so they get the half-size clips.
+const SMALL_QUERY = '(max-width: 759px)';
 
 /**
  * One clip of a branch, with real transparency: the still poster first, then the
  * moving clip drawn on a canvas once it plays. `active` plays it; otherwise it rests.
+ * Every place a clip appears shares one download and one decoder (lib/alphaVideo.js).
  */
 function Clip({ name, animated, near, active }) {
-  const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [live, setLive] = useState(false);
+  const small = useMediaQuery(SMALL_QUERY);
   const [width, height] = CLIP_SIZE[name];
+  const src = `/media/branch-${name}${small ? '-sm' : ''}.mp4`;
 
   useEffect(() => {
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    if (!animated || !near || !video || !canvas) return undefined;
-    const ctx = canvas.getContext('2d');
-    let handle = 0;
-    let stopped = false;
-    const perFrame = 'requestVideoFrameCallback' in video;
-    const schedule = () => {
-      handle = perFrame ? video.requestVideoFrameCallback(draw) : requestAnimationFrame(draw);
-    };
-    function draw() {
-      if (stopped) return;
-      if (drawAlphaFrame(video, ctx)) setLive(true);
-      if (active) schedule();
-    }
+    if (animated && near) preloadClip(src);
+  }, [animated, near, src]);
 
-    video.muted = true;
-    if (active && !document.hidden) {
-      video.play().catch(() => {});
-      schedule();
-    } else {
-      video.pause();
-    }
-    return () => {
-      stopped = true;
-      if (perFrame) video.cancelVideoFrameCallback(handle);
-      else cancelAnimationFrame(handle);
-    };
-  }, [animated, near, active]);
+  useEffect(() => {
+    if (!animated || !active) return undefined;
+    return showClip(src, canvasRef.current.getContext('2d'), () => setLive(true));
+  }, [animated, active, src]);
 
   return (
     <div className={`branch__clip${live ? ' is-live' : ''}`} style={{ aspectRatio: `${width} / ${height}` }}>
-      <img src={`/media/branch-${name}-poster.webp`} alt="" width={width} height={height} decoding="async" />
-      {animated && (
-        <>
-          <canvas ref={canvasRef} width={width} height={height} />
-          <video
-            ref={videoRef}
-            src={near ? `/media/branch-${name}.mp4` : undefined}
-            muted
-            loop
-            playsInline
-            preload={near ? 'auto' : 'none'}
-            disablePictureInPicture
-          />
-        </>
-      )}
+      <img src={`/media/branch-${name}-poster.webp`} alt="" width={width} height={height} loading="lazy" decoding="async" />
+      {animated && <canvas ref={canvasRef} width={width} height={height} />}
     </div>
   );
 }

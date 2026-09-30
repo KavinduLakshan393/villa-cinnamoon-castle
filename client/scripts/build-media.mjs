@@ -1,13 +1,21 @@
-// Generates responsive WebP + JPEG renditions of the curated Phase 1 media
+// Generates responsive AVIF + WebP + JPEG renditions of the curated Phase 1 media
 // into public/media and writes a manifest consumed by <ResponsiveImage>.
 // Run with: npm run media            (every item)
 //          npm run media -- name ...  (only the named items; the manifest is merged)
+//          npm run media -- --force   (rebuild files that already exist)
+//
+// Every item gets a ladder of widths up to a 2560px long edge, so a browser never
+// has to jump to the 8K master (DEC-033). The master is still written, and listed
+// in the manifest as `full`, but it is not part of the srcset.
 import sharp from 'sharp';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const EIGHT_K_LONG_EDGE = 7680;
+// Widths added to every item so the ladder has no gap below the master.
+const LADDER = [1440, 1920, 2560];
+const LADDER_LONG_EDGE = 2560;
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const source = path.resolve(root, '..', 'images');
@@ -105,7 +113,10 @@ const media = [
   })),
 ];
 
-const only = process.argv.slice(2);
+const args = process.argv.slice(2);
+const force = args.includes('--force');
+const only = args.filter((arg) => !arg.startsWith('--'));
+const exists = (file) => access(file).then(() => true, () => false);
 const selected = only.length ? media.filter((item) => only.includes(item.name)) : media;
 
 await mkdir(outDir, { recursive: true });
@@ -141,9 +152,11 @@ for (const item of selected) {
   const scale = EIGHT_K_LONG_EDGE / Math.max(width, height);
   const enhancedWidth = Math.round(width * scale);
   const enhancedHeight = Math.round(height * scale);
-  const widths = [...new Set([...item.widths, enhancedWidth])].sort((a, b) => a - b);
+  // Served widths: the item's own, plus the shared ladder while the long edge stays within 2560px.
+  const ladder = LADDER.filter((w) => w > Math.max(...item.widths) && (w * Math.max(width, height)) / width <= LADDER_LONG_EDGE);
+  const widths = [...new Set([...item.widths, ...ladder])].sort((a, b) => a - b);
 
-  for (const w of widths) {
+  for (const w of [...widths, enhancedWidth]) {
     const base = () => {
       let pipeline = sharp(input).rotate();
       if (region) pipeline = pipeline.extract(region);
@@ -151,11 +164,17 @@ for (const item of selected) {
       return item.grade === false ? pipeline : enhance(pipeline);
     };
     const isEightK = w === enhancedWidth;
-    await base().webp({ quality: isEightK ? 88 : 82, effort: 5 }).toFile(path.join(outDir, `${item.name}-${w}.webp`));
-    await base().jpeg({ quality: isEightK ? 92 : 86, progressive: true, mozjpeg: true }).toFile(path.join(outDir, `${item.name}-${w}.jpg`));
+    const write = async (ext, encode) => {
+      const file = path.join(outDir, `${item.name}-${w}.${ext}`);
+      if (force || !(await exists(file))) await encode(base()).toFile(file);
+    };
+    await write('webp', (image) => image.webp({ quality: isEightK ? 88 : 82, effort: 5 }));
+    await write('jpg', (image) => image.jpeg({ quality: isEightK ? 92 : 86, progressive: true, mozjpeg: true }));
+    // AVIF is only made for the served widths; the master is kept as WebP and JPEG.
+    if (!isEightK) await write('avif', (image) => image.avif({ quality: 58, effort: 4 }));
   }
 
-  manifest[item.name] = { width: enhancedWidth, height: enhancedHeight, widths };
+  manifest[item.name] = { width: enhancedWidth, height: enhancedHeight, widths, full: enhancedWidth };
   console.log(`${item.name}: ${width}x${height} -> ${enhancedWidth}x${enhancedHeight} (8K long edge); widths ${widths.join(', ')}`);
 }
 

@@ -67,15 +67,6 @@
   visibility: hidden;
 }
 
-/* The source video only feeds the canvas. */
-.branch__clip video {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
 /* Mirrors a clip so it can grow from the opposite edge. */
 .branch--flip .branch__clip {
   transform: scaleX(-1);

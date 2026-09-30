@@ -217,3 +217,9 @@ button {
   padding: 0 0.08em 0.14em;
   margin: 0 -0.08em -0.14em;
 }
+
+/* Holds the page's height for the instant a page's code is still arriving. */
+.page-loading {
+  min-height: 100vh;
+  min-height: 100svh;
+}
