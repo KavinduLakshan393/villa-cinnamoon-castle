@@ -1,5 +1,6 @@
 .admin-loading {
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,6 +11,8 @@
 .admin-brand {
   display: inline-flex;
   flex-direction: column;
+  justify-content: center;
+  min-height: 44px;
   width: max-content;
   font-size: 0.72rem;
   font-weight: 600;
@@ -20,6 +23,7 @@
 
 .admin-login {
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 28px var(--gutter) 56px;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -57,7 +61,7 @@
 
 .admin-login__card .btn { justify-self: start; }
 
-.admin-shell { min-height: 100vh; background: var(--background); }
+.admin-shell { min-height: 100vh; min-height: 100dvh; background: var(--background); }
 
 .admin-header {
   position: sticky;
@@ -90,6 +94,7 @@
   position: sticky;
   top: var(--nav-height);
   height: calc(100vh - var(--nav-height));
+  height: calc(100dvh - var(--nav-height));
   padding: 42px 32px 42px 0;
   display: flex;
   flex-direction: column;
@@ -135,7 +140,7 @@
 
 .admin-text-button,
 .admin-danger-link {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 3px;
   font-size: var(--fs-nav);
   font-weight: 600;
@@ -185,7 +190,7 @@
 .admin-loading-reserve { min-height: 320px; }
 
 .admin-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.admin-filter { min-height: 40px; padding: 7px 15px; border: 1px solid var(--border); border-radius: 999px; font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary); }
+.admin-filter { min-height: 44px; padding: 7px 15px; border: 1px solid var(--border); border-radius: 999px; font-size: 0.8125rem; font-weight: 600; color: var(--text-secondary); }
 .admin-filter.is-active { border-color: var(--accent); background: var(--accent); color: var(--text-on-image); }
 .admin-filters__count { margin-left: auto; font-size: 0.8125rem; color: var(--text-secondary); font-variant-numeric: tabular-nums; }
 
@@ -454,4 +459,15 @@
   .package-editor.is-open .package-editor__collapse { transition: none; }
   .admin-modal-backdrop,
   .admin-modal { animation: none; }
+}
+
+/* Phones: nothing smaller than 12 px. */
+@media (max-width: 699px) {
+  .admin-brand,
+  .status-badge,
+  .admin-inquiry-control > span,
+  .admin-inquiry__dates-label,
+  .admin-inquiry__date-point span,
+  .admin-inquiry__facts dt,
+  .admin-inquiry__mobile-stay > span:last-child { font-size: 0.75rem; }
 }
