@@ -275,3 +275,20 @@ html.menu-open body {
     transition: none;
   }
 }
+
+/* ---------- Phones: Send Inquiry lives in the bottom bar (DEC-034) ---------- */
+
+/* The menu panel still offers it, since the open menu covers the bar. */
+.site-menu__inquiry {
+  display: none;
+}
+
+@media (max-width: 759px) {
+  .site-nav__cta-slot {
+    display: none;
+  }
+
+  .site-menu__inquiry {
+    display: block;
+  }
+}

@@ -156,6 +156,10 @@ export default function Navbar() {
           </ul>
         </nav>
         <div className="site-menu__footer">
+          {/* Phones only: the header button moved to the bottom bar, which the open menu covers. */}
+          <span className="site-menu__inquiry" onClick={() => setOpen(false)}>
+            <Button to={inquiryPath}>Send Inquiry</Button>
+          </span>
           <p className="site-menu__locality">{site.locality}</p>
           <a className="site-menu__contact" href={site.whatsapp.href} target="_blank" rel="noopener noreferrer">
             WhatsApp {site.whatsapp.label}
