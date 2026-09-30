@@ -254,6 +254,18 @@ Do not mix included amenities with services or activities that require prior arr
 - Always present the beach as a nearby place, never as part of the villa.
 - The source aerial photograph must be licensed or replaced with an owned photograph before launch.
 
+## Mobile Inquiry Bar
+
+### Current working copy (DEC-034)
+
+Shown on phones only. It introduces no new wording: the rate line repeats the Home stay preview.
+
+> From Rs. 6,500 per night
+
+> Send Inquiry
+
+The amount is the lowest active weekday rate and follows the package data.
+
 ## Photo Viewer
 
 ### Current working copy (DEC-029)

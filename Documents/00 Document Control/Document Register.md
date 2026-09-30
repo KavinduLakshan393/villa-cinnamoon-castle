@@ -114,6 +114,9 @@ The files under `Sample components/` are **samples**, not approved designs. They
 - **2026-09-30 — Mobile audit fixes (DEC-030):** Layout only; no document text changed.
 - **2026-09-30 — Bolder rewinding lines and view-triggered reveals (DEC-031):** Motion only; no document text changed.
 - **2026-09-30 — Animated cinnamon branches (DEC-032):** Visual only; no document text changed.
+- **2026-09-30 — Site-wide performance (DEC-033):** Technical only; no document text changed.
+- **2026-09-30 — Mobile interface refinements (DEC-034):** Added the Mobile Inquiry Bar entry to `Phase 1 Website Copy.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
+- **2026-09-30 — Line-by-line text reveals (DEC-035):** Motion only; no document text changed.
 
 ## Document control rules
 
