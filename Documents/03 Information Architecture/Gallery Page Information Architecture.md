@@ -148,6 +148,7 @@ Walk the visitor through the villa one part at a time, with every selected photo
 ### Photographs and hover
 
 - Every photograph opens in the full-screen viewer.
+- No caption is shown under a photograph (DEC-029). The chapter heading gives the context, and each image keeps its alternative text.
 - On hover (mouse and trackpad only), the frame draws in, the photograph eases closer, the other photographs in the chapter dim, and a round `View` label follows the pointer. Keyboard focus shows the same state with a focus ring.
 
 ### Current curated set (39 photographs)
@@ -180,29 +181,38 @@ All photographs are the enhanced versions: the Home cinematic set and the Galler
 
 ### Full-screen viewer
 
-Opening an image displays an accessible full-screen viewer with the following (the same viewer serves the Home photographs):
+Opening an image displays an accessible full-screen viewer (DEC-029). The same viewer serves the Home photographs. Only three things are on screen:
 
-- Large image
-- Close button
-- Previous and next controls
-- Current position, for example `3 of 18`
-- Short factual caption where useful
-- Chapter/category label
-- Thumbnail rail only on sufficiently large screens
+- The photograph, filling the viewport (contained, never cropped or stretched)
+- A counter, for example `03 / 12`
+- A Close button
 
-Viewer behaviour:
+*Superseded by DEC-029 (2026-09-30): "Short factual caption where useful", "Chapter/category label" and "Thumbnail rail only on sufficiently large screens". The caption and chapter are no longer shown; they are announced to screen readers on each photo change.*
 
+Touch layouts (phones, tablets and any touch screen) use a card stack:
+
+- The photograph follows the finger with a slight tilt, while the next or previous photograph waits behind it and grows into place.
+- A long or fast swipe sends the card off screen: left for the next photo, right for the previous one. A short swipe springs back to the centre.
+- The sequence is circular. There are no arrows on touch layouts.
+- A `Swipe to explore` hint shows once per visit and leaves on the first swipe.
+
+Pointer devices (mouse and trackpad):
+
+- Subtle Previous and Next buttons float at the sides of the photograph.
 - Left/right arrow keys move between images.
+
+Viewer behaviour on every layout:
+
 - Escape closes the viewer.
-- Mobile supports horizontal swipe.
 - Focus is trapped inside the viewer while open and returns to the originating image when closed.
 - Background page scrolling is disabled while open.
-- Images remain usable with zoom at browser level.
+- Only the current photograph and its two neighbours are rendered, so the neighbours are already loaded.
+- The viewer uses the dynamic viewport height and the device safe areas.
 - Opening: the selected photograph grows from its card or tile into the viewer (0.8 s) while the dark background fades in (DEC-026).
 - Closing: the photograph on screen shrinks back into its tile (0.7 s). When that tile is off screen, the viewer fades out.
-- With reduced motion, the viewer simply fades.
-- Captions never use bedroom numbers.
-- Decorative images use empty alternative text; informative images receive concise factual alternative text.
+- With reduced motion, photographs change without movement and the viewer simply fades.
+- Captions (announced only) never use bedroom numbers.
+- Informative images receive concise factual alternative text.
 
 ---
 
