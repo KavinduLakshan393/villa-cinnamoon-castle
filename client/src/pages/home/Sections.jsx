@@ -6,6 +6,7 @@ import Mosaic from './Mosaic.jsx';
 import Cinemagraph from './Cinemagraph.jsx';
 import { useOpenPhoto } from './PhotoViewer.jsx';
 import SideLines from './SideLines.jsx';
+import Branch from './Branch.jsx';
 import { OVERVIEW_LINES, QUOTE_LINES, INQUIRY_LINES } from './lines.js';
 import { site, inquiryPath } from '../../data/site.js';
 import { startingRate, formatRupees } from '../../data/packages.js';
@@ -261,6 +262,8 @@ export function Overview() {
   return (
     <section id="villa" className="section overview" aria-labelledby="villa-title">
       <SideLines {...OVERVIEW_LINES} start="top 90%" end="bottom 70%" />
+      <Branch name="c" extra="a" side="left" className="branch--overview" />
+      <Branch name="b" side="right" className="branch--overview-right" />
       <div className="container grid-12">
         <Eyebrow className="overview__eyebrow">
           The villa
@@ -325,6 +328,8 @@ export function QuoteBand({ children }) {
   return (
     <section className="section quote-band" aria-label="About the villa">
       <SideLines {...QUOTE_LINES} start="top 95%" end="bottom 45%" />
+      <Branch name="a" extra="c" side="left" className="branch--quote" />
+      <Branch name="c" side="right" flip className="branch--quote-right" />
       <div className="container">
         <ScrubText as="blockquote" className="quote-band__text">
           {children}
@@ -362,6 +367,7 @@ export function KitchenDining() {
   const open = useOpenPhoto(KITCHEN_ITEMS, 'Kitchen & dining');
   return (
     <section className="section kitchen" aria-labelledby="kitchen-title">
+      <Branch name="c" extra="a" side="left" className="branch--kitchen" />
       <div className="container grid-12">
         <header className="split-intro">
           <Eyebrow>Kitchen &amp; dining</Eyebrow>
@@ -388,6 +394,7 @@ export function Outdoor() {
   const open = useOpenPhoto(OUTDOOR_ITEMS, 'Outside');
   return (
     <section className="section outdoor" aria-labelledby="outdoor-title">
+      <Branch name="a" extra="c" side="right" flip className="branch--outdoor" />
       <div className="container grid-12">
         <header className="split-intro">
           <Eyebrow>Outside</Eyebrow>
@@ -467,6 +474,7 @@ const onRequest = [
 export function Includes() {
   return (
     <section className="section includes" aria-labelledby="includes-title">
+      <Branch name="b" side="right" className="branch--includes" />
       <div className="container">
         <Eyebrow>Amenities</Eyebrow>
         <RevealHeading id="includes-title" className="section-heading includes__title">
@@ -677,6 +685,7 @@ export function InquiryCta() {
   return (
     <section className="section inquiry-cta" aria-labelledby="inquiry-title">
       <SideLines {...INQUIRY_LINES} start="top 90%" end="bottom 95%" />
+      <Branch name="a" extra="c" side="right" flip className="branch--inquiry" />
       <div className="container grid-12">
         <Frame
           className="inquiry-cta__image"

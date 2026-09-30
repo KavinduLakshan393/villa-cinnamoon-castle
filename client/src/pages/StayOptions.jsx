@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import Frame from '../components/Frame.jsx';
 import Button from '../components/Button.jsx';
+import Branch from './home/Branch.jsx';
 import { RevealHeading, Eyebrow } from '../components/Reveal.jsx';
 import { useFadeReveals } from '../lib/reveal.js';
 import { inquiryPath } from '../data/site.js';
@@ -193,6 +194,7 @@ function MixedStay() {
 function Rates({ packagesReady, showSkeleton }) {
   return (
     <section id="rates" className="section rates" aria-labelledby="rates-title">
+      <Branch name="a" extra="c" side="right" flip className="branch--rates" />
       <div className="container">
         <header className="rates__header">
           <Eyebrow>Rates</Eyebrow>
@@ -311,6 +313,8 @@ const steps = [
 function BeforeYouInquire() {
   return (
     <section className="section before" aria-labelledby="before-title">
+      <Branch name="a" side="left" className="branch--before" />
+      <Branch name="c" side="right" flip className="branch--before-right" />
       <div className="container before__grid">
         <header className="before__header">
           <Eyebrow>Before you inquire</Eyebrow>
