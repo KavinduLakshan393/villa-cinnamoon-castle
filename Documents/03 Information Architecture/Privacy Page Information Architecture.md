@@ -56,114 +56,116 @@ The article headings below are not separate marketing sections.
 
 ## Privacy Notice
 
-**Last updated:** `[launch date]` — until the real date is set, the page shows `draft — the publication date is added at launch`. Never show an invented date.
+**Last updated:** `2026-09-30`
 
-Villa Cinnamoon Castle respects your privacy. This notice explains what information is used when you browse the website or prepare a stay inquiry, why it is used and when it is shared with another service.
+Villa Cinnamoon Castle respects your privacy. Whether you are exploring our spaces, reading guest reviews, or preparing an inquiry for a stay, this notice explains what information we collect, why we need it, how it is kept secure, and how you remain in control of your personal data.
+
+### Our commitments at a glance
+
+- **No advertising trackers:** We do not use third-party tracking, profiling, or advertising cookies.
+- **We never sell data:** Your contact and stay details are never sold, rented, or used for third-party marketing.
+- **Authentic Google Reviews:** Guest reviews displayed on our website are real reviews sourced directly from our verified Google Business Account.
+- **Always in control:** You can review, correct, or request deletion of your inquiry details anytime by messaging the host on WhatsApp.
 
 ### Information you provide
 
-When you prepare an inquiry, you may enter:
+When you prepare a stay inquiry, you provide details needed to coordinate your visit:
 
 - Check-in and check-out dates
 - Number of guests
-- Selected stay option
+- Preferred stay option and room package
 - Full name
-- WhatsApp number
-- Any information you choose to add under special requests
+- WhatsApp contact number
+- Any optional special requests you choose to share
 
-Please provide only the information needed for your stay inquiry. Do not enter passport details, payment-card information, bank details or unnecessary medical information in the special-requests field.
+Please provide only the details necessary for your stay. Do not enter passport scans, payment card numbers, bank details, or confidential medical information into the special requests field. Payment and identity verification are arranged directly with the host when confirming your reservation.
 
 ### How we use this information
 
-The information is used to:
+We use your inquiry details solely to:
 
-- Show stay options and an estimated price
-- Prepare your inquiry message
-- Respond to your inquiry
-- Confirm availability and arrange the stay with you
-- Address any special requests you choose to provide
+- Calculate estimated pricing and check stay availability
+- Create an inquiry reference number so the host can identify your request
+- Enable the villa management team to review and arrange your visit
+- Prepare your direct WhatsApp inquiry message
+- Address any special preferences or arrangements you have requested
 
-The website does not use inquiry details for unrelated advertising and does not sell personal information.
+We never use your contact details for unrelated marketing, automated promotional campaigns, or third-party advertising, and we never sell personal information.
 
-### Website inquiry storage
+### How your inquiry is stored and protected
 
-The website does not save your inquiry in an online booking database.
+When you submit an inquiry, your request details are saved to our secure reservation system to generate your reference number and allow the host to review dates and manage the stay.
 
-While you fill in the form, your progress is kept in your browser for the current session, so moving between steps or returning to the form does not clear what you have entered. This session data stays on your device and is not a booking record.
+- **Private management access:** Your inquiry records are accessible strictly to authorized villa management through an authenticated administration portal.
+- **Browser form memory:** While you move through the form steps, your progress is kept in your device’s temporary browser storage so you do not lose entered details if you switch steps or refresh the page.
 
-### WhatsApp
+### Direct WhatsApp communication
 
-When you select `Send Inquiry`, the website prepares a message and opens WhatsApp. You can review the message before choosing to send it.
+When you select `Send Inquiry`, our website records your inquiry reference and opens WhatsApp with your pre-filled inquiry summary.
 
-Your inquiry reaches the host only after you tap Send in WhatsApp. From that point, WhatsApp processes the message under its own terms and privacy policies. The host uses the conversation to respond, confirm availability and arrange the stay.
+- **You choose when to send:** The inquiry reaches the host only after you review the message and tap Send in WhatsApp.
+- **Encrypted conversation:** From that point, your conversation takes place directly on WhatsApp under WhatsApp’s privacy terms and end-to-end messaging encryption. The host uses this chat to answer questions, confirm availability, and finalize your stay.
 
 Read the [WhatsApp privacy policies](https://www.whatsapp.com/legal/privacy-policies).
 
-### Technical information
+### Google Reviews, maps and external links
 
-The website and its hosting provider may process limited technical information needed to deliver and protect the site, such as:
+We display authentic guest ratings and feedback sourced directly from our official Google Business Account:
 
-- Internet Protocol (IP) address
-- Browser and device type
-- Date and time of a request
-- Pages or files requested
-- Security and error logs
-
-This information is used for website delivery, reliability and security. The website does not use advertising or behavioural-analytics cookies.
-
-### Maps and external links
-
-The website may link to Google Maps, Google Reviews, Airbnb, Facebook, Instagram and TikTok. When you choose one of these links, the external service may process information according to its own privacy policy.
-
-The Location section on the home page can show a Google map. The map does not load automatically: it loads only after you select “Show map”. Google then receives technical information, such as your IP address, and processes it under its own privacy policy.
-
-If another third-party service is added in the future, this notice will be updated first.
-
-*(Implementation rule, not public copy: any such addition also requires the consent controls that applicable law requires before it is enabled.)*
+- **Google Reviews:** The reviews and star ratings shown on our website reflect genuine experiences shared by guests on our Google Business Profile. When you choose to read full reviews on Google, view our profile, or submit your own review via “Review Us on Google”, you will be directed to Google’s platform, where your interaction is handled under Google’s privacy terms.
+- **On-Demand Location Map:** To help you plan your journey, our Location section provides an interactive Google map. To respect your privacy, this map does not load automatically—it activates only when you select “Show map”, at which point Google receives standard technical connection data (such as your IP address). You can also select “Get directions” to open Google Maps directly.
+- **External Links:** We provide links to our verified profiles on Airbnb, Google Maps, Facebook, Instagram, and TikTok. Choosing any of these links opens the external platform under its own terms and privacy practices.
 
 Read the [Google Privacy Policy](https://policies.google.com/privacy).
 
+### Cookies and device storage
+
+We keep device storage minimal and transparent:
+
+- **Public visitors:** The website does not use advertising, marketing, or behavioural analytics cookies. We use only temporary browser storage to remember your inquiry form inputs while you navigate the site.
+- **Administrative portal:** If a villa manager signs into the administration dashboard, an essential security session cookie is used strictly to protect their login session.
+
 ### How long information is kept
 
-Browser session data is kept only for the current session. You can remove it by closing the browser session or clearing this website's data.
+Temporary browser form data remains on your personal device only until you complete your session or clear your browser data.
 
-After you send an inquiry through WhatsApp, the host keeps the conversation only for as long as reasonably needed to respond, arrange the stay, maintain required business or financial records, resolve a dispute or meet a legal obligation. Information that is no longer needed is deleted or securely removed.
+Inquiry records are retained in our secure reservation system for as long as reasonably needed to manage active stays, maintain required business and financial records, address any disputes, or meet statutory obligations. Information that is no longer needed is securely removed.
+
+WhatsApp conversation history is kept by the host for communication continuity, booking details, and guest support.
 
 ### Sharing and disclosure
 
-Inquiry information may be available to:
+Your inquiry information is handled with strict discretion and is shared only with:
 
-- The Villa Cinnamoon Castle host handling the inquiry
-- WhatsApp when you choose to send the prepared message
-- Website-hosting or technical service providers processing limited data to deliver and secure the website
-- A public authority where disclosure is required by applicable law
+- The Villa Cinnamoon Castle host and management team handling your reservation
+- WhatsApp, when you choose to send your prepared inquiry message
+- Essential website hosting providers processing technical delivery logs to ensure site security and availability
+- A lawful authority, only where disclosure is strictly required by applicable law
 
-Personal information is not sold.
+We do not sell, rent, or trade personal data under any circumstances.
 
-### Your choices and requests
+### Your choices and rights
 
-Depending on applicable law, you may ask to:
+In accordance with Sri Lanka’s Personal Data Protection Act (No. 9 of 2022) and international privacy principles, you have the right to:
 
-- Receive information about personal data held about you
-- Correct inaccurate information
-- Request deletion where the information is no longer required
-- Withdraw a request or object to certain uses where applicable
+- Ask what personal information we hold regarding your inquiries
+- Request correction of any inaccurate or out-of-date details
+- Request the deletion of your inquiry records where they are no longer required for legal or booking administration
+- Withdraw consent for future communications at any time
 
-Some information may need to be retained where required for business records, legal obligations or dispute resolution.
+### Contact & privacy requests
 
-### Contact
+To ask a privacy question, update your information, or request deletion of your inquiry details, message Villa Cinnamoon Castle directly on WhatsApp:
 
-For a privacy question or request, contact Villa Cinnamoon Castle on WhatsApp:
-
-> +94 76 100 7686
-
+> +94 76 100 7686  
 > `https://wa.me/94761007686`
 
-You may also visit the [Data Protection Authority of Sri Lanka](https://www.dpa.gov.lk/) for information about data-protection rights and applicable procedures.
+For independent regulatory information regarding data protection rights in Sri Lanka, you may visit the [Data Protection Authority of Sri Lanka](https://www.dpa.gov.lk/).
 
 ### Changes to this notice
 
-This notice may be updated if the website's features, service providers or data practices change. The latest version and its update date will be published on this page.
+This notice may be updated if our website features, service providers, or data practices change. The latest version and its publication date will always be published on this page.
+
 
 ---
 

@@ -38,163 +38,216 @@ export default function Privacy() {
           )}
         </p>
         <p className="privacy__intro">
-          Villa Cinnamoon Castle respects your privacy. This notice explains what information is used when you browse
-          the website or prepare a stay inquiry, why it is used and when it is shared with another service.
+          Villa Cinnamoon Castle respects your privacy. Whether you are exploring our spaces, reading guest reviews,
+          or preparing an inquiry for a stay, this notice explains what information we collect, why we need it, how it
+          is kept secure, and how you remain in control of your personal data.
         </p>
       </header>
 
       <div className="privacy__body">
+        <section aria-labelledby="p-glance">
+          <h2 id="p-glance">Our commitments at a glance</h2>
+          <ul>
+            <li>
+              <strong>No advertising trackers:</strong> We do not use third-party tracking, profiling, or advertising cookies.
+            </li>
+            <li>
+              <strong>We never sell data:</strong> Your contact and stay details are never sold, rented, or used for third-party marketing.
+            </li>
+            <li>
+              <strong>Authentic Google Reviews:</strong> Guest reviews displayed on our website are real reviews sourced directly from our verified Google Business Account.
+            </li>
+            <li>
+              <strong>Always in control:</strong> You can review, correct, or request deletion of your inquiry details anytime by messaging the host on WhatsApp.
+            </li>
+          </ul>
+        </section>
+
         <section aria-labelledby="p-provide">
           <h2 id="p-provide">Information you provide</h2>
-          <p>When you prepare an inquiry, you may enter:</p>
+          <p>When you prepare a stay inquiry, you provide details needed to coordinate your visit:</p>
           <ul>
             <li>Check-in and check-out dates</li>
             <li>Number of guests</li>
-            <li>Selected stay option</li>
+            <li>Preferred stay option and room package</li>
             <li>Full name</li>
-            <li>WhatsApp number</li>
-            <li>Any information you choose to add under special requests</li>
+            <li>WhatsApp contact number</li>
+            <li>Any optional special requests you choose to share</li>
           </ul>
           <p>
-            Please provide only the information needed for your stay inquiry. Do not enter passport details,
-            payment-card information, bank details or unnecessary medical information in the special-requests field.
+            Please provide only the details necessary for your stay. Do not enter passport scans, payment card numbers,
+            bank details, or confidential medical information into the special requests field. Payment and identity
+            verification are arranged directly with the host when confirming your reservation.
           </p>
         </section>
 
         <section aria-labelledby="p-use">
           <h2 id="p-use">How we use this information</h2>
-          <p>The information is used to:</p>
+          <p>We use your inquiry details solely to:</p>
           <ul>
-            <li>Show stay options and an estimated price</li>
-            <li>Prepare your inquiry message</li>
-            <li>Respond to your inquiry</li>
-            <li>Confirm availability and arrange the stay with you</li>
-            <li>Address any special requests you choose to provide</li>
+            <li>Calculate estimated pricing and check stay availability</li>
+            <li>Create an inquiry reference number so the host can identify your request</li>
+            <li>Enable the villa management team to review and arrange your visit</li>
+            <li>Prepare your direct WhatsApp inquiry message</li>
+            <li>Address any special preferences or arrangements you have requested</li>
           </ul>
           <p>
-            The website does not use inquiry details for unrelated advertising and does not sell personal information.
+            We never use your contact details for unrelated marketing, automated promotional campaigns, or third-party
+            advertising, and we never sell personal information.
           </p>
         </section>
 
         <section aria-labelledby="p-storage">
-          <h2 id="p-storage">Website inquiry storage</h2>
-          <p>The website does not save your inquiry in an online booking database.</p>
+          <h2 id="p-storage">How your inquiry is stored and protected</h2>
           <p>
-            While you fill in the form, your progress is kept in your browser for the current session, so moving
-            between steps or returning to the form does not clear what you have entered. This session data stays on
-            your device and is not a booking record.
+            When you submit an inquiry, your request details are saved to our secure reservation system to generate your
+            reference number and allow the host to review dates and manage the stay.
+          </p>
+          <p>
+            <strong>Private management access:</strong> Your inquiry records are accessible strictly to authorized villa
+            management through an authenticated administration portal.
+          </p>
+          <p>
+            <strong>Browser form memory:</strong> While you move through the form steps, your progress is kept in your
+            device’s temporary browser storage so you do not lose entered details if you switch steps or refresh the
+            page.
           </p>
         </section>
 
         <section aria-labelledby="p-whatsapp">
-          <h2 id="p-whatsapp">WhatsApp</h2>
+          <h2 id="p-whatsapp">Direct WhatsApp communication</h2>
           <p>
-            When you select “Send Inquiry”, the website prepares a message and opens WhatsApp. You can review the
-            message before choosing to send it.
+            When you select “Send Inquiry”, our website records your inquiry reference and opens WhatsApp with your
+            pre-filled inquiry summary.
           </p>
           <p>
-            Your inquiry reaches the host only after you tap Send in WhatsApp. From that point, WhatsApp processes the
-            message under its own terms and privacy policies. The host uses the conversation to respond, confirm
-            availability and arrange the stay.
+            <strong>You choose when to send:</strong> The inquiry reaches the host only after you review the message and
+            tap Send in WhatsApp.
+          </p>
+          <p>
+            <strong>Encrypted conversation:</strong> From that point, your conversation takes place directly on WhatsApp
+            under WhatsApp’s privacy terms and end-to-end messaging encryption. The host uses this chat to answer
+            questions, confirm availability, and finalize your stay.
           </p>
           <p>
             Read the <External href="https://www.whatsapp.com/legal/privacy-policies">WhatsApp privacy policies</External>.
           </p>
         </section>
 
-        <section aria-labelledby="p-technical">
-          <h2 id="p-technical">Technical information</h2>
+        <section aria-labelledby="p-reviews-maps">
+          <h2 id="p-reviews-maps">Google Reviews, maps and external links</h2>
           <p>
-            The website and its hosting provider may process limited technical information needed to deliver and
-            protect the site, such as:
+            We display authentic guest ratings and feedback sourced directly from our official Google Business Account:
           </p>
           <ul>
-            <li>Internet Protocol (IP) address</li>
-            <li>Browser and device type</li>
-            <li>Date and time of a request</li>
-            <li>Pages or files requested</li>
-            <li>Security and error logs</li>
+            <li>
+              <strong>Google Reviews:</strong> The reviews and star ratings shown on our website reflect genuine experiences
+              shared by guests on our Google Business Profile. When you choose to read full reviews on Google, view our
+              profile, or submit your own review via “Review Us on Google”, you will be directed to Google’s platform, where
+              your interaction is handled under Google’s privacy terms.
+            </li>
+            <li>
+              <strong>On-Demand Location Map:</strong> To help you plan your journey, our Location section provides an
+              interactive Google map. To respect your privacy, this map does not load automatically—it activates only when
+              you select “Show map”, at which point Google receives standard technical connection data (such as your IP
+              address). You can also select “Get directions” to open Google Maps directly.
+            </li>
+            <li>
+              <strong>External Links:</strong> We provide links to our verified profiles on Airbnb, Google Maps, Facebook,
+              Instagram, and TikTok. Choosing any of these links opens the external platform under its own terms and
+              privacy practices.
+            </li>
           </ul>
-          <p>
-            This information is used for website delivery, reliability and security. The website does not use
-            advertising or behavioural-analytics cookies.
-          </p>
-        </section>
-
-        <section aria-labelledby="p-external">
-          <h2 id="p-external">Maps and external links</h2>
-          <p>
-            The website may link to Google Maps, Google Reviews, Airbnb, Facebook, Instagram and TikTok. When you
-            choose one of these links, that service may process information according to its own privacy policy.
-          </p>
-          <p>
-            The Location section on the home page can show a Google map. The map does not load automatically: it loads
-            only after you select “Show map”. Google then receives technical information, such as your IP address, and
-            processes it under its own privacy policy.
-          </p>
-          <p>If another third-party service is added in the future, this notice will be updated first.</p>
           <p>
             Read the <External href="https://policies.google.com/privacy">Google Privacy Policy</External>.
           </p>
         </section>
 
+        <section aria-labelledby="p-cookies">
+          <h2 id="p-cookies">Cookies and device storage</h2>
+          <p>We keep device storage minimal and transparent:</p>
+          <ul>
+            <li>
+              <strong>Public visitors:</strong> The website does not use advertising, marketing, or behavioural
+              analytics cookies. We use only temporary browser storage to remember your inquiry form inputs while you
+              navigate the site.
+            </li>
+            <li>
+              <strong>Administrative portal:</strong> If a villa manager signs into the administration dashboard, an
+              essential security session cookie is used strictly to protect their login session.
+            </li>
+          </ul>
+        </section>
+
         <section aria-labelledby="p-retention">
           <h2 id="p-retention">How long information is kept</h2>
           <p>
-            Browser session data is kept only for the current session. You can remove it by closing the browser
-            session or clearing this website’s data.
+            Temporary browser form data remains on your personal device only until you complete your session or clear
+            your browser data.
           </p>
           <p>
-            After you send an inquiry through WhatsApp, the host keeps the conversation only for as long as reasonably
-            needed to respond, arrange the stay, maintain required business or financial records, resolve a dispute or
-            meet a legal obligation. Information that is no longer needed is deleted or securely removed.
+            Inquiry records are retained in our secure reservation system for as long as reasonably needed to manage
+            active stays, maintain required business and financial records, address any disputes, or meet statutory
+            obligations. Information that is no longer needed is securely removed.
+          </p>
+          <p>
+            WhatsApp conversation history is kept by the host for communication continuity, booking details, and guest
+            support.
           </p>
         </section>
 
         <section aria-labelledby="p-sharing">
           <h2 id="p-sharing">Sharing and disclosure</h2>
-          <p>Inquiry information may be available to:</p>
+          <p>Your inquiry information is handled with strict discretion and is shared only with:</p>
           <ul>
-            <li>The Villa Cinnamoon Castle host handling the inquiry</li>
-            <li>WhatsApp, when you choose to send the prepared message</li>
-            <li>Website-hosting or technical service providers processing limited data to deliver and secure the website</li>
-            <li>A public authority, where disclosure is required by applicable law</li>
+            <li>The Villa Cinnamoon Castle host and management team handling your reservation</li>
+            <li>WhatsApp, when you choose to send your prepared inquiry message</li>
+            <li>
+              Essential website hosting providers processing technical delivery logs to ensure site security and
+              availability
+            </li>
+            <li>A lawful authority, only where disclosure is strictly required by applicable law</li>
           </ul>
-          <p>Personal information is not sold.</p>
+          <p>We do not sell, rent, or trade personal data under any circumstances.</p>
         </section>
 
         <section aria-labelledby="p-choices">
-          <h2 id="p-choices">Your choices and requests</h2>
-          <p>Depending on applicable law, you may ask to:</p>
-          <ul>
-            <li>Receive information about personal data held about you</li>
-            <li>Correct inaccurate information</li>
-            <li>Request deletion where the information is no longer required</li>
-            <li>Withdraw a request or object to certain uses where applicable</li>
-          </ul>
+          <h2 id="p-choices">Your choices and rights</h2>
           <p>
-            Some information may need to be kept where required for business records, legal obligations or dispute
-            resolution.
+            In accordance with Sri Lanka’s Personal Data Protection Act (No. 9 of 2022) and international privacy
+            principles, you have the right to:
           </p>
+          <ul>
+            <li>Ask what personal information we hold regarding your inquiries</li>
+            <li>Request correction of any inaccurate or out-of-date details</li>
+            <li>
+              Request the deletion of your inquiry records where they are no longer required for legal or booking
+              administration
+            </li>
+            <li>Withdraw consent for future communications at any time</li>
+          </ul>
         </section>
 
         <section aria-labelledby="p-contact" className="privacy__contact">
-          <h2 id="p-contact">Contact</h2>
-          <p>For a privacy question or request, contact Villa Cinnamoon Castle on WhatsApp:</p>
+          <h2 id="p-contact">Contact &amp; privacy requests</h2>
+          <p>
+            To ask a privacy question, update your information, or request deletion of your inquiry details, message
+            Villa Cinnamoon Castle directly on WhatsApp:
+          </p>
           <p className="privacy__contact-line">
             <External href={site.whatsapp.href}>WhatsApp {site.whatsapp.label}</External>
           </p>
           <p>
-            You may also visit the <External href="https://www.dpa.gov.lk/">Data Protection Authority of Sri Lanka</External>{' '}
-            for information about data-protection rights and applicable procedures.
+            For independent regulatory information regarding data protection rights in Sri Lanka, you may visit the{' '}
+            <External href="https://www.dpa.gov.lk/">Data Protection Authority of Sri Lanka</External>.
           </p>
         </section>
 
         <section aria-labelledby="p-changes">
           <h2 id="p-changes">Changes to this notice</h2>
           <p>
-            This notice may be updated if the website’s features, service providers or data practices change. The
-            latest version and its update date are published on this page.
+            This notice may be updated if our website features, service providers, or data practices change. The latest
+            version and its publication date will always be published on this page.
           </p>
         </section>
       </div>

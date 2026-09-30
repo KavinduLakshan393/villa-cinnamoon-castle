@@ -13,7 +13,7 @@ export const site = {
   // OPEN-001: publish only the verified official Google Reviews URL.
   googleReviewsUrl: null,
   // OPEN-003: set to the real publication date (YYYY-MM-DD) before launch.
-  privacyLastUpdated: null,
+  privacyLastUpdated: '2026-09-30',
 };
 
 // DEC-013 navigation model. `section` items target Home anchors.
