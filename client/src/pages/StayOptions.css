@@ -629,3 +629,44 @@
 .before__close .btn {
   margin-top: 8px;
 }
+
+/* ---------- Phones: weekday stays as cards (DEC-034) ---------- */
+@media (max-width: 759px) {
+  .rate-table tbody {
+    display: grid;
+    gap: 12px;
+  }
+
+  /* No column gap, so the rule above the two prices runs unbroken. */
+  .rate-table tbody tr {
+    gap: 4px 0;
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .rate-table__stay {
+    margin-bottom: 0;
+    padding-bottom: 14px !important;
+  }
+
+  /* The two prices sit side by side under a rule, each under its own label. */
+  .rate-table tbody td[data-label] {
+    padding-top: 14px !important;
+    border-top: 1px solid var(--border);
+  }
+
+  .rate-table td[data-label]::before {
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+
+  .rate-table .price {
+    font-size: 1.25rem;
+  }
+
+  .rate-table .price--none {
+    font-size: 0.9375rem;
+  }
+}

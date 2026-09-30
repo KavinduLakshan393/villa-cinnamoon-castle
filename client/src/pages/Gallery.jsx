@@ -5,6 +5,7 @@ import Branch from './home/Branch.jsx';
 import { RevealHeading, Eyebrow } from '../components/Reveal.jsx';
 import GalleryStrip from './gallery/GalleryStrip.jsx';
 import GalleryWheel from './gallery/GalleryWheel.jsx';
+import GalleryChips from './gallery/GalleryChips.jsx';
 import Mosaic from './home/Mosaic.jsx';
 import { PhotoViewerProvider, useOpenPhoto } from './home/PhotoViewer.jsx';
 import { useFadeReveals } from '../lib/reveal.js';
@@ -57,6 +58,7 @@ function GalleryChapters() {
   return (
     <div className="gallery-chapters" ref={scopeRef}>
       <GalleryWheel chapters={chapters} scopeRef={scopeRef} getSection={getSection} />
+      <GalleryChips chapters={chapters} getSection={getSection} />
       <div className="gallery-chapters__content">
         {chapters.map((chapter, i) => (
           <Chapter key={chapter.key} chapter={chapter} index={i} onOpen={open} />

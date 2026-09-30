@@ -978,3 +978,17 @@ button.stepper-nav__link {
     padding-inline: 8px;
   }
 }
+
+/* ---------- Phones: Back and Continue stay in reach (DEC-034) ---------- */
+@media (max-width: 759px) {
+  .step__actions {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--background) 94%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}

@@ -408,7 +408,7 @@ export function Outdoor() {
       </div>
       <div className="container">
         <Mosaic
-          className="outdoor__mosaic"
+          className="outdoor__mosaic mosaic--row"
           sizes="(min-width: 760px) 30vw, 46vw"
           columns={OUTDOOR_COLUMNS}
           onOpen={open}
@@ -523,7 +523,7 @@ export function Nearby() {
       </div>
       <div className="container">
         <Mosaic
-          className="nearby__mosaic"
+          className="nearby__mosaic mosaic--row"
           sizes="(min-width: 760px) 44vw, 46vw"
           columns={NEARBY_COLUMNS}
           onOpen={open}

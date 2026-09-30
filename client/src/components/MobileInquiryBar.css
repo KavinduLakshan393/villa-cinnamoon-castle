@@ -1,0 +1,72 @@
+/* ---------- Phone inquiry bar (rendered only under 760px) ---------- */
+
+.inquiry-bar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border);
+  transform: translate3d(0, 100%, 0);
+  visibility: hidden;
+  transition:
+    transform 0.5s var(--ease-out),
+    visibility 0s linear 0.5s;
+}
+
+.inquiry-bar.is-shown {
+  transform: none;
+  visibility: visible;
+  transition:
+    transform 0.5s var(--ease-out),
+    visibility 0s;
+}
+
+/* Out of the way under the open menu and the photo viewer. */
+html.menu-open .inquiry-bar,
+html.viewer-open .inquiry-bar {
+  transform: translate3d(0, 100%, 0);
+  visibility: hidden;
+}
+
+.inquiry-bar__rate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 6px;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.inquiry-bar__from,
+.inquiry-bar__unit {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.inquiry-bar__rate strong {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* With no rate to show, the button sits alone on the right. */
+.inquiry-bar .btn {
+  flex-shrink: 0;
+  min-height: 44px;
+  margin-left: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inquiry-bar,
+  .inquiry-bar.is-shown {
+    transition: none;
+  }
+}
