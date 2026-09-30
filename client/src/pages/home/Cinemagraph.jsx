@@ -19,7 +19,7 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
   const videoRef = useRef(null);
   const variant = useMediaQuery(PORTRAIT_QUERY) ? 'mobile' : 'desktop';
   const video = `/media/${name}-video-${variant}.mp4`;
-  const poster = `/media/${name}-video-${variant}-poster.jpg`;
+  const poster = `/media/${name}-video-${variant}-poster.webp`;
   const allowed = useVideoAllowed();
   const [near, setNear] = useState(false);
 

@@ -1,0 +1,61 @@
+/* ---------- Gallery chapter names (rendered only under 760px) ---------- */
+
+.chips {
+  position: sticky;
+  top: var(--nav-height);
+  z-index: 5;
+  background: color-mix(in srgb, var(--background) 94%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.chips__list {
+  display: flex;
+  gap: 8px;
+  padding: 8px var(--gutter);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.chips__list::-webkit-scrollbar {
+  display: none;
+}
+
+.chips__chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  background: var(--surface);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.chips__chip[aria-current='true'] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--text-on-image);
+}
+
+/* A chapter scrolled to from a name clears the header and this row. */
+@media (max-width: 759px) {
+  .gallery-chapter {
+    scroll-margin-top: calc(var(--nav-height) + 76px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chips__chip {
+    transition: none;
+  }
+}

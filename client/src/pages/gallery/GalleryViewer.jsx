@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import ResponsiveImage from '../../components/ResponsiveImage.jsx';
+import ResponsiveImage, { mediaRatio } from '../../components/ResponsiveImage.jsx';
 import { gsap, prefersReducedMotion } from '../../lib/motion.js';
 import { useMediaQuery } from '../../lib/media.js';
 import './GalleryViewer.css';
@@ -317,7 +317,7 @@ export default function GalleryViewer({ items, startIndex, onClose, returnFocusT
             <ResponsiveImage
               name={items[i].name}
               alt={slot === 'current' ? items[i].alt : ''}
-              sizes="100vw"
+              sizes={`min(100vw, ${Math.ceil(mediaRatio(items[i].name) * 100)}vh)`}
               className="viewer__image"
               priority={slot === 'current'}
               loading="eager"

@@ -2,7 +2,13 @@ import manifest from '../data/media-manifest.json';
 
 const srcset = (name, widths, ext) => widths.map((w) => `/media/${name}-${w}.${ext} ${w}w`).join(', ');
 
-/** Serves the renditions produced by `npm run media` with explicit dimensions (no CLS). */
+/** Width divided by height of a media item, for layouts that fit a photo by height. */
+export const mediaRatio = (name) => manifest[name].width / manifest[name].height;
+
+/**
+ * Serves the renditions produced by `npm run media` with explicit dimensions (no CLS).
+ * The browser picks AVIF, then WebP, then JPEG, at the width the layout needs.
+ */
 export default function ResponsiveImage({ name, alt, sizes = '100vw', priority = false, className, ...rest }) {
   const entry = manifest[name];
   if (!entry) throw new Error(`Unknown media "${name}". Add it to scripts/build-media.mjs.`);
@@ -11,6 +17,7 @@ export default function ResponsiveImage({ name, alt, sizes = '100vw', priority =
 
   return (
     <picture>
+      <source type="image/avif" srcSet={srcset(name, widths, 'avif')} sizes={sizes} />
       <source type="image/webp" srcSet={srcset(name, widths, 'webp')} sizes={sizes} />
       <img
         src={`/media/${name}-${fallback}.jpg`}

@@ -303,6 +303,44 @@ This log records confirmed product, content and UX decisions. It is not a discus
   - The branches are decorative: hidden from assistive technology, never clickable, and always behind the section content.
 - **Affected documents:** None. Visual only; no copy or structure changed.
 
+### DEC-033 — Site-wide performance
+
+- **Status:** Approved (2026-09-30)
+- **Decision:**
+  - **Code:** only the Home page ships in the first download. Stay Options, Gallery, Inquiry, Privacy and the admin area are separate files, fetched while the current page eases out and in idle time. First download: 189 kB to 161 kB (gzip).
+  - **Photographs:** every photograph gains AVIF renditions and a ladder of widths up to a 2560px long edge. The 8K masters (4-6 MB each) stay on disk but leave the `srcset`, so no browser jumps to them. The photo viewer asks for the width the fitted photograph needs.
+  - **Clips:** each leaf clip is downloaded and decoded once however often it appears on a page; phones get half-size leaf clips. The three portrait cinemagraphs are 720x1280. Cinemagraph posters are WebP.
+  - **Delivery:** long-lived cache headers for built files, a one-week cache for media, and a preload for the Home hero poster.
+  - **Measured (full scroll of Home, cache off):** phone 26.4 MB to 8.9 MB; desktop 30.1 MB to 18.0 MB; desktop at 2x density 38.1 MB to 19.6 MB.
+- **Not changed:** the landscape cinemagraphs (re-encoding saved almost nothing) and the 8K files themselves.
+- **Affected documents:** None. No copy or structure changed.
+
+### DEC-034 — Mobile interface refinements (under 760px only)
+
+- **Status:** Approved (2026-09-30)
+- **Scope:** Layouts under 760px only. Desktop pages were compared before and after at 1440px and 1024px and are pixel-identical.
+- **Decision:**
+  - **Inquiry bar:** a slim bar at the bottom of the screen with the weekday starting rate (`From Rs. … per night`, the wording already on Home) and Send Inquiry. It appears after the first screen and hides on the Inquiry page, in the photo viewer, under the open menu, and wherever the page already shows Send Inquiry (the closing sections and the footer).
+  - **Stay Options:** each weekday stay is a card, with the two prices side by side under their labels.
+  - **Inquiry:** Back and Continue stay at the bottom of the screen while a step is in view.
+  - **Gallery:** the chapter names sit in a row under the header while the chapters scroll, standing in for the wheel. The current chapter is highlighted; selecting a name scrolls to it.
+  - **Home, Outside and Nearby:** the photographs form one row to swipe through, each large with the next one peeking in.
+  - **Spacing and touch:** sections sit a little closer together; a photograph responds when pressed.
+- **Supersedes:** In DEC-030, the two-column masonry for the Outside and Nearby sections only. Every other section keeps the masonry.
+- **Not adopted:** an accordion for the amenities (it would hide content guests use to decide) and a scroll hint on the Hero.
+- **Affected documents:** `04 Content/Phase 1 Website Copy.md` (inquiry bar wording).
+
+### DEC-035 — Text reveals: line by line, at a steadier pace
+
+- **Status:** Approved (2026-09-30)
+- **Decision:**
+  - All supporting text reveals line by line: paragraphs, lists, and the text inside boxes and cards (rates, amenities, "Available on request", the closing panels). Text never appears as one block.
+  - A box or card fades in behind its lines; photographs, buttons and the map (no text) fade up as before.
+  - Faster than DEC-031: headings 1.15 s per line with 0.11 s between lines (was 1.6 s and 0.16 s); body text 1.0 s with 0.085 s between lines (was a 1.5 s fade of the whole block).
+  - Everything still waits for its own section to scroll into view.
+- **Supersedes:** In DEC-031, the reveal timings and the fade of whole text blocks.
+- **Affected documents:** None. Motion only.
+
 ## Open decisions and launch dependencies
 
 ### OPEN-001 — Official Google destination

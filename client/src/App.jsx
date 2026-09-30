@@ -1,21 +1,38 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Intro from './components/Intro.jsx';
 import CursorLabel from './components/CursorLabel.jsx';
+import MobileInquiryBar from './components/MobileInquiryBar.jsx';
 import Home from './pages/Home.jsx';
-import StayOptions from './pages/StayOptions.jsx';
-import Gallery from './pages/Gallery.jsx';
-import Inquiry from './pages/Inquiry.jsx';
-import Privacy from './pages/Privacy.jsx';
-import Placeholder from './pages/Placeholder.jsx';
 import { gsap, ScrollTrigger, introState, prefersReducedMotion } from './lib/motion.js';
 import { site } from './data/site.js';
 import { recordNavigation } from './lib/navigation.js';
 import { initSmoothScroll } from './lib/smoothScroll.js';
 import { scrollToRouteLocation } from './lib/routeScroll.js';
-import AdminApp from './admin/AdminApp.jsx';
+
+// Only the Home page ships in the first download. Every other page is a separate
+// file, fetched while the current page eases out (or in idle time, see App).
+const pages = {
+  '/stay-options': () => import('./pages/StayOptions.jsx'),
+  '/gallery': () => import('./pages/Gallery.jsx'),
+  '/inquiry': () => import('./pages/Inquiry.jsx'),
+  '/privacy': () => import('./pages/Privacy.jsx'),
+};
+const loadAdmin = () => import('./admin/AdminApp.jsx');
+const StayOptions = lazy(pages['/stay-options']);
+const Gallery = lazy(pages['/gallery']);
+const Inquiry = lazy(pages['/inquiry']);
+const Privacy = lazy(pages['/privacy']);
+const AdminApp = lazy(loadAdmin);
+const Placeholder = lazy(() => import('./pages/Placeholder.jsx'));
+
+/** Fetches the code for a route ahead of showing it. Never rejects. */
+const preloadPage = (pathname) => {
+  const load = pathname.startsWith('/admin') ? loadAdmin : pages[pathname];
+  return load ? load().catch(() => {}) : Promise.resolve();
+};
 
 const titles = {
   '/': `${site.name} — Private villa near Hikkaduwa`,
@@ -44,16 +61,21 @@ function usePageTransition(pageRef) {
       if (location !== shown) setShown(location);
       return;
     }
+    // The next page's code downloads while this one eases out, so it is ready to show.
+    let cancelled = false;
+    const ready = preloadPage(location.pathname);
+    const show = () => ready.then(() => !cancelled && setShown(location));
     const tween = gsap.to(pageRef.current, {
       opacity: 0,
       y: prefersReducedMotion() ? 0 : -10,
       duration: prefersReducedMotion() ? 0.12 : 0.3,
       ease: 'power2.in',
-      onComplete: () => setShown(location),
+      onComplete: show,
     });
     // GSAP pauses in background tabs; never let navigation wait on the exit animation.
-    const fallback = setTimeout(() => setShown(location), 700);
+    const fallback = setTimeout(show, 700);
     return () => {
+      cancelled = true;
       tween.kill();
       clearTimeout(fallback);
     };
@@ -130,7 +152,15 @@ export default function App() {
     });
     observer.observe(document.body);
 
+    // Once the first page has settled, fetch the other public pages in idle time
+    // so moving between them is instant.
+    const idle = window.requestIdleCallback ?? ((run) => setTimeout(run, 2500));
+    const warm = () => idle(() => Object.keys(pages).forEach(preloadPage));
+    if (document.readyState === 'complete') warm();
+    else window.addEventListener('load', warm, { once: true });
+
     return () => {
+      window.removeEventListener('load', warm);
       window.removeEventListener('load', refresh);
       observer.disconnect();
       clearTimeout(timer);
@@ -150,6 +180,7 @@ export default function App() {
       {!isAdmin && <Navbar />}
       <div className="page" ref={pageRef}>
         <main id="main" tabIndex={-1}>
+          <Suspense fallback={<div className="page-loading" aria-hidden="true" />}>
           <Routes location={shown}>
             <Route path="/" element={<Home />} />
             <Route path="/stay-options" element={<StayOptions />} />
@@ -169,11 +200,13 @@ export default function App() {
               }
             />
           </Routes>
+          </Suspense>
         </main>
         {!isAdmin && <Footer />}
       </div>
       {!isAdmin && introVisible && <Intro onDone={hideIntro} />}
       {!isAdmin && <CursorLabel />}
+      {!isAdmin && <MobileInquiryBar />}
     </>
   );
 }
