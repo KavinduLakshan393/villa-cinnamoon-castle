@@ -1,10 +1,9 @@
 import { forwardRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { scrollToTarget } from '../lib/smoothScroll.js';
+import { scrollToRouteLocation } from '../lib/routeScroll.js';
 
 export function scrollToSection(id, { instant = false } = {}) {
-  const target = id ? document.getElementById(id) : null;
-  scrollToTarget(target ?? 0, { immediate: instant });
+  scrollToRouteLocation(id ? `#${id}` : '', { immediate: instant });
 }
 
 /**

@@ -12,6 +12,10 @@ import './styles/tokens.css';
 import './styles/base.css';
 import { PackagesProvider } from './data/PackagesContext.jsx';
 
+// Set this before React mounts. On hosted builds, the browser can otherwise
+// restore the previous document position after our route has already rendered.
+if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>

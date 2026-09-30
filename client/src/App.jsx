@@ -4,7 +4,6 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import Intro from './components/Intro.jsx';
 import CursorLabel from './components/CursorLabel.jsx';
-import { scrollToSection } from './components/SmartLink.jsx';
 import Home from './pages/Home.jsx';
 import StayOptions from './pages/StayOptions.jsx';
 import Gallery from './pages/Gallery.jsx';
@@ -14,7 +13,8 @@ import Placeholder from './pages/Placeholder.jsx';
 import { gsap, ScrollTrigger, introState, prefersReducedMotion } from './lib/motion.js';
 import { site } from './data/site.js';
 import { recordNavigation } from './lib/navigation.js';
-import { initSmoothScroll, scrollToTarget } from './lib/smoothScroll.js';
+import { initSmoothScroll } from './lib/smoothScroll.js';
+import { scrollToRouteLocation } from './lib/routeScroll.js';
 import AdminApp from './admin/AdminApp.jsx';
 
 const titles = {
@@ -64,9 +64,6 @@ function usePageTransition(pageRef) {
     if (renderedPath.current === shown.pathname) return;
     recordNavigation(renderedPath.current);
     renderedPath.current = shown.pathname;
-    const hash = shown.hash.slice(1);
-    if (hash) scrollToSection(hash, { instant: true });
-    else scrollToTarget(0, { immediate: true });
     ScrollTrigger.refresh();
 
     const reduce = prefersReducedMotion();
@@ -83,15 +80,37 @@ function usePageTransition(pageRef) {
   return shown;
 }
 
+/**
+ * React Router keeps the current document alive between routes, so browsers do
+ * not automatically reset its scroll position. Scroll after the destination DOM
+ * commits, then repeat on the next frame after Lenis and layout measurements
+ * have caught up. This also handles the initial hosted page load.
+ */
+function useRouteScroll(location) {
+  useLayoutEffect(() => {
+    let frame = 0;
+
+    const settle = () => {
+      scrollToRouteLocation(location.hash, { immediate: true });
+      ScrollTrigger.refresh();
+    };
+
+    settle();
+    frame = requestAnimationFrame(settle);
+
+    return () => cancelAnimationFrame(frame);
+  }, [location.key, location.pathname, location.hash]);
+}
+
 export default function App() {
   const pageRef = useRef(null);
   const shown = usePageTransition(pageRef);
+  useRouteScroll(shown);
   const isAdmin = shown.pathname.startsWith('/admin');
   const [introVisible, setIntroVisible] = useState(introState.active);
   const hideIntro = useCallback(() => setIntroVisible(false), []);
 
   useEffect(() => {
-    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
     // Recalculate trigger positions once every late image and font has settled.
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener('load', refresh);

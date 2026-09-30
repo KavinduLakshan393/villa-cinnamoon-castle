@@ -77,6 +77,9 @@ export function scrollToTarget(target, { immediate = false } = {}) {
   const instant = immediate || prefersReducedMotion();
   const offset = target instanceof Element ? -parseFloat(getComputedStyle(target).scrollMarginTop || 0) : 0;
   if (lenis) {
+    // Route changes can replace a short page with a much taller one (or vice
+    // versa). Refresh Lenis' dimensions before resolving an element target.
+    lenis.resize();
     lenis.scrollTo(target, { immediate: instant, offset, force: true });
     return;
   }

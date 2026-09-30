@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap, EASE, markIntroLifting, prefersReducedMotion } from '../lib/motion.js';
-import { scrollToTarget } from '../lib/smoothScroll.js';
+import { scrollToRouteLocation } from '../lib/routeScroll.js';
 import './Intro.css';
 
 // Short phrases drawn from the villa itself; the name stays on screen as the intro lifts.
@@ -115,7 +115,9 @@ export default function Intro({ onDone }) {
     function lift() {
       const root = rootRef.current;
       document.documentElement.classList.remove('is-intro');
-      scrollToTarget(0, { immediate: true });
+      // A full-page visit to /#location must keep its destination. The previous
+      // unconditional top reset made the intro override Home anchor links.
+      scrollToRouteLocation(window.location.hash, { immediate: true });
       markIntroLifting();
 
       if (reduce) {
