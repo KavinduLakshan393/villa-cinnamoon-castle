@@ -19,6 +19,7 @@ import { getPreviousPath } from '../lib/navigation.js';
 import { scrollToTarget } from '../lib/smoothScroll.js';
 import { apiRequest } from '../lib/api.js';
 import { usePackages } from '../data/PackagesContext.jsx';
+import { isFrontendOnly } from '../config/appMode.js';
 import { useDelayedLoading } from '../components/loading/useDelayedLoading.js';
 import { InquiryOptionsSkeleton } from './loading/PackageSkeletons.jsx';
 import './inquiry/Inquiry.css';
@@ -133,27 +134,30 @@ export default function Inquiry() {
     const opened = window.open('', '_blank');
     if (opened) opened.opener = null;
     try {
-      if (packageState.error || est.lines.some((line) => !line.variantId)) {
+      if (!isFrontendOnly && (packageState.error || est.lines.some((line) => !line.variantId))) {
         throw new Error('Package information is temporarily unavailable. Please refresh the page and try again.');
       }
-      const result = await apiRequest('/inquiries', {
-        method: 'POST',
-        retryAuth: false,
-        body: {
-          customerName: state.name.trim(),
-          whatsappNumber: phone,
-          checkIn: state.checkIn,
-          checkOut: state.checkOut,
-          guestCount: state.guests,
-          specialRequests: state.requests.trim() || null,
-          consent: state.consent,
-          selections: est.lines.map((line) => ({
-            portion: line.portion.toUpperCase(),
-            packageVariantId: line.variantId,
-          })),
-        },
-      });
-      const reference = result.inquiry.reference;
+      let reference = null;
+      if (!isFrontendOnly) {
+        const result = await apiRequest('/inquiries', {
+          method: 'POST',
+          retryAuth: false,
+          body: {
+            customerName: state.name.trim(),
+            whatsappNumber: phone,
+            checkIn: state.checkIn,
+            checkOut: state.checkOut,
+            guestCount: state.guests,
+            specialRequests: state.requests.trim() || null,
+            consent: state.consent,
+            selections: est.lines.map((line) => ({
+              portion: line.portion.toUpperCase(),
+              packageVariantId: line.variantId,
+            })),
+          },
+        });
+        reference = result.inquiry.reference;
+      }
       const message = buildMessage(state, est, phone, reference);
       const url = whatsappUrl(message);
       if (opened) opened.location.replace(url);

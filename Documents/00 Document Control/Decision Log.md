@@ -341,6 +341,15 @@ This log records confirmed product, content and UX decisions. It is not a discus
 - **Supersedes:** In DEC-031, the reveal timings and the fade of whole text blocks.
 - **Affected documents:** None. Motion only.
 
+### DEC-036 — Frontend-only inquiry deployment
+
+- **Status:** Approved (2026-10-30)
+- **Decision:** The production website runs from Netlify without a live application backend or booking database. The three-step inquiry remains unchanged through validation and estimation, then prepares a WhatsApp message entirely in the visitor's browser. The visitor must intentionally send it in WhatsApp.
+- **Package management:** The public package catalogue is version-controlled frontend configuration. Every production build validates its codes, rate values, guest ranges and pricing combinations before deployment.
+- **Administration boundary:** The existing admin, Express, Prisma and migration source remains preserved for a future full-stack deployment, but the frontend-only production mode does not load admin routes or call its APIs.
+- **Security and privacy:** No secret is placed in the browser bundle, estimates are non-binding until confirmed by the host, inquiry progress remains session-scoped, and the public Privacy notice describes the direct WhatsApp handoff accurately.
+- **Affected documents:** `03 Information Architecture/Privacy Page Information Architecture.md`; `Deployment/frontend-only-hosting.md`.
+
 ## Open decisions and launch dependencies
 
 ### OPEN-001 — Official Google destination
