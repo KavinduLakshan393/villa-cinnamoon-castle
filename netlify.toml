@@ -25,8 +25,53 @@
   [headers.values]
     Cache-Control = "public, max-age=604800, stale-while-revalidate=2592000"
 
-# Keep the SPA fallback last so React Router routes resolve to index.html.
+# Administration remains available to a future full-stack build, but it must
+# never appear in search results while the public site is frontend-only.
+[[headers]]
+  for = "/admin"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# Serve route-specific HTML so crawlers and social link previews receive the
+# correct metadata before the React application hydrates.
+[[redirects]]
+  from = "/stay-options"
+  to = "/stay-options/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gallery"
+  to = "/gallery/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/inquiry"
+  to = "/inquiry/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+# Public routes are emitted as real directory index files. Unknown paths now
+# return a genuine 404 instead of a search-engine-unfriendly soft 404.
 [[redirects]]
   from = "/*"
-  to = "/index.html"
-  status = 200
+  to = "/404.html"
+  status = 404

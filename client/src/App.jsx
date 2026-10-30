@@ -7,11 +7,11 @@ import CursorLabel from './components/CursorLabel.jsx';
 import MobileInquiryBar from './components/MobileInquiryBar.jsx';
 import Home from './pages/Home.jsx';
 import { gsap, ScrollTrigger, introState, prefersReducedMotion } from './lib/motion.js';
-import { site } from './data/site.js';
 import { recordNavigation } from './lib/navigation.js';
 import { initSmoothScroll } from './lib/smoothScroll.js';
 import { scrollToRouteLocation } from './lib/routeScroll.js';
 import { isFrontendOnly } from './config/appMode.js';
+import SeoHead from './components/SeoHead.jsx';
 
 // Only the Home page ships in the first download. Every other page is a separate
 // file, fetched while the current page eases out (or in idle time, see App).
@@ -33,17 +33,6 @@ const Placeholder = lazy(() => import('./pages/Placeholder.jsx'));
 const preloadPage = (pathname) => {
   const load = pathname.startsWith('/admin') ? (isFrontendOnly ? null : loadAdmin) : pages[pathname];
   return load ? load().catch(() => {}) : Promise.resolve();
-};
-
-const titles = {
-  '/': `${site.name} — Private villa near Hikkaduwa`,
-  '/stay-options': `Stay Options — ${site.name}`,
-  '/gallery': `Gallery — ${site.name}`,
-  '/inquiry': `Send Inquiry — ${site.name}`,
-  '/privacy': `Privacy — ${site.name}`,
-  '/admin/login': `Admin Sign In — ${site.name}`,
-  '/admin/inquiries': `Inquiries — ${site.name} Admin`,
-  '/admin/packages': `Packages — ${site.name} Admin`,
 };
 
 /**
@@ -83,7 +72,6 @@ function usePageTransition(pageRef) {
   }, [location, shown, pageRef]);
 
   useLayoutEffect(() => {
-    document.title = titles[shown.pathname] ?? site.name;
     if (renderedPath.current === shown.pathname) return;
     recordNavigation(renderedPath.current);
     renderedPath.current = shown.pathname;
@@ -175,6 +163,7 @@ export default function App() {
 
   return (
     <>
+      <SeoHead pathname={shown.pathname} />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
