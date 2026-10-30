@@ -117,6 +117,7 @@ The files under `Sample components/` are **samples**, not approved designs. They
 - **2026-09-30 — Site-wide performance (DEC-033):** Technical only; no document text changed.
 - **2026-09-30 — Mobile interface refinements (DEC-034):** Added the Mobile Inquiry Bar entry to `Phase 1 Website Copy.md`. **Sinhala synchronization:** Not required, because no Sinhala Website Copy document exists.
 - **2026-09-30 — Line-by-line text reveals (DEC-035):** Motion only; no document text changed.
+- **2026-10-30 — Frontend-only inquiry deployment (DEC-036):** Restored the approved direct WhatsApp inquiry boundary for the production site, made the version-controlled frontend catalogue the production source, aligned the Privacy notice, and recorded the Netlify-only deployment and rollback procedure. Backend, Prisma, migrations and admin source remain preserved for future reactivation.
 
 ## Document control rules
 

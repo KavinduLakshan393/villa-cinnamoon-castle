@@ -181,6 +181,7 @@ export function buildMessage(state, est, phone, reference) {
   }
   lines.push(
     `Estimated total: ${lkr(est.total)}`,
+    'Estimate only — availability and the final price are confirmed by the host.',
     '',
     `Name: ${state.name.trim()}`,
     `WhatsApp: ${phone}`,

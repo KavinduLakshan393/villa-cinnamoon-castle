@@ -11,6 +11,7 @@ import { site } from './data/site.js';
 import { recordNavigation } from './lib/navigation.js';
 import { initSmoothScroll } from './lib/smoothScroll.js';
 import { scrollToRouteLocation } from './lib/routeScroll.js';
+import { isFrontendOnly } from './config/appMode.js';
 
 // Only the Home page ships in the first download. Every other page is a separate
 // file, fetched while the current page eases out (or in idle time, see App).
@@ -30,7 +31,7 @@ const Placeholder = lazy(() => import('./pages/Placeholder.jsx'));
 
 /** Fetches the code for a route ahead of showing it. Never rejects. */
 const preloadPage = (pathname) => {
-  const load = pathname.startsWith('/admin') ? loadAdmin : pages[pathname];
+  const load = pathname.startsWith('/admin') ? (isFrontendOnly ? null : loadAdmin) : pages[pathname];
   return load ? load().catch(() => {}) : Promise.resolve();
 };
 
@@ -128,7 +129,7 @@ export default function App() {
   const pageRef = useRef(null);
   const shown = usePageTransition(pageRef);
   useRouteScroll(shown);
-  const isAdmin = shown.pathname.startsWith('/admin');
+  const isAdmin = !isFrontendOnly && shown.pathname.startsWith('/admin');
   const [introVisible, setIntroVisible] = useState(introState.active);
   const hideIntro = useCallback(() => setIntroVisible(false), []);
 
@@ -187,7 +188,20 @@ export default function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/inquiry" element={<Inquiry />} />
             <Route path="/privacy" element={<Privacy />} />
-            <Route path="/admin/*" element={<AdminApp />} />
+            <Route
+              path="/admin/*"
+              element={
+                isFrontendOnly ? (
+                  <Placeholder
+                    eyebrow="Unavailable"
+                    title="The administration portal is currently offline."
+                    note="Villa enquiries are handled directly through WhatsApp."
+                  />
+                ) : (
+                  <AdminApp />
+                )
+              }
+            />
             <Route
               path="*"
               element={

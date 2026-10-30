@@ -56,9 +56,9 @@ The article headings below are not separate marketing sections.
 
 ## Privacy Notice
 
-**Last updated:** `2026-09-30`
+**Last updated:** `2026-10-30`
 
-Villa Cinnamoon Castle respects your privacy. Whether you are exploring our spaces, reading guest reviews, or preparing an inquiry for a stay, this notice explains what information we collect, why we need it, how it is kept secure, and how you remain in control of your personal data.
+Villa Cinnamoon Castle respects your privacy. Whether you are exploring our spaces, reading guest reviews, or preparing an inquiry for a stay, this notice explains what information you use and choose to share, why it is needed, and how you remain in control of your personal data.
 
 ### Our commitments at a glance
 
@@ -84,9 +84,7 @@ Please provide only the details necessary for your stay. Do not enter passport s
 
 We use your inquiry details solely to:
 
-- Calculate estimated pricing and check stay availability
-- Create an inquiry reference number so the host can identify your request
-- Enable the villa management team to review and arrange your visit
+- Calculate an estimated price from the dates and stay option you select
 - Prepare your direct WhatsApp inquiry message
 - Address any special preferences or arrangements you have requested
 
@@ -94,14 +92,13 @@ We never use your contact details for unrelated marketing, automated promotional
 
 ### How your inquiry is stored and protected
 
-When you submit an inquiry, your request details are saved to our secure reservation system to generate your reference number and allow the host to review dates and manage the stay.
+The website does not send your inquiry to a reservation database or store it in a website administration system. Your details leave the website only if you choose to send the prepared message in WhatsApp.
 
-- **Private management access:** Your inquiry records are accessible strictly to authorized villa management through an authenticated administration portal.
-- **Browser form memory:** While you move through the form steps, your progress is kept in your device’s temporary browser storage so you do not lose entered details if you switch steps or refresh the page.
+- **Browser form memory:** While you move through the form steps, your progress is kept in your device’s session storage so you do not lose entered details if you switch steps or refresh the page. This temporary copy is controlled by your browser and is not transmitted to us by the website.
 
 ### Direct WhatsApp communication
 
-When you select `Send Inquiry`, our website records your inquiry reference and opens WhatsApp with your pre-filled inquiry summary.
+When you select `Send Inquiry`, the website opens WhatsApp with a pre-filled summary created in your browser.
 
 - **You choose when to send:** The inquiry reaches the host only after you review the message and tap Send in WhatsApp.
 - **Encrypted conversation:** From that point, your conversation takes place directly on WhatsApp under WhatsApp’s privacy terms and end-to-end messaging encryption. The host uses this chat to answer questions, confirm availability, and finalize your stay.
@@ -123,15 +120,12 @@ Read the [Google Privacy Policy](https://policies.google.com/privacy).
 We keep device storage minimal and transparent:
 
 - **Public visitors:** The website does not use advertising, marketing, or behavioural analytics cookies. We use only temporary browser storage to remember your inquiry form inputs while you navigate the site.
-- **Administrative portal:** If a villa manager signs into the administration dashboard, an essential security session cookie is used strictly to protect their login session.
 
 ### How long information is kept
 
 Temporary browser form data remains on your personal device only until you complete your session or clear your browser data.
 
-Inquiry records are retained in our secure reservation system for as long as reasonably needed to manage active stays, maintain required business and financial records, address any disputes, or meet statutory obligations. Information that is no longer needed is securely removed.
-
-WhatsApp conversation history is kept by the host for communication continuity, booking details, and guest support.
+The website does not retain a server-side copy of your inquiry. If you send the prepared message, the host may retain the resulting WhatsApp conversation as reasonably needed to discuss your stay, provide guest support, maintain required business records, or meet legal obligations.
 
 ### Sharing and disclosure
 
@@ -148,9 +142,9 @@ We do not sell, rent, or trade personal data under any circumstances.
 
 In accordance with Sri Lanka’s Personal Data Protection Act (No. 9 of 2022) and international privacy principles, you have the right to:
 
-- Ask what personal information we hold regarding your inquiries
+- Ask what personal information the host holds in your WhatsApp conversation
 - Request correction of any inaccurate or out-of-date details
-- Request the deletion of your inquiry records where they are no longer required for legal or booking administration
+- Request the deletion of your conversation details where they are no longer required for legal or booking administration
 - Withdraw consent for future communications at any time
 
 ### Contact & privacy requests

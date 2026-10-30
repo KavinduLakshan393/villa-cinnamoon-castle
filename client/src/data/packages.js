@@ -1,24 +1,23 @@
-// Phase 1 package seed — Documents/01 Source Information/package_details.md §9.
+// Frontend production catalogue — Documents/01 Source Information/package_details.md §9.
 // Rates, capacities and A/C classifications must match the official catalogue.
-// Replace with the public packages API once the admin portal exists; the Home
-// preview, the Stay Options comparison and the inquiry flow all read from here.
+// Home, Stay Options and the inquiry flow all read from this single source.
 //
 // `stay` groups the Non-A/C and A/C variants of one offer into a single public row.
 export const packages = [
-  { title: 'Weekend Standard — Non-A/C', type: 'WEEKEND', ac: 'NON_AC', rate: 21000, minGuests: 1, maxGuests: 15, stay: 'weekend-villa', active: true },
-  { title: 'Weekend Premium — A/C', type: 'WEEKEND', ac: 'AC', rate: 23000, minGuests: 1, maxGuests: 15, stay: 'weekend-villa', active: true },
-  { title: 'Couples Package', type: 'WEEKDAY', ac: 'NA', rate: 6500, minGuests: 1, maxGuests: 2, stay: 'couples', active: true },
-  { title: 'Family Package', type: 'WEEKDAY', ac: 'NA', rate: 8500, minGuests: 3, maxGuests: 4, stay: 'family', active: true },
-  { title: '2-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 8500, minGuests: 1, maxGuests: 4, stay: 'two-bedroom', active: true },
-  { title: '2-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 10500, minGuests: 1, maxGuests: 4, stay: 'two-bedroom', active: true },
-  { title: '3-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 12500, minGuests: 5, maxGuests: 6, stay: 'three-bedroom', active: true },
-  { title: '3-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 14500, minGuests: 5, maxGuests: 6, stay: 'three-bedroom', active: true },
-  { title: '4-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 15500, minGuests: 7, maxGuests: 8, stay: 'four-bedroom', active: true },
-  { title: '4-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 17500, minGuests: 7, maxGuests: 8, stay: 'four-bedroom', active: true },
-  { title: '5-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 17900, minGuests: 9, maxGuests: 10, stay: 'five-bedroom', active: true },
-  { title: '5-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 19900, minGuests: 9, maxGuests: 10, stay: 'five-bedroom', active: true },
-  { title: 'Full Villa — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 17900, minGuests: 11, maxGuests: 15, stay: 'full-villa', active: true },
-  { title: 'Full Villa — A/C', type: 'WEEKDAY', ac: 'AC', rate: 19900, minGuests: 11, maxGuests: 15, stay: 'full-villa', active: true },
+  { code: 'pkg-wknd-nonac', title: 'Weekend Standard — Non-A/C', type: 'WEEKEND', ac: 'NON_AC', rate: 21000, minGuests: 1, maxGuests: 15, stay: 'weekend-villa', active: true },
+  { code: 'pkg-wknd-ac', title: 'Weekend Premium — A/C', type: 'WEEKEND', ac: 'AC', rate: 23000, minGuests: 1, maxGuests: 15, stay: 'weekend-villa', active: true },
+  { code: 'pkg-wkday-cpl', title: 'Couples Package', type: 'WEEKDAY', ac: 'NA', rate: 6500, minGuests: 1, maxGuests: 2, stay: 'couples', active: true },
+  { code: 'pkg-wkday-fam', title: 'Family Package', type: 'WEEKDAY', ac: 'NA', rate: 8500, minGuests: 3, maxGuests: 4, stay: 'family', active: true },
+  { code: 'pkg-wkday-2r-nac', title: '2-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 8500, minGuests: 1, maxGuests: 4, stay: 'two-bedroom', active: true },
+  { code: 'pkg-wkday-2r-ac', title: '2-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 10500, minGuests: 1, maxGuests: 4, stay: 'two-bedroom', active: true },
+  { code: 'pkg-wkday-3r-nac', title: '3-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 12500, minGuests: 5, maxGuests: 6, stay: 'three-bedroom', active: true },
+  { code: 'pkg-wkday-3r-ac', title: '3-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 14500, minGuests: 5, maxGuests: 6, stay: 'three-bedroom', active: true },
+  { code: 'pkg-wkday-4r-nac', title: '4-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 15500, minGuests: 7, maxGuests: 8, stay: 'four-bedroom', active: true },
+  { code: 'pkg-wkday-4r-ac', title: '4-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 17500, minGuests: 7, maxGuests: 8, stay: 'four-bedroom', active: true },
+  { code: 'pkg-wkday-5r-nac', title: '5-Room Group — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 17900, minGuests: 9, maxGuests: 10, stay: 'five-bedroom', active: true },
+  { code: 'pkg-wkday-5r-ac', title: '5-Room Group — A/C', type: 'WEEKDAY', ac: 'AC', rate: 19900, minGuests: 9, maxGuests: 10, stay: 'five-bedroom', active: true },
+  { code: 'pkg-wkday-fv-nac', title: 'Full Villa — Non-A/C', type: 'WEEKDAY', ac: 'NON_AC', rate: 17900, minGuests: 11, maxGuests: 15, stay: 'full-villa', active: true },
+  { code: 'pkg-wkday-fv-ac', title: 'Full Villa — A/C', type: 'WEEKDAY', ac: 'AC', rate: 19900, minGuests: 11, maxGuests: 15, stay: 'full-villa', active: true },
 ];
 
 // Guest-oriented public labels (Stay Options IA). Bedrooms are counted, never named or numbered.
@@ -42,6 +41,7 @@ export function applyPackageApi(stayOptions) {
     stay.variants.forEach((variant) => {
       nextPackages.push({
         id: variant.id,
+        code: variant.code,
         title: variant.title,
         type: stay.stayType,
         ac: variant.coolingType === 'NOT_APPLICABLE' ? 'NA' : variant.coolingType,

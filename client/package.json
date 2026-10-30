@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run validate:catalog && vite build",
+    "test": "node --test tests/*.test.mjs",
+    "validate:catalog": "node scripts/validate-catalog.mjs",
     "preview": "vite preview",
     "media": "node scripts/build-media.mjs",
     "media:library-8k": "node scripts/enhance-image-library.mjs"

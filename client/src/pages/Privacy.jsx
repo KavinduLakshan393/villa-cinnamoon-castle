@@ -39,8 +39,8 @@ export default function Privacy() {
         </p>
         <p className="privacy__intro">
           Villa Cinnamoon Castle respects your privacy. Whether you are exploring our spaces, reading guest reviews,
-          or preparing an inquiry for a stay, this notice explains what information we collect, why we need it, how it
-          is kept secure, and how you remain in control of your personal data.
+          or preparing an inquiry for a stay, this notice explains what information you use and choose to share, why it
+          is needed, and how you remain in control of your personal data.
         </p>
       </header>
 
@@ -85,9 +85,7 @@ export default function Privacy() {
           <h2 id="p-use">How we use this information</h2>
           <p>We use your inquiry details solely to:</p>
           <ul>
-            <li>Calculate estimated pricing and check stay availability</li>
-            <li>Create an inquiry reference number so the host can identify your request</li>
-            <li>Enable the villa management team to review and arrange your visit</li>
+            <li>Calculate an estimated price from the dates and stay option you select</li>
             <li>Prepare your direct WhatsApp inquiry message</li>
             <li>Address any special preferences or arrangements you have requested</li>
           </ul>
@@ -100,25 +98,20 @@ export default function Privacy() {
         <section aria-labelledby="p-storage">
           <h2 id="p-storage">How your inquiry is stored and protected</h2>
           <p>
-            When you submit an inquiry, your request details are saved to our secure reservation system to generate your
-            reference number and allow the host to review dates and manage the stay.
-          </p>
-          <p>
-            <strong>Private management access:</strong> Your inquiry records are accessible strictly to authorized villa
-            management through an authenticated administration portal.
+            The website does not send your inquiry to a reservation database or store it in a website administration
+            system. Your details leave the website only if you choose to send the prepared message in WhatsApp.
           </p>
           <p>
             <strong>Browser form memory:</strong> While you move through the form steps, your progress is kept in your
-            device’s temporary browser storage so you do not lose entered details if you switch steps or refresh the
-            page.
+            device’s session storage so you do not lose entered details if you switch steps or refresh the page. This
+            temporary copy is controlled by your browser and is not transmitted to us by the website.
           </p>
         </section>
 
         <section aria-labelledby="p-whatsapp">
           <h2 id="p-whatsapp">Direct WhatsApp communication</h2>
           <p>
-            When you select “Send Inquiry”, our website records your inquiry reference and opens WhatsApp with your
-            pre-filled inquiry summary.
+            When you select “Send Inquiry”, the website opens WhatsApp with a pre-filled summary created in your browser.
           </p>
           <p>
             <strong>You choose when to send:</strong> The inquiry reaches the host only after you review the message and
@@ -172,10 +165,6 @@ export default function Privacy() {
               analytics cookies. We use only temporary browser storage to remember your inquiry form inputs while you
               navigate the site.
             </li>
-            <li>
-              <strong>Administrative portal:</strong> If a villa manager signs into the administration dashboard, an
-              essential security session cookie is used strictly to protect their login session.
-            </li>
           </ul>
         </section>
 
@@ -186,13 +175,9 @@ export default function Privacy() {
             your browser data.
           </p>
           <p>
-            Inquiry records are retained in our secure reservation system for as long as reasonably needed to manage
-            active stays, maintain required business and financial records, address any disputes, or meet statutory
-            obligations. Information that is no longer needed is securely removed.
-          </p>
-          <p>
-            WhatsApp conversation history is kept by the host for communication continuity, booking details, and guest
-            support.
+            The website does not retain a server-side copy of your inquiry. If you send the prepared message, the host
+            may retain the resulting WhatsApp conversation as reasonably needed to discuss your stay, provide guest
+            support, maintain required business records, or meet legal obligations.
           </p>
         </section>
 
@@ -218,10 +203,10 @@ export default function Privacy() {
             principles, you have the right to:
           </p>
           <ul>
-            <li>Ask what personal information we hold regarding your inquiries</li>
+            <li>Ask what personal information the host holds in your WhatsApp conversation</li>
             <li>Request correction of any inaccurate or out-of-date details</li>
             <li>
-              Request the deletion of your inquiry records where they are no longer required for legal or booking
+              Request the deletion of your conversation details where they are no longer required for legal or booking
               administration
             </li>
             <li>Withdraw consent for future communications at any time</li>
