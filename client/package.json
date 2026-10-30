@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run validate:catalog && vite build",
+    "build": "npm run validate:catalog && vite build && node scripts/build-seo.mjs && npm run validate:seo",
     "test": "node --test tests/*.test.mjs",
     "validate:catalog": "node scripts/validate-catalog.mjs",
+    "validate:seo": "node scripts/validate-seo-output.mjs",
     "preview": "vite preview",
     "media": "node scripts/build-media.mjs",
     "media:library-8k": "node scripts/enhance-image-library.mjs"
