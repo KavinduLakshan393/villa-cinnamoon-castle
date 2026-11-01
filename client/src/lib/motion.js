@@ -54,11 +54,15 @@ const introLiftedPromise = new Promise((resolve) => {
 });
 
 export const introState = {
-  active: typeof document !== 'undefined' && document.documentElement.classList.contains('is-intro'),
+  // index.html decides this before first paint. The boot flag is deliberately
+  // separate from the mutable class list used to lock scrolling and style the
+  // splash, so module evaluation order cannot silently skip the intro.
+  active: typeof window !== 'undefined' && window.__VILLA_INTRO__ === true,
 };
 
 export function markIntroLifting() {
   introState.active = false;
+  if (typeof window !== 'undefined') window.__VILLA_INTRO__ = false;
   liftResolve();
 }
 
