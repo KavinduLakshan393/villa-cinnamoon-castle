@@ -118,7 +118,7 @@ export default function App() {
   const shown = usePageTransition(pageRef);
   useRouteScroll(shown);
   const isAdmin = !isFrontendOnly && shown.pathname.startsWith('/admin');
-  const [introVisible, setIntroVisible] = useState(introState.active);
+  const [introVisible, setIntroVisible] = useState(() => introState.active);
   const hideIntro = useCallback(() => setIntroVisible(false), []);
 
   useEffect(() => {
