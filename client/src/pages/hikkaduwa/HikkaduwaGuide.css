@@ -107,6 +107,79 @@
   color: var(--text-secondary);
 }
 
+.hikkaduwa-coast {
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.hikkaduwa-coast__intro {
+  display: grid;
+  gap: 24px;
+  max-width: 1180px;
+}
+
+.hikkaduwa-coast__intro .section-heading {
+  max-width: 13em;
+}
+
+.hikkaduwa-coast__intro .body-copy {
+  max-width: 48rem;
+}
+
+.hikkaduwa-coast__gallery {
+  display: grid;
+  gap: clamp(32px, 6vw, 96px);
+  margin-top: clamp(56px, 8vw, 120px);
+}
+
+.hikkaduwa-coast__photo {
+  display: grid;
+  gap: 16px;
+}
+
+.hikkaduwa-coast__photo p,
+.hikkaduwa-coast__credits {
+  color: var(--text-secondary);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.hikkaduwa-coast__credits {
+  margin-top: clamp(40px, 6vw, 80px);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.hikkaduwa-coast__credits a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 0.24em;
+}
+
+@media (min-width: 900px) {
+  .hikkaduwa-coast__intro {
+    grid-template-columns: minmax(0, 8fr) minmax(260px, 4fr);
+    column-gap: clamp(40px, 8vw, 140px);
+    align-items: end;
+  }
+
+  .hikkaduwa-coast__intro > .eyebrow {
+    grid-column: 1 / -1;
+  }
+
+  .hikkaduwa-coast__gallery {
+    grid-template-columns: minmax(0, 7fr) minmax(280px, 4fr);
+    align-items: start;
+  }
+
+  .hikkaduwa-coast__photo--tall {
+    margin-top: clamp(88px, 12vw, 180px);
+  }
+}
+
 .hikkaduwa-area__index {
   letter-spacing: 0.14em;
   color: var(--accent);

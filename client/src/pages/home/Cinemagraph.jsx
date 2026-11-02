@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Eyebrow, ScrubText } from '../../components/Reveal.jsx';
+import SmartLink from '../../components/SmartLink.jsx';
 import { gsap, useGSAP, withMotion } from '../../lib/motion.js';
 import { PORTRAIT_QUERY, useMediaQuery, useVideoAllowed } from '../../lib/media.js';
 import './Cinemagraph.css';
@@ -14,7 +15,18 @@ import './Cinemagraph.css';
  * viewport, and plays only while it is on screen. Reduced motion or data saver
  * shows the poster.
  */
-export default function Cinemagraph({ id, name, alt, eyebrow, note, className = '', children }) {
+export default function Cinemagraph({
+  id,
+  name,
+  alt,
+  eyebrow,
+  note,
+  to,
+  linkLabel,
+  ctaLabel,
+  className = '',
+  children,
+}) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const variant = useMediaQuery(PORTRAIT_QUERY) ? 'mobile' : 'desktop';
@@ -104,7 +116,7 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
   const titleId = `${id}-quote`;
 
   return (
-    <section id={id} className={`cinema ${className}`} ref={sectionRef} aria-labelledby={titleId}>
+    <section id={id} className={`cinema${to ? ' cinema--linked' : ''} ${className}`} ref={sectionRef} aria-labelledby={titleId}>
       <div className="cinema__frame">
         {allowed ? (
           <video
@@ -126,6 +138,7 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
         )}
       </div>
       <div className="cinema__shade" aria-hidden="true" />
+      {to && <SmartLink className="cinema__link" to={to} aria-label={linkLabel ?? ctaLabel ?? `Explore ${eyebrow}`} />}
 
       <div className="cinema__content container">
         <Eyebrow className="cinema__eyebrow">{eyebrow}</Eyebrow>
@@ -137,6 +150,12 @@ export default function Cinemagraph({ id, name, alt, eyebrow, note, className = 
           <p className="cinema__note" data-reveal="fade">
             {note}
           </p>
+        )}
+        {ctaLabel && (
+          <span className="cinema__cta" aria-hidden="true">
+            {ctaLabel}
+            <span aria-hidden="true">↗</span>
+          </span>
         )}
       </div>
     </section>

@@ -24,6 +24,11 @@ const manifestPath = path.join(root, 'src', 'data', 'media-manifest.json');
 
 // crop: fractions of the source image { top, bottom, left, right } to keep.
 const media = [
+  // Hikkaduwa guide: externally sourced location photography. Keep the local
+  // masters at a web-appropriate long edge instead of upscaling them to 8K.
+  { name: 'hikkaduwa-beach-palms', file: 'External/Hikkaduwa/hikkaduwa-beach-palms.jpg', widths: [480, 720, 960, 1440, 1920], grade: false, masterLongEdge: 2560 },
+  { name: 'hikkaduwa-rocky-shore', file: 'External/Hikkaduwa/hikkaduwa-rocky-shore.jpg', widths: [480, 720, 960, 1440, 1920], grade: false, masterLongEdge: 2560 },
+  { name: 'thiranagama-beachside', file: 'External/Hikkaduwa/thiranagama-beachside.jpg', widths: [480, 720, 960, 1440, 1920], grade: false, masterLongEdge: 2560 },
   { name: 'hero-arrival', file: 'hero/villa-arrival-hero-8k.jpg', widths: [960, 1440, 1920, 2560, 3200, 3840] },
   // Tighter framing of the same 8K photograph, centred on the villa facade (Stay Options).
   { name: 'villa-facade', file: 'hero/villa-arrival-hero-8k.jpg', widths: [960, 1440, 1920, 2560, 3200], crop: { left: 0.42, top: 0.16, bottom: 0.74 } },
@@ -149,14 +154,15 @@ for (const item of selected) {
     height = region.height;
   }
 
-  const scale = EIGHT_K_LONG_EDGE / Math.max(width, height);
+  const masterLongEdge = item.masterLongEdge ?? EIGHT_K_LONG_EDGE;
+  const scale = masterLongEdge / Math.max(width, height);
   const enhancedWidth = Math.round(width * scale);
   const enhancedHeight = Math.round(height * scale);
   // Served widths: the item's own, plus the shared ladder while the long edge stays within 2560px.
   const ladder = LADDER.filter((w) => w > Math.max(...item.widths) && (w * Math.max(width, height)) / width <= LADDER_LONG_EDGE);
   const widths = [...new Set([...item.widths, ...ladder])].sort((a, b) => a - b);
 
-  for (const w of [...widths, enhancedWidth]) {
+  for (const w of [...new Set([...widths, enhancedWidth])]) {
     const base = () => {
       let pipeline = sharp(input).rotate();
       if (region) pipeline = pipeline.extract(region);
@@ -171,11 +177,11 @@ for (const item of selected) {
     await write('webp', (image) => image.webp({ quality: isEightK ? 88 : 82, effort: 5 }));
     await write('jpg', (image) => image.jpeg({ quality: isEightK ? 92 : 86, progressive: true, mozjpeg: true }));
     // AVIF is only made for the served widths; the master is kept as WebP and JPEG.
-    if (!isEightK) await write('avif', (image) => image.avif({ quality: 58, effort: 4 }));
+    if (!isEightK || widths.includes(w)) await write('avif', (image) => image.avif({ quality: 58, effort: 4 }));
   }
 
   manifest[item.name] = { width: enhancedWidth, height: enhancedHeight, widths, full: enhancedWidth };
-  console.log(`${item.name}: ${width}x${height} -> ${enhancedWidth}x${enhancedHeight} (8K long edge); widths ${widths.join(', ')}`);
+  console.log(`${item.name}: ${width}x${height} -> ${enhancedWidth}x${enhancedHeight} (${masterLongEdge}px long edge); widths ${widths.join(', ')}`);
 }
 
 await mkdir(path.dirname(manifestPath), { recursive: true });

@@ -4,7 +4,26 @@ import Frame from '../components/Frame.jsx';
 import { Eyebrow, RevealHeading } from '../components/Reveal.jsx';
 import { inquiryPath } from '../data/site.js';
 import { useFadeReveals } from '../lib/reveal.js';
+import { PhotoViewerProvider, useOpenPhoto } from './home/PhotoViewer.jsx';
 import './hikkaduwa/HikkaduwaGuide.css';
+
+const hikkaduwaPhotos = [
+  {
+    name: 'hikkaduwa-beach-palms',
+    alt: 'Coconut palms framing the Indian Ocean and a beach hammock in Hikkaduwa',
+    caption: 'Palm-lined beach life in Hikkaduwa',
+  },
+  {
+    name: 'hikkaduwa-rocky-shore',
+    alt: 'Ocean waves breaking across the rocky shoreline near Hikkaduwa',
+    caption: 'The rocky shoreline and open Indian Ocean',
+  },
+  {
+    name: 'thiranagama-beachside',
+    alt: 'An open beachside restaurant looking across the sand at Thiranagama Beach',
+    caption: 'A slower beachside afternoon at Thiranagama',
+  },
+];
 
 const areaHighlights = [
   {
@@ -31,9 +50,10 @@ const groupReasons = [
   ['Direct planning', 'Send dates and group details to the host through WhatsApp for availability and final pricing.'],
 ];
 
-export default function HikkaduwaGuide() {
+function HikkaduwaGuideContent() {
   const pageRef = useRef(null);
   useFadeReveals(pageRef);
+  const openPhoto = useOpenPhoto(hikkaduwaPhotos, 'Hikkaduwa coast');
 
   return (
     <div className="hikkaduwa-page" ref={pageRef}>
@@ -57,10 +77,11 @@ export default function HikkaduwaGuide() {
         <div className="container">
           <Frame
             className="hikkaduwa-hero__image"
-            name="home-nearby-coast"
-            alt="Waves meeting the rocky south coast near Hikkaduwa at sunset"
+            name="hikkaduwa-beach-palms"
+            alt={hikkaduwaPhotos[0].alt}
             ratio={null}
             sizes="(min-width: 1680px) 1600px, 94vw"
+            onOpen={openPhoto}
           />
         </div>
       </section>
@@ -91,6 +112,58 @@ export default function HikkaduwaGuide() {
             ))}
           </ol>
         </div>
+      </section>
+
+      <section className="section hikkaduwa-coast" aria-labelledby="hikkaduwa-coast-title">
+        <div className="container hikkaduwa-coast__intro">
+          <Eyebrow>Along the coast</Eyebrow>
+          <RevealHeading id="hikkaduwa-coast-title" className="section-heading">
+            Beach mornings, ocean air and room to slow down.
+          </RevealHeading>
+          <p className="body-copy" data-reveal="fade">
+            Hikkaduwa and neighbouring Thiranagama mix long beach views with rocky shoreline and relaxed places to
+            pause by the ocean. Select any photograph to explore it full screen.
+          </p>
+        </div>
+
+        <div className="container hikkaduwa-coast__gallery">
+          <div className="hikkaduwa-coast__photo hikkaduwa-coast__photo--wide">
+            <Frame
+              name="hikkaduwa-rocky-shore"
+              alt={hikkaduwaPhotos[1].alt}
+              ratio="3 / 2"
+              sizes="(min-width: 1000px) 58vw, 94vw"
+              onOpen={openPhoto}
+            />
+            <p>{hikkaduwaPhotos[1].caption}</p>
+          </div>
+          <div className="hikkaduwa-coast__photo hikkaduwa-coast__photo--tall">
+            <Frame
+              name="thiranagama-beachside"
+              alt={hikkaduwaPhotos[2].alt}
+              ratio="4 / 5"
+              sizes="(min-width: 1000px) 30vw, 84vw"
+              onOpen={openPhoto}
+            />
+            <p>{hikkaduwaPhotos[2].caption}</p>
+          </div>
+        </div>
+
+        <p className="container hikkaduwa-coast__credits" data-reveal="fade">
+          Location photography by{' '}
+          <a href="https://www.pexels.com/photo/palm-trees-at-the-beach-11887209/" target="_blank" rel="noopener noreferrer">
+            Charith Kodagoda
+          </a>
+          ,{' '}
+          <a href="https://www.pexels.com/photo/scenic-tropical-beach-with-ocean-waves-in-sri-lanka-34861072/" target="_blank" rel="noopener noreferrer">
+            Thilina Alagiyawanna
+          </a>{' '}
+          and{' '}
+          <a href="https://unsplash.com/photos/a-beachside-restaurant-with-a-view-of-the-ocean-a-wD8MN8fEE" target="_blank" rel="noopener noreferrer">
+            Zoshua Colah
+          </a>
+          .
+        </p>
       </section>
 
       <section className="section hikkaduwa-group" aria-labelledby="hikkaduwa-group-title">
@@ -128,5 +201,13 @@ export default function HikkaduwaGuide() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function HikkaduwaGuide() {
+  return (
+    <PhotoViewerProvider>
+      <HikkaduwaGuideContent />
+    </PhotoViewerProvider>
   );
 }

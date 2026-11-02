@@ -439,6 +439,9 @@ export function Beach() {
       alt="An aerial view of Hikkaduwa Beach with its reef, moored boats and palm-lined sand"
       eyebrow="Hikkaduwa Beach"
       note="Nearby · 3.5 km from the villa, about 5 minutes by car"
+      to="/hikkaduwa-guide"
+      linkLabel="Open the Hikkaduwa area guide"
+      ctaLabel="Explore Hikkaduwa"
     >
       Reef, surf and golden sand, <span className="editorial">five minutes down the road.</span>
     </Cinemagraph>
