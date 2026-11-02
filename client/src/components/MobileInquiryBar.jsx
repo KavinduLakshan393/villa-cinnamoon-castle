@@ -50,7 +50,7 @@ export default function MobileInquiryBar() {
   const rate = ready ? startingRate('WEEKDAY') : null;
 
   return (
-    <div className={`inquiry-bar${shown ? ' is-shown' : ''}`} inert={shown ? undefined : ''}>
+    <div className={`inquiry-bar${shown ? ' is-shown' : ''}`} inert={shown ? undefined : true}>
       {rate !== null && (
         <p className="inquiry-bar__rate">
           <span className="inquiry-bar__from">From</span>
