@@ -176,7 +176,7 @@ export default function Hero() {
             Arachchikanda, Hikkaduwa
           </p>
           <h1 className="hero__title" id="hero-title">
-            <span className="sr-only">A private villa for families and groups, under the trees.</span>
+            <span className="sr-only">A private villa in Hikkaduwa for families and groups, under the trees.</span>
             <span aria-hidden="true">
               <span className="hero__line">
                 <span>A private villa for</span>

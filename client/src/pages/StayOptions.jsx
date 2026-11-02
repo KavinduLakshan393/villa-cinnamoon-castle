@@ -24,12 +24,12 @@ function Hero() {
       <div className="container stay-hero__grid">
         <Eyebrow>Stay options</Eyebrow>
         <RevealHeading as="h1" id="stay-hero-title" className="stay-hero__title" start="top 100%" delay={0.1}>
-          Find the right stay for <span className="editorial">your group.</span>
+          Private villa stays for <span className="editorial">your group.</span>
         </RevealHeading>
         <div className="stay-hero__aside" data-reveal="fade">
           <p className="lead">
-            Enjoy flexible weekday stays tailored to your party, or reserve the entire private villa for weekend
-            gatherings of up to 15 guests.
+            Stay near Hikkaduwa with flexible weekday options tailored to your party, or reserve the entire private
+            five-bedroom villa for weekend gatherings of up to 15 guests.
           </p>
           <div className="stay-hero__actions">
             <Button to={inquiryPath}>Send Inquiry</Button>

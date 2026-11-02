@@ -45,6 +45,11 @@
   status = 200
 
 [[redirects]]
+  from = "/hikkaduwa-guide"
+  to = "/hikkaduwa-guide/index.html"
+  status = 200
+
+[[redirects]]
   from = "/gallery"
   to = "/gallery/index.html"
   status = 200

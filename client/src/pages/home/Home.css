@@ -42,6 +42,10 @@
   }
 }
 
+.nearby__guide-link {
+  margin-top: 24px;
+}
+
 /* ---------- 01 Overview ---------- */
 
 .overview__eyebrow {

@@ -515,10 +515,15 @@ export function Nearby() {
         <header className="split-intro">
           <Eyebrow>Nearby</Eyebrow>
           <RevealHeading id="nearby-title">Hikkaduwa is 3.5&nbsp;km away.</RevealHeading>
-          <p className="body-copy split-intro__copy" data-reveal="fade">
-            The town, beach, coral reef and surf spots are a short trip from the villa. Galle Fort is around 20 minutes away
-            by road.
-          </p>
+          <div className="split-intro__copy" data-reveal="fade">
+            <p className="body-copy">
+              The town, beach, coral reef and surf spots are a short trip from the villa. Galle Fort is around 20 minutes
+              away by road.
+            </p>
+            <Button to="/hikkaduwa-guide" variant="swipe" tone="dark" className="nearby__guide-link">
+              Plan around Hikkaduwa
+            </Button>
+          </div>
         </header>
       </div>
       <div className="container">

@@ -17,12 +17,14 @@ import SeoHead from './components/SeoHead.jsx';
 // file, fetched while the current page eases out (or in idle time, see App).
 const pages = {
   '/stay-options': () => import('./pages/StayOptions.jsx'),
+  '/hikkaduwa-guide': () => import('./pages/HikkaduwaGuide.jsx'),
   '/gallery': () => import('./pages/Gallery.jsx'),
   '/inquiry': () => import('./pages/Inquiry.jsx'),
   '/privacy': () => import('./pages/Privacy.jsx'),
 };
 const loadAdmin = () => import('./admin/AdminApp.jsx');
 const StayOptions = lazy(pages['/stay-options']);
+const HikkaduwaGuide = lazy(pages['/hikkaduwa-guide']);
 const Gallery = lazy(pages['/gallery']);
 const Inquiry = lazy(pages['/inquiry']);
 const Privacy = lazy(pages['/privacy']);
@@ -174,6 +176,7 @@ export default function App() {
           <Routes location={shown}>
             <Route path="/" element={<Home />} />
             <Route path="/stay-options" element={<StayOptions />} />
+            <Route path="/hikkaduwa-guide" element={<HikkaduwaGuide />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/inquiry" element={<Inquiry />} />
             <Route path="/privacy" element={<Privacy />} />
