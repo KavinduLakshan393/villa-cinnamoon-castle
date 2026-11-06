@@ -5,15 +5,21 @@ export const defaultShareImage = `${productionOrigin}/media/villa-facade-1920.jp
 
 export const seoPages = {
   '/': {
-    title: 'Private Villa near Hikkaduwa | Villa Cinnamoon Castle',
+    title: 'Private Villa in Hikkaduwa | Villa Cinnamoon Castle',
     description:
-      'Stay at a private five-bedroom villa for families and groups near Hikkaduwa, Sri Lanka. Explore the villa, stay options, gallery, and direct WhatsApp inquiries.',
+      'Stay at a private five-bedroom villa in Hikkaduwa for families and groups of up to 15 guests, with direct WhatsApp inquiries and Hikkaduwa Beach 3.5 km away.',
     robots: 'index, follow',
   },
   '/stay-options': {
-    title: 'Stay Options & Villa Rates | Villa Cinnamoon Castle',
+    title: 'Hikkaduwa Villa Stay Options & Rates | Villa Cinnamoon Castle',
     description:
-      'Compare stay options and estimated villa rates for couples, families, and groups near Hikkaduwa before sending a direct WhatsApp inquiry.',
+      'Compare private villa stay options and estimated rates for couples, families, and groups near Hikkaduwa before sending a direct WhatsApp inquiry.',
+    robots: 'index, follow',
+  },
+  '/hikkaduwa-guide': {
+    title: 'Hikkaduwa Villa & Local Area Guide | Villa Cinnamoon Castle',
+    description:
+      'Plan a group villa stay near Hikkaduwa Beach, the coral reef, surf spots, town and Galle Fort from a private five-bedroom base in Arachchikanda.',
     robots: 'index, follow',
   },
   '/gallery': {
@@ -72,44 +78,90 @@ export function seoForPath(pathname) {
 }
 
 export function structuredDataForPath(pathname) {
-  if (normalizeSeoPath(pathname) !== '/') return null;
+  const normalized = normalizeSeoPath(pathname);
+
+  if (normalized === '/') {
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          '@id': `${productionOrigin}/#website`,
+          url: `${productionOrigin}/`,
+          name: site.name,
+          description: site.description,
+          inLanguage: 'en',
+        },
+        {
+          '@type': 'LodgingBusiness',
+          '@id': `${productionOrigin}/#lodging`,
+          name: site.name,
+          url: `${productionOrigin}/`,
+          description: site.description,
+          image: [defaultShareImage],
+          telephone: '+94761007686',
+          numberOfRooms: 5,
+          occupancy: {
+            '@type': 'QuantitativeValue',
+            maxValue: 15,
+          },
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Arachchikanda',
+            addressLocality: 'Hikkaduwa',
+            addressRegion: 'Southern Province',
+            addressCountry: 'LK',
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 6.1416876,
+            longitude: 80.1300153,
+          },
+          hasMap: site.googleMapsUrl,
+          amenityFeature: [
+            ['Wi-Fi', true],
+            ['Private kitchen', true],
+            ['Private garden and courtyard', true],
+            ['Gated on-site parking', true],
+            ['Hot-water showers', true],
+          ].map(([name, value]) => ({
+            '@type': 'LocationFeatureSpecification',
+            name,
+            value,
+          })),
+          sameAs: [
+            ...profiles.map(({ href }) => href),
+            accommodationProfile.href,
+          ],
+        },
+      ],
+    };
+  }
+
+  const breadcrumbLabels = {
+    '/stay-options': 'Stay Options',
+    '/hikkaduwa-guide': 'Hikkaduwa Guide',
+    '/gallery': 'Gallery',
+    '/inquiry': 'Send an Inquiry',
+  };
+  const label = breadcrumbLabels[normalized];
+  if (!label) return null;
 
   return {
     '@context': 'https://schema.org',
-    '@graph': [
+    '@type': 'BreadcrumbList',
+    itemListElement: [
       {
-        '@type': 'WebSite',
-        '@id': `${productionOrigin}/#website`,
-        url: `${productionOrigin}/`,
-        name: site.name,
-        description: site.description,
-        inLanguage: 'en',
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${productionOrigin}/`,
       },
       {
-        '@type': 'LodgingBusiness',
-        '@id': `${productionOrigin}/#lodging`,
-        name: site.name,
-        url: `${productionOrigin}/`,
-        description: site.description,
-        image: [defaultShareImage],
-        telephone: '+94761007686',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Arachchikanda',
-          addressLocality: 'Hikkaduwa',
-          addressRegion: 'Southern Province',
-          addressCountry: 'LK',
-        },
-        geo: {
-          '@type': 'GeoCoordinates',
-          latitude: 6.1416876,
-          longitude: 80.1300153,
-        },
-        hasMap: site.googleMapsUrl,
-        sameAs: [
-          ...profiles.map(({ href }) => href),
-          accommodationProfile.href,
-        ],
+        '@type': 'ListItem',
+        position: 2,
+        name: label,
+        item: `${productionOrigin}${normalized}`,
       },
     ],
   };

@@ -23,7 +23,7 @@ test('defines unique metadata and custom-domain canonicals for every public rout
 });
 
 test('indexes conversion routes while excluding supporting and private routes', () => {
-  assert.deepEqual(indexableRoutes, ['/', '/stay-options', '/gallery', '/inquiry']);
+  assert.deepEqual(indexableRoutes, ['/', '/stay-options', '/hikkaduwa-guide', '/gallery', '/inquiry']);
   assert.equal(seoForPath('/privacy').robots, 'noindex, follow');
   assert.equal(seoForPath('/admin/packages').robots, 'noindex, nofollow');
   assert.equal(seoForPath('/missing-page').robots, 'noindex, follow');
@@ -35,19 +35,26 @@ test('normalises trailing slashes without changing the homepage', () => {
   assert.equal(seoForPath('/gallery/').canonical, `${productionOrigin}/gallery`);
 });
 
-test('publishes truthful lodging structured data only on the homepage', () => {
+test('publishes truthful lodging structured data and route breadcrumbs', () => {
   const data = structuredDataForPath('/');
   const lodging = data['@graph'].find((item) => item['@type'] === 'LodgingBusiness');
   assert.equal(lodging.name, 'Villa Cinnamoon Castle');
   assert.equal(lodging.telephone, '+94761007686');
+  assert.equal(lodging.numberOfRooms, 5);
+  assert.equal(lodging.occupancy.maxValue, 15);
+
+  const guide = structuredDataForPath('/hikkaduwa-guide');
+  assert.equal(guide['@type'], 'BreadcrumbList');
+  assert.equal(guide.itemListElement[1].name, 'Hikkaduwa Guide');
+  assert.equal(structuredDataForPath('/privacy'), null);
   assert.equal(lodging.geo.latitude, 6.1416876);
   assert.ok(!('aggregateRating' in lodging));
-  assert.equal(structuredDataForPath('/gallery'), null);
+  assert.equal(structuredDataForPath('/gallery')['@type'], 'BreadcrumbList');
 });
 
 test('routes crawlers to page-specific HTML and returns real 404 responses', async () => {
   const netlify = await readFile(new URL('../../netlify.toml', import.meta.url), 'utf8');
-  for (const pathname of ['/stay-options', '/gallery', '/inquiry', '/privacy']) {
+  for (const pathname of ['/stay-options', '/hikkaduwa-guide', '/gallery', '/inquiry', '/privacy']) {
     assert.ok(netlify.includes(`from = "${pathname}"`));
     assert.ok(netlify.includes(`to = "${pathname}/index.html"`));
   }

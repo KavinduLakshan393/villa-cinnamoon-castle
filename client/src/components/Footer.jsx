@@ -3,7 +3,11 @@ import Button from './Button.jsx';
 import { site, navItems, inquiryPath, profiles, accommodationProfile } from '../data/site.js';
 import './Footer.css';
 
-const explore = [{ label: 'Home', to: '/' }, ...navItems];
+const explore = [
+  { label: 'Home', to: '/' },
+  ...navItems,
+  { label: 'Hikkaduwa Guide', to: '/hikkaduwa-guide' },
+];
 
 function External({ href, children }) {
   return (

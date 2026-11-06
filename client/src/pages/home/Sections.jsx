@@ -439,6 +439,9 @@ export function Beach() {
       alt="An aerial view of Hikkaduwa Beach with its reef, moored boats and palm-lined sand"
       eyebrow="Hikkaduwa Beach"
       note="Nearby · 3.5 km from the villa, about 5 minutes by car"
+      to="/hikkaduwa-guide"
+      linkLabel="Open the Hikkaduwa area guide"
+      ctaLabel="Explore Hikkaduwa"
     >
       Reef, surf and golden sand, <span className="editorial">five minutes down the road.</span>
     </Cinemagraph>
@@ -515,10 +518,15 @@ export function Nearby() {
         <header className="split-intro">
           <Eyebrow>Nearby</Eyebrow>
           <RevealHeading id="nearby-title">Hikkaduwa is 3.5&nbsp;km away.</RevealHeading>
-          <p className="body-copy split-intro__copy" data-reveal="fade">
-            The town, beach, coral reef and surf spots are a short trip from the villa. Galle Fort is around 20 minutes away
-            by road.
-          </p>
+          <div className="split-intro__copy" data-reveal="fade">
+            <p className="body-copy">
+              The town, beach, coral reef and surf spots are a short trip from the villa. Galle Fort is around 20 minutes
+              away by road.
+            </p>
+            <Button to="/hikkaduwa-guide" variant="swipe" tone="dark" className="nearby__guide-link">
+              Plan around Hikkaduwa
+            </Button>
+          </div>
         </header>
       </div>
       <div className="container">

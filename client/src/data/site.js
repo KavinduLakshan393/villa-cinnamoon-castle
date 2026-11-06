@@ -1,6 +1,6 @@
 export const site = {
   name: 'Villa Cinnamoon Castle',
-  description: 'A private villa for families and groups near Hikkaduwa.',
+  description: 'A private five-bedroom villa in Hikkaduwa for families and groups of up to 15 guests.',
   locality: 'Arachchikanda, Hikkaduwa, Sri Lanka',
   address: 'Arachchikanda, Hikkaduwa, Southern Province, Sri Lanka',
   whatsapp: {

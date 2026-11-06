@@ -784,5 +784,44 @@
       1920
     ],
     "full": 5760
+  },
+  "hikkaduwa-beach-palms": {
+    "width": 2560,
+    "height": 1707,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      1920,
+      2560
+    ],
+    "full": 2560
+  },
+  "hikkaduwa-rocky-shore": {
+    "width": 2560,
+    "height": 1707,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      1920,
+      2560
+    ],
+    "full": 2560
+  },
+  "thiranagama-beachside": {
+    "width": 2560,
+    "height": 1600,
+    "widths": [
+      480,
+      720,
+      960,
+      1440,
+      1920,
+      2560
+    ],
+    "full": 2560
   }
 }
