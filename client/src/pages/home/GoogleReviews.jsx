@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Button from '../../components/Button.jsx';
 import { RevealHeading, Eyebrow } from '../../components/Reveal.jsx';
-import { googleReviews } from '../../data/reviews.js';
+import { googleReviews, googleReviewsEndpoint } from '../../data/reviews.js';
 import { site } from '../../data/site.js';
 import { useReducedMotion } from '../../lib/media.js';
 import './GoogleReviews.css';
@@ -11,6 +11,14 @@ const MIN_PER_ROW = 6; // Enough cards for a row to cover wide screens before it
 const SECONDS_PER_CARD = 9; // Restrained speed: roughly 40px per second.
 
 const STAR_PATH = 'M10 1.8l2.5 5.2 5.7.8-4.1 4 1 5.7L10 14.8l-5.1 2.7 1-5.7-4.1-4 5.7-.8z';
+
+function formatReviewDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return '';
+  if (/ago|yesterday|today/i.test(dateStr)) return dateStr;
+  const parsed = Date.parse(dateStr);
+  if (Number.isNaN(parsed)) return dateStr;
+  return new Intl.DateTimeFormat('en-GB', { month: 'short', year: 'numeric' }).format(new Date(parsed));
+}
 
 const StarRow = () =>
   [1, 2, 3, 4, 5].map((n) => (
@@ -39,7 +47,7 @@ function ReviewCard({ review }) {
   const text = long
     ? `${review.text.slice(0, TEXT_LIMIT).replace(/\s+\S*$/, '').replace(/[\s.,;:!?]+$/, '')}…`
     : review.text;
-  const initial = review.author.trim().charAt(0).toUpperCase();
+  const initial = (review.author || 'G').trim().charAt(0).toUpperCase();
   const readMore = site.googleReviewsUrl ?? site.googleMapsUrl;
 
   return (
@@ -57,7 +65,7 @@ function ReviewCard({ review }) {
         </span>
         <span>
           <span className="review-card__name">{review.author}</span>
-          <span className="review-card__date">{review.date} · Google review</span>
+          <span className="review-card__date">{formatReviewDate(review.date)} · Google review</span>
         </span>
       </p>
     </li>
@@ -109,6 +117,7 @@ export default function GoogleReviews() {
   const sectionRef = useRef(null);
   const [userPaused, setUserPaused] = useState(false);
   const [visible, setVisible] = useState(true);
+  const [liveReviews, setLiveReviews] = useState(null);
   const still = useReducedMotion();
 
   useEffect(() => {
@@ -118,11 +127,30 @@ export default function GoogleReviews() {
     return () => observer.disconnect();
   }, []);
 
-  const reviewsUrl = site.googleReviewsUrl ?? site.googleMapsUrl;
+  useEffect(() => {
+    if (!googleReviewsEndpoint) return undefined;
+    let cancelled = false;
+    fetch(googleReviewsEndpoint)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!cancelled && data?.items?.length) {
+          setLiveReviews(data);
+        }
+      })
+      .catch(() => {
+        // Gracefully ignore fetch errors and fall back
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-  // Until real reviews are added to data/reviews.js, point visitors to the reviews
+  const reviewsUrl = site.googleReviewsUrl ?? site.googleMapsUrl;
+  const data = liveReviews ?? googleReviews;
+
+  // Until real reviews are added or fetched from the API, point visitors to the reviews
   // on the official Google profile. Reviews are never invented for this section.
-  if (!googleReviews?.items?.length) {
+  if (!data?.items?.length) {
     if (!reviewsUrl) return null;
     return (
       <section className="section google-reviews" ref={sectionRef} aria-labelledby="reviews-title">
@@ -149,7 +177,7 @@ export default function GoogleReviews() {
     );
   }
 
-  const { rating, total, items } = googleReviews;
+  const { rating, total, items } = data;
   const half = Math.ceil(items.length / 2);
   const upper = items.length > 1 ? items.slice(0, half) : items;
   const lower = items.length > 1 ? items.slice(half) : items;

@@ -3,6 +3,9 @@
   command = "npm run build"
   publish = "dist"
 
+[functions]
+  directory = "netlify/functions"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -76,6 +79,11 @@
 
 # Public routes are emitted as real directory index files. Unknown paths now
 # return a genuine 404 instead of a search-engine-unfriendly soft 404.
+[[redirects]]
+  from = "/api/google-reviews"
+  to = "/.netlify/functions/google-reviews"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/404.html"

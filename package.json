@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "npm --prefix client run dev",
     "build": "npm --prefix client run build",
+    "google:auth": "node scripts/get-google-refresh-token.mjs",
     "server:dev": "npm --prefix server run dev",
     "server:build": "npm --prefix server run build",
     "server:test": "npm --prefix server run test",
