@@ -11,7 +11,7 @@ export const site = {
   googleMapsUrl: 'https://maps.app.goo.gl/Nsd11SNNdLVSAZ9fA',
   googleMapsEmbedUrl: 'https://www.google.com/maps?q=6.1416876,80.1300153&z=16&output=embed',
   // OPEN-001: publish only the verified official Google Reviews URL.
-  googleReviewsUrl: null,
+  googleReviewsUrl: 'https://g.page/r/CbEzYcAF6I2dEBM/review',
   // OPEN-003: set to the real publication date (YYYY-MM-DD) before launch.
   privacyLastUpdated: '2026-10-30',
 };

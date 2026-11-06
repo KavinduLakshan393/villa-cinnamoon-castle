@@ -126,4 +126,6 @@ images/living_rooms/living_room_2/living_room_2_double_height_mezzanine.png
 
 # Google Business Profile setup (local screenshots and OAuth client downloads; never commit)
 Google business profile/
+Client secret/
 client_secret*.json
+tmp/
